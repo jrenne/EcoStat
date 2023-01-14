@@ -1,0 +1,565 @@
+# Statistical tests {#Tests}
+
+We run a statistical test when we want to know whether some hypothesis about a vector of parameters $\theta$ ---that is imperfectly observed--- is consistent with data that are seen as random, and whose randomness depend on $\theta$.
+
+Typically, assume you observe a sample $\bv{x}=\{x_1,\dots,x_n\}$ where the $x_i$'s are i.i.d., of mean $\mu$ and variance $\sigma^2$ (these two parameters being unobseved). One may want to know whether $\mu=0$ or, maybe, whether $\sigma = 1$.
+
+The hypothesis the researcher wants to test is called the *null hypothesis*. It is often denoted by $H_0$. It is a conjecture about a given property of a population. Without loss of generality, it can be stated as:
+$$
+H_0:\;\{\theta \in \Theta\}.
+$$
+It can also be defined through a function $h$ (say):^[We can relate the previous and the next equation through $\Theta = \{\theta, \,s.t.\,h(\theta)=0\}$.]
+$$
+H_0:\;h(\theta)=0.
+$$
+
+The *alternative hypothesis*, often denoted $H_1$ is then defined by $H_1:\;\{\theta \in \Theta^c\}$.^[Note that researchers may want to find support for the null hypothesis $H_0$ as well as for the alternative hypothesis $H_1$.]
+
+The ingredients of a statistical test are:
+
+* a vector of (unknown) parameters ($\theta$),
+* a **test statistic**, that is a function of the sample components ($S(\bv{x})$, say), and
+* a **critical region** ($\Omega$, say), defined as a set of implausible values of $S$ under $H_0$.
+
+To implement a test statistic, we need to know the distribution of $S$ under the null hypothesis $H_0$. Equipped, with such a distribution, we compute $S(\bv{x})$ and we look at its location; more specifically, we look whether it lies within the critical region $\Omega$. The latter corresponds to "implausible" regions of this distribution (typically the tails). If $S \in \Omega$, then we reject the null hypothesis. Looselly speaking; it amounts to saying: *if $H_0$ were true, it would have been unlikely to get such a large (or small) draw for $S$*.
+
+Hence, there are two possible outcomes for a statisitcal test:
+
+* $H_0$ is rejected if $S \in \Omega$;
+* $H_0$ is not rejected if $S \not\in \Omega$.
+
+Except in extreme cases, there is always a non-zero probability to reject $H_0$ while it is true (**Type I error**, or **false positive**), or to fail to reject it while it is false (**Type II error**, or **false negative**).
+
+This vocabulary is widely used. For instance, the notions of false positive and false negative are used in the context of Early Warning Signals (see Example \@ref(FPFN)).
+
+:::{.example #FPFN name="Early Warning Signals"}
+
+These are approaches that aim to detect the occurrence of crises in advance. See, e.g., [ECB (2014)](http://www.ecb.europa.eu/events/pdf/conferences/140623/Vasicek-et-al_Comparing-Different-Early-Warning-Systems.pdf?F96bbb525a26071ecf97f9154fb3cc73), for applications to financial crises.
+
+To implement such approaches, researchers look for signals/indices forecasting crises. Suppose one index ($W$, say) tends to be large before financial crises; one may define an EWS by predicting a crisis when $W>a$, where $a$ is a given threshold. It is easliy seen that the lower (respectively higeher) $a$, the larger the fraction of FP (resp. of FN).
+:::
+
+
+## Size and power of a test
+
+:::{.definition #sizepower name="Size and Power of a test"}
+
+For a given test,
+
+* the probability of type-I errors, denoted by $\alpha$, is called the **size**, or **significance level**, of the test,
+* the **power** of a test is equal to $1 - \beta$, where $\beta$ is the probability of type-II errors.
+:::
+
+Formally, the previous definitions can be written as follows:
+\begin{eqnarray}
+\alpha &=& \mathbb{P}(S \in \Omega|H_0) \quad \mbox{(Proba. of a false positive)}\\
+\beta &=& \mathbb{P}(S \not\in \Omega|H_1) \quad \mbox{(Proba. of a false negative)}.
+\end{eqnarray}
+
+The power is the probability that the test will lead to the rejection of the null hypothesis if the latter is false. Therefore, for a given size, we prefer tests with high power.
+
+In most cases, there is a trade-off between size and power, whch is easily understood in the EWS context (Example \@ref(exm:FPFN)): increasing the threshold $a$ reduces the fraction of FP (thereby reducing the size of the test), but it increases the fraction of FN (thereby reducing the power of the test).
+
+
+
+
+## The different types of statistical tests
+
+How to determine the critical region? Loosely speaking, we want the critical region to be a set of "implausible" values of the test statistic $S$ under the null hypothesis $H_0$. The lower the size of the test ($\alpha$), the more implausible these values. Recall that, by definition of the size of the test, $\alpha = \mathbb{P}(S \in \Omega|H_0)$. That is, if $\alpha$ is small, there is only a small probability that $S$ lies in $\Omega$ under $H_0$.
+
+Consider the case where, under $H_0$, the distribution of the test statistic is symmetrical (e.g., normal distribution or Student-t distribution). In this case, the critical region is usually defined by the union of the two tails of the distribution. The test is then said to be a **two-tailed test** or a **two-sided test**. This situation is illustrated by Figures \@ref(fig:Illusttest1) and \@ref(fig:Illusttest2). (Use this [web interface](https://jrenne.shinyapps.io/tests/) to explore alternative situations.)
+
+Figure \@ref(fig:Illusttest2) also illustrates the notion of *p-value* (in the case of a two-sided test). The p-value can be defined as the value of the size of the test $\alpha$ that is such that the computed test statistic, $S$, is at the "frontier" of the critical region. Given this definition, if the p-value is smaller (respectively larger) than the size of the test, we reject (resp. cannot rejet) the null hypothesis at the $\alpha$ significance level.
+
+
+```{r Illusttest1, echo=FALSE, fig.cap="Two-sided test. Under $H_0$, $S \\sim t(5)$. $\\alpha$ is the size of the test.", fig.align = 'left-aligned'}
+f <- function(x,df){
+  return(dt(x = x,df))
+}
+min.x <- -4
+max.x <- 4
+x <- seq(min.x,max.x,by=.01)
+df <- 5
+f.x <- f(x,df)
+max.f <- max(f.x)
+
+par(plt=c(.15,.95,.2,.95))
+plot(x,f.x,type="l",lwd=2,ylim=c(0,1.5*max.f),xlab="Test statistic S",
+     ylab="Density of test statistic under Ho")
+abline(h=0)
+alpha <- .05
+threshold <- qt(p = alpha/2,df)
+arrows(x0 = threshold,y0 = .6*max.f,
+       x1 = threshold,y1 = 0,
+       angle = 10,lwd = 1,col="black",length = .1,lty=1)
+text(x = threshold,y=.63*max.f,expression({Phi[S]^{-1}}(alpha/2)))
+arrows(x0 = -threshold,y0 = .6*max.f,
+       x1 = -threshold,y1 = 0,
+       angle = 10,lwd = 1,col="black",length = .1,lty=1)
+text(x = -threshold,y=.63*max.f,expression({Phi[S]^{-1}}(1-alpha/2)))
+
+text(x = min.x + .25*(max.x-min.x),y=1.45*max.f,
+     expression(paste(alpha," is the level (or size) of the test.",sep=""))
+)
+x.critic <- seq(min.x,threshold,by=.01)
+n <- length(x.critic)
+polygon(c(x.critic,x.critic[n:1]),c(f(x.critic,df),0*x.critic),col = "grey")
+x.critic <- seq(-threshold,max.x,by=.01)
+polygon(c(x.critic,x.critic[n:1]),c(f(x.critic,df),0*x.critic),col = "grey")
+
+arrows(x0 = (min.x + .48*(max.x-min.x)),y0 = 1.2*max.f,
+       x1 = (min.x + .1*(max.x-min.x)),y1 = .02*max.f,angle = 10,lwd = 2,col="red",length = .15)
+arrows(x0 = (min.x + .52*(max.x-min.x)),y0 = 1.2*max.f,
+       x1 = (min.x + .9*(max.x-min.x)),y1 = .02*max.f,angle = 10,lwd = 2,col="red",length = .15)
+text(x = min.x + .5*(max.x-min.x),y=1.24*max.f,labels =
+       expression(paste("Critical region (sum of areas = ",alpha,")",sep="")),
+     col="red")
+```
+
+
+
+```{r Illusttest2, echo=FALSE, fig.cap="Two-sided test. Under $H_0$, $S \\sim t(5)$. $\\alpha$ is the size of the test.", fig.align = 'left-aligned'}
+f <- function(x,df){
+  return(dt(x = x,df))
+}
+min.x <- -4
+max.x <- 4
+x <- seq(min.x,max.x,by=.01)
+df <- 5
+f.x <- f(x,df)
+max.f <- max(f.x)
+
+par(plt=c(.15,.95,.2,.95))
+plot(x,f.x,type="l",lwd=2,ylim=c(0,1.5*max.f),xlab="Test statistic S",
+     ylab="Density of test statistic under Ho")
+abline(h=0)
+alpha <- .05
+threshold <- qt(p = alpha/2,df)
+arrows(x0 = threshold,y0 = .6*max.f,
+       x1 = threshold,y1 = 0,
+       angle = 10,lwd = 1,col="black",length = .1,lty=1)
+text(x = threshold,y=.63*max.f,expression({Phi[S]^{-1}}(alpha/2)))
+arrows(x0 = -threshold,y0 = .6*max.f,
+       x1 = -threshold,y1 = 0,
+       angle = 10,lwd = 1,col="black",length = .1,lty=1)
+text(x = -threshold,y=.63*max.f,expression({Phi[S]^{-1}}(1-alpha/2)))
+
+text(x = min.x + .25*(max.x-min.x),y=1.45*max.f,
+     expression(paste(alpha," is the level (or size) of the test.",sep=""))
+)
+x.value <- threshold + .6
+arrows(x0 = x.value,y0 = .9*max.f,
+       x1 = x.value,y1 = 0,
+       angle = 10,length = .1,lty=1,col="blue",lwd=2)
+text(x = threshold,y=.93*max.f,"(Sample-based) Test statistics X",col="blue")
+
+threshold <- x.value
+x.critic <- seq(min.x,threshold,by=.01)
+n <- length(x.critic)
+polygon(c(x.critic,x.critic[n:1]),c(f(x.critic,df),0*x.critic),col = "#00006055")
+x.critic <- seq(-threshold,max.x,by=.01)
+polygon(c(x.critic,x.critic[n:1]),c(f(x.critic,df),0*x.critic),col = "#00006055")
+
+arrows(x0 = (min.x + .48*(max.x-min.x)),y0 = 1.2*max.f,
+       x1 = (min.x + .2*(max.x-min.x)),y1 = .04*max.f,angle = 10,lwd = 1,col="blue",length = .15)
+arrows(x0 = (min.x + .52*(max.x-min.x)),y0 = 1.2*max.f,
+       x1 = (min.x + .8*(max.x-min.x)),y1 = .04*max.f,angle = 10,lwd = 1,col="blue",length = .15)
+text(x = min.x + .5*(max.x-min.x),y=1.24*max.f,labels = "Sum of areas = p-value",
+     col="blue")
+
+text(x = min.x + .8*(max.x-min.x),y=1.45*max.f,
+     labels = expression(paste("p-value > ",alpha,", which implies",sep="")),
+     col="red")
+text(x = min.x + .8*(max.x-min.x),y=1.35*max.f,
+     labels = "that we cannot reject Ho",
+     col="red")
+```
+
+
+Figures \@ref(fig:IllusTestOneSided1) and \@ref(fig:IllusTestOneSided2) illustrate the **one-tailed**, or **one-sided** situation. These tests are typically employed when the distribution of the test statistic under the null hypothesis has a support on $\mathbb{R}^+$ (e.g., the chi-square distribution $\chi^2$, see Def. \@ref(def:chi2)). Figure \@ref(fig:IllusTestOneSided2) also illustrates the notion of p-value associated with a one-sided statistical test.
+
+```{r IllusTestOneSided1, echo=FALSE, fig.cap="One-sided test. Under $H_0$, $S \\sim \\chi^2(5)$. $\\alpha$ is the size of the test.", fig.align = 'left-aligned'}
+
+f <- function(x,df){
+  return(dchisq(x = x,df))
+}
+min.x <- 0
+max.x <- 15
+x <- seq(min.x,max.x,by=.01)
+df <- 5
+f.x <- f(x,df)
+max.f <- max(f.x)
+
+par(plt=c(.15,.95,.2,.95))
+plot(x,f.x,type="l",lwd=2,ylim=c(0,1.5*max.f),xlab="Test statistic X",
+     ylab="Density of test statistic under Ho")
+abline(h=0)
+alpha <- .05
+threshold <- qchisq(p = 1-alpha,df)
+#lines(c(threshold,threshold),c(0,f(threshold,df)),col="blue",lwd=2)
+arrows(x0 = threshold,y0 = .6*max.f,
+       x1 = threshold,y1 = 0,
+       angle = 10,lwd = 1,col="black",length = .1,lty=1)
+text(x = threshold,y=.63*max.f,expression({Phi[X]^{-1}}(1-alpha)))
+
+text(x = min.x + .25*(max.x-min.x),y=1.45*max.f,
+     expression(paste(alpha," is the level (or size) of the test.",sep="")))
+
+x.critic <- seq(threshold,max.x,by=.01)
+n <- length(x.critic)
+polygon(c(x.critic,x.critic[n:1]),c(f(x.critic,df),0*x.critic),col = "grey")
+arrows(x0 = (min.x + .82*(max.x-min.x)),y0 = 1.2*max.f,
+       x1 = (min.x + .9*(max.x-min.x)),y1 = .02*max.f,angle = 10,lwd = 2,col="red",length = .15)
+text(x = min.x + .8*(max.x-min.x),y=1.24*max.f,labels =
+       expression(paste("Critical region (area = ",alpha,")",sep="")),
+     col="red")
+
+```
+
+
+
+```{r IllusTestOneSided2, echo=FALSE, fig.cap="One-sided test. Under $H_0$, $S \\sim \\chi^2(5)$. $\\alpha$ is the size of the test.", fig.align = 'left-aligned'}
+
+f <- function(x,df){
+  return(dchisq(x = x,df))
+}
+min.x <- 0
+max.x <- 15
+x <- seq(min.x,max.x,by=.01)
+df <- 5
+f.x <- f(x,df)
+max.f <- max(f.x)
+
+par(plt=c(.15,.95,.2,.95))
+plot(x,f.x,type="l",lwd=2,ylim=c(0,1.5*max.f),xlab="Test statistic X",
+     ylab="Density of test statistic under Ho")
+abline(h=0)
+alpha <- .05
+threshold <- qchisq(p = 1-alpha,df)
+#lines(c(threshold,threshold),c(0,f(threshold,df)),col="blue",lwd=2)
+arrows(x0 = threshold,y0 = .6*max.f,
+       x1 = threshold,y1 = 0,
+       angle = 10,lwd = 1,col="black",length = .1,lty=1)
+text(x = threshold,y=.63*max.f,expression({Phi[X]^{-1}}(1-alpha)))
+
+text(x = min.x + .25*(max.x-min.x),y=1.45*max.f,
+     expression(paste(alpha," is the level (or size) of the test.",sep="")))
+
+x.value <- threshold - 2
+arrows(x0 = x.value,y0 = .9*max.f,
+       x1 = x.value,y1 = 0,
+       angle = 10,length = .1,lty=1,col="blue",lwd=2)
+text(x = threshold,y=.93*max.f,"(Sample-based) Test statistics X",col="blue")
+
+threshold <- x.value
+#lines(c(threshold,threshold),c(0,f(threshold,df)),col="blue",lwd=2)
+x.critic <- seq(threshold,max.x,by=.01)
+n <- length(x.critic)
+polygon(c(x.critic,x.critic[n:1]),c(f(x.critic,df),0*x.critic),col = "#00006055")
+
+arrows(x0 = (min.x + .5*(max.x-min.x)),y0 = 1.2*max.f,
+       x1 = (min.x + .65*(max.x-min.x)),y1 = .04*max.f,angle = 10,lwd = 1,col="blue",length = .15)
+text(x = min.x + .5*(max.x-min.x),y=1.24*max.f,labels = "Area = p-value",
+     col="blue")
+
+text(x = min.x + .8*(max.x-min.x),y=1.45*max.f,
+     labels = expression(paste("p-value > ",alpha,", which implies",sep="")),
+     col="red")
+text(x = min.x + .8*(max.x-min.x),y=1.35*max.f,
+     labels = "that we cannot reject Ho",
+     col="red")
+```
+
+
+:::{.example #Factory name="A practical illustration of size and power"}
+
+Consider a factory that produces metal cylinders whose diameter has to be equal to 1\,cm. The tolerance is $a=0.01$ cm. More precisely, more than 90\% of the pieces have to satisfy the tolerance for the whole production (say 1.000.000 pieces) to be bought by the client.
+
+The production technology is such that a proportion $\theta$ (imperfectly known) of the pieces does not satisfy the tolerance. The (population) parameter $\theta$ could be computed by measuring all the pieces but this would be costly. Instead, it is decided that $n \ll 1.000.000$ pieces will be measured. In this context, the null hypothesis $H_0$ is $\theta < 10\%$. The producing firm would like $H_0$ to be true.
+
+Let us denote by $d_i$ the binary indicator defined as:
+$$
+d_i = \left\{
+\begin{array}{cll}
+0 & \mbox{if the size of the $i^{th}$ cylinder is in $[1-a,1+a]$;}\\
+1 & \mbox{otherwise.}
+\end{array}
+\right.
+$$
+
+We set $x_n=\sum_{i=1}^n d_i$. That is, $x_n$ is the number of measured pieces that do not satisfy the tolerance (out of $n$).
+
+The decision rule is: accept $H_0$ if $\dfrac{x_n}{n} \le b$, reject otherwise. A natural choice for $b$ is $b=0.1$. However, this would not be a conservative choice, since it remains likely that $x_n<0.1$ even if $\mathbb{E}(x_n)=\theta>0.1$ (especially if $n$ is small). Hence, if one chooses $b=0.1$, the probability of false negative may be high.
+
+In this simple example, the size and the power of the test can be computed analytically. The test statistic is $S_n=\frac{x_n}{n}$ and the critical region is $\Omega = [b,1]$. The probability to reject $H_0$ is:
+\begin{eqnarray*}
+\mathbb{P}_\theta(S_n \in \Omega) = \sum_{i=b \times n+1}^{n}C_{n}^i\theta^i(1-\theta)^{n-i}.
+\end{eqnarray*}
+
+When $\theta<0.1$, the previous expression gives the size of the test, while it gives the power of the test when $\theta>0.1$. Figure \@ref(FactoryR) shows how this probability depends on $\theta$ for two sample sizes: $n=100$ (upper plot) and $n=500$ (lower plot).
+
+```{r FactoryR, echo=FALSE, fig.cap="Factory example.", fig.align = 'left-aligned'}
+size <- function(theta,N,critical){
+  aux <- rep(theta,N+1)^(0:N) * rep(1-theta,N+1)^(seq(N,0,by=-1)) * choose(N,0:N)
+  return(sum(aux[(0:N)>(critical*N)]))
+}
+
+all.N <- c(100,500)
+par(mfrow=c(length(all.N),1))
+par(plt=c(0.15,0.95,0.25,0.8))
+
+for(N in all.N){
+  theta <- .01
+  critical <- .1
+  
+  theta.vector <- seq(0,.5,by=.0025)
+  size.vector.1 <- NULL
+  size.vector.2 <- NULL
+  critical.vector <- c(.05,.1,.2)
+  all.sizes <- matrix(NaN,length(theta.vector),length(critical.vector))
+  i <- 0
+  for(theta in theta.vector){
+    i <- i + 1
+    j <- 0
+    for(critical in critical.vector){
+      j <- j + 1 
+      all.sizes[i,j] <- size(theta,N,critical)
+    }
+  }
+  
+  position.arrow.size <- .08
+  position.arrow.power <- .12
+  x.arrow.size <- which(theta.vector==position.arrow.size)
+  x.arrow.power <- which(theta.vector==position.arrow.power)
+  
+  if(N==100){
+    main.t = expression(paste("Probability to reject ",H[0],", N=100",sep=""))
+  }else{
+    main.t = expression(paste("Probability to reject ",H[0],", N=500",sep=""))
+  }
+  plot(0,0,type='l',
+       xlab=expression(paste("\"true\" ",theta,sep="")),
+       ylab="Probability",
+       main=main.t,
+       xlim=c(0,.4),ylim=c(0,1))
+  polygon(c(-1,.1,.1,-1),c(-1,-1,2,2),
+          col="#9999EE66", border = rgb(0.4,0.4,0.4))
+  lines(theta.vector,all.sizes[,1],col='black',lwd=3)
+  lines(theta.vector,all.sizes[,2],col='red',lwd=3)
+  lines(theta.vector,all.sizes[,3],col='blue',lwd=3)
+  abline(v=.1)
+  arrows(position.arrow.size,0,position.arrow.size,all.sizes[x.arrow.size,2],length=.1,
+         angle=20,lwd=2,col="red",code=3)
+  lines(c(position.arrow.size,.25),c(all.sizes[x.arrow.size,2]/2,.35),col='red')
+  text(.255,.35,"Size",pos=4,col='red')
+  arrows(position.arrow.power,0,position.arrow.power,all.sizes[x.arrow.power,2],length=.1,
+         angle=20,lwd=2,col="red",code=3)
+  lines(c(position.arrow.power,.25),c(all.sizes[x.arrow.power,2]/2,.5),col='red')
+  text(.255,.55,"Power",pos=4,col='red')
+  legend("bottomright",
+         c("b = 0.05","b = 0.10","b = 0.20"),
+         lty=c(1,1,1), # gives the legend appropriate symbols (lines)       
+         lwd=c(3,3,3), # line width
+         col=c("black","red","blue"), # gives the legend lines the correct color and width
+         #text.width = 2,
+         cex=1,# size of the text
+         pch = c(NaN,NaN,NaN)#symbols
+  )
+  text(.03,.8,"We would like")
+  text(.03,.7,"to accept Ho")
+  text(.35,.8,"We would like")
+  text(.35,.7,"to reject Ho")
+}
+```
+
+(Alternative situations can be explored by using this [web interface](https://jrenne.shinyapps.io/Factory/).)
+:::
+
+## Asymptotic properties of statistical tests
+
+In some cases, the distribution of the test statistic is known only asymptotically. For instance, it may be the case that the distribution of a given test statistic becomes normal only in large samples (e.g., related to the CLT, see Section \@ref(TCL)). The level of the test is then not know for small sample sizes, but only asymptotically, i.e., when $n$ becomes infinitely large. That defines the asymptotic level of the test:
+
+:::{.definition #asmyptlevel name="Asymptotic level"}
+An asymptotic test with critical region $\Omega_n$ has an asymptotic level equal to $\alpha$ if:
+$$
+\underset{\theta \in \Theta}{\mbox{sup}} \quad \underset{n \rightarrow \infty}{\mbox{lim}} \mathbb{P}_\theta (S_n \in \Omega_n) = \alpha.
+$$
+:::
+
+:::{.example #FactAsymptlevel name="The factory example"}
+
+Let us come back to the factory example (Example \@ref(exm:Factory)). Because $S_n =\bar{d}_n$, and since $\mathbb{E}(d_i)=\theta$ and $\mathbb{V}ar(d_i)=\theta(1-\theta)$, the CLT (Theorem \@ref(thm:LindbergLevyCLT)) leads to:
+$$
+S_n \sim \mathcal{N}\left(\theta,\frac{1}{n}\theta(1-\theta)\right) \quad or \quad \frac{\sqrt{n}(S_n-\theta)}{\sqrt{\theta(1-\theta)}} \sim \mathcal{N}(0,1).
+$$
+
+Hence, $\mathbb{P}_\theta (S_n \in \Omega_n)=\mathbb{P}_\theta (S_n > b) \approx 1-\Phi\left(\frac{\sqrt{n}(b-\theta)}{\sqrt{\theta(1-\theta)}}\right)$. Since function $\theta \rightarrow 1-\Phi\left(\frac{\sqrt{n}(b-\theta)}{\sqrt{\theta(1-\theta)}}\right)$ increases w.r.t. $\theta$, we have:
+$$
+\underset{\theta \in \Theta=[0,0.1]}{\mbox{sup}} \quad \mathbb{P}_\theta (S_n > b_n) = \mathbb{P}_{\theta=0.1} (S_n \in \Omega_n)\approx$$
+$$
+1-\Phi\left(\frac{\sqrt{n}(b_n-0.1)}{0.3}\right).
+$$
+Hence, if we set $b_n = 0.1 + 0.3\Phi^{-1}(1-\alpha)/\sqrt{n}$, we have ${\mbox{sup}}_{\theta \in \Theta=[0,0.1]} \quad \mathbb{P}_\theta (S_n > b_n) \approx \alpha$ for large values of $n$.
+:::
+
+Let us now turn to the power of the test. Although it is often difficult to compute the power of the test, it is sometimes feasible to demonstrate that the power of the test converges to one when $n$ goes to $+\infty$. In that case, if $H_0$ is false, the probability to reject it tends to be close to one in large samples.
+
+:::{.definition #asmyptconsisttest name="Asymptotically consistent test"}
+An asymptotic test with critical region $\Omega_n$ is consistent if:
+$$
+\forall \theta \in \Theta^c, \quad \mathbb{P}_\theta (S_n \in \Omega_n) \rightarrow 1.
+$$
+:::
+
+
+:::{.example #FactAsymptConsist name="The factory example"}
+
+Let us come back to the factory example (Example \@ref(exm:Factory)). We proceed under the assumption that $\theta>0.1$ and we consider $b_n = b = 0.1$. We still have:
+$$
+\mathbb{P}_\theta (S_n \in \Omega_n)=\mathbb{P}_\theta (S_n > b) \approx 1-\Phi\left(\frac{\sqrt{n}(b-\theta)}{\sqrt{\theta(1-\theta)}}\right).
+$$
+
+Because $\frac{\sqrt{n}(b-\theta)}{\sqrt{\theta(1-\theta)}} \underset{n \rightarrow \infty}{\rightarrow} -\infty$, we have
+$$
+\mathbb{P}_\theta (S_n > b) \approx 1- \underbrace{\Phi\left(\frac{\sqrt{n}(b-\theta)}{\sqrt{\theta(1-\theta)}}\right)}_{\underset{n \rightarrow \infty}{\rightarrow} 0} \underset{n \rightarrow \infty}{\rightarrow} 1.
+$$
+Therefore, with $b_n=b=0.1$, the test is consistent.
+:::
+
+
+## Example: Normality tests
+
+Because many statistical results are valid only if the underlying data is normally distributed, researchers often have tu conduct normality tests. Under the null hypothesis, the data at hand ($\bv{y}=\{y_1,\dots,y_n\}$, say) are drawn from a Gaussian distribution. A popular normality test is the Jarque-Bera test. It consists in verifying that the sample skewness and kurtosis of the $y_i$'s are consistent with those of the normal distribution. Let us first define the skewness and kurtosis of a random variable.
+
+Let $f$ be the p.d.f. of $Y$. The $k^{th}$ **standardized moment** of $Y$ is defined as:
+$$
+\psi_k = \frac{\mu_k}{\left(\sqrt{\mathbb{V}ar(Y)}\right)^k},
+$$
+where $\mathbb{E}(Y)=\mu$ and
+$$
+\mu_k = \mathbb{E}[(Y-\mu)^k]= \int_{-\infty}^{\infty} (y-\mu)^k f(y) dy
+$$
+is the $k^{th}$ **central moment** of $Y$. In particular, $\mu_2 = \mathbb{V}ar(Y)$. Therefore:
+$$
+\psi_k = \frac{\mu_k}{\left(\mu_2^{1/2}\right)^k},
+$$
+
+The **skewness** of $Y$ corresponds to $\psi_3$ and the **kurtosis** to $\psi_4$ (Def. \@ref(def:skewnesskurtosis)).
+
+:::{.proposition #normSkewKurt name="Skewness and kurtosis of the normal distribution"}
+
+For a Gaussian var., the skewness ($\psi_3$) is 0 and the kurtosis ($\psi_4$) is 3.
+:::
+:::{.proof}
+For a centered Gaussian distribution, $(-y)^3f(-y)=-y^3f(y)$. This implies that
+\begin{eqnarray*}
+\int_{-\infty}^{\infty}y^3f(y)dy&=&\int_{-\infty}^{0}y^3f(y)dy+\int_{0}^{\infty}y^3f(y)dy\\
+&=&-\int_{0}^{\infty}y^3f(y)dy+\int_{0}^{\infty}y^3f(y)dy=0,
+\end{eqnarray*}
+which leads to the skewness result.
+
+Moreover, for a Gaussian distribution, $df(y)/dy=-yf(y)$ and therefore $\frac{d}{dy}(y^3f(y))=3y^2f(y)-y^4f(y)$. Partial integration leads to the kurtosis result.
+:::
+
+Let us now introduce the sample analog of standardized moments.  The $k^{th}$ **central sample moment** of $Y$ is given by:
+$$
+m_k = \frac{1}{n}\sum_{i=1}^n(y_i - \bar{y})^k,
+$$
+and the $k^{th}$ **standardized sample moment** of $Y$ is given by:
+$$
+g_k = \frac{m_k}{m_2^{k/2}}.
+$$
+
+:::{.proposition #conssitCentralMoments name="Consistency of central sample moments"}
+
+If the $k^{th}$ central moment of $Y$, exists and if the $y_i$'s are i.i.d., then the sample central moment $m_k$ is a consistent estimate of the central moment $\mu_k$.
+:::
+
+
+:::{.proposition #Asymptg3Normal name="Asymptotic distribution of 3rd-order sample central moment of a normal distribution"}
+
+If $y_i\sim\,i.i.d.\,\mathcal{N}(\mu,\sigma^2)$, then $\sqrt{n}g_3 \overset{d}{\rightarrow} \mathcal{N}(0,6)$.
+:::
+:::{.proof}
+See, e.g. [Lehmann (1999)](http://www.springer.com/la/book/9780387985954).
+:::
+
+:::{.proposition #Asymptg4Normal name="Asymptotic distribution of 4th-order sample central moment of a normal distribution"}
+
+If $y_i\sim\,i.i.d.\,\mathcal{N}(\mu,\sigma^2)$, then $\sqrt{n}(g_4-3) \overset{d}{\rightarrow} \mathcal{N}(0,24)$.
+:::
+
+:::{.proposition #Asymptg3g4Normal name="Joint asymptotic distribution of 3rd and 4th-order sample central moments of a normal distribution"}
+
+If $y_i\sim\,i.i.d.\,\mathcal{N}(\mu,\sigma^2)$, then the vector $(\sqrt{n}g_3,\sqrt{n}(g_4-3))$ is asymptotically bivariate Gaussian. Further its elements are uncorrelated and therefore independent.
+:::
+
+The Jarque-Bera statistic is defined by:
+$$
+JB = n \left( \frac{g_3^2}{6}+\frac{(g_4-3)^2}{24} \right) = \frac{n}{6}\left(g_3^2 + \frac{(g_4-3)^2}{4}\right).
+$$
+
+:::{.proposition #JB name="Jarque-Bera asympt. distri."}
+
+If $y_i\sim\,i.i.d.\,\mathcal{N}(\mu,\sigma^2)$, $JB \overset{d}{\rightarrow} \chi^2(2)$.
+:::
+:::{.proof}
+This directly derives from Proposition \@ref(prp:Asymptg3g4Normal).
+:::
+
+
+:::{.example #JB name="Consistency of the Jarque-Bera normality test"}
+
+This example illustrates the consistency of the JB test (see Def. \@ref(def:asmyptconsisttest)).
+
+For each row of matrix `x`, the function `JB` (defined below) computes the Jarque-Bera test statistic. (That is, each row is considered as a given sample.)
+
+```{r JBTest1}
+JB <- function(x){
+  N <- dim(x)[1] # number of samples
+  n <- dim(x)[2] # sample size
+  x.bar <- apply(x,1,mean)
+  x.x.bar <- x - matrix(x.bar,N,n)
+  m.2 <- apply(x.x.bar,1,function(x){mean(x^2)})
+  m.3 <- apply(x.x.bar,1,function(x){mean(x^3)})
+  m.4 <- apply(x.x.bar,1,function(x){mean(x^4)})
+  g.3 <- m.3/m.2^(3/2)
+  g.4 <- m.4/m.2^(4/2)
+  return(n*(g.3^2/6 + (g.4-3)^2/24))
+}
+```
+
+
+Let us first consider the case where $H_0$ is satisfied. Figure \@ref(fig:JBTest2) displays, for different sample sizes $n$, the distribution of the JB statistics when the $y_i$'s are normal, consistently with $H_0$. It appears that when $n$ grows, the distribution indeed converges to the $\chi^2(2)$ distribution (as stated by Proposition \@ref(prp:JB)).
+
+```{r JBTest2, fig.cap="Distribution of the JB test statistic under $H_0$ (normality).", fig.align = 'left-aligned'}
+all.n <- c(5,10,20,100)
+nb.sim <- 10000
+y <- matrix(rnorm(nb.sim*max(all.n)),nb.sim,max(all.n))
+
+par(mfrow=c(2,2));par(plt=c(.1,.95,.15,.8))
+for(i in 1:length(all.n)){
+  n <- all.n[i]
+  hist(JB(y[,1:n]),nclass = 200,freq = FALSE,
+       main=paste("n = ",toString(n),sep=""),xlim=c(0,10))
+  xx <- seq(0,10,by=.01)
+  lines(xx,dchisq(xx,df = 2),col="red")
+}
+```
+
+Now, replace `rnorm` with `runif`. The $y_i$'s are then drawn from a uniform distribution. $H_0$ is not satisfied. Figure \@ref(fig:JBTest3) then shows that, when $n$ grows, the distributions of the JB statistic shift to the right. This results in the consistency of the JB test (see Def. \@ref(def:asmyptconsisttest)).
+
+```{r JBTest3, fig.cap="Distribution of the JB test statistic when the $y_i$'s are drawn from a uniform distribution (hence $H_0$ is not satisfied).", fig.align = 'left-aligned',echo=FALSE}
+y <- matrix(runif(nb.sim*max(all.n)),nb.sim,max(all.n))
+par(mfrow=c(2,2));par(plt=c(.1,.95,.15,.8))
+for(i in 1:length(all.n)){
+  n <- all.n[i]
+  hist(JB(y[,1:n]),nclass = 200,freq = FALSE,
+       main=paste("n = ",toString(n),sep=""),xlim=c(0,10))
+  xx <- seq(0,10,by=.01)
+  lines(xx,dchisq(xx,df = 2),col="red")
+}
+```
+
+:::
+

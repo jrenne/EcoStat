@@ -1,0 +1,10 @@
+h1:Tests Statistical tests
+h2:size-and-power-of-a-test Size and power of a test
+h2:the-different-types-of-statistical-tests The different types of statistical tests
+fig:Illusttest1 Two-sided test. Under $H_0$, $S \\sim t(5)$. $\\alpha$ is the size of the test.
+fig:Illusttest2 Two-sided test. Under $H_0$, $S \\sim t(5)$. $\\alpha$ is the size of the test.
+fig:IllusTestOneSided1 One-sided test. Under $H_0$, $S \\sim \\chi^2(5)$. $\\alpha$ is the size of the test.
+fig:IllusTestOneSided2 One-sided test. Under $H_0$, $S \\sim \\chi^2(5)$. $\\alpha$ is the size of the test.
+h2:asymptotic-properties-of-statistical-tests Asymptotic properties of statistical tests
+h2:example-normality-tests Example: Normality tests
+
