@@ -438,10 +438,10 @@ That is, $\hat\theta$ is a consistent estimator if $\hat\theta_n$ *converges in 
 
 Assume that $X_i \sim i.i.d. \mbox{Cauchy}$ with a location parameter of 1 and a scale parameter of 1 (Def. \@ref(def:Cauchy)). The sample mean $\bar{X}_n = \frac{1}{n}\sum_{i=1}^{n} X_i$ does not converge in probability. This is because a Cauchy distribution has no mean; hence the law of large numbers (Theorem \@ref(thm:LLN)) does not apply.
 
-```{r figCauchy, fig.cap="Simulation of $\\bar{X}_n$ when $X_i \\sim i.i.d. \\mbox{Cauchy}$.", fig.asp = .6, out.width = "95%", fig.align = "left-aligned",echo=FALSE,warning=FALSE}
-max.n <- 5000
-X <- rcauchy(max.n)
-X.bar <- cumsum(X)/(1:max.n)
+```{r figCauchy, fig.cap="Simulation of $\\bar{X}_n$ when $X_i \\sim i.i.d. \\mbox{Cauchy}$.", fig.asp = .6, out.width = "95%", fig.align = "left-aligned",warning=FALSE}
+N <- 5000
+X <- rcauchy(N)
+X.bar <- cumsum(X)/(1:N)
 par(plt=c(.1,.95,.3,.85),mfrow=c(1,2))
 plot(X,type="l",xlab="sample size (n)",
      ylab="",main=expression(X[n]),lwd=2)

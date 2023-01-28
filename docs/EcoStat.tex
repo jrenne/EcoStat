@@ -433,6 +433,20 @@ That is, \(\hat\theta\) is a consistent estimator if \(\hat\theta_n\) \emph{conv
 
 Assume that \(X_i \sim i.i.d. \mbox{Cauchy}\) with a location parameter of 1 and a scale parameter of 1 (Def. \ref{def:Cauchy}). The sample mean \(\bar{X}_n = \frac{1}{n}\sum_{i=1}^{n} X_i\) does not converge in probability. This is because a Cauchy distribution has no mean; hence the law of large numbers (Theorem \ref{thm:LLN}) does not apply.
 
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{N }\OtherTok{\textless{}{-}} \DecValTok{5000}
+\NormalTok{X }\OtherTok{\textless{}{-}} \FunctionTok{rcauchy}\NormalTok{(N)}
+\NormalTok{X.bar }\OtherTok{\textless{}{-}} \FunctionTok{cumsum}\NormalTok{(X)}\SpecialCharTok{/}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\NormalTok{N)}
+\FunctionTok{par}\NormalTok{(}\AttributeTok{plt=}\FunctionTok{c}\NormalTok{(.}\DecValTok{1}\NormalTok{,.}\DecValTok{95}\NormalTok{,.}\DecValTok{3}\NormalTok{,.}\DecValTok{85}\NormalTok{),}\AttributeTok{mfrow=}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{))}
+\FunctionTok{plot}\NormalTok{(X,}\AttributeTok{type=}\StringTok{"l"}\NormalTok{,}\AttributeTok{xlab=}\StringTok{"sample size (n)"}\NormalTok{,}
+     \AttributeTok{ylab=}\StringTok{""}\NormalTok{,}\AttributeTok{main=}\FunctionTok{expression}\NormalTok{(X[n]),}\AttributeTok{lwd=}\DecValTok{2}\NormalTok{)}
+\FunctionTok{plot}\NormalTok{(X.bar,}\AttributeTok{type=}\StringTok{"l"}\NormalTok{,}\AttributeTok{xlab=}\StringTok{"sample size (n)"}\NormalTok{,}
+     \AttributeTok{ylab=}\StringTok{""}\NormalTok{,}\AttributeTok{main=}\FunctionTok{expression}\NormalTok{(}\FunctionTok{bar}\NormalTok{(X)[n]),}\AttributeTok{lwd=}\DecValTok{2}\NormalTok{)}
+\FunctionTok{abline}\NormalTok{(}\AttributeTok{h=}\DecValTok{0}\NormalTok{,}\AttributeTok{lty=}\DecValTok{2}\NormalTok{,}\AttributeTok{col=}\StringTok{"grey"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
 \begin{figure}
 \includegraphics[width=0.95\linewidth]{EcoStat_files/figure-latex/figCauchy-1} \caption{Simulation of $\bar{X}_n$ when $X_i \sim i.i.d. \mbox{Cauchy}$.}\label{fig:figCauchy}
 \end{figure}
@@ -5771,7 +5785,7 @@ S^{NW}=\hat\gamma_0 + 2 \sum_{\nu=1}^{q}\left(1-\frac{\nu}{q+1}\right) \hat\gamm
 
 Loosely speaking, Theorem \ref{thm:CLTcovstat} says that, for a given sample size, the higher the ``persistency'' of a process, the lower the accuracy of the sample mean as an estimate of the population mean. To illustrate, consider three processes that feature the same marginal variance (equal to one, say), but different autocorrelations: 0\%, 70\%, and 99.9\%. Figure \ref{fig:TVTCL} displays simulated paths of such three processes. It indeed appears that, the larger the autocorrelation of the process, the further the sample mean (dashed red line) from the population mean (red solid line).
 
-The same type of simulations can be performed using \href{https://jrenne.shinyapps.io/MacroEc/}{this ShinyApp} (use panel ``AR(1)'').
+The same type of simulations can be performed using \href{https://jrenne.shinyapps.io/MacroEc/}{this ShinyApp} (use panel ``AR(1) Simulation'').
 
 \begin{figure}
 \includegraphics[width=1\linewidth]{EcoStat_files/figure-latex/TVTCL-1} \caption{The three samples have been simulated using the following data generating process: $x_t = \mu + \rho (x_{t-1}-\mu) + \sqrt{1-\rho^2}\varepsilon_t$, where $\varepsilon_t \sim \mathcal{N}(0,1)$. Case A: $\rho = 0$;  Case B: $\rho = 0.7$;  Case C: $\rho = 0.999$. In the three cases, $\mathbb{E}(x_t)=\mu=2$ and $\mathbb{V}ar(x_t)=1$.}\label{fig:TVTCL}
@@ -5936,6 +5950,8 @@ The absolute summability of \(\{\theta_{i}\}\) and the fact that \(\mathbb{E}(\v
 y_t = c + \phi y_{t-1} + \varepsilon_t.
 \]
 \end{definition}
+
+That kind of process can be simulated by using panel ``AR(1) Simulation'' of \href{https://jrenne.shinyapps.io/MacroEc/}{this web interface}.
 
 If \(|\phi|\ge1\), \(y_t\) is not stationary. Indeed, we have:
 \[

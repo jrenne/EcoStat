@@ -109,7 +109,7 @@ This sample mean is an estimator of the true (population) mean <span class="math
 <div class="example">
 <p><span id="exm:doctorVisits" class="example"><strong>Example 2.1  </strong></span>Suppose one is interested in the average number of doctor consultations over 12 months, for Swiss people. One can get an estimate by computing the sample average of a large dataset, for instance using the <a href="https://forscenter.ch/projects/swiss-household-panel/">Swiss Household Panel (SHP)</a>:</p>
 <p>Figure <a href="TCL.html#fig:incomeDistri">2.1</a> shows the empirical distribution of the number of doctor visits.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">AEC</span><span class="op">)</span> <span class="co"># to load the shp data-frame.</span></span>
 <span><span class="va">Nb.doct.visits</span> <span class="op">&lt;-</span> <span class="va">shp</span><span class="op">$</span><span class="va">p19c15</span></span>
 <span><span class="va">Nb.doct.visits</span> <span class="op">&lt;-</span> <span class="va">Nb.doct.visits</span><span class="op">[</span><span class="va">Nb.doct.visits</span><span class="op">&gt;=</span><span class="fl">0</span><span class="op">]</span> <span class="co"># remove irrelevant observations</span></span>
@@ -121,12 +121,12 @@ This sample mean is an estimator of the true (population) mean <span class="math
 Figure 2.1: Distribution of the number of doctor visits. Source: Swiss Household Panel.
 </p>
 </div>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">Nb.doct.visits</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/stats/cor.html">var</a></span><span class="op">(</span><span class="va">Nb.doct.visits</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##          [,1]     [,2]
 ## [1,] 5.253816 79.50575</code></pre>
 <p>Let us compute the sample mean and variance:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">Nb.doct.visits</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/stats/cor.html">var</a></span><span class="op">(</span><span class="va">Nb.doct.visits</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##          [,1]     [,2]
 ## [1,] 5.253816 79.50575</code></pre>
@@ -198,7 +198,7 @@ This can be used to test the null hypothesis <span class="math inline">\(H_0: \;
 <div class="example">
 <p><span id="exm:comparSmplMeans" class="example"><strong>Example 2.2  (Comparison of sample means) </strong></span>Let us use the <a href="https://forscenter.ch/projects/swiss-household-panel/">Swiss Household Panel (SHP)</a> dataset to test the equality between men and women incomes, for Swiss people under the age of 35.</p>
 <p>The next lines of codes construct two samples of incomes; one for men (<code>income.m</code>), and one for women (<code>income.w</code>).</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">AEC</span><span class="op">)</span>;<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">logKDE</span><span class="op">)</span></span>
 <span><span class="va">dataset.m</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html">subset</a></span><span class="op">(</span><span class="va">shp</span>,<span class="op">(</span><span class="va">sex19</span><span class="op">==</span><span class="fl">1</span><span class="op">)</span><span class="op">&amp;</span><span class="op">(</span><span class="va">age19</span><span class="op">&lt;=</span><span class="fl">35</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">dataset.w</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html">subset</a></span><span class="op">(</span><span class="va">shp</span>,<span class="op">(</span><span class="va">sex19</span><span class="op">==</span><span class="fl">2</span><span class="op">)</span><span class="op">&amp;</span><span class="op">(</span><span class="va">age19</span><span class="op">&lt;=</span><span class="fl">35</span><span class="op">)</span><span class="op">)</span></span>
@@ -207,7 +207,7 @@ This can be used to test the null hypothesis <span class="math inline">\(H_0: \;
 <span><span class="va">income.m</span> <span class="op">&lt;-</span> <span class="va">income.m</span><span class="op">[</span><span class="va">income.m</span><span class="op">&gt;=</span><span class="fl">0</span><span class="op">]</span> <span class="co"># remove irrelevant data</span></span>
 <span><span class="va">income.w</span> <span class="op">&lt;-</span> <span class="va">income.w</span><span class="op">[</span><span class="va">income.w</span><span class="op">&gt;=</span><span class="fl">0</span><span class="op">]</span> <span class="co"># remove irrelevant data</span></span></code></pre></div>
 <p>Figure <a href="TCL.html#fig:RcompMeans">2.2</a> displays the empirical densities of incomes for men and women. Vertical dashed lines indicate sample means:</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>plt<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">.1</span>,<span class="fl">.95</span>,<span class="fl">.2</span>,<span class="fl">.95</span><span class="op">)</span><span class="op">)</span> <span class="co"># adjust margins</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/logKDE/man/logdensity.html">logdensity</a></span><span class="op">(</span><span class="va">income.w</span><span class="op">)</span>,lwd<span class="op">=</span><span class="fl">2</span>,xlim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">200000</span><span class="op">)</span>,main<span class="op">=</span><span class="st">""</span>,</span>
 <span>     xlab<span class="op">=</span><span class="st">"Yearly gross income (in CHF)"</span>,ylab<span class="op">=</span><span class="st">""</span><span class="op">)</span> <span class="co"># x and y labels</span></span>
@@ -222,7 +222,7 @@ Figure 2.2: Distribution of yearly gross incomes for Swiss residents under the a
 </p>
 </div>
 <p>Let us compute <span class="math inline">\(\bar{m}\)</span>, <span class="math inline">\(\bar{w}\)</span>, and <span class="math inline">\(\sigma\)</span>:</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">m.bar</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">income.m</span><span class="op">)</span></span>
 <span><span class="va">w.bar</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">income.w</span><span class="op">)</span></span>
 <span><span class="va">sigma</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html">var</a></span><span class="op">(</span><span class="va">income.m</span><span class="op">)</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">income.m</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/stats/cor.html">var</a></span><span class="op">(</span><span class="va">income.w</span><span class="op">)</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">income.w</span><span class="op">)</span><span class="op">)</span></span>
