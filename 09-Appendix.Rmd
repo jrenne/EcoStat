@@ -9,7 +9,7 @@
 
 Suppose that we have $T$ observations of a $n$-dimensional random vector $x$, denoted by $x_{1},x_{2},\ldots,x_{T}$. We suppose that each component of $x$ is of mean zero.
 
-Let denote with $X$ the matrix given by $\left[\begin{array}{cccc}
+Denote with $X$ the matrix given by $\left[\begin{array}{cccc}
 x_{1} & x_{2} & \ldots & x_{T}\end{array}\right]'$. Denote the $j^{th}$ column of $X$ by $X_{j}$.
 
 We want to find the linear combination of the $x_{i}$'s ($x.u$), with $\left\Vert u\right\Vert =1$, with "maximum variance." That is, we want to solve:
@@ -1005,98 +1005,7 @@ $$
 which leads to the result.
 :::
 
-**Proof of Proposition \@ref(prp:OLSVAR)**
 
-:::{.proof}
-Let us drop the $i$ subscript. Rearranging Eq. \@ref(eq:olsar1), we have:
-$$
-\sqrt{T}(\bv{b}-\boldsymbol{\beta}) =  (X'X/T)^{-1}\sqrt{T}(X'\boldsymbol\varepsilon/T).
-$$
-Let us consider the autocovariances of $\bv{v}_t = x_t \varepsilon_t$, denoted by $\gamma^v_j$. Using the fact that $x_t$ is a linear combination of past $\varepsilon_t$s and that $\varepsilon_t$ is a white noise, we get that $\mathbb{E}(\varepsilon_t x_t)=0$. Therefore
-$$
-\gamma^v_j = \mathbb{E}(\varepsilon_t\varepsilon_{t-j}x_tx_{t-j}').
-$$
-If $j>0$, we have $\mathbb{E}(\varepsilon_t\varepsilon_{t-j}x_tx_{t-j}')=\mathbb{E}(\mathbb{E}[\varepsilon_t\varepsilon_{t-j}x_tx_{t-j}'|\varepsilon_{t-j},x_t,x_{t-j}])=$ $\mathbb{E}(\varepsilon_{t-j}x_tx_{t-j}'\mathbb{E}[\varepsilon_t|\varepsilon_{t-j},x_t,x_{t-j}])=0$. Note that we have $\mathbb{E}[\varepsilon_t|\varepsilon_{t-j},x_t,x_{t-j}]=0$ because $\{\varepsilon_t\}$ is an i.i.d. white noise sequence. If $j=0$, we have:
-$$
-\gamma^v_0 = \mathbb{E}(\varepsilon_t^2x_tx_{t}')= \mathbb{E}(\varepsilon_t^2) \mathbb{E}(x_tx_{t}')=\sigma^2\bv{Q}.
-$$
-The convergence in distribution of $\sqrt{T}(X'\boldsymbol\varepsilon/T)=\sqrt{T}\frac{1}{T}\sum_{t=1}^Tv_t$ results from the Central Limit Theorem for covariance-stationary processes, using the $\gamma_j^v$ computed above.
-:::
-
-
-## Additional codes
-
-### Simulating GEV distributions {#App:GEV}
-
-The following lines of code have been used to generate Figure \@ref(fig:GEV).
-
-```{r #GEV, eval=FALSE}
-n.sim <- 4000
-par(mfrow=c(1,3),
-    plt=c(.2,.95,.2,.85))
-all.rhos <- c(.3,.6,.95)
-for(j in 1:length(all.rhos)){
-  theta <- 1/all.rhos[j]
-  v1 <- runif(n.sim)
-  v2 <- runif(n.sim)
-  w <- rep(.000001,n.sim)
-  # solve for f(w) = w*(1 - log(w)/theta) - v2 = 0
-  for(i in 1:20){
-    f.i <- w * (1 - log(w)/theta) - v2
-    f.prime <- 1 - log(w)/theta - 1/theta
-    w <- w - f.i/f.prime
-  }
-  u1 <- exp(v1^(1/theta) * log(w))
-  u2 <- exp((1-v1)^(1/theta) * log(w))
-
-  # Get eps1 and eps2 using the inverse of
-  # the Gumbel distribution's cdf:
-  eps1 <- -log(-log(u1))
-  eps2 <- -log(-log(u2))
-  cbind(cor(eps1,eps2),1-all.rhos[j]^2)
-  plot(eps1,eps2,pch=19,col="#FF000044",
-       main=paste("rho = ",toString(all.rhos[j]),sep=""),
-       xlab=expression(epsilon[1]),
-       ylab=expression(epsilon[2]),
-       cex.lab=2,cex.main=1.5)
-}
-```
-
-
-### Computing the covariance matrix of IRF using the delta method {#IRFDELTA}
-
-```{r #IRFDELTA, eval=FALSE}
-irf.function <- function(THETA){
-  c <- THETA[1]
-  phi <- THETA[2:(p+1)]
-  if(q>0){
-    theta <- c(1,THETA[(1+p+1):(1+p+q)])
-  }else{
-    theta <- 1
-  }
-  sigma <- THETA[1+p+q+1]
-  r <- dim(Matrix.of.Exog)[2] - 1
-  beta <- THETA[(1+p+q+1+1):(1+p+q+1+(r+1))]
-  
-  irf <- sim.arma(0,phi,beta,sigma=sd(Ramey$ED3_TC,na.rm=TRUE),T=60,
-                  y.0=rep(0,length(x$phi)),nb.sim=1,make.IRF=1,
-                  X=NaN,beta=NaN)
-  return(irf)
-}
-
-IRF.0 <- 100*irf.function(x$THETA)
-eps <- .00000001
-d.IRF <- NULL
-for(i in 1:length(x$THETA)){
-  THETA.i <- x$THETA
-  THETA.i[i] <- THETA.i[i] + eps
-  IRF.i <- 100*irf.function(THETA.i)
-  d.IRF <- cbind(d.IRF,
-                 (IRF.i - IRF.0)/eps
-                 )
-}
-mat.var.cov.IRF <- d.IRF %*% x$I %*% t(d.IRF)
-```
 
 ## Statistical Tables
 

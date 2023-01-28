@@ -72,7 +72,7 @@
 <li><a class="" href="ChapterLS.html"><span class="header-section-number">4</span> Linear Regressions</a></li>
 <li><a class="active" href="Panel.html"><span class="header-section-number">5</span> Panel regressions</a></li>
 <li><a class="" href="estimation-methods.html"><span class="header-section-number">6</span> Estimation Methods</a></li>
-<li><a class="" href="microeconometrics.html"><span class="header-section-number">7</span> Microeconometrics</a></li>
+<li><a class="" href="binary-choice-models.html"><span class="header-section-number">7</span> Binary-choice models</a></li>
 <li><a class="" href="TS.html"><span class="header-section-number">8</span> Time Series</a></li>
 <li><a class="" href="append.html"><span class="header-section-number">9</span> Appendix</a></li>
 <li><a class="" href="references.html">References</a></li>
@@ -754,7 +754,7 @@ which correlates to the corresponding error, that is:
 <span class="math display">\[
 \tilde{\varepsilon}_{i,t} = \varepsilon_{i,t} - \frac{1}{T} \sum_{s=1}^{T} \varepsilon_{i,s}.
 \]</span></p>
-<p>The previous equation shows that the <em>within-group</em> estimator (LSDV) introduces all realizations of the <span class="math inline">\(\varepsilon_{i,t}\)</span> errors into the transformed error term (<span class="math inline">\(\tilde{\varepsilon}_{i,t}\)</span>). As a result, in large-<span class="math inline">\(n\)</span> fixed-<span class="math inline">\(T\)</span> panels, it is consistent only if all the right-hand-side variables of the regression are strictly exogenous (i.e., do not correlate to past, present, and future errors <span class="math inline">\(\varepsilon_{i,t}\)</span>).<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;Although the bias may vanish for large &lt;span class="math inline"&gt;\(T\)&lt;/span&gt;’s, it does not if &lt;span class="math inline"&gt;\(n\)&lt;/span&gt; only goes to infinity.&lt;/p&gt;'><sup>9</sup></a> This is not the case when there are lags of <span class="math inline">\(y_{i,t}\)</span> on the right-hand side of the regression formula.</p>
+<p>The previous equation shows that the <em>within-group</em> estimator (LSDV) introduces all realizations of the <span class="math inline">\(\varepsilon_{i,t}\)</span> errors into the transformed error term (<span class="math inline">\(\tilde{\varepsilon}_{i,t}\)</span>). As a result, in large-<span class="math inline">\(n\)</span> fixed-<span class="math inline">\(T\)</span> panels, it is consistent only if all the right-hand-side variables of the regression are strictly exogenous (i.e., do not correlate to past, present, and future errors <span class="math inline">\(\varepsilon_{i,t}\)</span>).<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;Although the bias may vanish for large &lt;span class="math inline"&gt;\(T\)&lt;/span&gt;’s, it does not if &lt;span class="math inline"&gt;\(n\)&lt;/span&gt; only goes to infinity.&lt;/p&gt;'><sup>10</sup></a> This is not the case when there are lags of <span class="math inline">\(y_{i,t}\)</span> on the right-hand side of the regression formula.</p>
 <p>The following simulation illustrate this bias. The <span class="math inline">\(x\)</span>-coordinates of the dots are the fixed effects <span class="math inline">\(\alpha_i\)</span>’s, and the <span class="math inline">\(y\)</span>-coordinates are their LSDV estimates. The blue line is the 45-degree line.</p>
 <div class="sourceCode" id="cb73"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">n</span> <span class="op">&lt;-</span> <span class="fl">400</span>;<span class="cn">T</span> <span class="op">&lt;-</span> <span class="fl">10</span></span>
@@ -808,7 +808,7 @@ Z_i = \left[
 \end{array}
 \right],
 \]</span>
-where <span class="math inline">\(\mathbf{z}_{i,t} = [y_{i,t},\mathbf{x}_{i,t}']'\)</span>, we have the moment conditions:<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;If &lt;span class=&quot;math inline&quot;&gt;\(\mathbf{x}_{i,t}\)&lt;/span&gt; is predetermined (exogenous), we can use &lt;span class=&quot;math inline&quot;&gt;\(\mathbf{z}_{i,t} = [y_{i,t},\mathbf{x}_{i,t+1},\mathbf{x}_{i,t}']'\)&lt;/span&gt; (respectively &lt;span class=&quot;math inline&quot;&gt;\(\mathbf{z}_{i,t} = [y_{i,t},\mathbf{x}_{i,t+2},\mathbf{x}_{i,t+1},\mathbf{x}_{i,t}']'\)&lt;/span&gt;).&lt;/p&gt;"><sup>10</sup></a>
+where <span class="math inline">\(\mathbf{z}_{i,t} = [y_{i,t},\mathbf{x}_{i,t}']'\)</span>, we have the moment conditions:<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;If &lt;span class=&quot;math inline&quot;&gt;\(\mathbf{x}_{i,t}\)&lt;/span&gt; is predetermined (exogenous), we can use &lt;span class=&quot;math inline&quot;&gt;\(\mathbf{z}_{i,t} = [y_{i,t},\mathbf{x}_{i,t+1},\mathbf{x}_{i,t}']'\)&lt;/span&gt; (respectively &lt;span class=&quot;math inline&quot;&gt;\(\mathbf{z}_{i,t} = [y_{i,t},\mathbf{x}_{i,t+2},\mathbf{x}_{i,t+1},\mathbf{x}_{i,t}']'\)&lt;/span&gt;).&lt;/p&gt;"><sup>11</sup></a>
 <span class="math display">\[
 \mathbb{E}(Z_i'\Delta  {\boldsymbol\varepsilon}_i)=0,
 \]</span></p>
@@ -1124,7 +1124,7 @@ Figure 5.7: Source: Meyer et al., (1995).
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Econometrics and Statistics</strong>" was written by Jean-Paul Renne. It was last built on 2023-01-14.</p>
+    <p>"<strong>Econometrics and Statistics</strong>" was written by Jean-Paul Renne. It was last built on 2023-01-28.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

@@ -155,7 +155,7 @@ $$
 f(\bv{b}) = (\bv{y} - \bv{X}\bv{b})'(\bv{y} - \bv{X}\bv{b}).
 $$
 
-Since (see Def. \@ref(def:FOC) and Proposition \@ref(prp:partial)):
+Since:^[see Proposition \@ref(prp:partial).]
 $$
 \frac{\partial f}{\partial \bv{b}}(\bv{b}) = - 2 \bv{X}'\bv{y} + 2 \bv{X}'\bv{X}\bv{b},
 $$

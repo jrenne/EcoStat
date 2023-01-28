@@ -21,11 +21,12 @@ css: "my-style.css"
 
 <!-- # Before starting {#intro .unlisted .unnumbered} -->
 
-This course covers various econometric topics, including linear regression models, discrete-choice models, and time series analysis. It provides examples or simulations based on R codes.
+This course covers various econometric topics, including linear regression models, discrete-choice models, and an introduction to time series analysis. It provides examples or simulations based on R codes. This course has been developed by [Jean-Paul Renne](https://sites.google.com/site/jeanpaulrenne/home).
 
-The R codes use various packages that can be obtained from [CRAN](https://cran.r-project.org). Several pieces of code also involve procedures and data from a companion package (`AEC`). Some of these procedures ---those pertaining to VAR models--- as well as the associated presentation (in Section \@ref(VAR)) have been prepared jointly with [Kenza Benhima](https://sites.google.com/site/benhimakenza/). This `AEC` package is available on GitHub. To install it, one need to employ the `devtools` library:
+The R codes use various packages that can be obtained from [CRAN](https://cran.r-project.org). Several pieces of code also involve procedures and data from a companion package (`AEC`). This `AEC` package is available on GitHub. To install it, one need to employ the `devtools` library:
 
 ```{r installAEC, eval=FALSE}
+install.packages("devtools") # This library allows to use "install_github".
 library(devtools)
 install_github("jrenne/AEC")
 library(AEC)
@@ -45,25 +46,7 @@ library(AEC)
     * My own tutorial: https://jrenne.shinyapps.io/Rtuto_publiShiny/
 
 
-<!-- <!-- To specify the corresponding covariance matrix vcov. to be used, there are three possibilities: 1. It is pre-computed and supplied in argument vcov.. 2. A function for extracting the covariance matrix from x is supplied, e.g., sandwich, vcovHC, vcovCL, or vcovHAC from package sandwich.  -->
-<!-- ```{r shp2,warning=FALSE,message=FALSE} -->
-<!-- library(AEC) -->
-<!-- library(sandwich) -->
-<!-- shp$income <- shp$i19ptotn/1000 -->
-<!-- shp$female <- 1*(shp$sex19==2) -->
-<!-- eq <- lm(income ~ edyear19 + age19 + I(age19^2) + female,data=shp) -->
-<!-- #eq <- lm(income ~ edyear19 + age19 + I(age19^2) + female + I(female*ownkid19*(age19<40)),data=shp) -->
-<!-- #lmtest::coeftest(eq,vcov. = sandwich) -->
-<!-- #lmtest::coeftest(eq,vcov. = vcovHC) -->
-<!-- #X <- cbind(1,shp$edyear19,shp$age19,shp$age19^2,shp$female) -->
-<!-- #solve(t(X) %*% X) %*% t(X) %*% diag(eq$residuals^2) %*% X %*% solve(t(X) %*% X) -->
-<!-- #vcovHC(eq,type="HC0") -->
-<!-- #sandwich(eq) -->
-<!-- #vcovHC(eq,type="HC1") -->
-<!-- ``` -->
-<!-- XXXX HC0, HC1... Davidson MacKinnon 2004 Section 5.5 XXXX -->
 
-<!-- **p.d.f. version**: [here](https://www.dropbox.com/s/td4bqpbzfuvwsev/ApplEcts.pdf?dl=0). -->
 
 
 

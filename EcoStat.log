@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999994 (TeX Live 2022) (preloaded format=xelatex 2023.1.3)  14 JAN 2023 17:57
+This is XeTeX, Version 3.141592653-2.6-0.999994 (TeX Live 2022) (preloaded format=xelatex 2023.1.3)  28 JAN 2023 16:35
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -291,12 +291,40 @@ Package graphics Info: Driver file: xetex.def on input line 107.
 )
 \Gin@req@height=\dimen176
 \Gin@req@width=\dimen177
+) (/Users/jrenne/Library/TinyTeX/texmf-dist/tex/latex/amscls/amsthm.sty
+Package: amsthm 2020/05/29 v2.20.6
+\thm@style=\toks24
+\thm@bodyfont=\toks25
+\thm@headfont=\toks26
+\thm@notefont=\toks27
+\thm@headpunct=\toks28
+\thm@preskip=\skip63
+\thm@postskip=\skip64
+\thm@headsep=\skip65
+\dth@everypar=\toks29
+) (/Users/jrenne/Library/TinyTeX/texmf-dist/tex/latex/geometry/geometry.sty
+Package: geometry 2020/01/02 v5.9 Page Geometry
+(/Users/jrenne/Library/TinyTeX/texmf-dist/tex/generic/iftex/ifvtex.sty
+Package: ifvtex 2019/10/25 v1.7 ifvtex legacy package. Use iftex instead.
+)
+\Gm@cnth=\count302
+\Gm@cntv=\count303
+\c@Gm@tempcnt=\count304
+\Gm@bindingoffset=\dimen178
+\Gm@wd@mp=\dimen179
+\Gm@odd@mp=\dimen180
+\Gm@even@mp=\dimen181
+\Gm@layoutwidth=\dimen182
+\Gm@layoutheight=\dimen183
+\Gm@layouthoffset=\dimen184
+\Gm@layoutvoffset=\dimen185
+\Gm@dimlist=\toks30
 ) (/Users/jrenne/Library/TinyTeX/texmf-dist/tex/latex/natbib/natbib.sty
 Package: natbib 2010/09/13 8.31b (PWD, AO)
-\bibhang=\skip63
-\bibsep=\skip64
+\bibhang=\skip66
+\bibsep=\skip67
 LaTeX Info: Redefining \cite on input line 694.
-\c@NAT@ctr=\count302
+\c@NAT@ctr=\count305
 ) (/Users/jrenne/Library/TinyTeX/texmf-dist/tex/latex/hyperref/hyperref.sty
 Package: hyperref 2022-11-13 v7.00u Hypertext links for LaTeX
 (/Users/jrenne/Library/TinyTeX/texmf-dist/tex/generic/ltxcmds/ltxcmds.sty
@@ -330,11 +358,11 @@ Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 (/Users/jrenne/Library/TinyTeX/texmf-dist/tex/latex/kvoptions/kvoptions.sty
 Package: kvoptions 2022-06-15 v3.15 Key value format for package options (HO)
 ))
-\c@section@level=\count303
+\c@section@level=\count306
 )
-\@linkdim=\dimen178
-\Hy@linkcounter=\count304
-\Hy@pagecounter=\count305
+\@linkdim=\dimen186
+\Hy@linkcounter=\count307
+\Hy@pagecounter=\count308
 (/Users/jrenne/Library/TinyTeX/texmf-dist/tex/latex/hyperref/pd1enc.def
 File: pd1enc.def 2022-11-13 v7.00u Hyperref: PDFDocEncoding definition (HO)
 ) (/Users/jrenne/Library/TinyTeX/texmf-dist/tex/generic/intcalc/intcalc.sty
@@ -342,7 +370,7 @@ Package: intcalc 2019/12/15 v1.3 Expandable calculations with integers (HO)
 ) (/Users/jrenne/Library/TinyTeX/texmf-dist/tex/generic/etexcmds/etexcmds.sty
 Package: etexcmds 2019/12/15 v1.7 Avoid name clashes with e-TeX commands (HO)
 )
-\Hy@SavedSpaceFactor=\count306
+\Hy@SavedSpaceFactor=\count309
 (/Users/jrenne/Library/TinyTeX/texmf-dist/tex/latex/hyperref/puenc.def
 File: puenc.def 2022-11-13 v7.00u Hyperref: PDF Unicode definition (HO)
 )
@@ -354,21 +382,21 @@ Package hyperref Info: Plain pages OFF on input line 4177.
 Package hyperref Info: Backreferencing OFF on input line 4182.
 Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
 Package hyperref Info: Bookmarks ON on input line 4410.
-\c@Hy@tempcnt=\count307
+\c@Hy@tempcnt=\count310
 (/Users/jrenne/Library/TinyTeX/texmf-dist/tex/latex/url/url.sty
 \Urlmuskip=\muskip18
 Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
 )
 LaTeX Info: Redefining \url on input line 4748.
-\XeTeXLinkMargin=\dimen179
+\XeTeXLinkMargin=\dimen187
 (/Users/jrenne/Library/TinyTeX/texmf-dist/tex/generic/bitset/bitset.sty
 Package: bitset 2019/12/09 v1.3 Handle bit-vector datatype (HO)
 (/Users/jrenne/Library/TinyTeX/texmf-dist/tex/generic/bigintcalc/bigintcalc.sty
 Package: bigintcalc 2019/12/15 v1.5 Expandable calculations on big integers (HO)
 ))
-\Fld@menulength=\count308
-\Field@Width=\dimen180
-\Fld@charsize=\dimen181
+\Fld@menulength=\count311
+\Field@Width=\dimen188
+\Fld@charsize=\dimen189
 Package hyperref Info: Hyper figures OFF on input line 6027.
 Package hyperref Info: Link nesting OFF on input line 6032.
 Package hyperref Info: Hyper index ON on input line 6035.
@@ -380,9 +408,9 @@ Package hyperref Info: PDF/A mode OFF on input line 6057.
 Package: atbegshi-ltx 2021/01/10 v1.0c Emulation of the original atbegshi
 package with kernel methods
 )
-\Hy@abspage=\count309
-\c@Item=\count310
-\c@Hfootnote=\count311
+\Hy@abspage=\count312
+\c@Item=\count313
+\c@Hfootnote=\count314
 )
 Package hyperref Info: Driver (autodetected): hxetex.
 (/Users/jrenne/Library/TinyTeX/texmf-dist/tex/latex/hyperref/hxetex.def
@@ -391,10 +419,10 @@ File: hxetex.def 2022-11-13 v7.00u Hyperref driver for XeTeX
 Package: stringenc 2019/11/29 v1.12 Convert strings between diff. encodings (HO)
 )
 \pdfm@box=\box63
-\c@Hy@AnnotLevel=\count312
-\HyField@AnnotCount=\count313
-\Fld@listcount=\count314
-\c@bookmark@seq@number=\count315
+\c@Hy@AnnotLevel=\count315
+\HyField@AnnotCount=\count316
+\Fld@listcount=\count317
+\c@bookmark@seq@number=\count318
 (/Users/jrenne/Library/TinyTeX/texmf-dist/tex/latex/rerunfilecheck/rerunfilecheck.sty
 Package: rerunfilecheck 2022-07-10 v1.10 Rerun checks for auxiliary files (HO)
 (/Users/jrenne/Library/TinyTeX/texmf-dist/tex/latex/base/atveryend-ltx.sty
@@ -405,44 +433,18 @@ Package: uniquecounter 2019/12/15 v1.4 Provide unlimited unique counter (HO)
 )
 Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 285.
 )
-\Hy@SectionHShift=\skip65
-) (/Users/jrenne/Library/TinyTeX/texmf-dist/tex/latex/amscls/amsthm.sty
-Package: amsthm 2020/05/29 v2.20.6
-\thm@style=\toks24
-\thm@bodyfont=\toks25
-\thm@headfont=\toks26
-\thm@notefont=\toks27
-\thm@headpunct=\toks28
-\thm@preskip=\skip66
-\thm@postskip=\skip67
-\thm@headsep=\skip68
-\dth@everypar=\toks29
+\Hy@SectionHShift=\skip68
 )
-\c@theorem=\count316
-\c@lemma=\count317
-\c@corollary=\count318
-\c@proposition=\count319
-\c@conjecture=\count320
-\c@definition=\count321
-\c@example=\count322
-\c@exercise=\count323
-\c@hypothesis=\count324
+\c@theorem=\count319
+\c@lemma=\count320
+\c@corollary=\count321
+\c@proposition=\count322
+\c@conjecture=\count323
+\c@definition=\count324
+\c@example=\count325
+\c@exercise=\count326
+\c@hypothesis=\count327
 (./EcoStat.aux
-
-LaTeX Warning: Label `eq:thetaOrganizCL' multiply defined.
-
-
-LaTeX Warning: Label `eq:multipleLogLik' multiply defined.
-
-
-LaTeX Warning: Label `eq:dynmultX' multiply defined.
-
-
-LaTeX Warning: Label `eq:olsar1' multiply defined.
-
-
-LaTeX Warning: Label `eq:Qols' multiply defined.
-
 
 LaTeX Warning: Label `def:asmyptlevel' multiply defined.
 
@@ -455,40 +457,40 @@ LaTeX Warning: Label `thm:LindbergLevyCLT' multiply defined.
 )
 \openout1 = `EcoStat.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 140.
-LaTeX Font Info:    ... okay on input line 140.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 140.
-LaTeX Font Info:    ... okay on input line 140.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 140.
-LaTeX Font Info:    ... okay on input line 140.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 140.
-LaTeX Font Info:    ... okay on input line 140.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 140.
-LaTeX Font Info:    ... okay on input line 140.
-LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 140.
-LaTeX Font Info:    ... okay on input line 140.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 140.
-LaTeX Font Info:    ... okay on input line 140.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 140.
-LaTeX Font Info:    ... okay on input line 140.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 140.
-LaTeX Font Info:    ... okay on input line 140.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 140.
-LaTeX Font Info:    ... okay on input line 140.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 153.
+LaTeX Font Info:    ... okay on input line 153.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 153.
+LaTeX Font Info:    ... okay on input line 153.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 153.
+LaTeX Font Info:    ... okay on input line 153.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 153.
+LaTeX Font Info:    ... okay on input line 153.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 153.
+LaTeX Font Info:    ... okay on input line 153.
+LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 153.
+LaTeX Font Info:    ... okay on input line 153.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 153.
+LaTeX Font Info:    ... okay on input line 153.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 153.
+LaTeX Font Info:    ... okay on input line 153.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 153.
+LaTeX Font Info:    ... okay on input line 153.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 153.
+LaTeX Font Info:    ... okay on input line 153.
 LaTeX Font Info:    Overwriting math alphabet `\mathrm' in version `normal'
-(Font)                  OT1/lmr/m/n --> TU/lmr/m/n on input line 140.
+(Font)                  OT1/lmr/m/n --> TU/lmr/m/n on input line 153.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `normal'
-(Font)                  OT1/lmr/m/it --> TU/lmr/m/it on input line 140.
+(Font)                  OT1/lmr/m/it --> TU/lmr/m/it on input line 153.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `normal'
-(Font)                  OT1/lmr/bx/n --> TU/lmr/bx/n on input line 140.
+(Font)                  OT1/lmr/bx/n --> TU/lmr/bx/n on input line 153.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `normal'
-(Font)                  OT1/lmss/m/n --> TU/lmss/m/n on input line 140.
+(Font)                  OT1/lmss/m/n --> TU/lmss/m/n on input line 153.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
-(Font)                  OT1/lmss/bx/n --> TU/lmss/bx/n on input line 140.
+(Font)                  OT1/lmss/bx/n --> TU/lmss/bx/n on input line 153.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `normal'
-(Font)                  OT1/lmtt/m/n --> TU/lmtt/m/n on input line 140.
+(Font)                  OT1/lmtt/m/n --> TU/lmtt/m/n on input line 153.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
-(Font)                  OT1/lmtt/m/n --> TU/lmtt/bx/n on input line 140.
+(Font)                  OT1/lmtt/m/n --> TU/lmtt/bx/n on input line 153.
 
 Package fontspec Info: latinmodern-math scale = 0.9999970497384594.
 
@@ -514,7 +516,7 @@ Package fontspec Info: Font family 'latinmodern-math.otf(0)' created for font
 (fontspec)             - 'bold small caps'  (b/sc) with NFSS spec.: 
 
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(0)/m/n' will be
-(Font)              scaled to size 12.0pt on input line 140.
+(Font)              scaled to size 12.0pt on input line 153.
 
 Package fontspec Info: latinmodern-math scale = 0.9999970497384594.
 
@@ -546,15 +548,15 @@ Package fontspec Info: Font family 'latinmodern-math.otf(1)' created for font
 (fontspec)             - 'bold small caps'  (b/sc) with NFSS spec.: 
 
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 12.0pt on input line 140.
+(Font)              scaled to size 12.0pt on input line 153.
 LaTeX Font Info:    Encoding `OT1' has changed to `TU' for symbol font
-(Font)              `operators' in the math version `normal' on input line 140.
+(Font)              `operators' in the math version `normal' on input line 153.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
-(Font)                  OT1/lmr/m/n --> TU/latinmodern-math.otf(1)/m/n on input line 140.
+(Font)                  OT1/lmr/m/n --> TU/latinmodern-math.otf(1)/m/n on input line 153.
 LaTeX Font Info:    Encoding `OT1' has changed to `TU' for symbol font
-(Font)              `operators' in the math version `bold' on input line 140.
+(Font)              `operators' in the math version `bold' on input line 153.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
-(Font)                  OT1/lmr/bx/n --> TU/latinmodern-math.otf(1)/b/n on input line 140.
+(Font)                  OT1/lmr/bx/n --> TU/latinmodern-math.otf(1)/b/n on input line 153.
 
 Package fontspec Info: latinmodern-math scale = 0.9999970497384594.
 
@@ -633,13 +635,13 @@ Package fontspec Info: Font family 'latinmodern-math.otf(2)' created for font
 (fontspec)             \fontdimen 21\font =0pt\relax 
 
 LaTeX Font Info:    Encoding `OMS' has changed to `TU' for symbol font
-(Font)              `symbols' in the math version `normal' on input line 140.
+(Font)              `symbols' in the math version `normal' on input line 153.
 LaTeX Font Info:    Overwriting symbol font `symbols' in version `normal'
-(Font)                  OMS/lmsy/m/n --> TU/latinmodern-math.otf(2)/m/n on input line 140.
+(Font)                  OMS/lmsy/m/n --> TU/latinmodern-math.otf(2)/m/n on input line 153.
 LaTeX Font Info:    Encoding `OMS' has changed to `TU' for symbol font
-(Font)              `symbols' in the math version `bold' on input line 140.
+(Font)              `symbols' in the math version `bold' on input line 153.
 LaTeX Font Info:    Overwriting symbol font `symbols' in version `bold'
-(Font)                  OMS/lmsy/b/n --> TU/latinmodern-math.otf(2)/b/n on input line 140.
+(Font)                  OMS/lmsy/b/n --> TU/latinmodern-math.otf(2)/b/n on input line 153.
 
 Package fontspec Info: latinmodern-math scale = 0.9999970497384594.
 
@@ -700,45 +702,79 @@ Package fontspec Info: Font family 'latinmodern-math.otf(3)' created for font
 (fontspec)             =7.2pt\relax \fontdimen 13\font =0pt\relax 
 
 LaTeX Font Info:    Encoding `OMX' has changed to `TU' for symbol font
-(Font)              `largesymbols' in the math version `normal' on input line 140.
+(Font)              `largesymbols' in the math version `normal' on input line 153.
 LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `normal'
-(Font)                  OMX/lmex/m/n --> TU/latinmodern-math.otf(3)/m/n on input line 140.
+(Font)                  OMX/lmex/m/n --> TU/latinmodern-math.otf(3)/m/n on input line 153.
 LaTeX Font Info:    Encoding `OMX' has changed to `TU' for symbol font
-(Font)              `largesymbols' in the math version `bold' on input line 140.
+(Font)              `largesymbols' in the math version `bold' on input line 153.
 LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `bold'
-(Font)                  OMX/lmex/m/n --> TU/latinmodern-math.otf(3)/b/n on input line 140.
-Package hyperref Info: Link coloring OFF on input line 140.
+(Font)                  OMX/lmex/m/n --> TU/latinmodern-math.otf(3)/b/n on input line 153.
+*geometry* driver: auto-detecting
+*geometry* detected driver: xetex
+*geometry* verbose mode - [ preamble ] result:
+* driver: xetex
+* paper: a4paper
+* layout: <same size as paper>
+* layoutoffset:(h,v)=(0.0pt,0.0pt)
+* modes: twoside 
+* h-part:(L,W,R)=(51.10114pt, 469.75499pt, 76.65175pt)
+* v-part:(T,H,B)=(77.84674pt, 650.43pt, 116.77011pt)
+* \paperwidth=597.50787pt
+* \paperheight=845.04684pt
+* \textwidth=469.75499pt
+* \textheight=650.43pt
+* \oddsidemargin=-21.16885pt
+* \evensidemargin=4.38176pt
+* \topmargin=-26.29704pt
+* \headheight=12.0pt
+* \headsep=19.8738pt
+* \topskip=12.0pt
+* \footskip=30.0pt
+* \marginparwidth=98.0pt
+* \marginparsep=7.0pt
+* \columnsep=10.0pt
+* \skip\footins=10.8pt plus 4.0pt minus 2.0pt
+* \hoffset=0.0pt
+* \voffset=0.0pt
+* \mag=1000
+* \@twocolumnfalse
+* \@twosidetrue
+* \@mparswitchtrue
+* \@reversemarginfalse
+* (1in=72.27pt=25.4mm, 1cm=28.453pt)
+
+Package hyperref Info: Link coloring OFF on input line 153.
 (./EcoStat.out) (./EcoStat.out)
 \@outlinefile=\write4
 \openout4 = `EcoStat.out'.
 
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 14.4pt on input line 142.
+(Font)              scaled to size 14.4pt on input line 155.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 10.0pt on input line 142.
+(Font)              scaled to size 10.0pt on input line 155.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 7.0pt on input line 142.
-LaTeX Font Info:    Trying to load font information for OML+lmm on input line 142.
+(Font)              scaled to size 7.0pt on input line 155.
+LaTeX Font Info:    Trying to load font information for OML+lmm on input line 155.
 (/Users/jrenne/Library/TinyTeX/texmf-dist/tex/latex/lm/omllmm.fd
 File: omllmm.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 14.4013pt on input line 142.
+(Font)              scaled to size 14.4013pt on input line 155.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 10.00092pt on input line 142.
+(Font)              scaled to size 10.00092pt on input line 155.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 7.00064pt on input line 142.
+(Font)              scaled to size 7.00064pt on input line 155.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 14.39845pt on input line 142.
+(Font)              scaled to size 14.39845pt on input line 155.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 9.99893pt on input line 142.
+(Font)              scaled to size 9.99893pt on input line 155.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 6.99925pt on input line 142.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 142.
+(Font)              scaled to size 6.99925pt on input line 155.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 155.
 (/Users/jrenne/Library/TinyTeX/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 142.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 155.
 (/Users/jrenne/Library/TinyTeX/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ) [1
@@ -763,1601 +799,404 @@ LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
 (Font)              scaled to size 8.3991pt on input line 2.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
 (Font)              scaled to size 5.99936pt on input line 2.
-[3] [4])
+[3])
 \tf@toc=\write5
 \openout5 = `EcoStat.toc'.
 
-[5] [6
-
-]
-Underfull \hbox (badness 10000) in paragraph at lines 185--187
-[]\TU/lmr/m/n/12 R: []$[][][][][] [] [] [] [][][][] [] [] [][] [][][][][][][] [] [][][] [] [][][] [] [][][][][][][] [] [][][][][][][] [][] [][][][][][][] [] [][] []
+[4]
+Underfull \hbox (badness 10000) in paragraph at lines 199--201
+[]\TU/lmr/m/n/12 R: []$[][][][][] [] [] [] [][][][] [] [] [][] [][][][][][][] [] [][][] [] [][][] [] [][][][][][][] [] [][][][][][][] [][] [][][][][][][] [] [][] [] [][][]$[] (by Em-
  []
 
+[5
 
-Overfull \hbox (1.35612pt too wide) in paragraph at lines 187--188
-[]\TU/lmr/m/n/12 My own tutorial: []$[][][][][] [] [] [] [][][][][][] [] [][][][][][][][][] [] [][] [] [][][][][] [] [][][][][][][][][][][]$[] 
- []
-
-[7] [8
+] [6
 
 ]
 Chapter 1.
-[9]
 File: EcoStat_files/figure-latex/essai3d2-1.pdf Graphic file (type pdf)
 <use EcoStat_files/figure-latex/essai3d2-1.pdf>
-[10]
+[7]
 File: EcoStat_files/figure-latex/essai3d-1.pdf Graphic file (type pdf)
 <use EcoStat_files/figure-latex/essai3d-1.pdf>
-
-Overfull \hbox (78.25758pt too wide) has occurred while \output is active
-\TU/lmr/m/sl/12 1.1.  CUMULATIVE AND PROBABILITY DENSITY FUNTIONS (C.D.F. AND P.D.F.) \TU/lmr/m/n/12 11
- []
-
-[11] [12]
-Overfull \hbox (22.28546pt too wide) in alignment at lines 321--324
- [][][] []
+[8] [9]
+Underfull \hbox (badness 2762) in paragraph at lines 310--311
+[]\TU/lmr/m/n/12 If $[]$ and $[]$ are independent, then $[][][][][][][][][][][] [] [][][][][][][][][][][][][][]$ and
  []
 
 File: EcoStat_files/figure-latex/mixtureG-1.pdf Graphic file (type pdf)
 <use EcoStat_files/figure-latex/mixtureG-1.pdf>
-[13]
+[10]
 File: EcoStat_files/figure-latex/Buffon-1.pdf Graphic file (type pdf)
 <use EcoStat_files/figure-latex/Buffon-1.pdf>
-[14] [15]
+[11] [12]
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 5.0pt on input line 415.
+(Font)              scaled to size 5.0pt on input line 429.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 5.00046pt on input line 415.
+(Font)              scaled to size 5.00046pt on input line 429.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 4.99947pt on input line 415.
+(Font)              scaled to size 4.99947pt on input line 429.
 File: EcoStat_files/figure-latex/figCauchy-1.pdf Graphic file (type pdf)
 <use EcoStat_files/figure-latex/figCauchy-1.pdf>
-[16] [17] [18
+[13] [14
 
 ]
 Chapter 2.
-[19]
+[15]
 File: EcoStat_files/figure-latex/incomeDistri-1.pdf Graphic file (type pdf)
 <use EcoStat_files/figure-latex/incomeDistri-1.pdf>
-[20] [21] [22]
+[16] [17]
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/b/n' will be
-(Font)              scaled to size 12.0pt on input line 548.
+(Font)              scaled to size 12.0pt on input line 562.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/b/n' will be
-(Font)              scaled to size 8.4pt on input line 548.
+(Font)              scaled to size 8.4pt on input line 562.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/b/n' will be
-(Font)              scaled to size 6.0pt on input line 548.
+(Font)              scaled to size 6.0pt on input line 562.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/b/n' will be
-(Font)              scaled to size 12.0011pt on input line 548.
+(Font)              scaled to size 12.0011pt on input line 562.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/b/n' will be
-(Font)              scaled to size 8.40076pt on input line 548.
+(Font)              scaled to size 8.40076pt on input line 562.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/b/n' will be
-(Font)              scaled to size 6.00055pt on input line 548.
+(Font)              scaled to size 6.00055pt on input line 562.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/b/n' will be
-(Font)              scaled to size 11.99872pt on input line 548.
+(Font)              scaled to size 11.99872pt on input line 562.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/b/n' will be
-(Font)              scaled to size 8.3991pt on input line 548.
+(Font)              scaled to size 8.3991pt on input line 562.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/b/n' will be
-(Font)              scaled to size 5.99936pt on input line 548.
-[23] [24]
+(Font)              scaled to size 5.99936pt on input line 562.
+[18]
 File: EcoStat_files/figure-latex/RcompMeans-1.pdf Graphic file (type pdf)
 <use EcoStat_files/figure-latex/RcompMeans-1.pdf>
-[25] [26]
+[19] [20]
 Chapter 3.
-[27
+[21
 
 ]
 
-LaTeX Warning: Reference `FPFN' on page 28 undefined on input line 675.
+LaTeX Warning: Reference `FPFN' on page 22 undefined on input line 689.
 
-[28] [29]
+[22]
 File: EcoStat_files/figure-latex/Illusttest1-1.pdf Graphic file (type pdf)
 <use EcoStat_files/figure-latex/Illusttest1-1.pdf>
 File: EcoStat_files/figure-latex/Illusttest2-1.pdf Graphic file (type pdf)
 <use EcoStat_files/figure-latex/Illusttest2-1.pdf>
 File: EcoStat_files/figure-latex/IllusTestOneSided1-1.pdf Graphic file (type pdf)
 <use EcoStat_files/figure-latex/IllusTestOneSided1-1.pdf>
+[23] [24]
 File: EcoStat_files/figure-latex/IllusTestOneSided2-1.pdf Graphic file (type pdf)
 <use EcoStat_files/figure-latex/IllusTestOneSided2-1.pdf>
-[30] [31] [32] [33]
+[25] [26]
 
-LaTeX Warning: Reference `FactoryR' on page 34 undefined on input line 762.
+LaTeX Warning: Reference `FactoryR' on page 27 undefined on input line 776.
 
 File: EcoStat_files/figure-latex/FactoryR-1.pdf Graphic file (type pdf)
 <use EcoStat_files/figure-latex/FactoryR-1.pdf>
-[34] [35]
-Overfull \hbox (4.01675pt too wide) in paragraph at lines 794--796
-\TU/lmr/m/n/12 Hence, if we set $[][] [] [][][] [] [][][][][][][] [] [][][][]$, we have $[][] [][][][][] []
- []
-
-[36] [37]
-Underfull \hbox (badness 1910) in paragraph at lines 869--870
-[][]\TU/lmr/bx/n/12 Proposition 3.3 \TU/lmr/m/n/12 (Asymptotic distribution of 3rd-order sample cen-
- []
-
-[38]
+[27] [28] [29]
 LaTeX Font Info:    Font shape `TU/lmtt/bx/n' in size <12> not available
-(Font)              Font shape `TU/lmtt/b/n' tried instead on input line 906.
-[39]
+(Font)              Font shape `TU/lmtt/b/n' tried instead on input line 920.
+[30]
 File: EcoStat_files/figure-latex/JBTest2-1.pdf Graphic file (type pdf)
 <use EcoStat_files/figure-latex/JBTest2-1.pdf>
 File: EcoStat_files/figure-latex/JBTest3-1.pdf Graphic file (type pdf)
 <use EcoStat_files/figure-latex/JBTest3-1.pdf>
-[40] [41] [42]
+[31] [32]
 Chapter 4.
-[43
+[33
 
-] [44]
+] [34]
 File: EcoStat_files/figure-latex/heteroskedasticity-1.pdf Graphic file (type pdf)
 <use EcoStat_files/figure-latex/heteroskedasticity-1.pdf>
-[45]
+[35]
 File: EcoStat_files/figure-latex/exmpSalarayPhDSHP-1.pdf Graphic file (type pdf)
 <use EcoStat_files/figure-latex/exmpSalarayPhDSHP-1.pdf>
-[46] [47]
-
-LaTeX Warning: Reference `def:FOC' on page 48 undefined on input line 1129.
-
-[48] [49]
+[36] [37]
+Missing character: There is no 𝜀 (U+1D700) in font [lmroman12-bold]:mapping=tex-text;!
+[38]
 Missing character: There is no 𝜀 (U+1D700) in font [lmroman12-bold]:mapping=tex-text;!
 Missing character: There is no 𝜀 (U+1D700) in font [lmroman12-bold]:mapping=tex-text;!
 Missing character: There is no 𝜀 (U+1D700) in font [lmroman12-bold]:mapping=tex-text;!
 Missing character: There is no 𝜀 (U+1D700) in font [lmroman12-bold]:mapping=tex-text;!
 Missing character: There is no 𝜀 (U+1D700) in font [lmroman12-bold]:mapping=tex-text;!
 Missing character: There is no 𝜀 (U+1D700) in font [lmroman12-bold]:mapping=tex-text;!
-Missing character: There is no 𝜀 (U+1D700) in font [lmroman12-bold]:mapping=tex-text;!
-[50]
-Overfull \hbox (9.29955pt too wide) detected at line 1283
-[][][][][][][][] [] [][] [] [] [][][][][][][][] [] [][][][][][]
- []
-
-[51] [52] [53] [54] [55]
+[39] [40] [41] [42]
 File: EcoStat_files/figure-latex/R2issue-1.pdf Graphic file (type pdf)
 <use EcoStat_files/figure-latex/R2issue-1.pdf>
-[56] [57] [58]
+[43] [44] [45]
 File: EcoStat_files/figure-latex/chartStudent-1.pdf Graphic file (type pdf)
 <use EcoStat_files/figure-latex/chartStudent-1.pdf>
-[59] [60]
-Overfull \hbox (11.69984pt too wide) in paragraph at lines 1609--1609
-[]\TU/lmtt/m/n/12 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1[] 
- []
-
-[61] [62] [63]
-Overfull \hbox (87.66756pt too wide) in paragraph at lines 1717--1718
+[46] [47] [48] [49]
+Overfull \hbox (7.91257pt too wide) in paragraph at lines 1731--1732
 []\TU/lmr/m/n/12 By Proposition []9.5[] (in Appendix []9.2[]), we have: $[][] [] [] [] [][][][][][][][][][][][][][][][][][][][][][][][] []
  []
 
-[64]
-Underfull \hbox (badness 2460) in paragraph at lines 1751--1752
-[]\TU/lmr/m/n/12 Since $[] [] [] [] [][] []$, we have: $[][][] [] [][] []
- []
-
-
-Underfull \hbox (badness 1603) in paragraph at lines 1751--1752
-\TU/lmr/m/n/12 Applying the multivariate central limit theorem on vectors $[][]$ gives
- []
-
-[65]
-Overfull \hbox (21.07883pt too wide) in alignment at lines 1775--1780
- [][][] []
- []
-
-[66] [67] [68] [69]
-Overfull \hbox (6.843pt too wide) in paragraph at lines 1918--1921
+[50] [51] [52] [53] [54]
+Underfull \hbox (badness 1442) in paragraph at lines 1932--1935
 \TU/lmr/m/n/12 By continuity of the inverse function (everywhere but at 0): $[][] []
  []
 
-[70]
-Underfull \hbox (badness 1354) in paragraph at lines 1970--1971
-[]\TU/lmr/m/n/12 The Durbin-Wu-Hausman test ([]Durbin[] ([]1954[]), []Wu[] ([]1973[]), []Hausman[]
- []
-
-[71]
+[55]
 File: EcoStat_files/figure-latex/figureIV-1.pdf Graphic file (type pdf)
 <use EcoStat_files/figure-latex/figureIV-1.pdf>
+[56] [57]
 
 LaTeX Font Warning: Font shape `TU/lmtt/bx/it' in size <12> not available
-(Font)              Font shape `TU/lmtt/b/sl' tried instead on input line 2013.
+(Font)              Font shape `TU/lmtt/b/sl' tried instead on input line 2027.
 
-[72] [73] [74] [75] [76]
-Overfull \hbox (103.99628pt too wide) has occurred while \output is active
-\TU/lmr/m/sl/12 4.5.  GENERAL REGRESSION MODEL (GRM) AND ROBUST COVARIANCE MATRICES \TU/lmr/m/n/12 77
+[58] [59]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[60]
+Overfull \hbox (24.24129pt too wide) has occurred while \output is active
+\TU/lmr/m/sl/12 4.5.  GENERAL REGRESSION MODEL (GRM) AND ROBUST COVARIANCE MATRICES \TU/lmr/m/n/12 61
  []
 
-[77] [78]
-Overfull \hbox (103.99628pt too wide) has occurred while \output is active
-\TU/lmr/m/sl/12 4.5.  GENERAL REGRESSION MODEL (GRM) AND ROBUST COVARIANCE MATRICES \TU/lmr/m/n/12 79
+[61] [62]
+Overfull \hbox (24.24129pt too wide) has occurred while \output is active
+\TU/lmr/m/sl/12 4.5.  GENERAL REGRESSION MODEL (GRM) AND ROBUST COVARIANCE MATRICES \TU/lmr/m/n/12 63
  []
 
-[79] [80]
-Overfull \hbox (103.99628pt too wide) has occurred while \output is active
-\TU/lmr/m/sl/12 4.5.  GENERAL REGRESSION MODEL (GRM) AND ROBUST COVARIANCE MATRICES \TU/lmr/m/n/12 81
- []
-
-[81]
+[63]
 File: EcoStat_files/figure-latex/simulHeterosk-1.pdf Graphic file (type pdf)
 <use EcoStat_files/figure-latex/simulHeterosk-1.pdf>
-[82]
-Overfull \hbox (103.99628pt too wide) has occurred while \output is active
-\TU/lmr/m/sl/12 4.5.  GENERAL REGRESSION MODEL (GRM) AND ROBUST COVARIANCE MATRICES \TU/lmr/m/n/12 83
+[64]
+Overfull \hbox (24.24129pt too wide) has occurred while \output is active
+\TU/lmr/m/sl/12 4.5.  GENERAL REGRESSION MODEL (GRM) AND ROBUST COVARIANCE MATRICES \TU/lmr/m/n/12 65
  []
 
-[83] [84]
-Overfull \hbox (103.99628pt too wide) has occurred while \output is active
-\TU/lmr/m/sl/12 4.5.  GENERAL REGRESSION MODEL (GRM) AND ROBUST COVARIANCE MATRICES \TU/lmr/m/n/12 85
+[65] [66]
+Overfull \hbox (24.24129pt too wide) has occurred while \output is active
+\TU/lmr/m/sl/12 4.5.  GENERAL REGRESSION MODEL (GRM) AND ROBUST COVARIANCE MATRICES \TU/lmr/m/n/12 67
  []
 
-[85]
+[67]
 File: EcoStat_files/figure-latex/DB-1.pdf Graphic file (type pdf)
 <use EcoStat_files/figure-latex/DB-1.pdf>
-[86]
-Overfull \hbox (103.99628pt too wide) has occurred while \output is active
-\TU/lmr/m/sl/12 4.5.  GENERAL REGRESSION MODEL (GRM) AND ROBUST COVARIANCE MATRICES \TU/lmr/m/n/12 87
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[68]
+Overfull \hbox (24.24129pt too wide) has occurred while \output is active
+\TU/lmr/m/sl/12 4.5.  GENERAL REGRESSION MODEL (GRM) AND ROBUST COVARIANCE MATRICES \TU/lmr/m/n/12 69
  []
 
-[87] [88]
-Overfull \hbox (103.99628pt too wide) has occurred while \output is active
-\TU/lmr/m/sl/12 4.5.  GENERAL REGRESSION MODEL (GRM) AND ROBUST COVARIANCE MATRICES \TU/lmr/m/n/12 89
+[69] [70]
+Overfull \hbox (24.24129pt too wide) has occurred while \output is active
+\TU/lmr/m/sl/12 4.5.  GENERAL REGRESSION MODEL (GRM) AND ROBUST COVARIANCE MATRICES \TU/lmr/m/n/12 71
  []
 
-[89] [90] [91] [92] [93]
+[71] [72] [73]
 File: EcoStat_files/figure-latex/lasso4-1.pdf Graphic file (type pdf)
 <use EcoStat_files/figure-latex/lasso4-1.pdf>
-[94]
+[74] [75]
 File: EcoStat_files/figure-latex/lasso6-1.pdf Graphic file (type pdf)
 <use EcoStat_files/figure-latex/lasso6-1.pdf>
-[95] [96] [97] [98
+[76] [77] [78
 
 ]
 Chapter 5.
-[99]
+[79]
 File: EcoStat_files/figure-latex/simulPanel-1.pdf Graphic file (type pdf)
 <use EcoStat_files/figure-latex/simulPanel-1.pdf>
 File: EcoStat_files/figure-latex/cigarettes-1.pdf Graphic file (type pdf)
 <use EcoStat_files/figure-latex/cigarettes-1.pdf>
-[100] [101] [102] [103] [104] [105] [106] [107] [108] [109] [110]
+[80] [81] [82] [83] [84] [85]
+Underfull \vbox (badness 5245) has occurred while \output is active []
+
+[86] [87] [88]
 File: EcoStat_files/figure-latex/airbnb-1.pdf Graphic file (type pdf)
 <use EcoStat_files/figure-latex/airbnb-1.pdf>
-[111] [112]
-Overfull \hbox (61.14pt too wide) in paragraph at lines 3490--3490
-[]\TU/lmtt/m/n/12 ## ======================================================================[] 
- []
-
-
-Overfull \hbox (61.13948pt too wide) in paragraph at lines 3490--3490
-[]\TU/lmtt/m/n/12 ##              ---------------------------------------------------------[] 
- []
-
-
-Overfull \hbox (61.13982pt too wide) in paragraph at lines 3490--3490
-[]\TU/lmtt/m/n/12 ##              FE (no HAC) No FE (no HAC) FE (with HAC) No FE (with HAC)[] 
- []
-
-
-Overfull \hbox (17.87965pt too wide) in paragraph at lines 3490--3490
-[]\TU/lmtt/m/n/12 ##                  (1)          (2)            (3)            (4)[] 
- []
-
-
-Overfull \hbox (61.13948pt too wide) in paragraph at lines 3490--3490
-[]\TU/lmtt/m/n/12 ## ----------------------------------------------------------------------[] 
- []
-
-
-Overfull \hbox (36.34782pt too wide) in paragraph at lines 3490--3490
-[]\TU/lmtt/m/n/12 ## bedrooms      7.229***      5.629**       7.229***        5.629***[] 
- []
-
-
-Overfull \hbox (30.2277pt too wide) in paragraph at lines 3490--3490
-[]\TU/lmtt/m/n/12 ##                (2.135)      (2.194)        (2.052)        (2.073)[] 
- []
-
-
-Overfull \hbox (36.34789pt too wide) in paragraph at lines 3490--3490
-[]\TU/lmtt/m/n/12 ## accommodates  16.426***    17.449***      16.426***      17.449***[] 
- []
-
-
-Overfull \hbox (30.2397pt too wide) in paragraph at lines 3490--3490
-[]\TU/lmtt/m/n/12 ##                (1.284)      (1.323)        (1.431)        (1.428)[] 
- []
-
-
-Overfull \hbox (36.37184pt too wide) in paragraph at lines 3490--3490
-[]\TU/lmtt/m/n/12 ## Constant      95.118***    68.417***      95.118***      68.417***[] 
- []
-
-
-Overfull \hbox (30.21571pt too wide) in paragraph at lines 3490--3490
-[]\TU/lmtt/m/n/12 ##                (5.323)      (3.223)        (5.664)        (3.527)[] 
- []
-
-
-Overfull \hbox (61.13948pt too wide) in paragraph at lines 3490--3490
-[]\TU/lmtt/m/n/12 ## ----------------------------------------------------------------------[] 
- []
-
-
-Overfull \hbox (17.8797pt too wide) in paragraph at lines 3490--3490
-[]\TU/lmtt/m/n/12 ## District FE      Yes           No            Yes             No[] 
- []
-
-
-Overfull \hbox (61.13948pt too wide) in paragraph at lines 3490--3490
-[]\TU/lmtt/m/n/12 ## ----------------------------------------------------------------------[] 
- []
-
-
-Overfull \hbox (24.05974pt too wide) in paragraph at lines 3490--3490
-[]\TU/lmtt/m/n/12 ## Observations    1,321        1,321          1,321          1,321[] 
- []
-
-
-Overfull \hbox (61.14pt too wide) in paragraph at lines 3490--3490
-[]\TU/lmtt/m/n/12 ## ======================================================================[] 
- []
-
-
-Overfull \hbox (61.1397pt too wide) in paragraph at lines 3490--3490
-[]\TU/lmtt/m/n/12 ## Note:                                      *p<0.1; **p<0.05; ***p<0.01[] 
- []
-
+[89] [90]
 File: EcoStat_files/figure-latex/airbnb3-1.pdf Graphic file (type pdf)
 <use EcoStat_files/figure-latex/airbnb3-1.pdf>
-[113] [114] [115]
+[91] [92]
 File: EcoStat_files/figure-latex/dynpanel1-1.pdf Graphic file (type pdf)
 <use EcoStat_files/figure-latex/dynpanel1-1.pdf>
-[116] [117] [118]
-Overfull \hbox (5.44783pt too wide) in paragraph at lines 3690--3690
-[]\TU/lmtt/m/n/12 ## L1.emp      0.686226    0.144594       4.746      < 2e-16 ***[] 
- []
-
-
-Overfull \hbox (5.49585pt too wide) in paragraph at lines 3690--3690
-[]\TU/lmtt/m/n/12 ## L0.wage    -0.607821    0.178205      -3.411      0.00065 ***[] 
- []
-
-[119]
-Overfull \hbox (5.44786pt too wide) in paragraph at lines 3690--3690
-[]\TU/lmtt/m/n/12 ## L0.capital  0.356846    0.059020       6.046      < 2e-16 ***[] 
- []
-
-
-Overfull \hbox (5.49583pt too wide) in paragraph at lines 3690--3690
-[]\TU/lmtt/m/n/12 ## L0.output   0.608506    0.172531       3.527      0.00042 ***[] 
- []
-
-
-Overfull \hbox (11.69984pt too wide) in paragraph at lines 3690--3690
-[]\TU/lmtt/m/n/12 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1[] 
- []
-
-
-Overfull \hbox (17.8799pt too wide) in paragraph at lines 3690--3690
-[]\TU/lmtt/m/n/12 ## J-Test (overid restrictions):  70.82 with 25 DF, pvalue: <0.001[] 
- []
-
-
-Overfull \hbox (5.50792pt too wide) in paragraph at lines 3690--3690
-[]\TU/lmtt/m/n/12 ## F-Statistic (slope coeff):  528.06 with 10 DF, pvalue: <0.001[] 
- []
-
-
-Overfull \hbox (67.31981pt too wide) in paragraph at lines 3701--3701
-[]\TU/lmtt/m/n/12 ##      L1.emp      L2.emp     L0.wage     L1.wage  L0.capital  L1.capital[] 
- []
-
-
-Overfull \hbox (67.19994pt too wide) in paragraph at lines 3701--3701
-[]\TU/lmtt/m/n/12 ##  0.62870890 -0.06518800 -0.52575951  0.31128961  0.27836190  0.01409950[] 
- []
-
-
-Overfull \hbox (67.2838pt too wide) in paragraph at lines 3701--3701
-[]\TU/lmtt/m/n/12 ##  L2.capital   L0.output   L1.output   L2.output        1979        1980[] 
- []
-
-
-Overfull \hbox (67.23595pt too wide) in paragraph at lines 3701--3701
-[]\TU/lmtt/m/n/12 ## -0.04024847  0.59192286 -0.56598515  0.10054264  0.01121551  0.02306871[] 
- []
-
-[120]
-Overfull \hbox (5.49594pt too wide) in paragraph at lines 3720--3720
-[]\TU/lmtt/m/n/12 ##  Arellano and Bond (1991) serial correlation test of degree 3[] 
- []
-
-
-Overfull \hbox (73.49994pt too wide) in paragraph at lines 3720--3720
-[]\TU/lmtt/m/n/12 ## alternative hypothesis: serial correlation of order 3 in the error terms[] 
- []
-
-[121] [122] [123]
-Overfull \hbox (21.33046pt too wide) detected at line 3824
-[]
- []
-
+[93] [94] [95] [96] [97] [98] [99]
 File: images/Abadie_et_al_2018.pdf Graphic file (type pdf)
 <use images/Abadie_et_al_2018.pdf>
-[124]
+[100]
 File: images/Figure_Meyer_et_al.pdf Graphic file (type pdf)
 <use images/Figure_Meyer_et_al.pdf>
-[125] [126] [127] [128
+[101] [102] [103] [104
 
 ]
 Chapter 6.
-[129] [130] [131] [132] [133] [134] [135] [136]
+[105] [106] [107] [108] [109] [110]
 File: EcoStat_files/figure-latex/MLE1-1.pdf Graphic file (type pdf)
 <use EcoStat_files/figure-latex/MLE1-1.pdf>
-[137]
 File: EcoStat_files/figure-latex/MLE2-1.pdf Graphic file (type pdf)
 <use EcoStat_files/figure-latex/MLE2-1.pdf>
+[111] [112]
 File: EcoStat_files/figure-latex/MLE3-1.pdf Graphic file (type pdf)
 <use EcoStat_files/figure-latex/MLE3-1.pdf>
-[138] [139] [140]
-Overfull \hbox (39.35138pt too wide) in paragraph at lines 4378--4379
+[113] [114]
+Underfull \hbox (badness 1721) in paragraph at lines 4392--4393
 []\TU/lmr/m/n/12 The Cauchy-Schwarz inequality implies that $[] []
  []
 
 
-Overfull \hbox (15.6153pt too wide) in paragraph at lines 4378--4379
+Underfull \hbox (badness 4001) in paragraph at lines 4392--4393
 [][][][][][][][][][][][] [][][][] [][][][][]$\TU/lmr/m/n/12 . Now, $[][][][][][][][][] [][][][] [][][] [] [][] [][][][][][][][][] [][][][] []
  []
 
-[141] [142] [143]
+
+Overfull \hbox (20.45735pt too wide) in paragraph at lines 4392--4393
+[] [][] [][][][][][][][] [][][][] [] []$ \TU/lmr/m/n/12 because $[]$ is unbiased. Therefore $[][][][][][][][][][][] [] [][][][][][][][][][] [][][][][][][][][][]$.
+ []
+
+[115] [116]
 File: EcoStat_files/figure-latex/smiData-1.pdf Graphic file (type pdf)
 <use EcoStat_files/figure-latex/smiData-1.pdf>
-[144] [145] [146] [147]
+[117] [118] [119]
 File: EcoStat_files/figure-latex/smidistri-1.pdf Graphic file (type pdf)
 <use EcoStat_files/figure-latex/smidistri-1.pdf>
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-[148] [149] [150]
+[120] [121] [122]
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/b/n' will be
-(Font)              scaled to size 10.0pt on input line 4774.
+(Font)              scaled to size 10.0pt on input line 4788.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/b/n' will be
-(Font)              scaled to size 7.0pt on input line 4774.
+(Font)              scaled to size 7.0pt on input line 4788.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/b/n' will be
-(Font)              scaled to size 5.0pt on input line 4774.
+(Font)              scaled to size 5.0pt on input line 4788.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/b/n' will be
-(Font)              scaled to size 10.00092pt on input line 4774.
+(Font)              scaled to size 10.00092pt on input line 4788.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/b/n' will be
-(Font)              scaled to size 7.00064pt on input line 4774.
+(Font)              scaled to size 7.00064pt on input line 4788.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/b/n' will be
-(Font)              scaled to size 5.00046pt on input line 4774.
+(Font)              scaled to size 5.00046pt on input line 4788.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/b/n' will be
-(Font)              scaled to size 9.99893pt on input line 4774.
+(Font)              scaled to size 9.99893pt on input line 4788.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/b/n' will be
-(Font)              scaled to size 6.99925pt on input line 4774.
+(Font)              scaled to size 6.99925pt on input line 4788.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/b/n' will be
-(Font)              scaled to size 4.99947pt on input line 4774.
-[151] [152] [153] [154] [155]
+(Font)              scaled to size 4.99947pt on input line 4788.
+[123] [124] [125] [126]
 File: EcoStat_files/figure-latex/MCMC1-1.pdf Graphic file (type pdf)
 <use EcoStat_files/figure-latex/MCMC1-1.pdf>
-[156] [157] [158]
+[127] [128]
 File: EcoStat_files/figure-latex/MCMC8-1.pdf Graphic file (type pdf)
 <use EcoStat_files/figure-latex/MCMC8-1.pdf>
-[159] [160]
+[129] [130]
 Chapter 7.
-[161
+[131
 
 ]
 File: EcoStat_files/figure-latex/LPM-1.pdf Graphic file (type pdf)
 <use EcoStat_files/figure-latex/LPM-1.pdf>
-[162]
 File: EcoStat_files/figure-latex/ProbLogit-1.pdf Graphic file (type pdf)
 <use EcoStat_files/figure-latex/ProbLogit-1.pdf>
-
-Overfull \vbox (244.11205pt too high) has occurred while \output is active []
-
-[163]
+[132]
 File: EcoStat_files/figure-latex/LPM2-1.pdf Graphic file (type pdf)
 <use EcoStat_files/figure-latex/LPM2-1.pdf>
-[164]
+
+Overfull \hbox (61.62529pt too wide) has occurred while \output is active
+\TU/lmr/m/sl/12 7.1.  INTERPRETATION IN TERMS OF LATENT VARIABLE, AND UTILITY-BASED MODELS \TU/lmr/m/n/12 133
+ []
+
+[133]
 File: EcoStat_files/figure-latex/Latent-1.pdf Graphic file (type pdf)
 <use EcoStat_files/figure-latex/Latent-1.pdf>
-[165] [166] [167] [168]
-Overfull \hbox (11.28044pt too wide) in paragraph at lines 5292--5293
-[]\TU/lmr/m/n/12 For agent $[]$, this marginal effect is consistently estimated by $[][][][][][][][][][]$.
- []
-
-
-Overfull \hbox (8.44849pt too wide) in paragraph at lines 5298--5300
-[]\TU/lmr/m/n/12 Denoting by $[]$ the sample average of the $[][]$s, compute $[][][][][][][][][]$. 
- []
-
-[169]
+[134] [135] [136] [137] [138]
 File: EcoStat_files/figure-latex/Probitlending-1.pdf Graphic file (type pdf)
 <use EcoStat_files/figure-latex/Probitlending-1.pdf>
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-[170] [171] [172]
-Overfull \hbox (11.69972pt too wide) in paragraph at lines 5423--5423
-[]\TU/lmtt/m/n/12 ##          (Intercept)               gradeB               gradeC[] 
- []
-
-
-Overfull \hbox (11.6758pt too wide) in paragraph at lines 5423--5423
-[]\TU/lmtt/m/n/12 ##          0.840731198          0.070747353          0.103944305[] 
- []
-
-
-Overfull \hbox (11.69968pt too wide) in paragraph at lines 5423--5423
-[]\TU/lmtt/m/n/12 ##               gradeD               gradeE               gradeF[] 
- []
-
-
-Overfull \hbox (11.67581pt too wide) in paragraph at lines 5423--5423
-[]\TU/lmtt/m/n/12 ##          0.145089219          0.154773742          0.217702041[] 
- []
-
-
-Overfull \hbox (11.69977pt too wide) in paragraph at lines 5423--5423
-[]\TU/lmtt/m/n/12 ##               gradeG       log(loan_amnt)           amt2income[] 
- []
-
-
-Overfull \hbox (11.62779pt too wide) in paragraph at lines 5423--5423
-[]\TU/lmtt/m/n/12 ##          0.254722161         -0.034289921          0.216251992[] 
- []
-
-
-Overfull \hbox (11.69989pt too wide) in paragraph at lines 5423--5423
-[]\TU/lmtt/m/n/12 ##          delinq_2yrs      log(annual_inc) I(log(annual_inc)^2)[] 
- []
-
-
-Overfull \hbox (11.6638pt too wide) in paragraph at lines 5423--5423
-[]\TU/lmtt/m/n/12 ##          0.001574178         -0.154701321          0.006813694[] 
- []
-
-[173] [174]
-Overfull \hbox (24.05998pt too wide) in paragraph at lines 5525--5525
-[]\TU/lmtt/m/n/12 ## ================================================================[] 
- []
-
-
-Overfull \hbox (24.05952pt too wide) in paragraph at lines 5525--5525
-[]\TU/lmtt/m/n/12 ##                     --------------------------------------------[] 
- []
-
-
-Overfull \hbox (24.05952pt too wide) in paragraph at lines 5525--5525
-[]\TU/lmtt/m/n/12 ## ----------------------------------------------------------------[] 
- []
-
-
-Overfull \hbox (24.05952pt too wide) in paragraph at lines 5525--5525
-[]\TU/lmtt/m/n/12 ## ----------------------------------------------------------------[] 
- []
-
-
-Overfull \hbox (24.04774pt too wide) in paragraph at lines 5525--5525
-[]\TU/lmtt/m/n/12 ## F Statistic                             542.123*** (df = 1; 628)[] 
- []
-
-
-Overfull \hbox (24.05998pt too wide) in paragraph at lines 5525--5525
-[]\TU/lmtt/m/n/12 ## ================================================================[] 
- []
-
-
-Overfull \hbox (24.05974pt too wide) in paragraph at lines 5525--5525
-[]\TU/lmtt/m/n/12 ## Note:                                *p<0.1; **p<0.05; ***p<0.01[] 
- []
-
-[175]
+[139] [140] [141] [142] [143]
 File: EcoStat_files/figure-latex/fishing3-1.pdf Graphic file (type pdf)
 <use EcoStat_files/figure-latex/fishing3-1.pdf>
-[176] [177] [178] [179] [180] [181] [182]
-Overfull \hbox (17.87999pt too wide) in paragraph at lines 5826--5826
-[]\TU/lmtt/m/n/12 ## ===============================================================[] 
- []
-
-
-Overfull \hbox (17.87953pt too wide) in paragraph at lines 5826--5826
-[]\TU/lmtt/m/n/12 ##                     -------------------------------------------[] 
- []
-
-
-Overfull \hbox (17.87953pt too wide) in paragraph at lines 5826--5826
-[]\TU/lmtt/m/n/12 ## ---------------------------------------------------------------[] 
- []
-
-
-Overfull \hbox (5.50784pt too wide) in paragraph at lines 5826--5826
-[]\TU/lmtt/m/n/12 ## (Intercept):boat     0.871***              0.739***   0.527**[] 
- []
-
-
-Overfull \hbox (5.50769pt too wide) in paragraph at lines 5826--5826
-[]\TU/lmtt/m/n/12 ##                      (0.114)               (0.197)    (0.223)[] 
- []
-
-
-Overfull \hbox (11.65186pt too wide) in paragraph at lines 5826--5826
-[]\TU/lmtt/m/n/12 ## (Intercept):charter  1.499***              1.341***   1.694***[] 
- []
-
-
-Overfull \hbox (5.50769pt too wide) in paragraph at lines 5826--5826
-[]\TU/lmtt/m/n/12 ##                      (0.133)               (0.195)    (0.224)[] 
- []
-
-
-Overfull \hbox (11.69984pt too wide) in paragraph at lines 5826--5826
-[]\TU/lmtt/m/n/12 ## (Intercept):pier     0.307***              0.814***   0.778***[] 
- []
-
-
-Overfull \hbox (5.50769pt too wide) in paragraph at lines 5826--5826
-[]\TU/lmtt/m/n/12 ##                      (0.115)               (0.229)    (0.220)[] 
- []
-
-
-Overfull \hbox (11.69975pt too wide) in paragraph at lines 5826--5826
-[]\TU/lmtt/m/n/12 ## price               -0.025***  -0.020***             -0.025***[] 
- []
-
-
-Overfull \hbox (5.51968pt too wide) in paragraph at lines 5826--5826
-[]\TU/lmtt/m/n/12 ##                      (0.002)    (0.001)               (0.002)[] 
- []
-
-
-Overfull \hbox (11.68776pt too wide) in paragraph at lines 5826--5826
-[]\TU/lmtt/m/n/12 ## catch                0.377***   0.953***              0.358***[] 
- []
-
-
-Overfull \hbox (5.50769pt too wide) in paragraph at lines 5826--5826
-[]\TU/lmtt/m/n/12 ##                      (0.110)    (0.089)               (0.110)[] 
- []
-
-
-Overfull \hbox (5.51974pt too wide) in paragraph at lines 5826--5826
-[]\TU/lmtt/m/n/12 ## income:boat                                0.0001**   0.0001*[] 
- []
-
-
-Overfull \hbox (11.69966pt too wide) in paragraph at lines 5826--5826
-[]\TU/lmtt/m/n/12 ##                                           (0.00004)   (0.0001)[] 
- []
-
-
-Overfull \hbox (11.69977pt too wide) in paragraph at lines 5826--5826
-[]\TU/lmtt/m/n/12 ## income:charter                             -0.00003   -0.00003[] 
- []
-
-
-Overfull \hbox (11.69966pt too wide) in paragraph at lines 5826--5826
-[]\TU/lmtt/m/n/12 ##                                           (0.00004)   (0.0001)[] 
- []
-
-
-Overfull \hbox (11.69977pt too wide) in paragraph at lines 5826--5826
-[]\TU/lmtt/m/n/12 ## income:pier                               -0.0001*** -0.0001**[] 
- []
-
-
-Overfull \hbox (11.69966pt too wide) in paragraph at lines 5826--5826
-[]\TU/lmtt/m/n/12 ##                                            (0.0001)   (0.0001)[] 
- []
-
-
-Overfull \hbox (17.87953pt too wide) in paragraph at lines 5826--5826
-[]\TU/lmtt/m/n/12 ## ---------------------------------------------------------------[] 
- []
-
-
-Overfull \hbox (17.86795pt too wide) in paragraph at lines 5826--5826
-[]\TU/lmtt/m/n/12 ## Log Likelihood      -1,230.784 -1,311.980 -1,477.151 -1,215.138[] 
- []
-
-[183]
-Overfull \hbox (17.87999pt too wide) in paragraph at lines 5826--5826
-[]\TU/lmtt/m/n/12 ## ===============================================================[] 
- []
-
-
-Overfull \hbox (17.87975pt too wide) in paragraph at lines 5826--5826
-[]\TU/lmtt/m/n/12 ## Note:                               *p<0.1; **p<0.05; ***p<0.01[] 
- []
-
-
-Underfull \vbox (badness 7308) has occurred while \output is active []
-
-[184] [185]
-File: EcoStat_files/figure-latex/Gumbel-1.pdf Graphic file (type pdf)
-<use EcoStat_files/figure-latex/Gumbel-1.pdf>
-[186] [187] [188]
-File: images/Figure_GEV.png Graphic file (type bmp)
-<images/Figure_GEV.png>
-[189] [190] [191] [192] [193]
-File: EcoStat_files/figure-latex/tobit1-1.pdf Graphic file (type pdf)
-<use EcoStat_files/figure-latex/tobit1-1.pdf>
-[194] [195]
-File: EcoStat_files/figure-latex/tobit2-1.pdf Graphic file (type pdf)
-<use EcoStat_files/figure-latex/tobit2-1.pdf>
-[196]
-File: EcoStat_files/figure-latex/tobit3-1.pdf Graphic file (type pdf)
-<use EcoStat_files/figure-latex/tobit3-1.pdf>
-[197] [198]
-Overfull \hbox (61.14pt too wide) in paragraph at lines 6330--6330
-[]\TU/lmtt/m/n/12 ## ======================================================================[] 
- []
-
-[199]
-Overfull \hbox (61.13948pt too wide) in paragraph at lines 6330--6330
-[]\TU/lmtt/m/n/12 ##                     --------------------------------------------------[] 
- []
-
-
-Overfull \hbox (17.87964pt too wide) in paragraph at lines 6330--6330
-[]\TU/lmtt/m/n/12 ##                           OLS           Heckman           Tobit[] 
- []
-
-
-Overfull \hbox (11.69963pt too wide) in paragraph at lines 6330--6330
-[]\TU/lmtt/m/n/12 ##                           (1)             (2)              (3)[] 
- []
-
-
-Overfull \hbox (61.13948pt too wide) in paragraph at lines 6330--6330
-[]\TU/lmtt/m/n/12 ## ----------------------------------------------------------------------[] 
- []
-
-
-Overfull \hbox (24.03575pt too wide) in paragraph at lines 6330--6330
-[]\TU/lmtt/m/n/12 ## educ                    0.481***       0.759***         0.642***[] 
- []
-
-
-Overfull \hbox (24.04767pt too wide) in paragraph at lines 6330--6330
-[]\TU/lmtt/m/n/12 ##                         (0.067)         (0.270)          (0.081)[] 
- []
-
-
-Overfull \hbox (24.04768pt too wide) in paragraph at lines 6330--6330
-[]\TU/lmtt/m/n/12 ## exper                    0.032           0.430          0.461***[] 
- []
-
-
-Overfull \hbox (24.01169pt too wide) in paragraph at lines 6330--6330
-[]\TU/lmtt/m/n/12 ##                         (0.062)         (0.369)          (0.068)[] 
- []
-
-
-Overfull \hbox (30.22774pt too wide) in paragraph at lines 6330--6330
-[]\TU/lmtt/m/n/12 ## I(exper2)               -0.0003         -0.008          -0.009***[] 
- []
-
-
-Overfull \hbox (24.05966pt too wide) in paragraph at lines 6330--6330
-[]\TU/lmtt/m/n/12 ##                         (0.002)         (0.008)          (0.002)[] 
- []
-
-
-Overfull \hbox (17.86768pt too wide) in paragraph at lines 6330--6330
-[]\TU/lmtt/m/n/12 ## city                     0.449           0.113           -0.087[] 
- []
-
-
-Overfull \hbox (24.05966pt too wide) in paragraph at lines 6330--6330
-[]\TU/lmtt/m/n/12 ##                         (0.318)         (0.522)          (0.378)[] 
- []
-
-
-Overfull \hbox (30.21576pt too wide) in paragraph at lines 6330--6330
-[]\TU/lmtt/m/n/12 ## Constant               -2.561***        -12.251        -10.395***[] 
- []
-
-
-Overfull \hbox (24.02368pt too wide) in paragraph at lines 6330--6330
-[]\TU/lmtt/m/n/12 ##                         (0.929)         (8.853)          (1.095)[] 
- []
-
-
-Overfull \hbox (61.13948pt too wide) in paragraph at lines 6330--6330
-[]\TU/lmtt/m/n/12 ## ----------------------------------------------------------------------[] 
- []
-
-
-Overfull \hbox (11.69972pt too wide) in paragraph at lines 6330--6330
-[]\TU/lmtt/m/n/12 ## Observations              428             753              753[] 
- []
-
-
-Overfull \hbox (30.2277pt too wide) in paragraph at lines 6330--6330
-[]\TU/lmtt/m/n/12 ## Log Likelihood                                         -1,462.700[] 
- []
-
-
-Overfull \hbox (61.12766pt too wide) in paragraph at lines 6330--6330
-[]\TU/lmtt/m/n/12 ## Wald Test                                          153.892*** (df = 4)[] 
- []
-
-
-Overfull \hbox (61.14pt too wide) in paragraph at lines 6330--6330
-[]\TU/lmtt/m/n/12 ## ======================================================================[] 
- []
-
-
-Overfull \hbox (61.1397pt too wide) in paragraph at lines 6330--6330
-[]\TU/lmtt/m/n/12 ## Note:                                      *p<0.1; **p<0.05; ***p<0.01[] 
- []
-
-File: EcoStat_files/figure-latex/tobit5-1.pdf Graphic file (type pdf)
-<use EcoStat_files/figure-latex/tobit5-1.pdf>
-[200] [201] [202]
-File: EcoStat_files/figure-latex/SampleSelec-1.pdf Graphic file (type pdf)
-<use EcoStat_files/figure-latex/SampleSelec-1.pdf>
-[203] [204] [205] [206]
-Overfull \hbox (42.59999pt too wide) in paragraph at lines 6557--6557
-[]\TU/lmtt/m/n/12 ## ===================================================================[] 
- []
-
-
-Overfull \hbox (42.5995pt too wide) in paragraph at lines 6557--6557
-[]\TU/lmtt/m/n/12 ##                     -----------------------------------------------[] 
- []
-
-
-Overfull \hbox (30.23973pt too wide) in paragraph at lines 6557--6557
-[]\TU/lmtt/m/n/12 ##                     logistic   probit      Heckman      selection[] 
- []
-
-
-Overfull \hbox (11.69966pt too wide) in paragraph at lines 6557--6557
-[]\TU/lmtt/m/n/12 ##                        (1)       (2)         (3)           (4)[] 
- []
-
-
-Overfull \hbox (42.5995pt too wide) in paragraph at lines 6557--6557
-[]\TU/lmtt/m/n/12 ## -------------------------------------------------------------------[] 
- []
-
-
-Overfull \hbox (17.87968pt too wide) in paragraph at lines 6557--6557
-[]\TU/lmtt/m/n/12 ## age                   0.012     0.010       0.010         0.010[] 
- []
-
-[207]
-Overfull \hbox (23.98775pt too wide) in paragraph at lines 6557--6557
-[]\TU/lmtt/m/n/12 ##                      (0.114)   (0.069)     (0.069)       (0.069)[] 
- []
-
-
-Overfull \hbox (24.05975pt too wide) in paragraph at lines 6557--6557
-[]\TU/lmtt/m/n/12 ## I(age2)              -0.001    -0.0005     -0.0005       -0.0005[] 
- []
-
-
-Overfull \hbox (24.05971pt too wide) in paragraph at lines 6557--6557
-[]\TU/lmtt/m/n/12 ##                      (0.001)   (0.001)     (0.001)       (0.001)[] 
- []
-
-
-Overfull \hbox (30.2278pt too wide) in paragraph at lines 6557--6557
-[]\TU/lmtt/m/n/12 ## kids5               -1.409*** -0.855***   -0.855***     -0.854***[] 
- []
-
-
-Overfull \hbox (24.02373pt too wide) in paragraph at lines 6557--6557
-[]\TU/lmtt/m/n/12 ##                      (0.198)   (0.116)     (0.115)       (0.116)[] 
- []
-
-
-Overfull \hbox (30.21582pt too wide) in paragraph at lines 6557--6557
-[]\TU/lmtt/m/n/12 ## huswage             -0.069*** -0.042***   -0.042***     -0.042***[] 
- []
-
-
-Overfull \hbox (24.05971pt too wide) in paragraph at lines 6557--6557
-[]\TU/lmtt/m/n/12 ##                      (0.020)   (0.012)     (0.012)       (0.013)[] 
- []
-
-
-Overfull \hbox (24.0598pt too wide) in paragraph at lines 6557--6557
-[]\TU/lmtt/m/n/12 ## educ                0.244***  0.148***    0.148***      0.148***[] 
- []
-
-
-Overfull \hbox (24.05971pt too wide) in paragraph at lines 6557--6557
-[]\TU/lmtt/m/n/12 ##                      (0.040)   (0.024)     (0.023)       (0.024)[] 
- []
-
-
-Overfull \hbox (17.8318pt too wide) in paragraph at lines 6557--6557
-[]\TU/lmtt/m/n/12 ## Constant             -0.938    -0.620      -0.620        -0.615[] 
- []
-
-
-Overfull \hbox (24.03572pt too wide) in paragraph at lines 6557--6557
-[]\TU/lmtt/m/n/12 ##                      (2.508)   (1.506)     (1.516)       (1.518)[] 
- []
-
-
-Overfull \hbox (42.5995pt too wide) in paragraph at lines 6557--6557
-[]\TU/lmtt/m/n/12 ## -------------------------------------------------------------------[] 
- []
-
-
-Overfull \hbox (11.69975pt too wide) in paragraph at lines 6557--6557
-[]\TU/lmtt/m/n/12 ## Observations           753       753         753           753[] 
- []
-
-
-Overfull \hbox (23.99982pt too wide) in paragraph at lines 6557--6557
-[]\TU/lmtt/m/n/12 ## Log Likelihood      -459.955  -459.901                  -891.177[] 
- []
-
-
-Overfull \hbox (42.59964pt too wide) in paragraph at lines 6557--6557
-[]\TU/lmtt/m/n/12 ## rho                                         0.018     0.014 (0.203)[] 
- []
-
-
-Overfull \hbox (42.59999pt too wide) in paragraph at lines 6557--6557
-[]\TU/lmtt/m/n/12 ## ===================================================================[] 
- []
-
-
-Overfull \hbox (42.59972pt too wide) in paragraph at lines 6557--6557
-[]\TU/lmtt/m/n/12 ## Note:                                   *p<0.1; **p<0.05; ***p<0.01[] 
- []
-
-
-Overfull \hbox (24.05998pt too wide) in paragraph at lines 6596--6596
-[]\TU/lmtt/m/n/12 ## ================================================================[] 
- []
-
-
-Overfull \hbox (24.05952pt too wide) in paragraph at lines 6596--6596
-[]\TU/lmtt/m/n/12 ##                     --------------------------------------------[] 
- []
-
-
-Overfull \hbox (11.69968pt too wide) in paragraph at lines 6596--6596
-[]\TU/lmtt/m/n/12 ##                           OLS           Heckman      selection[] 
- []
-
-
-Overfull \hbox (24.05952pt too wide) in paragraph at lines 6596--6596
-[]\TU/lmtt/m/n/12 ## ----------------------------------------------------------------[] 
- []
-
-
-Overfull \hbox (5.48378pt too wide) in paragraph at lines 6596--6596
-[]\TU/lmtt/m/n/12 ## educ                    0.106***       0.106***      0.106***[] 
- []
-
-
-Overfull \hbox (5.51968pt too wide) in paragraph at lines 6596--6596
-[]\TU/lmtt/m/n/12 ##                         (0.014)         (0.017)       (0.017)[] 
- []
-
-
-Overfull \hbox (5.51976pt too wide) in paragraph at lines 6596--6596
-[]\TU/lmtt/m/n/12 ## exper                   0.041***       0.041***      0.041***[] 
- []
-
-[208]
-Overfull \hbox (5.51968pt too wide) in paragraph at lines 6596--6596
-[]\TU/lmtt/m/n/12 ##                         (0.013)         (0.013)       (0.013)[] 
- []
-
-
-Overfull \hbox (5.51979pt too wide) in paragraph at lines 6596--6596
-[]\TU/lmtt/m/n/12 ## I(exper2)               -0.001**       -0.001**      -0.001**[] 
- []
-
-
-Overfull \hbox (5.51973pt too wide) in paragraph at lines 6596--6596
-[]\TU/lmtt/m/n/12 ##                         (0.0004)       (0.0004)      (0.0004)[] 
- []
-
-
-Overfull \hbox (5.45972pt too wide) in paragraph at lines 6596--6596
-[]\TU/lmtt/m/n/12 ##                         (0.068)         (0.069)       (0.069)[] 
- []
-
-
-Overfull \hbox (5.51978pt too wide) in paragraph at lines 6596--6596
-[]\TU/lmtt/m/n/12 ## Constant               -0.531***        -0.547*      -0.544**[] 
- []
-
-
-Overfull \hbox (5.4837pt too wide) in paragraph at lines 6596--6596
-[]\TU/lmtt/m/n/12 ##                         (0.199)         (0.289)       (0.272)[] 
- []
-
-
-Overfull \hbox (24.05952pt too wide) in paragraph at lines 6596--6596
-[]\TU/lmtt/m/n/12 ## ----------------------------------------------------------------[] 
- []
-
-
-Overfull \hbox (5.50772pt too wide) in paragraph at lines 6596--6596
-[]\TU/lmtt/m/n/12 ## Log Likelihood                                       -891.177[] 
- []
-
-
-Overfull \hbox (24.05966pt too wide) in paragraph at lines 6596--6596
-[]\TU/lmtt/m/n/12 ## rho                                      0.018     0.014 (0.203)[] 
- []
-
-
-Overfull \hbox (24.05998pt too wide) in paragraph at lines 6596--6596
-[]\TU/lmtt/m/n/12 ## ================================================================[] 
- []
-
-
-Overfull \hbox (24.05974pt too wide) in paragraph at lines 6596--6596
-[]\TU/lmtt/m/n/12 ## Note:                                *p<0.1; **p<0.05; ***p<0.01[] 
- []
-
-[209] [210] [211]
-File: EcoStat_files/figure-latex/countdata1-1.pdf Graphic file (type pdf)
-<use EcoStat_files/figure-latex/countdata1-1.pdf>
-[212]
-Overfull \hbox (79.68001pt too wide) in paragraph at lines 6774--6774
-[]\TU/lmtt/m/n/12 ## =========================================================================[] 
- []
-
-
-Overfull \hbox (79.67946pt too wide) in paragraph at lines 6774--6774
-[]\TU/lmtt/m/n/12 ##                   -------------------------------------------------------[] 
- []
-
-
-Overfull \hbox (36.41963pt too wide) in paragraph at lines 6774--6774
-[]\TU/lmtt/m/n/12 ##                      (1)        (2)           (3)              (4)[] 
- []
-
-
-Overfull \hbox (79.67946pt too wide) in paragraph at lines 6774--6774
-[]\TU/lmtt/m/n/12 ## -------------------------------------------------------------------------[] 
- []
-
-
-Overfull \hbox (54.95975pt too wide) in paragraph at lines 6774--6774
-[]\TU/lmtt/m/n/12 ## LC                -0.155***  -0.051***     -0.057***        -0.058***[] 
- []
-
-
-Overfull \hbox (48.75569pt too wide) in paragraph at lines 6774--6774
-[]\TU/lmtt/m/n/12 ##                    (0.020)    (0.003)       (0.006)          (0.006)[] 
- []
-
-
-Overfull \hbox (54.93578pt too wide) in paragraph at lines 6774--6774
-[]\TU/lmtt/m/n/12 ## idp               -0.546***  -0.183***     -0.212***        -0.268***[] 
- []
-
-
-Overfull \hbox (48.77968pt too wide) in paragraph at lines 6774--6774
-[]\TU/lmtt/m/n/12 ##                    (0.075)    (0.011)       (0.023)          (0.023)[] 
- []
-
-
-Overfull \hbox (54.94777pt too wide) in paragraph at lines 6774--6774
-[]\TU/lmtt/m/n/12 ## lpi               0.230***   0.095***       0.088***         0.041***[] 
- []
-
-[213]
-Overfull \hbox (48.77968pt too wide) in paragraph at lines 6774--6774
-[]\TU/lmtt/m/n/12 ##                    (0.012)    (0.002)       (0.004)          (0.004)[] 
- []
-
-
-Overfull \hbox (54.94777pt too wide) in paragraph at lines 6774--6774
-[]\TU/lmtt/m/n/12 ## fmde              -0.073***  -0.029***     -0.030***        -0.038***[] 
- []
-
-
-Overfull \hbox (48.77968pt too wide) in paragraph at lines 6774--6774
-[]\TU/lmtt/m/n/12 ##                    (0.012)    (0.002)       (0.004)          (0.003)[] 
- []
-
-
-Overfull \hbox (54.91179pt too wide) in paragraph at lines 6774--6774
-[]\TU/lmtt/m/n/12 ## physlm            0.945***   0.217***       0.229***         0.269***[] 
- []
-
-
-Overfull \hbox (48.77968pt too wide) in paragraph at lines 6774--6774
-[]\TU/lmtt/m/n/12 ##                    (0.104)    (0.013)       (0.031)          (0.030)[] 
- []
-
-
-Overfull \hbox (54.94777pt too wide) in paragraph at lines 6774--6774
-[]\TU/lmtt/m/n/12 ## disea             0.177***   0.050***       0.062***         0.038***[] 
- []
-
-
-Overfull \hbox (48.7797pt too wide) in paragraph at lines 6774--6774
-[]\TU/lmtt/m/n/12 ##                    (0.004)   (0.0005)       (0.001)          (0.001)[] 
- []
-
-
-Overfull \hbox (54.93578pt too wide) in paragraph at lines 6774--6774
-[]\TU/lmtt/m/n/12 ## hlthg             0.270***   0.126***       0.068***         -0.044**[] 
- []
-
-
-Overfull \hbox (48.7437pt too wide) in paragraph at lines 6774--6774
-[]\TU/lmtt/m/n/12 ##                    (0.066)    (0.009)       (0.020)          (0.020)[] 
- []
-
-
-Overfull \hbox (42.58774pt too wide) in paragraph at lines 6774--6774
-[]\TU/lmtt/m/n/12 ## hlthf             0.455***   0.149***       0.084**           0.017[] 
- []
-
-
-Overfull \hbox (48.75569pt too wide) in paragraph at lines 6774--6774
-[]\TU/lmtt/m/n/12 ##                    (0.123)    (0.016)       (0.037)          (0.036)[] 
- []
-
-
-Overfull \hbox (48.76775pt too wide) in paragraph at lines 6774--6774
-[]\TU/lmtt/m/n/12 ## hlthp             1.537***   0.197***       0.185**          0.178**[] 
- []
-
-
-Overfull \hbox (48.75569pt too wide) in paragraph at lines 6774--6774
-[]\TU/lmtt/m/n/12 ##                    (0.263)    (0.027)       (0.076)          (0.074)[] 
- []
-
-
-Overfull \hbox (54.93561pt too wide) in paragraph at lines 6774--6774
-[]\TU/lmtt/m/n/12 ## Constant                                                     0.664***[] 
- []
-
-
-Overfull \hbox (48.77954pt too wide) in paragraph at lines 6774--6774
-[]\TU/lmtt/m/n/12 ##                                                              (0.025)[] 
- []
-
-
-Overfull \hbox (79.67946pt too wide) in paragraph at lines 6774--6774
-[]\TU/lmtt/m/n/12 ## -------------------------------------------------------------------------[] 
- []
-
-
-Overfull \hbox (48.7318pt too wide) in paragraph at lines 6774--6774
-[]\TU/lmtt/m/n/12 ## Observations       20,190     20,190         20,190           20,190[] 
- []
-
-
-Overfull \hbox (61.09186pt too wide) in paragraph at lines 6774--6774
-[]\TU/lmtt/m/n/12 ## Log Likelihood              -64,221.340   -43,745.860      -43,384.660[] 
- []
-
-
-Overfull \hbox (79.6797pt too wide) in paragraph at lines 6774--6774
-[]\TU/lmtt/m/n/12 ## theta                                   0.732*** (0.010) 0.773*** (0.011)[] 
- []
-
-
-Overfull \hbox (61.09186pt too wide) in paragraph at lines 6774--6774
-[]\TU/lmtt/m/n/12 ## Akaike Inf. Crit.           128,460.700    87,509.710       86,789.320[] 
- []
-
-
-Overfull \hbox (79.68001pt too wide) in paragraph at lines 6774--6774
-[]\TU/lmtt/m/n/12 ## =========================================================================[] 
- []
-
-
-Overfull \hbox (79.67967pt too wide) in paragraph at lines 6774--6774
-[]\TU/lmtt/m/n/12 ## Note:                                         *p<0.1; **p<0.05; ***p<0.01[] 
- []
-
-[214]
-Overfull \hbox (42.5995pt too wide) in paragraph at lines 6806--6806
-[]\TU/lmtt/m/n/12 ##              0         1         2          3          4          5[] 
- []
-
-
-Overfull \hbox (42.50395pt too wide) in paragraph at lines 6806--6806
-[]\TU/lmtt/m/n/12 ## [1,] 0.3124319 0.1890540 0.1385339 0.09331352 0.06661714 0.04794453[] 
- []
-
-
-Overfull \hbox (42.55194pt too wide) in paragraph at lines 6806--6806
-[]\TU/lmtt/m/n/12 ## [2,] 0.1220592 0.2230328 0.2271621 0.17173478 0.10888940 0.06244353[] 
- []
-
-
-Overfull \hbox (42.49196pt too wide) in paragraph at lines 6806--6806
-[]\TU/lmtt/m/n/12 ## [3,] 0.3486824 0.1884640 0.1219340 0.08385899 0.05968603 0.04350209[] 
- []
-
-[215] [216] [217]
-Overfull \hbox (79.67978pt too wide) in paragraph at lines 6965--6965
-[]\TU/lmtt/m/n/12 ## Model 1: mdvis ~ LC + idp + lpi + fmde + physlm + disea + hlthg + hlthf +[] 
- []
-
-
-Overfull \hbox (85.85979pt too wide) in paragraph at lines 6965--6965
-[]\TU/lmtt/m/n/12 ## Model 2: mdvis ~ idp + lpi + fmde + physlm + disea + hlthg + hlthf + hlthp[] 
- []
-
-
-Overfull \hbox (11.69984pt too wide) in paragraph at lines 6965--6965
-[]\TU/lmtt/m/n/12 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1[] 
- []
-
-[218]
-Overfull \hbox (48.7795pt too wide) in paragraph at lines 6988--6988
-[]\TU/lmtt/m/n/12 ##              0          1         2          3          4          5[] 
- []
-
-
-Overfull \hbox (48.65996pt too wide) in paragraph at lines 6988--6988
-[]\TU/lmtt/m/n/12 ## [1,] 0.3124319 0.18905399 0.1385339 0.09331352 0.06661714 0.04794453[] 
- []
-
-
-Overfull \hbox (48.73195pt too wide) in paragraph at lines 6988--6988
-[]\TU/lmtt/m/n/12 ## [2,] 0.1220592 0.22303277 0.2271621 0.17173478 0.10888940 0.06244353[] 
- []
-
-
-Overfull \hbox (48.65996pt too wide) in paragraph at lines 6988--6988
-[]\TU/lmtt/m/n/12 ## [3,] 0.3486824 0.18846395 0.1219340 0.08385899 0.05968603 0.04350209[] 
- []
-
-
-Overfull \hbox (48.65994pt too wide) in paragraph at lines 6988--6988
-[]\TU/lmtt/m/n/12 ## [4,] 0.3124319 0.06056959 0.1083120 0.13262624 0.12553899 0.09847017[] 
- []
-
-
-Overfull \hbox (48.67195pt too wide) in paragraph at lines 6988--6988
-[]\TU/lmtt/m/n/12 ## [5,] 0.3124684 0.06053026 0.1082799 0.13262562 0.12556531 0.09850218[] 
- []
-
-[219] [220
+[144]
+Chapter 8.
+[145
 
 ]
-Chapter 8.
-[221]
-Underfull \hbox (badness 1917) in paragraph at lines 7032--7033
-[][]\TU/lmr/bx/n/12 Example 8.1 \TU/lmr/m/n/12 (ARCH process)\TU/lmr/bx/n/12 . []\TU/lmr/m/n/12 The Autoregressive conditional het-
- []
-
-[222]
-Overfull \hbox (15.49843pt too wide) in paragraph at lines 7076--7078
-\TU/lmr/m/n/12 where $[][][][][][] [][][] [] [] [][][]$ is the joint distribution of $[][][] [][][] [] [] [][]$. 
- []
-
 File: EcoStat_files/figure-latex/nonstat1-1.pdf Graphic file (type pdf)
 <use EcoStat_files/figure-latex/nonstat1-1.pdf>
+[146]
 File: EcoStat_files/figure-latex/nonstat2-1.pdf Graphic file (type pdf)
 <use EcoStat_files/figure-latex/nonstat2-1.pdf>
 File: EcoStat_files/figure-latex/autocov-1.pdf Graphic file (type pdf)
 <use EcoStat_files/figure-latex/autocov-1.pdf>
 File: EcoStat_files/figure-latex/autocov2-1.pdf Graphic file (type pdf)
 <use EcoStat_files/figure-latex/autocov2-1.pdf>
-[223] [224] [225] [226] [227]
+[147] [148] [149]
 File: EcoStat_files/figure-latex/TVTCL-1.pdf Graphic file (type pdf)
 <use EcoStat_files/figure-latex/TVTCL-1.pdf>
-[228] [229] [230]
-Overfull \hbox (19.12221pt too wide) in alignment at lines 7258--7261
- [][][] []
- []
+[150] [151]
 
-[231]
+LaTeX Warning: Reference `eq:invertible' on page 152 undefined on input line 5825.
+
+[152]
 File: EcoStat_files/figure-latex/simMA-1.pdf Graphic file (type pdf)
 <use EcoStat_files/figure-latex/simMA-1.pdf>
-[232]
-Underfull \hbox (badness 1237) in paragraph at lines 7309--7310
-[]\TU/lmr/m/n/12 See Appendix 3.A in Hamilton. “Well behaved” means that
- []
-
-[233]
-Overfull \hbox (31.90216pt too wide) in alignment at lines 7371--7376
- [][][] []
- []
-
-[234] [235] [236] [237] [238] [239]
+[153] [154] [155] [156] [157] [158]
 File: EcoStat_files/figure-latex/pacf-1.pdf Graphic file (type pdf)
 <use EcoStat_files/figure-latex/pacf-1.pdf>
-[240] [241] [242]
-File: EcoStat_files/figure-latex/IRFarma-1.pdf Graphic file (type pdf)
-<use EcoStat_files/figure-latex/IRFarma-1.pdf>
-[243]
-File: EcoStat_files/figure-latex/IRFgdp1-1.pdf Graphic file (type pdf)
-<use EcoStat_files/figure-latex/IRFgdp1-1.pdf>
-[244] [245]
-File: EcoStat_files/figure-latex/IRFgdp2-1.pdf Graphic file (type pdf)
-<use EcoStat_files/figure-latex/IRFgdp2-1.pdf>
+[159] [160]
 
-Underfull \hbox (badness 4353) in paragraph at lines 7815--7815
-[]\TU/lmr/bx/n/14.4 ARMA processes with exogenous variables
- []
+LaTeX Warning: Reference `eq:invertible' on page 161 undefined on input line 6275.
 
-[246] [247] [248]
-File: EcoStat_files/figure-latex/freez-1.pdf Graphic file (type pdf)
-<use EcoStat_files/figure-latex/freez-1.pdf>
+[161] [162]
 
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-[249] [250] [251] [252]
-File: EcoStat_files/figure-latex/freez4-1.pdf Graphic file (type pdf)
-<use EcoStat_files/figure-latex/freez4-1.pdf>
-[253]
-File: EcoStat_files/figure-latex/Ramey1fig-1.pdf Graphic file (type pdf)
-<use EcoStat_files/figure-latex/Ramey1fig-1.pdf>
-[254]
-File: EcoStat_files/figure-latex/Ramey3-1.pdf Graphic file (type pdf)
-<use EcoStat_files/figure-latex/Ramey3-1.pdf>
-[255] [256] [257]
-Underfull \hbox (badness 2913) in paragraph at lines 8214--8216
-\TU/lmr/m/n/12 where $[][][][][][] [] [] [][][] [][]$ is the marginal distribution of $[][] [][]
- []
-
-[258] [259]
-Overfull \hbox (82.26929pt too wide) in alignment at lines 8285--8288
- [][][] []
- []
-
-[260] [261] [262] [263] [264]
-Overfull \hbox (98.40404pt too wide) in paragraph at lines 8478--8480
-\TU/lmr/m/n/12 If $[][] [][][][] [] []$, we have: $[][] [] [] [] [][][][][] []
- []
+LaTeX Warning: Reference `def:NW' on page 163 undefined on input line 6361.
 
 
-Underfull \hbox (badness 1077) in paragraph at lines 8478--8480
-[][][][][] [] []$\TU/lmr/m/n/12 , which implies, in the same spirit as before, that
- []
-
-[265] [266]
-Overfull \hbox (50.49586pt too wide) in alignment at lines 8561--8566
- [][][] []
- []
-
-[267] [268] [269]
-File: EcoStat_files/figure-latex/simVAR-1.pdf Graphic file (type pdf)
-<use EcoStat_files/figure-latex/simVAR-1.pdf>
-[270]
-
-LaTeX Warning: Reference `eq:VARMAstd' on page 271 undefined on input line 8701.
+LaTeX Warning: Reference `exm:SwissGrowthAIC' on page 163 undefined on input line 6372.
 
 
-Underfull \vbox (badness 10000) has occurred while \output is active []
+LaTeX Warning: Reference `exm:SwissGrowthAIC' on page 163 undefined on input line 6374.
 
-[271] [272] [273]
-Overfull \hbox (40.25853pt too wide) in paragraph at lines 8779--8780
-[]\TU/lmr/m/n/12 Using []Hamilton[] ([]1994[])’s notations, denote with $[]$ the matrix $[][]$
- []
+[163]
 
-[274] [275]
-Underfull \hbox (badness 2269) in paragraph at lines 8872--8873
-[]\TU/lmr/m/n/12 Naturally, in practice, $[]$ is replaced with $[]$, $[]$ is replaced with
- []
+LaTeX Warning: Reference `def:SVAR' on page 164 undefined on input line 6419.
 
-[276] [277] [278] [279] [280] [281] [282]
-File: EcoStat_files/figure-latex/CEE-1.pdf Graphic file (type pdf)
-<use EcoStat_files/figure-latex/CEE-1.pdf>
-[283] [284]
-File: EcoStat_files/figure-latex/BQ1-1.pdf Graphic file (type pdf)
-<use EcoStat_files/figure-latex/BQ1-1.pdf>
-[285] [286]
-File: EcoStat_files/figure-latex/BQ4-1.pdf Graphic file (type pdf)
-<use EcoStat_files/figure-latex/BQ4-1.pdf>
-[287] [288] [289] [290] [291]
-File: EcoStat_files/figure-latex/signrestr1-1.pdf Graphic file (type pdf)
-<use EcoStat_files/figure-latex/signrestr1-1.pdf>
-[292] [293] [294] [295]
-Overfull \hbox (3.69075pt too wide) in paragraph at lines 9573--9576
-[]$[] [] [][][][] [][][]$\TU/lmr/m/n/12 , with $[] [] []$ and $[] [] []$
- []
-
-File: images/Figure_A.pdf Graphic file (type pdf)
-<use images/Figure_A.pdf>
-File: EcoStat_files/figure-latex/preMadeFigureICA2-1.pdf Graphic file (type pdf)
-<use EcoStat_files/figure-latex/preMadeFigureICA2-1.pdf>
-[296]
-File: images/Figure_C.pdf Graphic file (type pdf)
-<use images/Figure_C.pdf>
-Missing character: There is no 𝜂 (U+1D702) in font [lmroman12-regular]:mapping=tex-text;!
-Missing character: There is no 𝜀 (U+1D700) in font [lmroman12-regular]:mapping=tex-text;!
-
-Underfull \hbox (badness 1895) in paragraph at lines 9600--9601
-\TU/lmr/m/n/12 signal-processingliterature, called \TU/lmr/bx/n/12 independent component analysis
- []
-
-File: images/Figure_E.pdf Graphic file (type pdf)
-<use images/Figure_E.pdf>
-[297] [298] [299]
-Overfull \hbox (16.43521pt too wide) in paragraph at lines 9701--9701
-[]|\TU/lmr/m/n/12 Gaussian|  
- []
-
-
-Overfull \hbox (10.02722pt too wide) in paragraph at lines 9702--9702
-[]|\TU/lmr/m/n/12 Student 
- []
-
-
-Overfull \hbox (16.13171pt too wide) in paragraph at lines 9702--9702
-[]|$[][] [] []$|  
- []
-
-
-Overfull \hbox (26.01122pt too wide) in paragraph at lines 9703--9703
-[]|\TU/lmr/m/n/12 Hyperbolic 
- []
-
-
-Overfull \hbox (32.68321pt too wide) in paragraph at lines 9704--9704
-[]|\TU/lmr/m/n/12 Subgaussian|  
- []
-
-[300]
-Underfull \hbox (badness 3803) in paragraph at lines 9710--9711
-[]\TU/lmr/m/n/12 The asymptotic variance-covariance matrix of $[][][][][][] [] [][][]$ is
- []
-
-[301] [302] [303] [304]
-File: EcoStat_files/figure-latex/ICAFigIRF-1.pdf Graphic file (type pdf)
-<use EcoStat_files/figure-latex/ICAFigIRF-1.pdf>
-[305] [306] [307] [308]
-Underfull \vbox (badness 10000) detected at line 9981
- []
-
-
-Underfull \vbox (badness 10000) detected at line 9981
- []
-
-[309]
-File: EcoStat_files/figure-latex/FAVAR-1.pdf Graphic file (type pdf)
-<use EcoStat_files/figure-latex/FAVAR-1.pdf>
-[310] [311]
-Overfull \hbox (87.08461pt too wide) in paragraph at lines 10033--10034
-[]\TU/lmr/m/n/12 The IRFs can be estimated by LP, taking $[][] [] [][]$ and $[][] [] [][][][][][][] [][][] [][][][][][] [][][] [][][][]$. 
- []
-
-[312]
-File: images/GSS2005_HFI.pdf Graphic file (type pdf)
-<use images/GSS2005_HFI.pdf>
-[313] [314] [315] [316]
-File: EcoStat_files/figure-latex/essaiIV0-1.pdf Graphic file (type pdf)
-<use EcoStat_files/figure-latex/essaiIV0-1.pdf>
-[317]
-File: EcoStat_files/figure-latex/essaiIV1-1.pdf Graphic file (type pdf)
-<use EcoStat_files/figure-latex/essaiIV1-1.pdf>
-[318] [319] [320]
-Underfull \hbox (badness 1655) in paragraph at lines 10314--10316
-[]\TU/lmr/m/n/12 Asymptotic normal approximation ([]Lütkepohl[] ([]1990[])), or Delta
- []
-
-
-LaTeX Warning: Reference `LLNappendix' on page 321 undefined on input line 10327.
-
-[321] [322] [323]
-Underfull \hbox (badness 4819) in paragraph at lines 10448--10450
-[]\TU/lmr/m/n/12 Perform $[]$ replications and compute the median coefficients
- []
-
-[324]
-Overfull \hbox (104.39983pt too wide) in paragraph at lines 10505--10505
-[]\TU/lmtt/m/n/12 ##         inv(-1)   inc(-1)  con(-1)    inv(-2)   inc(-2)   con(-2)       const[] 
- []
-
-
-Overfull \hbox (104.29195pt too wide) in paragraph at lines 10505--10505
-[]\TU/lmtt/m/n/12 ## [1,] -0.3228276 0.0698514 1.066291 -0.1555651 0.1350925 1.0044744 -0.01895355[] 
- []
-
-
-Overfull \hbox (104.24396pt too wide) in paragraph at lines 10505--10505
-[]\TU/lmtt/m/n/12 ## [2,] -0.3196310 0.1459888 0.961219 -0.1605511 0.1146050 0.9343938 -0.01672199[] 
- []
-
-
-Overfull \hbox (104.24396pt too wide) in paragraph at lines 10505--10505
-[]\TU/lmtt/m/n/12 ## [3,] -0.3196310 0.1459888 0.961219 -0.1605511 0.1146050 0.9343938 -0.01672199[] 
- []
-
-[325] [326] [327] [328] [329] [330]
-
-LaTeX Warning: Reference `def:NW' on page 331 undefined on input line 10744.
-
-[331]
-Overfull \hbox (67.29582pt too wide) in paragraph at lines 10798--10798
-[]\TU/lmtt/m/n/12 ## DM = -0.82989, Forecast horizon = 2, Loss function power = 2, p-value =[] 
- []
-
-[332]
-Overfull \hbox (67.29582pt too wide) in paragraph at lines 10827--10827
-[]\TU/lmtt/m/n/12 ## DM = -0.82989, Forecast horizon = 2, Loss function power = 2, p-value =[] 
- []
-
-[333] [334
+[164] [165] [166
 
 ]
 Chapter 9.
-
-Underfull \vbox (badness 1147) has occurred while \output is active []
-
-[335] [336] [337]
+[167] [168]
 File: EcoStat_files/figure-latex/USydsPCA1-1.pdf Graphic file (type pdf)
 <use EcoStat_files/figure-latex/USydsPCA1-1.pdf>
-[338] [339]
-Overfull \hbox (8.45407pt too wide) in alignment at lines 11049--11053
- [][][] []
- []
-
-[340] [341] [342]
-Overfull \hbox (0.5146pt too wide) in paragraph at lines 11191--11192
+[169] [170] [171] [172]
+Underfull \hbox (badness 2237) in paragraph at lines 6808--6809
 []$[] [] [] [][][][]$ \TU/lmr/m/n/12 is a convex function. Therefore $[][][][] [] [][][][][][][][][][][] []
  []
 
-[343]
+[173]
 File: EcoStat_files/figure-latex/Cauchy-1.pdf Graphic file (type pdf)
 <use EcoStat_files/figure-latex/Cauchy-1.pdf>
-[344]
-Underfull \vbox (badness 7099) has occurred while \output is active []
+[174] [175] [176]
 
-[345] [346]
+Package hyperref Warning: Suppressing link with empty target on input line 6977.
 
-Package hyperref Warning: Suppressing link with empty target on input line 11360.
+[177]
+Overfull \hbox (31.16512pt too wide) in paragraph at lines 7048--7049
+[]\TU/lmr/m/n/12 Let us introduce the r.v. $[][] [][] [][][] [] [][]$. We have $[][][][][] [] [][]$.
+ []
 
-[347] [348] [349] [350]
+[178]
 File: EcoStat_files/figure-latex/inverseMills-1.pdf Graphic file (type pdf)
 <use EcoStat_files/figure-latex/inverseMills-1.pdf>
-[351] [352] [353] [354] [355] [356]
+[179] [180] [181] [182] [183]
 
-LaTeX Warning: Reference `(' on page 357 undefined on input line 11702.
-
-
-LaTeX Warning: Reference `(' on page 357 undefined on input line 11717.
+LaTeX Warning: Reference `(' on page 184 undefined on input line 7319.
 
 
-Overfull \hbox (33.54968pt too wide) in alignment at lines 11737--11743
- [][][] []
- []
+LaTeX Warning: Reference `(' on page 184 undefined on input line 7334.
 
-[357]
-Overfull \hbox (68.05292pt too wide) in alignment at lines 11756--11761
- [][][] []
- []
+[184] [185]
 
-[358]
-Overfull \hbox (36.3554pt too wide) detected at line 11770
-[] [] [] [] [] [][][][]
- []
+LaTeX Warning: Reference `prp:estimVARGaussian' on page 186 undefined on input line 7423.
 
-[359]
-Overfull \hbox (6.7202pt too wide) in paragraph at lines 11802--11804
-\TU/lmr/m/n/12 This implies that $[][][][][] [] [][][][][]$ is always larger than $[][]$[],
- []
-
-[360] [361] [362] [363]
-Overfull \hbox (87.66412pt too wide) in paragraph at lines 11953--12018
+[186] [187]
+Overfull \hbox (7.90913pt too wide) in paragraph at lines 7472--7537
  [][] 
  []
 
 
-Overfull \hbox (47.19214pt too wide) in paragraph at lines 12077--12124
+Overfull \hbox (58.83714pt too wide) in paragraph at lines 7649--7702
  [][] 
  []
 
+(./EcoStat.bbl [188] [189] [190] [191] [192] [193
 
-Overfull \hbox (138.59213pt too wide) in paragraph at lines 12130--12183
- [][] 
- []
-
-(./EcoStat.bbl [364] [365] [366] [367] [368] [369
-
-] [370] [371] [372] [373] [374] [375]) [376] (./EcoStat.aux)
+] [194]) [195] (./EcoStat.aux)
 
 LaTeX Warning: There were undefined references.
 
@@ -2365,15 +1204,15 @@ LaTeX Warning: There were undefined references.
 LaTeX Warning: There were multiply-defined labels.
 
 Package rerunfilecheck Info: File `EcoStat.out' has not changed.
-(rerunfilecheck)             Checksum: 4696E7D9A6B5B99C1B07D2261DDE03F0;9526.
+(rerunfilecheck)             Checksum: 8BA2376D98308C4C07ED6E66AA5A1F54;9666.
  ) 
 Here is how much of TeX's memory you used:
- 19327 strings out of 478777
- 373731 string characters out of 5850045
- 1999979 words of memory out of 5000000
- 38963 multiletter control sequences out of 15000+600000
+ 19207 strings out of 478777
+ 363941 string characters out of 5850045
+ 1961979 words of memory out of 5000000
+ 38870 multiletter control sequences out of 15000+600000
  524886 words of font info for 142 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 86i,17n,121p,1845b,593s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 86i,14n,121p,1845b,586s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on EcoStat.pdf (376 pages).
+Output written on EcoStat.pdf (195 pages).

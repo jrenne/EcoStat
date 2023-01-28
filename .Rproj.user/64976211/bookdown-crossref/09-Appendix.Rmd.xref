@@ -10,9 +10,6 @@ h3:CLTappend Central limit theorem
 h2:GaussianVar Some properties of Gaussian variables
 fig:inverseMills $\\mathbb{E}(X|X<b)$ as a function of $b$ when $X\\sim \\mathcal{N}(0,1)$ (in black).
 h2:AppendixProof Proofs
-h2:additional-codes Additional codes
-h3:App:GEV Simulating GEV distributions
-h3:IRFDELTA Computing the covariance matrix of IRF using the delta method
 h2:statistical-tables Statistical Tables
 tab:Normal Quantiles of the $\\mathcal{N}(0,1)$ distribution. If $a$ and $b$ are respectively the row and column number; then the corresponding cell gives $\\mathbb{P}(0<X\\le a+b)$, where $X \\sim \\mathcal{N}(0,1)$.
 tab:Student Quantiles of the Student-$t$ distribution. The rows correspond to different degrees of freedom ($\\nu$, say); the columns correspond to different probabilities ($z$, say). The cell gives $q$ that is s.t. $\\mathbb{P}(-q<X<q)=z$, with $X \\sim t(\\nu)$.
