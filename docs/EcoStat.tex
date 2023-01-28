@@ -5822,7 +5822,7 @@ where \(\mathbb{V}ar(\varepsilon_t)=\sigma^2\), has the same mean and autocovari
 \[
 y_t = \mu + \varepsilon^*_t +\frac{1}{\theta}\varepsilon^*_{t-1},
 \]
-where \(\mathbb{V}ar(\varepsilon^*_t)=\theta^2\sigma^2\). That is, even if we perfectly know the mean and auto-covariances of this process, it is not possible to identify which specification is the one that has been used to generate the data. Only one of these two specifications is said to be \emph{fundamental}, that is the one that satisfies \(|\theta_1|<1\) (see Eq. \eqref{eq:invertible}).
+where \(\mathbb{V}ar(\varepsilon^*_t)=\theta^2\sigma^2\). That is, even if we perfectly know the mean and auto-covariances of this process, it is not possible to identify which specification is the one that has been used to generate the data. Only one of these two specifications is said to be \emph{fundamental}, that is the one that satisfies \(|\theta_1|<1\).
 
 \begin{definition}[MA(q) process]
 \protect\hypertarget{def:MAq}{}\label{def:MAq}A \(q^{th}\) order Moving Average process is defined through:
@@ -6251,7 +6251,7 @@ y_t = \mu + \varepsilon_t + \theta_1 \varepsilon_{t-1} + \dots + \theta_q \varep
 \]
 where \(\{\varepsilon_t\}\) is a white noise sequence (Def. \ref{def:whitenoise}).
 
-We have:
+We have:\footnote{The present reasoning relies on the assumption that the \(\varepsilon_t\)'s are observed. But this is generally not the case in practice, where the \(\varepsilon_t\)'s generally have to be estimated.}
 \begin{eqnarray*}
 &&\mathbb{E}(y_{t+h}|\varepsilon_{t},\varepsilon_{t-1},\dots) =\\
 &&\left\{
@@ -6271,8 +6271,6 @@ and
 \end{array}
 \right.
 \end{eqnarray*}
-
-Remark: The previous reasoning relies on the assumption that the \(\varepsilon_t\)s are observed. But this is generally not the case in practice. Note that consistent estimates are available if the MA process is invertible (see Eq. \eqref{eq:invertible}) .
 \end{example}
 
 \begin{example}[Forecasting an AR(p) process]
@@ -6358,7 +6356,7 @@ Let us define the sequence \(\{d_t\}_{t=1,\dots,T} \equiv \{L(e^{A}_t)-L(e^{B}_t
 \]\\
 where the \(\gamma_j\)s are the autocovariances of \(d_t\).
 
-Hence, assuming that \(\hat{\sigma}^2\) is a consistent estimate of \(\sum_{j=-\infty}^{+\infty} \gamma_j\) (for instance the one given by the Newey-West formula, see Def. \ref{def:NW}), we have, under \(H_0\):
+Hence, assuming that \(\hat{\sigma}^2\) is a consistent estimate of \(\sum_{j=-\infty}^{+\infty} \gamma_j\) (for instance the one given by \citet{Newey_West_1987}), we have, under \(H_0\):
 \[
 DM_T := \sqrt{T}\frac{\bar{d}_T}{\sqrt{\hat{\sigma}^2}} \overset{d}{\rightarrow}  \mathcal{N}(0,1).
 \]
@@ -6369,9 +6367,9 @@ DM_T := \sqrt{T}\frac{\bar{d}_T}{\sqrt{\hat{\sigma}^2}} \overset{d}{\rightarrow}
 where \(\Phi\) is the c.d.f. of the standard normal distribution.
 
 \begin{example}[Forecasting Swiss GDP growth]
-\protect\hypertarget{exm:SwissOutOfSample}{}\label{exm:SwissOutOfSample}We use a long historical time series of the Swiss GDP growth taken from the \citet{JST_2017} dataset (see Figure \ref{fig:autocov}, and Example \ref{exm:SwissGrowthAIC}).
+\protect\hypertarget{exm:SwissOutOfSample}{}\label{exm:SwissOutOfSample}We use a long historical time series of the Swiss GDP growth taken from the \citet{JST_2017} dataset.\footnote{See \href{https://www.macrohistory.net/database/}{this website}.}
 
-We want to forecast this GDP growth. We envision two specifications : an AR(1) specification (the one advocated by the AIC criteria, see Example \ref{exm:SwissGrowthAIC}), and an ARMA(2,2) specification. We are interested in 2-year-ahead forecasts (i.e., \(h=2\) since the data are yearly).
+We want to forecast this GDP growth. We envision two specifications : an AR(1) specification (the one advocated by the AIC criteria), and an ARMA(2,2) specification. We are interested in 2-year-ahead forecasts (i.e., \(h=2\) since the data are yearly).
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -6416,7 +6414,7 @@ We want to forecast this GDP growth. We envision two specifications : an AR(1) s
 
 With \texttt{alternative\ =\ "greater"} The alternative hypothesis is that method 2 is more accurate than method 1. Since we do not reject the null (the p-value being of 0.795), we are not led to use the more sophisticated model (ARMA(2,2)) and we keep the simple AR(1) model.
 
-Assume now that we want to compare the AR(1) process to a VAR model (see Def. \ref{def:SVAR}). We consider a bivariate VAR, where GDP growth is complemented with CPI-based inflation rate.
+Assume now that we want to compare the AR(1) process to a multivariate (VAR) model. We consider a bivariate VAR, where GDP growth is complemented with CPI-based inflation rate.
 
 \begin{Shaded}
 \begin{Highlighting}[]

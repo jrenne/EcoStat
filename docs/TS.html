@@ -296,7 +296,7 @@ where <span class="math inline">\(\mathbb{V}ar(\varepsilon_t)=\sigma^2\)</span>,
 <span class="math display">\[
 y_t = \mu + \varepsilon^*_t +\frac{1}{\theta}\varepsilon^*_{t-1},
 \]</span>
-where <span class="math inline">\(\mathbb{V}ar(\varepsilon^*_t)=\theta^2\sigma^2\)</span>. That is, even if we perfectly know the mean and auto-covariances of this process, it is not possible to identify which specification is the one that has been used to generate the data. Only one of these two specifications is said to be <em>fundamental</em>, that is the one that satisfies <span class="math inline">\(|\theta_1|&lt;1\)</span> (see Eq. <a href="#eq:invertible">(<strong>??</strong>)</a>).</p>
+where <span class="math inline">\(\mathbb{V}ar(\varepsilon^*_t)=\theta^2\sigma^2\)</span>. That is, even if we perfectly know the mean and auto-covariances of this process, it is not possible to identify which specification is the one that has been used to generate the data. Only one of these two specifications is said to be <em>fundamental</em>, that is the one that satisfies <span class="math inline">\(|\theta_1|&lt;1\)</span>.</p>
 <div class="definition">
 <p><span id="def:MAq" class="definition"><strong>Definition 8.11  (MA(q) process) </strong></span>A <span class="math inline">\(q^{th}\)</span> order Moving Average process is defined through:
 <span class="math display">\[
@@ -708,7 +708,7 @@ If <span class="math inline">\(\{x_t,y_t\}\)</span> is covariance-stationary and
 y_t = \mu + \varepsilon_t + \theta_1 \varepsilon_{t-1} + \dots + \theta_q \varepsilon_{t-q},
 \]</span>
 where <span class="math inline">\(\{\varepsilon_t\}\)</span> is a white noise sequence (Def. <a href="TS.html#def:whitenoise">8.1</a>).</p>
-<p>We have:
+<p>We have:<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;The present reasoning relies on the assumption that the &lt;span class="math inline"&gt;\(\varepsilon_t\)&lt;/span&gt;’s are observed. But this is generally not the case in practice, where the &lt;span class="math inline"&gt;\(\varepsilon_t\)&lt;/span&gt;’s generally have to be estimated.&lt;/p&gt;'><sup>20</sup></a>
 <span class="math display">\[\begin{eqnarray*}
 &amp;&amp;\mathbb{E}(y_{t+h}|\varepsilon_{t},\varepsilon_{t-1},\dots) =\\
 &amp;&amp;\left\{
@@ -728,7 +728,6 @@ and
 \end{array}
 \right.
 \end{eqnarray*}\]</span></p>
-<p>Remark: The previous reasoning relies on the assumption that the <span class="math inline">\(\varepsilon_t\)</span>s are observed. But this is generally not the case in practice. Note that consistent estimates are available if the MA process is invertible (see Eq. <a href="#eq:invertible">(<strong>??</strong>)</a>) .</p>
 </div>
 <div class="example">
 <p><span id="exm:fcstARp" class="example"><strong>Example 8.4  (Forecasting an AR(p) process) </strong></span>(See <a href="https://jrenne.shinyapps.io/ARpFcst">this web interface</a>.) Consider the AR(p) process:
@@ -792,18 +791,18 @@ which can be exploited recursively.</p>
 \sqrt{T} \bar{d}_T \overset{d}{\rightarrow} \mathcal{N}\left(0,\sum_{j=-\infty}^{+\infty} \gamma_j \right),
 \]</span><br>
 where the <span class="math inline">\(\gamma_j\)</span>s are the autocovariances of <span class="math inline">\(d_t\)</span>.</p>
-<p>Hence, assuming that <span class="math inline">\(\hat{\sigma}^2\)</span> is a consistent estimate of <span class="math inline">\(\sum_{j=-\infty}^{+\infty} \gamma_j\)</span> (for instance the one given by the Newey-West formula, see Def. <a href="#def:NW"><strong>??</strong></a>), we have, under <span class="math inline">\(H_0\)</span>:
+<p>Hence, assuming that <span class="math inline">\(\hat{\sigma}^2\)</span> is a consistent estimate of <span class="math inline">\(\sum_{j=-\infty}^{+\infty} \gamma_j\)</span> (for instance the one given by <span class="citation">Newey and West (<a href="references.html#ref-Newey_West_1987" role="doc-biblioref">1987</a>)</span>), we have, under <span class="math inline">\(H_0\)</span>:
 <span class="math display">\[
 DM_T := \sqrt{T}\frac{\bar{d}_T}{\sqrt{\hat{\sigma}^2}} \overset{d}{\rightarrow}  \mathcal{N}(0,1).
 \]</span>
-<span class="math inline">\(DM_T\)</span> is the test statistics. For a test of size <span class="math inline">\(\alpha\)</span>, the critical region is:<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;This &lt;a href="https://jrenne.shinyapps.io/tests/"&gt;ShinyApp application&lt;/a&gt; illustrates the notion of statistical test (illustrating the p-value and the cirtical region, in particular).&lt;/p&gt;'><sup>20</sup></a>
+<span class="math inline">\(DM_T\)</span> is the test statistics. For a test of size <span class="math inline">\(\alpha\)</span>, the critical region is:<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;This &lt;a href="https://jrenne.shinyapps.io/tests/"&gt;ShinyApp application&lt;/a&gt; illustrates the notion of statistical test (illustrating the p-value and the cirtical region, in particular).&lt;/p&gt;'><sup>21</sup></a>
 <span class="math display">\[
 ]-\infty,-\Phi^{-1}(1-\alpha/2)] \cup [\Phi^{-1}(1-\alpha/2),+\infty[,
 \]</span>
 where <span class="math inline">\(\Phi\)</span> is the c.d.f. of the standard normal distribution.</p>
 <div class="example">
-<p><span id="exm:SwissOutOfSample" class="example"><strong>Example 8.5  (Forecasting Swiss GDP growth) </strong></span>We use a long historical time series of the Swiss GDP growth taken from the <span class="citation">Jordà, Schularick, and Taylor (<a href="references.html#ref-JST_2017" role="doc-biblioref">2017</a>)</span> dataset (see Figure <a href="TS.html#fig:autocov">8.3</a>, and Example <a href="#exm:SwissGrowthAIC"><strong>??</strong></a>).</p>
-<p>We want to forecast this GDP growth. We envision two specifications : an AR(1) specification (the one advocated by the AIC criteria, see Example <a href="#exm:SwissGrowthAIC"><strong>??</strong></a>), and an ARMA(2,2) specification. We are interested in 2-year-ahead forecasts (i.e., <span class="math inline">\(h=2\)</span> since the data are yearly).</p>
+<p><span id="exm:SwissOutOfSample" class="example"><strong>Example 8.5  (Forecasting Swiss GDP growth) </strong></span>We use a long historical time series of the Swiss GDP growth taken from the <span class="citation">Jordà, Schularick, and Taylor (<a href="references.html#ref-JST_2017" role="doc-biblioref">2017</a>)</span> dataset.<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;See &lt;a href="https://www.macrohistory.net/database/"&gt;this website&lt;/a&gt;.&lt;/p&gt;'><sup>22</sup></a></p>
+<p>We want to forecast this GDP growth. We envision two specifications : an AR(1) specification (the one advocated by the AIC criteria), and an ARMA(2,2) specification. We are interested in 2-year-ahead forecasts (i.e., <span class="math inline">\(h=2\)</span> since the data are yearly).</p>
 <div class="sourceCode" id="cb133"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">AEC</span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://pkg.robjhyndman.com/forecast/">forecast</a></span><span class="op">)</span></span></code></pre></div>
@@ -832,7 +831,7 @@ where <span class="math inline">\(\Phi\)</span> is the c.d.f. of the standard no
 ## 0.7946
 ## alternative hypothesis: greater</code></pre>
 <p>With <code>alternative = "greater"</code> The alternative hypothesis is that method 2 is more accurate than method 1. Since we do not reject the null (the p-value being of 0.795), we are not led to use the more sophisticated model (ARMA(2,2)) and we keep the simple AR(1) model.</p>
-<p>Assume now that we want to compare the AR(1) process to a VAR model (see Def. <a href="#def:SVAR"><strong>??</strong></a>). We consider a bivariate VAR, where GDP growth is complemented with CPI-based inflation rate.</p>
+<p>Assume now that we want to compare the AR(1) process to a multivariate (VAR) model. We consider a bivariate VAR, where GDP growth is complemented with CPI-based inflation rate.</p>
 <div class="sourceCode" id="cb137"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://www.pfaffikus.de">vars</a></span><span class="op">)</span></span>
 <span><span class="va">infl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="cn">NaN</span>,<span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">cpi</span><span class="op">[</span><span class="fl">2</span><span class="op">:</span><span class="cn">T</span><span class="op">]</span><span class="op">/</span><span class="va">data</span><span class="op">$</span><span class="va">cpi</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="op">(</span><span class="cn">T</span><span class="op">-</span><span class="fl">1</span><span class="op">)</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span>

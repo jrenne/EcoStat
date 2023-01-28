@@ -74,14 +74,14 @@
 \contentsline {subsection}{\numberline {8.2.2}Auto-Regressive (AR) processes}{155}{subsection.8.2.2}%
 \contentsline {subsection}{\numberline {8.2.3}PACF approach to identify AR/MA processes}{158}{subsection.8.2.3}%
 \contentsline {section}{\numberline {8.3}Forecasting}{159}{section.8.3}%
-\contentsline {chapter}{\numberline {9}Appendix}{167}{chapter.9}%
-\contentsline {section}{\numberline {9.1}Principal component analysis (PCA)}{167}{section.9.1}%
-\contentsline {section}{\numberline {9.2}Linear algebra: definitions and results}{169}{section.9.2}%
-\contentsline {section}{\numberline {9.3}Statistical analysis: definitions and results}{172}{section.9.3}%
-\contentsline {subsection}{\numberline {9.3.1}Moments and statistics}{172}{subsection.9.3.1}%
-\contentsline {subsection}{\numberline {9.3.2}Standard distributions}{174}{subsection.9.3.2}%
-\contentsline {subsection}{\numberline {9.3.3}Stochastic convergences}{175}{subsection.9.3.3}%
-\contentsline {subsection}{\numberline {9.3.4}Central limit theorem}{178}{subsection.9.3.4}%
-\contentsline {section}{\numberline {9.4}Some properties of Gaussian variables}{178}{section.9.4}%
-\contentsline {section}{\numberline {9.5}Proofs}{180}{section.9.5}%
-\contentsline {section}{\numberline {9.6}Statistical Tables}{188}{section.9.6}%
+\contentsline {chapter}{\numberline {9}Appendix}{165}{chapter.9}%
+\contentsline {section}{\numberline {9.1}Principal component analysis (PCA)}{165}{section.9.1}%
+\contentsline {section}{\numberline {9.2}Linear algebra: definitions and results}{167}{section.9.2}%
+\contentsline {section}{\numberline {9.3}Statistical analysis: definitions and results}{170}{section.9.3}%
+\contentsline {subsection}{\numberline {9.3.1}Moments and statistics}{170}{subsection.9.3.1}%
+\contentsline {subsection}{\numberline {9.3.2}Standard distributions}{172}{subsection.9.3.2}%
+\contentsline {subsection}{\numberline {9.3.3}Stochastic convergences}{173}{subsection.9.3.3}%
+\contentsline {subsection}{\numberline {9.3.4}Central limit theorem}{176}{subsection.9.3.4}%
+\contentsline {section}{\numberline {9.4}Some properties of Gaussian variables}{176}{section.9.4}%
+\contentsline {section}{\numberline {9.5}Proofs}{178}{section.9.5}%
+\contentsline {section}{\numberline {9.6}Statistical Tables}{186}{section.9.6}%
