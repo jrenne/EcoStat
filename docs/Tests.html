@@ -113,7 +113,7 @@ H_0:\;h(\theta)=0.
 <span class="math inline">\(H_0\)</span> is not rejected if <span class="math inline">\(S \not\in \Omega\)</span>.</li>
 </ul>
 <p>Except in extreme cases, there is always a non-zero probability to reject <span class="math inline">\(H_0\)</span> while it is true (<strong>Type I error</strong>, or <strong>false positive</strong>), or to fail to reject it while it is false (<strong>Type II error</strong>, or <strong>false negative</strong>).</p>
-<p>This vocabulary is widely used. For instance, the notions of false positive and false negative are used in the context of Early Warning Signals (see Example <a href="#FPFN"><strong>??</strong></a>).</p>
+<p>This vocabulary is widely used. For instance, the notions of false positive and false negative are used in the context of Early Warning Signals (see Example <a href="Tests.html#exm:FPFN">3.1</a>).</p>
 <div class="example">
 <p><span id="exm:FPFN" class="example"><strong>Example 3.1  (Early Warning Signals) </strong></span>These are approaches that aim to detect the occurrence of crises in advance. See, e.g., <a href="http://www.ecb.europa.eu/events/pdf/conferences/140623/Vasicek-et-al_Comparing-Different-Early-Warning-Systems.pdf?F96bbb525a26071ecf97f9154fb3cc73">ECB (2014)</a>, for applications to financial crises.</p>
 <p>To implement such approaches, researchers look for signals/indices forecasting crises. Suppose one index (<span class="math inline">\(W\)</span>, say) tends to be large before financial crises; one may define an EWS by predicting a crisis when <span class="math inline">\(W&gt;a\)</span>, where <span class="math inline">\(a\)</span> is a given threshold. It is easliy seen that the lower (respectively higeher) <span class="math inline">\(a\)</span>, the larger the fraction of FP (resp. of FN).</p>
@@ -187,7 +187,7 @@ d_i = \left\{
 <span class="math display">\[\begin{eqnarray*}
 \mathbb{P}_\theta(S_n \in \Omega) = \sum_{i=b \times n+1}^{n}C_{n}^i\theta^i(1-\theta)^{n-i}.
 \end{eqnarray*}\]</span></p>
-<p>When <span class="math inline">\(\theta&lt;0.1\)</span>, the previous expression gives the size of the test, while it gives the power of the test when <span class="math inline">\(\theta&gt;0.1\)</span>. Figure <a href="#FactoryR"><strong>??</strong></a> shows how this probability depends on <span class="math inline">\(\theta\)</span> for two sample sizes: <span class="math inline">\(n=100\)</span> (upper plot) and <span class="math inline">\(n=500\)</span> (lower plot).</p>
+<p>When <span class="math inline">\(\theta&lt;0.1\)</span>, the previous expression gives the size of the test, while it gives the power of the test when <span class="math inline">\(\theta&gt;0.1\)</span>. Figure <a href="Tests.html#fig:FactoryR">3.5</a> shows how this probability depends on <span class="math inline">\(\theta\)</span> for two sample sizes: <span class="math inline">\(n=100\)</span> (upper plot) and <span class="math inline">\(n=500\)</span> (lower plot).</p>
 <div class="figure" style="text-align: left-aligned">
 <span style="display:block;" id="fig:FactoryR"></span>
 <img src="EcoStat_files/figure-html/FactoryR-1.png" alt="Factory example." width="672"><p class="caption">

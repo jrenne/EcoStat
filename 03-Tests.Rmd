@@ -30,7 +30,7 @@ Hence, there are two possible outcomes for a statisitcal test:
 
 Except in extreme cases, there is always a non-zero probability to reject $H_0$ while it is true (**Type I error**, or **false positive**), or to fail to reject it while it is false (**Type II error**, or **false negative**).
 
-This vocabulary is widely used. For instance, the notions of false positive and false negative are used in the context of Early Warning Signals (see Example \@ref(FPFN)).
+This vocabulary is widely used. For instance, the notions of false positive and false negative are used in the context of Early Warning Signals (see Example \@ref(exm:FPFN)).
 
 :::{.example #FPFN name="Early Warning Signals"}
 
@@ -296,7 +296,7 @@ In this simple example, the size and the power of the test can be computed analy
 \mathbb{P}_\theta(S_n \in \Omega) = \sum_{i=b \times n+1}^{n}C_{n}^i\theta^i(1-\theta)^{n-i}.
 \end{eqnarray*}
 
-When $\theta<0.1$, the previous expression gives the size of the test, while it gives the power of the test when $\theta>0.1$. Figure \@ref(FactoryR) shows how this probability depends on $\theta$ for two sample sizes: $n=100$ (upper plot) and $n=500$ (lower plot).
+When $\theta<0.1$, the previous expression gives the size of the test, while it gives the power of the test when $\theta>0.1$. Figure \@ref(fig:FactoryR) shows how this probability depends on $\theta$ for two sample sizes: $n=100$ (upper plot) and $n=500$ (lower plot).
 
 ```{r FactoryR, echo=FALSE, fig.cap="Factory example.", fig.align = 'left-aligned'}
 size <- function(theta,N,critical){
@@ -340,7 +340,7 @@ for(N in all.N){
   plot(0,0,type='l',
        xlab=expression(paste("\"true\" ",theta,sep="")),
        ylab="Probability",
-       main=main.t,
+       main=main.t,cex.main=.9,
        xlim=c(0,.4),ylim=c(0,1))
   polygon(c(-1,.1,.1,-1),c(-1,-1,2,2),
           col="#9999EE66", border = rgb(0.4,0.4,0.4))

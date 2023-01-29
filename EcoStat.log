@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999994 (TeX Live 2022) (preloaded format=xelatex 2023.1.3)  28 JAN 2023 17:15
+This is XeTeX, Version 3.141592653-2.6-0.999994 (TeX Live 2022) (preloaded format=xelatex 2023.1.3)  28 JAN 2023 17:35
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -871,11 +871,7 @@ File: EcoStat_files/figure-latex/RcompMeans-1.pdf Graphic file (type pdf)
 Chapter 3.
 [21
 
-]
-
-LaTeX Warning: Reference `FPFN' on page 22 undefined on input line 703.
-
-[22]
+] [22]
 File: EcoStat_files/figure-latex/Illusttest1-1.pdf Graphic file (type pdf)
 <use EcoStat_files/figure-latex/Illusttest1-1.pdf>
 File: EcoStat_files/figure-latex/Illusttest2-1.pdf Graphic file (type pdf)
@@ -886,9 +882,6 @@ File: EcoStat_files/figure-latex/IllusTestOneSided1-1.pdf Graphic file (type pdf
 File: EcoStat_files/figure-latex/IllusTestOneSided2-1.pdf Graphic file (type pdf)
 <use EcoStat_files/figure-latex/IllusTestOneSided2-1.pdf>
 [25] [26]
-
-LaTeX Warning: Reference `FactoryR' on page 27 undefined on input line 790.
-
 File: EcoStat_files/figure-latex/FactoryR-1.pdf Graphic file (type pdf)
 <use EcoStat_files/figure-latex/FactoryR-1.pdf>
 [27] [28] [29]
@@ -1185,10 +1178,10 @@ Package rerunfilecheck Info: File `EcoStat.out' has not changed.
 (rerunfilecheck)             Checksum: 8BA2376D98308C4C07ED6E66AA5A1F54;9666.
  ) 
 Here is how much of TeX's memory you used:
- 19203 strings out of 478777
- 363888 string characters out of 5850045
+ 19201 strings out of 478777
+ 363872 string characters out of 5850045
  1961979 words of memory out of 5000000
- 38866 multiletter control sequences out of 15000+600000
+ 38864 multiletter control sequences out of 15000+600000
  524886 words of font info for 142 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  86i,14n,121p,1845b,586s stack positions out of 10000i,1000n,20000p,200000b,200000s
