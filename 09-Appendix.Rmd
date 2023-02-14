@@ -9,14 +9,14 @@
 
 Suppose that we have $T$ observations of a $n$-dimensional random vector $x$, denoted by $x_{1},x_{2},\ldots,x_{T}$. We suppose that each component of $x$ is of mean zero.
 
-Denote with $X$ the matrix given by $\left[\begin{array}{cccc}
+Let denote with $X$ the matrix given by $\left[\begin{array}{cccc}
 x_{1} & x_{2} & \ldots & x_{T}\end{array}\right]'$. Denote the $j^{th}$ column of $X$ by $X_{j}$.
 
 We want to find the linear combination of the $x_{i}$'s ($x.u$), with $\left\Vert u\right\Vert =1$, with "maximum variance." That is, we want to solve:
 \begin{equation}
 \begin{array}{clll}
 \underset{u}{\arg\max} & u'X'Xu. \\
-\mbox{s.t. } & \left| u\right| =1
+\mbox{s.t. } & \left\Vert u \right\Vert =1
 \end{array}(\#eq:PCA11)
 \end{equation}
 
@@ -42,7 +42,7 @@ y'Dy=\sum_{i=1}^{n}y_{i}^{2}\lambda_{i}\leq\lambda_{1}\sum_{i=1}^{n}y_{i}^{2}=\l
 
 It is easily seen that the maximum is reached for $y=\left[1,0,\cdots,0\right]'$. Therefore, the maximum of the optimization program (Eq. \@ref(eq:PCA11)) is obtained for $u=P\left[1,0,\cdots,0\right]'$. That is, $u$ is the eigenvector of $X'X$ that is associated with its larger eigenvalue (first column of $P$).
 
-Let us denote with $F$ the vector that is given by the matrix product $XP$ (note that its last column is equal to $Xu$). The columns of $F$, denoted by $F_{j}$, are called **factors**. We have:
+Let us denote with $F$ the vector that is given by the matrix product $XP$. The columns of $F$, denoted by $F_{j}$, are called **factors**. We have:
 \[
 F'F=P'X'XP=D.
 \]
@@ -54,12 +54,17 @@ Since $X=FP'$, the $X_{j}$'s are linear combinations of the factors. Let us then
 X_{i} & = & \sum_{j}\hat{X}_{i,j}=\sum_{j}p_{ij}F_{j}.
 \end{eqnarray*}
 
-Consider the share of variance that is explained --through the $n$ variables ($X_{1},\ldots,X_{n}$)-- by the first factor $F_{1}$:
+Consider the share of variance that is explained---through the $n$ variables ($X_{1},\ldots,X_{n}$)---by the first factor $F_{1}$:
 \begin{eqnarray*}
-\frac{\sum_{i}\hat{X}_{i,1}\hat{X}'_{i,1}}{\sum_{i}X_{i}X'_{i}} & = & \frac{\sum_{i}p_{i1}F_{1}F'_{1}p_{i1}}{tr(X'X)} = \frac{\sum_{i}p_{i1}^{2}\lambda_{1}}{tr(X'X)} = \frac{\lambda_{1}}{\sum_{i}\lambda_{i}}.
+\frac{\sum_{i}\hat{X}'_{i,1}\hat{X}_{i,1}}{\sum_{i}X_{i}'X_{i}} & = & \frac{\sum_{i}p_{i1}F'_{1}F_{1}p_{i1}}{tr(X'X)} = \frac{\sum_{i}p_{i1}^{2}\lambda_{1}}{tr(X'X)} = \frac{\lambda_{1}}{\sum_{i}\lambda_{i}}.
 \end{eqnarray*}
 
-Intuitively, if the first eigenvalue is large, it means that the first factor embed a large share of the fluctutaions of the $n$ $X_{i}$'s.
+Intuitively, if the first eigenvalue is large, it means that the first factor captures a large share of the fluctutaions of the $n$ $X_{i}$'s.
+
+By the same token, it is easily seen that the fraction of the variance of the $n$ variables that is explained by factor $j$ is given by:
+\begin{eqnarray*}
+\frac{\sum_{i}\hat{X}'_{i,j}\hat{X}_{i,j}}{\sum_{i}X_{i}'X_{i}} & = & \frac{\lambda_{j}}{\sum_{i}\lambda_{i}}.
+\end{eqnarray*}
 
 Let us illustrate PCA on the term structure of yields. The term strucutre of yields (or yield curve) is know to be driven by only a small number of factors (e.g., @Litterman_Scheinkman_1991). One can typically employ PCA to recover such factors. The data used in the example below are taken from the [Fred database](https://fred.stlouisfed.org) (tickers: "DGS6MO","DGS1", ...). The second plot shows the factor loardings, that indicate that the first factor is a level factor (loadings = black line), the second factor is a slope factor (loadings = blue line), the third factor is a curvature factor (loadings = red line).
 
