@@ -147,7 +147,7 @@ Y_i = 2 + 2X_i + \varepsilon^*_i.
 In Panel (b) (heteroskedasticity):
 <span class="math display">\[
 Y_i = 2 + 2X_i + \left(2\mathbb{I}_{\{X_i&lt;0\}}+0.2\mathbb{I}_{\{X_i\ge0\}}\right)\varepsilon^*_i\]</span>.</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">N</span> <span class="op">&lt;-</span> <span class="fl">200</span></span>
 <span><span class="va">X</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="va">N</span><span class="op">)</span>;<span class="va">eps</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="va">N</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span>,plt<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">.2</span>,<span class="fl">.95</span>,<span class="fl">.2</span>,<span class="fl">.8</span><span class="op">)</span><span class="op">)</span></span>
@@ -164,13 +164,13 @@ Figure 4.1: Homoskedasticity vs heteroskedasticity. See text for the exact speci
 </p>
 </div>
 <p>Figure <a href="ChapterLS.html#fig:exmpSalarayPhDSHP">4.2</a> shows a real-data situation of heteroskedasticity, based on data taken from the <a href="https://forscenter.ch/projects/swiss-household-panel/">Swiss Household Panel</a>. The sample is restricted to persons (i) that are younger than 35 year in 2019, and (ii) that have completed at least 19 years of study. The figure shows that the dispersion of yearly income increases with age.</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">AEC</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">shp</span><span class="op">$</span><span class="va">edyear19</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## 
 ##    8    9   10   12   13   14   16   19   21 
 ##   70  325  350 1985  454  117  990 1263  168</code></pre>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">shp_higherEd</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html">subset</a></span><span class="op">(</span><span class="va">shp</span>,<span class="op">(</span><span class="va">edyear19</span><span class="op">&gt;</span><span class="fl">18</span><span class="op">)</span><span class="op">&amp;</span><span class="va">age19</span><span class="op">&lt;</span><span class="fl">35</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">i19wyg</span><span class="op">/</span><span class="fl">1000</span><span class="op">~</span><span class="va">age19</span>,data<span class="op">=</span><span class="va">shp_higherEd</span>,pch<span class="op">=</span><span class="fl">19</span>,las<span class="op">=</span><span class="fl">1</span>,</span>
 <span>     xlab<span class="op">=</span><span class="st">"Age"</span>,ylab<span class="op">=</span><span class="st">"Yearly work income"</span><span class="op">)</span></span>
@@ -399,7 +399,7 @@ Using the fact that <span class="math inline">\(\mathbf{M}^{\mathbf{X}_1}\)</spa
 <li>Regress the residuals associated with the former regression on those associated with the latter regressions.</li>
 </ol>
 <p>This is illustrated by the following code, where we run different regressions involving the number of Google searches for “parapluie” (<em>umbrella</em> in French). In the broad specification, we regress it on French precipitations and month dummies. Next, we deseasonalize both the dependent variable and the precipitations by regressing them on the month dummies. As stated by Theorem <a href="ChapterLS.html#thm:FW">4.2</a>, regressing deseasonalized Google searches on deseasonalized precipitations give the same coefficient as in the baseline regression.</p>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">AEC</span><span class="op">)</span></span>
 <span><span class="va">dummies</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span><span class="op">(</span><span class="va">parapluie</span><span class="op">[</span>,<span class="fl">4</span><span class="op">:</span><span class="fl">14</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="va">eq_all</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">parapluie</span><span class="op">~</span><span class="va">dummies</span><span class="op">+</span><span class="va">precip</span>,data<span class="op">=</span><span class="va">parapluie</span><span class="op">)</span></span>
@@ -504,7 +504,7 @@ where <span class="math inline">\(r_{yz}^\mathbf{X}\)</span> is the coefficient 
 <p><span id="unlabeled-div-14" class="proof"><em>Proof</em>. </span>Let’s use the same notations as in Prop. <a href="ChapterLS.html#prp:chgeR2">4.4</a>. Theorem <a href="ChapterLS.html#thm:FW">4.2</a> implies that <span class="math inline">\(c = (\mathbf{z^*}'\mathbf{z^*})^{-1}\mathbf{z^*}'\mathbf{y^*}\)</span>. Using this in Eq. <a href="ChapterLS.html#eq:uu">(4.6)</a> gives <span class="math inline">\(\mathbf{u}'\mathbf{u} = \mathbf{e}'\mathbf{e} - (\mathbf{z^*}'\mathbf{y^*})^2/(\mathbf{z^*}'\mathbf{z^*})\)</span>. Using the definition of the partial correlation (Eq. <a href="append.html#eq:pc">(9.2)</a>), we get <span class="math inline">\(\mathbf{u}'\mathbf{u} = \mathbf{e}'\mathbf{e}\left(1 - (r_{yz}^\mathbf{X})^2\right)\)</span>. The results is obtained by dividing both sides of the previous equation by <span class="math inline">\(\mathbf{y}'\mathbf{M}_0\mathbf{y}\)</span>.</p>
 </div>
 <p>Figure <a href="ChapterLS.html#fig:R2issue">4.3</a>, below, illustrates the fact that one can obtain an <span class="math inline">\(R^2\)</span> of one by regressing a sample of length <span class="math inline">\(n\)</span> on any set of <span class="math inline">\(n\)</span> linearly-independent variables.</p>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">n</span> <span class="op">&lt;-</span> <span class="fl">30</span>;<span class="va">Y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span>;<span class="va">X</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="va">n</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span>,<span class="va">n</span>,<span class="va">n</span><span class="op">)</span></span>
 <span><span class="va">all_R2</span> <span class="op">&lt;-</span> <span class="cn">NULL</span>;<span class="va">all_adjR2</span> <span class="op">&lt;-</span> <span class="cn">NULL</span></span>
 <span><span class="kw">for</span><span class="op">(</span><span class="va">j</span> <span class="kw">in</span> <span class="fl">0</span><span class="op">:</span><span class="op">(</span><span class="va">n</span><span class="op">-</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span><span class="op">{</span></span>
@@ -617,7 +617,7 @@ H_0: \beta_k=0.
 Under the null hypothesis, the test statistic follows a Student-t distribution with <span class="math inline">\(n-K\)</span> degrees of freedom. The <strong>t-statistic</strong> is therefore of particular importance, and, as a result, it is routinely reported in regression outputs (see Example <a href="ChapterLS.html#exm:SHP0001">4.2</a>).</p>
 <div class="example">
 <p><span id="exm:SHP0001" class="example"><strong>Example 4.2  (Education and income) </strong></span>Consider regression that aims at determining covariates of households’ income. This example makes use of data from the <a href="https://forscenter.ch/projects/swiss-household-panel/">Swiss Household Panel (SHP)</a>; <code>edyear19</code> is the number of years of education and <code>age19</code> is the age of the respondent, as of 2019.</p>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">AEC</span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://sandwich.R-Forge.R-project.org/">sandwich</a></span><span class="op">)</span></span>
 <span><span class="va">shp</span><span class="op">$</span><span class="va">income</span> <span class="op">&lt;-</span> <span class="va">shp</span><span class="op">$</span><span class="va">i19ptotn</span><span class="op">/</span><span class="fl">1000</span></span>
@@ -654,7 +654,7 @@ where <span class="math inline">\(\Phi_{t(n-K)}(\alpha)\)</span> is the c.d.f. o
 &amp;&amp;\left[b_k - \Phi^{-1}_{t(n-K)}\left(1-\frac{\alpha}{2}\right)\sqrt{s^2v_k},b_k + \Phi^{-1}_{t(n-K)}\left(1-\frac{\alpha}{2}\right)\sqrt{s^2v_k}\right].
 \end{eqnarray*}\]</span></p>
 <p>Using the results presented in Example <a href="ChapterLS.html#exm:SHP0001">4.2</a>, we can compute lower and upper bounds of 95% confidence intervals for the estimated parameters as follows:</p>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">n</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">eq</span><span class="op">$</span><span class="va">residuals</span><span class="op">)</span>; <span class="va">K</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">eq</span><span class="op">$</span><span class="va">coefficients</span><span class="op">)</span></span>
 <span><span class="va">lower.b</span> <span class="op">&lt;-</span> <span class="va">eq</span><span class="op">$</span><span class="va">coefficients</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/stats/TDist.html">qt</a></span><span class="op">(</span><span class="fl">.025</span>,df<span class="op">=</span><span class="va">n</span><span class="op">-</span><span class="va">K</span><span class="op">)</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/diag.html">diag</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/vcov.html">vcov</a></span><span class="op">(</span><span class="va">eq</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">upper.b</span> <span class="op">&lt;-</span> <span class="va">eq</span><span class="op">$</span><span class="va">coefficients</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/stats/TDist.html">qt</a></span><span class="op">(</span><span class="fl">.975</span>,df<span class="op">=</span><span class="va">n</span><span class="op">-</span><span class="va">K</span><span class="op">)</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/diag.html">diag</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/vcov.html">vcov</a></span><span class="op">(</span><span class="va">eq</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
@@ -823,7 +823,7 @@ If one computes <span class="math inline">\(\mathbf{b}_1\)</span> by regressing 
 <!-- ::: -->
 <div class="example">
 <p><span id="exm:CASchools" class="example"><strong>Example 4.3  </strong></span>Let us use the <a href="https://rdrr.io/cran/AER/man/CASchools.html">California Test Score dataset</a> (in the package <code>AER</code>). Assume we want to measure the effect of the students-to-teacher ratio (<code>str</code>) on student test scores (<code>testscr</code>). The following regressions show that the effect is lower when controls are added.</p>
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">AER</span><span class="op">)</span>; <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"CASchools"</span><span class="op">)</span></span>
 <span><span class="va">CASchools</span><span class="op">$</span><span class="va">str</span> <span class="op">&lt;-</span> <span class="va">CASchools</span><span class="op">$</span><span class="va">students</span><span class="op">/</span><span class="va">CASchools</span><span class="op">$</span><span class="va">teachers</span></span>
 <span><span class="va">CASchools</span><span class="op">$</span><span class="va">testscr</span> <span class="op">&lt;-</span> <span class="fl">.5</span> <span class="op">*</span> <span class="op">(</span><span class="va">CASchools</span><span class="op">$</span><span class="va">math</span> <span class="op">+</span> <span class="va">CASchools</span><span class="op">$</span><span class="va">read</span><span class="op">)</span></span>
@@ -974,7 +974,7 @@ Figure 4.5: This figure illustrates the situation prevailing when estimating a p
 </p>
 </div>
 <p>Let us use IV regressions to estimate the price elasticity of cigarette demand. For that purpose, we use the <code>CigarettesSW</code> dataset of package <code>AER</code> (these data are used by <span class="citation">J. Stock and Watson (<a href="references.html#ref-Stock_Watson_2003" role="doc-biblioref">2003</a>)</span>). This panel dataset documents cigarette consumption for the 48 continental US States from 1985–1995. The instrument is the real tax on cigarettes arising from the state’s general sales tax. The rationale is that larger general sales tax drives cigarette prices up, but the general tax is not determined by other forces affecting <span class="math inline">\(\varepsilon_t^d\)</span>.</p>
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"CigarettesSW"</span>, package <span class="op">=</span> <span class="st">"AER"</span><span class="op">)</span></span>
 <span><span class="va">CigarettesSW</span><span class="op">$</span><span class="va">rprice</span>  <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">CigarettesSW</span>, <span class="va">price</span><span class="op">/</span><span class="va">cpi</span><span class="op">)</span></span>
 <span><span class="va">CigarettesSW</span><span class="op">$</span><span class="va">rincome</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">CigarettesSW</span>, <span class="va">income</span><span class="op">/</span><span class="va">population</span><span class="op">/</span><span class="va">cpi</span><span class="op">)</span></span>
@@ -1011,7 +1011,7 @@ Figure 4.5: This figure illustrates the situation prevailing when estimating a p
 ## Adjusted R2    0.408     0.404     0.388  
 ## ==========================================
 ## Note:          *p&lt;0.1; **p&lt;0.05; ***p&lt;0.01</code></pre>
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">eq.IV1</span>,diagnostics <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">$</span><span class="va">diagnostics</span></span></code></pre></div>
 <pre><code>##                  df1 df2   statistic      p-value
 ## Weak instruments   2  44 244.7337536 1.444054e-24
@@ -1026,7 +1026,7 @@ Figure 4.5: This figure illustrates the situation prevailing when estimating a p
 </div>
 <div class="example">
 <p><span id="exm:IVCollegeDistance" class="example"><strong>Example 4.5  (Education and wage) </strong></span>In this example, we make use of another dataset proposed by <span class="citation">J. Stock and Watson (<a href="references.html#ref-Stock_Watson_2003" role="doc-biblioref">2003</a>)</span>, namely the <code>CollegeDistance</code> dataset.<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content="&lt;p&gt;Cross-section data from the High School and Beyond survey conducted by the Department of Education in the 80s. The survey includes students from approximately 1,100 high schools.&lt;/p&gt;"><sup>7</sup></a> the objective is to estimate the effect of education on wages. Education choice is suspected to be an endogenous variable, which calls for an IV strategy. The instrumental variable is the distance to college (see, e.g., <span class="citation">Dee (<a href="references.html#ref-DEE20041697" role="doc-biblioref">2004</a>)</span>).</p>
-<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://www.r-project.org">sem</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"CollegeDistance"</span>, package <span class="op">=</span> <span class="st">"AER"</span><span class="op">)</span></span>
 <span><span class="va">eq.1st.stage</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">education</span> <span class="op">~</span> <span class="va">urban</span> <span class="op">+</span> <span class="va">gender</span> <span class="op">+</span> <span class="va">ethnicity</span> <span class="op">+</span> <span class="va">unemp</span> <span class="op">+</span> <span class="va">distance</span>,</span>
@@ -1246,7 +1246,7 @@ y_i = x_i + \varepsilon_i, \quad \varepsilon_i \sim \mathcal{N}(0,x_i^2),
 \]</span>
 where the <span class="math inline">\(x_i\)</span>’s are i.i.d. <span class="math inline">\(t(6)\)</span>.</p>
 <p>Here is a simulated sample (<span class="math inline">\(n=200\)</span>) of this model:</p>
-<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">n</span> <span class="op">&lt;-</span> <span class="fl">200</span></span>
 <span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/TDist.html">rt</a></span><span class="op">(</span><span class="va">n</span>,df<span class="op">=</span><span class="fl">6</span><span class="op">)</span></span>
 <span><span class="va">y</span> <span class="op">&lt;-</span> <span class="va">x</span> <span class="op">+</span> <span class="va">x</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span></span>
@@ -1259,7 +1259,7 @@ Figure 4.6: Situation of heteroskedasticity. The model is <span class="math inli
 </p>
 </div>
 <p>We simulate 1000 samples of the same model with <span class="math inline">\(n=200\)</span>. For each sample, we compute the OLS estimate of <span class="math inline">\(\beta\)</span> (<span class="math inline">\(=1\)</span>). For each of the 1000 OLS estimations, we employ (a) the standard OLS variance formula (<span class="math inline">\(s^2 (\mathbf{X}'\mathbf{X})^{-1}\)</span>) and (b) the White formula to estimate the variance of <span class="math inline">\(b\)</span>. For each formula, we compute the average of the 1000 resulting standard deviations and compare these with the standard deviation of the 1000 OLS estimate of <span class="math inline">\(\beta\)</span>.</p>
-<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">n</span> <span class="op">&lt;-</span> <span class="fl">200</span> <span class="co"># sample size</span></span>
 <span><span class="va">N</span> <span class="op">&lt;-</span> <span class="fl">1000</span> <span class="co"># number of simulated samples</span></span>
 <span><span class="va">XX</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/TDist.html">rt</a></span><span class="op">(</span><span class="va">n</span><span class="op">*</span><span class="va">N</span>,df<span class="op">=</span><span class="fl">6</span><span class="op">)</span>,<span class="va">n</span>,<span class="va">N</span><span class="op">)</span></span>
@@ -1282,7 +1282,7 @@ Figure 4.6: Situation of heteroskedasticity. The model is <span class="math inli
 <p>The results show that the White formula yields, on average, an estimated standard deviation that is much closer to the “true” value than the standard OLS formula. The latter underestimate the standard deviation of <span class="math inline">\(b\)</span>.</p>
 </div>
 <p>In the following example, we regress GDP growth rates from the <span class="citation">Jordà, Schularick, and Taylor (<a href="references.html#ref-JST_2017" role="doc-biblioref">2017</a>)</span> database on a systemic financial crisis dummy. We compute the HC0- and HC1-based standard deviations of the parameter estimate, and compare it to the one based on the standard OLS formula. The adjusted standard deviations are close to the one provided by the non-adjusted OLS formula.</p>
-<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">lmtest</span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://sandwich.R-Forge.R-project.org/">sandwich</a></span><span class="op">)</span></span>
 <span><span class="va">nT</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">JST</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></span>
@@ -1318,7 +1318,7 @@ x_i = 0.8 x_{i-1} + u_i \quad and \quad \varepsilon_i = 0.8 \varepsilon_{i-1} + 
 \end{equation}\]</span>
 where the <span class="math inline">\(u_i\)</span>’s and the <span class="math inline">\(v_i\)</span>’s are i.i.d. <span class="math inline">\(\mathcal{N}(0,1)\)</span>.</p>
 <p>We simulate 500 samples of the same model with <span class="math inline">\(n=200\)</span>. For each sample, we compute the OLS estimate of <span class="math inline">\(\beta\)</span> (=1). For each of the 1000 OLS estimations, we employ (a) the standard OLS variance formula (<span class="math inline">\(s^2 (\mathbf{X}'\mathbf{X})^{-1}\)</span>), (b) the White formula, and (c) the Newey-West formula to estimate the variance of <span class="math inline">\(b\)</span>. For each formula, we compute the average of the 500 resulting standard deviations and compare these with the standard deviation of the 500 OLS estimate of <span class="math inline">\(\beta\)</span>.</p>
-<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">AEC</span><span class="op">)</span></span>
 <span><span class="va">n</span> <span class="op">&lt;-</span> <span class="fl">100</span> <span class="co"># sample length</span></span>
 <span><span class="va">nb.sim</span> <span class="op">&lt;-</span> <span class="fl">500</span> <span class="co"># number of simulated samples</span></span>
@@ -1372,7 +1372,7 @@ r = \frac{\sum_{i=2}^{n}e_i e_{i-1}}{\sum_{i=1}^{n-1}e_i^2}.
 \]</span></p>
 <div class="example">
 <p><span id="exm:DurbinWats" class="example"><strong>Example 4.10  (Durbin-Watson test) </strong></span>We regress the short-term nominal US interest rate on inflation. We then employ the Durbin-Watson test to see whether the residuals are auto-correlated (which is quite obviously the case).</p>
-<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://r-forge.r-project.org/projects/car/">car</a></span><span class="op">)</span></span>
 <span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html">subset</a></span><span class="op">(</span><span class="va">JST</span>,<span class="va">iso</span><span class="op">==</span><span class="st">"USA"</span><span class="op">)</span>;<span class="cn">T</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></span>
 <span><span class="va">data</span><span class="op">$</span><span class="va">infl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="cn">NaN</span>,<span class="fl">100</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">cpi</span><span class="op">[</span><span class="fl">2</span><span class="op">:</span><span class="cn">T</span><span class="op">]</span><span class="op">/</span><span class="va">data</span><span class="op">$</span><span class="va">cpi</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="op">(</span><span class="cn">T</span><span class="op">-</span><span class="fl">1</span><span class="op">)</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span>
@@ -1384,7 +1384,7 @@ r = \frac{\sum_{i=2}^{n}e_i e_{i-1}}{\sum_{i=1}^{n-1}e_i^2}.
 <span><span class="va">eq</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">stir</span><span class="op">~</span><span class="va">infl</span>,data<span class="op">=</span><span class="va">data</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">eq</span><span class="op">$</span><span class="va">residuals</span>,type<span class="op">=</span><span class="st">"l"</span>,col<span class="op">=</span><span class="st">"blue"</span>,main<span class="op">=</span><span class="st">"Residuals"</span>,xlab<span class="op">=</span><span class="st">""</span>,ylab<span class="op">=</span><span class="st">""</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="EcoStat_files/figure-html/DB-1.png" width="672"></div>
-<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/car/man/durbinWatsonTest.html">durbinWatsonTest</a></span><span class="op">(</span><span class="va">eq</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##  lag Autocorrelation D-W Statistic p-value
 ##    1       0.7321902     0.4984178       0
@@ -1498,7 +1498,7 @@ and we use:
 \]</span></p>
 <p>As an alternative to the asymptotic approximation to the distribution of a statistic of interest, one can resort to bootstrap approximation (see Section 5 of <span class="citation">J. G. MacKinnon, Nielsen, and Webb (<a href="references.html#ref-MACKINNON2022" role="doc-biblioref">2022</a>)</span>). In R, the package <code>fwildclusterboot</code> allows to implement such approaches.<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;See, e.g., &lt;a href="https://cran.r-project.org/web/packages/fwildclusterboot/vignettes/fwildclusterboot.html"&gt;this tutorial by Alexander Fischer&lt;/a&gt;.&lt;/p&gt;'><sup>8</sup></a></p>
 <p>Let us come back to the analysis of the effect of systemic financial crises on GDP growth. Clustering the data at the country level and, further, at both the country and time levels gives the following:</p>
-<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">eq</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">growth</span><span class="op">~</span><span class="va">crisisJST</span><span class="op">+</span><span class="va">iso</span>,data<span class="op">=</span><span class="va">JST.red</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/lmtest/man/coeftest.html">coeftest</a></span><span class="op">(</span><span class="va">eq</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span>,<span class="op">]</span>,</span>
 <span>      <span class="fu"><a href="https://rdrr.io/pkg/lmtest/man/coeftest.html">coeftest</a></span><span class="op">(</span><span class="va">eq</span>, vcov <span class="op">=</span> <span class="fu"><a href="https://sandwich.R-Forge.R-project.org/reference/vcovHC.html">vcovHC</a></span><span class="op">(</span><span class="va">eq</span>, type <span class="op">=</span> <span class="st">"HC1"</span><span class="op">)</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span>,<span class="op">]</span>,</span>
@@ -1538,7 +1538,7 @@ f(\boldsymbol\beta) &amp; = &amp; \sum_{j=2}^K |\beta_j| \quad \mbox{(lasso)}.
 <p>Parameter <span class="math inline">\(\lambda\)</span> has to be determined separately from the minimization problem of Eq. <a href="ChapterLS.html#eq:minLasso">(4.43)</a>. One can combine standard criteria (e.g., BIC or Akaike) for this purpose.</p>
 <p>In R, one can use the <code>glmnet</code> package to run ridge and lasso regressions. In the following example, we employ this package to model interest rates proposed to debtors, using data extracted from the <a href="https://www.kaggle.com/datasets/ethon0426/lending-club-20072020q1">Lending Club</a> platform.</p>
 <p>To begin with, let us define the variables we want to consider:</p>
-<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">AEC</span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://glmnet.stanford.edu">glmnet</a></span><span class="op">)</span></span>
 <span><span class="va">credit</span><span class="op">$</span><span class="va">owner</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">*</span><span class="op">(</span><span class="va">credit</span><span class="op">$</span><span class="va">home_ownership</span><span class="op">==</span><span class="st">"OWN"</span><span class="op">)</span></span>
@@ -1555,16 +1555,16 @@ f(\boldsymbol\beta) &amp; = &amp; \sum_{j=2}^K |\beta_j| \quad \mbox{(lasso)}.
 <span>                       <span class="va">funded_amnt2</span>,<span class="va">log_funded_amnt</span>,<span class="va">pub_rec</span>,<span class="va">emp_length_10</span>,</span>
 <span>                       <span class="va">owner</span>,<span class="va">renter</span>,<span class="va">pub_rec_bankruptcies</span>,<span class="va">revol_util</span>,<span class="va">revol_bal</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>Let us standardize the data:</p>
-<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/scale.html">scale</a></span><span class="op">(</span><span class="va">credit</span><span class="op">$</span><span class="va">int_rate</span><span class="op">)</span></span>
 <span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/scale.html">scale</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></code></pre></div>
 <p>Next, we define the set of <span class="math inline">\(\lambda\)</span> we will use, and run the ridge and lasso regressions:</p>
-<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">grid.lambda</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">.2</span>,by<span class="op">=</span><span class="fl">.005</span><span class="op">)</span></span>
 <span><span class="va">result.ridge</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://glmnet.stanford.edu/reference/glmnet.html">glmnet</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, alpha <span class="op">=</span> <span class="fl">0</span>, lambda <span class="op">=</span> <span class="va">grid.lambda</span><span class="op">)</span></span>
 <span><span class="va">result.lasso</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://glmnet.stanford.edu/reference/glmnet.html">glmnet</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, alpha <span class="op">=</span> <span class="fl">1</span>, lambda <span class="op">=</span> <span class="va">grid.lambda</span><span class="op">)</span></span></code></pre></div>
 <p>The following figure shows how estimated parameters depend on <span class="math inline">\(\lambda\)</span>:</p>
-<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">variab</span> <span class="op">&lt;-</span> <span class="fl">6</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">result.ridge</span><span class="op">$</span><span class="va">lambda</span>,<span class="fu"><a href="https://rdrr.io/r/stats/coef.html">coef</a></span><span class="op">(</span><span class="va">result.ridge</span><span class="op">)</span><span class="op">[</span><span class="va">variab</span>,<span class="op">]</span>,type<span class="op">=</span><span class="st">"l"</span>,</span>
 <span>     ylim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/coef.html">coef</a></span><span class="op">(</span><span class="va">result.ridge</span><span class="op">)</span><span class="op">[</span><span class="va">variab</span>,<span class="op">]</span>,<span class="fu"><a href="https://rdrr.io/r/stats/coef.html">coef</a></span><span class="op">(</span><span class="va">result.lasso</span><span class="op">)</span><span class="op">[</span><span class="va">variab</span>,<span class="op">]</span><span class="op">)</span>,</span>
@@ -1573,12 +1573,12 @@ f(\boldsymbol\beta) &amp; = &amp; \sum_{j=2}^K |\beta_j| \quad \mbox{(lasso)}.
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/lines.html">lines</a></span><span class="op">(</span><span class="va">result.lasso</span><span class="op">$</span><span class="va">lambda</span>,<span class="fu"><a href="https://rdrr.io/r/stats/coef.html">coef</a></span><span class="op">(</span><span class="va">result.lasso</span><span class="op">)</span><span class="op">[</span><span class="va">variab</span>,<span class="op">]</span>,col<span class="op">=</span><span class="st">"red"</span>,lwd<span class="op">=</span><span class="fl">2</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="EcoStat_files/figure-html/lasso4-1.png" width="672"></div>
 <p>Let us take two values of <span class="math inline">\(\lambda\)</span> and see the associated estimated parameters in the context of lasso regressions:</p>
-<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">i</span> <span class="op">&lt;-</span> <span class="fl">20</span>; <span class="va">j</span> <span class="op">&lt;-</span> <span class="fl">40</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="va">result.lasso</span><span class="op">$</span><span class="va">lambda</span><span class="op">[</span><span class="va">i</span><span class="op">]</span>,<span class="va">result.lasso</span><span class="op">$</span><span class="va">lambda</span><span class="op">[</span><span class="va">j</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##       [,1]  [,2]
 ## [1,] 0.105 0.005</code></pre>
-<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/coef.html">coef</a></span><span class="op">(</span><span class="va">result.lasso</span><span class="op">)</span><span class="op">[</span>,<span class="va">i</span><span class="op">]</span>,<span class="fu"><a href="https://rdrr.io/r/stats/coef.html">coef</a></span><span class="op">(</span><span class="va">result.lasso</span><span class="op">)</span><span class="op">[</span>,<span class="va">j</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##                               [,1]          [,2]
 ## (Intercept)          -1.044971e-15  1.088731e-14
@@ -1599,26 +1599,26 @@ f(\boldsymbol\beta) &amp; = &amp; \sum_{j=2}^K |\beta_j| \quad \mbox{(lasso)}.
 ## pub_rec_bankruptcies  0.000000e+00  0.000000e+00
 ## revol_util            0.000000e+00  0.000000e+00
 ## revol_bal             0.000000e+00  2.402268e-03</code></pre>
-<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Compute values of y predicted by the model, for all lambdas:</span></span>
 <span><span class="va">pred1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">result.lasso</span>,<span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co"># Compute values of y predicted by the model, for a specific value:</span></span>
 <span><span class="va">pred2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">result.lasso</span>,<span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>,s<span class="op">=</span><span class="fl">0.085</span><span class="op">)</span></span></code></pre></div>
 <p>The <code>glmnet</code> package (see <a href="https://glmnet.stanford.edu/articles/glmnet.html">Hastie et al. (2021)</a>) also offers tools to implement cross-validation:</p>
-<div class="sourceCode" id="cb54"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># cross validation (cv):</span></span>
 <span><span class="va">cvglmnet</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://glmnet.stanford.edu/reference/cv.glmnet.html">cv.glmnet</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>,<span class="va">y</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">cvglmnet</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="EcoStat_files/figure-html/lasso6-1.png" width="672"></div>
-<div class="sourceCode" id="cb55"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># lambda.min: lambda that gives minimum mean cross-validated error</span></span>
 <span><span class="va">cvglmnet</span><span class="op">$</span><span class="va">lambda.min</span> </span></code></pre></div>
 <pre><code>## [1] 0.004091039</code></pre>
-<div class="sourceCode" id="cb57"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb55"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># lambda.1se: largest lambda s.t. cost within the one-std-dev cv-based band</span></span>
 <span><span class="va">cvglmnet</span><span class="op">$</span><span class="va">lambda.1se</span></span></code></pre></div>
 <pre><code>## [1] 0.00448991</code></pre>
-<div class="sourceCode" id="cb59"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb57"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/coef.html">coef</a></span><span class="op">(</span><span class="va">cvglmnet</span>, s <span class="op">=</span> <span class="st">"lambda.min"</span><span class="op">)</span> <span class="co"># associated parameters</span></span></code></pre></div>
 <pre><code>## 18 x 1 sparse Matrix of class "dgCMatrix"
 ##                                 s1
@@ -1640,7 +1640,7 @@ f(\boldsymbol\beta) &amp; = &amp; \sum_{j=2}^K |\beta_j| \quad \mbox{(lasso)}.
 ## pub_rec_bankruptcies  .           
 ## revol_util            .           
 ## revol_bal             3.093752e-03</code></pre>
-<div class="sourceCode" id="cb61"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb59"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># predicted values of y for specific values of x:</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">cvglmnet</span>, newx <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>,<span class="op">]</span>, s <span class="op">=</span> <span class="st">"lambda.min"</span><span class="op">)</span> </span></code></pre></div>
 <pre><code>##        lambda.min
@@ -1705,7 +1705,7 @@ f(\boldsymbol\beta) &amp; = &amp; \sum_{j=2}^K |\beta_j| \quad \mbox{(lasso)}.
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Econometrics and Statistics</strong>" was written by Jean-Paul Renne. It was last built on 2023-01-28.</p>
+    <p>"<strong>Econometrics and Statistics</strong>" was written by Jean-Paul Renne. It was last built on 2023-02-17.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

@@ -249,7 +249,7 @@ and, if <span class="math inline">\(\theta^{(u)}_{1}=\theta^{(u)}_{0}=\theta^{(u
 \end{equation}\]</span></p>
 <div class="example">
 <p><span id="exm:FishingTable" class="example"><strong>Example 7.2  (Fishing-mode dataset) </strong></span>The fishing-mode dataset used in <span class="citation">Cameron and Trivedi (<a href="references.html#ref-Cameron_Trivedi_2005" role="doc-biblioref">2005</a>)</span> (Chapters 14 and 15) contains alternative-specific variables. Specifically, for each individual, the price and catch rate depend on the fishing model. In the table reported below, lines <code>price</code> and <code>catch</code> correspond to the prices and catch rates associated with the chosen alternative.</p>
-<div class="sourceCode" id="cb113"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb111"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://cran.r-project.org/package=mlogit">mlogit</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"Fishing"</span>,package<span class="op">=</span><span class="st">"mlogit"</span><span class="op">)</span></span>
 <span><span class="fu">stargazer</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/stargazer/man/stargazer.html">stargazer</a></span><span class="op">(</span><span class="va">Fishing</span>,type<span class="op">=</span><span class="st">"text"</span><span class="op">)</span></span></code></pre></div>
@@ -342,7 +342,7 @@ Intuitively, <span class="math inline">\(R^2_{MF}=0\)</span> if the explanatory 
 <div class="example">
 <p><span id="exm:creditProbit" class="example"><strong>Example 7.3  (Credit and defaults (Lending-club dataset)) </strong></span>This example makes use of the <code>credit</code> data of package <code>AEC</code>. The objective is to model the default probabilities of borrowers.</p>
 <p>Let us first represent the relationship between the fraction of households that have defaulted on their loan and their annual income:</p>
-<div class="sourceCode" id="cb115"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb113"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">AEC</span><span class="op">)</span></span>
 <span><span class="va">credit</span><span class="op">$</span><span class="va">Default</span> <span class="op">&lt;-</span> <span class="fl">0</span></span>
 <span><span class="va">credit</span><span class="op">$</span><span class="va">Default</span><span class="op">[</span><span class="va">credit</span><span class="op">$</span><span class="va">loan_status</span> <span class="op">==</span> <span class="st">"Charged Off"</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">1</span></span>
@@ -354,7 +354,7 @@ Intuitively, <span class="math inline">\(R^2_{MF}=0\)</span> if the explanatory 
 <div class="inline-figure"><img src="EcoStat_files/figure-html/Probitlending-1.png" width="672"></div>
 <p>The previous figure suggests that the effect of annual income on the probability of default is non-monotonous. We will therefore include a quadratic term in one of our specification (namely <code>eq1</code> below).</p>
 <p>We consider three specifications. The first one (<code>eq0</code>), with no explanatory variables, is trivial. It will just be used to compute the pseudo-<span class="math inline">\(R^2\)</span>. In the second (<code>eq1</code>), we consider a few covariates (loan amount, the ratio between the amount and annual income, The number of more-than-30 days past-due incidences of delinquency in the borrower’s credit file for the past 2 years, and a quadratic function of annual income). In the third model (<code>eq2</code>), we add a credit rating.</p>
-<div class="sourceCode" id="cb116"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb114"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">eq0</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span><span class="op">(</span><span class="va">Default</span> <span class="op">~</span> <span class="fl">1</span>,data<span class="op">=</span><span class="va">credit</span>,family<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/stats/family.html">binomial</a></span><span class="op">(</span>link<span class="op">=</span><span class="st">"probit"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">eq1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span><span class="op">(</span><span class="va">Default</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">loan_amnt</span><span class="op">)</span> <span class="op">+</span> <span class="va">amt2income</span> <span class="op">+</span> <span class="va">delinq_2yrs</span> <span class="op">+</span> </span>
 <span>             <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">annual_inc</span><span class="op">)</span><span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html">I</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">annual_inc</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span>,</span>
@@ -401,14 +401,14 @@ Intuitively, <span class="math inline">\(R^2_{MF}=0\)</span> if the explanatory 
 ## ====================================================
 ## Note:                    *p&lt;0.1; **p&lt;0.05; ***p&lt;0.01</code></pre>
 <p>Let us compute the pseudo R2 for the last two models:</p>
-<div class="sourceCode" id="cb118"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb116"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">logL0</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/logLik.html">logLik</a></span><span class="op">(</span><span class="va">eq0</span><span class="op">)</span>;<span class="va">logL1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/logLik.html">logLik</a></span><span class="op">(</span><span class="va">eq1</span><span class="op">)</span>;<span class="va">logL2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/logLik.html">logLik</a></span><span class="op">(</span><span class="va">eq2</span><span class="op">)</span></span>
 <span><span class="va">pseudoR2_eq1</span> <span class="op">&lt;-</span> <span class="fl">1</span> <span class="op">-</span> <span class="va">logL1</span><span class="op">/</span><span class="va">logL0</span> <span class="co"># pseudo R2</span></span>
 <span><span class="va">pseudoR2_eq2</span> <span class="op">&lt;-</span> <span class="fl">1</span> <span class="op">-</span> <span class="va">logL2</span><span class="op">/</span><span class="va">logL0</span> <span class="co"># pseudo R2</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">pseudoR2_eq1</span>,<span class="va">pseudoR2_eq2</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 0.01173993 0.05584870</code></pre>
 <p>Let us now compute the (average) marginal effects, using method ii of Section <a href="binary-choice-models.html#marginalFX">7.4</a>:</p>
-<div class="sourceCode" id="cb120"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb118"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">dnorm</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">eq2</span><span class="op">)</span><span class="op">)</span>,na.rm<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span><span class="op">*</span><span class="va">eq2</span><span class="op">$</span><span class="va">coefficients</span></span></code></pre></div>
 <pre><code>##          (Intercept)               gradeB               gradeC 
 ##          0.840731198          0.070747353          0.103944305 
@@ -419,7 +419,7 @@ Intuitively, <span class="math inline">\(R^2_{MF}=0\)</span> if the explanatory 
 ##          delinq_2yrs      log(annual_inc) I(log(annual_inc)^2) 
 ##          0.001574178         -0.154701321          0.006813694</code></pre>
 <p>There is an issue for the <code>annual_inc</code> variable. Indeed, the previous computation does not realize that this variable appears twice among the explanatory variables (through <code>log(annual_inc)</code> and <code>I(log(annual_inc)^2)</code>). To address this, one can proceed as follows: (1) we construct a new counterfactual dataset where annual incomes are increased by 1%, (2) we use the model to compute model-implied probabilities of default on this new dataset and (3), we subtract the probabilities resulting from the original dataset from these counterfactual probabilities:</p>
-<div class="sourceCode" id="cb122"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb120"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">new_credit</span> <span class="op">&lt;-</span> <span class="va">credit</span></span>
 <span><span class="va">new_credit</span><span class="op">$</span><span class="va">annual_inc</span> <span class="op">&lt;-</span> <span class="fl">1.01</span> <span class="op">*</span> <span class="va">new_credit</span><span class="op">$</span><span class="va">annual_inc</span></span>
 <span><span class="va">bas_predict_eq2</span>  <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">eq2</span>, newdata <span class="op">=</span> <span class="va">credit</span>, type <span class="op">=</span> <span class="st">"response"</span><span class="op">)</span></span>
@@ -428,14 +428,14 @@ Intuitively, <span class="math inline">\(R^2_{MF}=0\)</span> if the explanatory 
 <span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">new_predict_eq2</span> <span class="op">-</span> <span class="va">bas_predict_eq2</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] -6.562126e-05</code></pre>
 <p>The negative sign means that, on average across the entities considered in the analysis, a 1% increase in annual income results in a decrease in the default probability. This average effect is however pretty low. To get an economic sense of the size of this effect, let us compute the average effect associated with a unit increase in the number of delinquencies:</p>
-<div class="sourceCode" id="cb124"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb122"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">new_credit</span> <span class="op">&lt;-</span> <span class="va">credit</span></span>
 <span><span class="va">new_credit</span><span class="op">$</span><span class="va">delinq_2yrs</span> <span class="op">&lt;-</span> <span class="va">credit</span><span class="op">$</span><span class="va">delinq_2yrs</span> <span class="op">+</span> <span class="fl">1</span></span>
 <span><span class="va">new_predict_eq2</span>  <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">eq2</span>, newdata <span class="op">=</span> <span class="va">new_credit</span>, type <span class="op">=</span> <span class="st">"response"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">new_predict_eq2</span> <span class="op">-</span> <span class="va">bas_predict_eq2</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## [1] 0.001582332</code></pre>
 <p>We can employ a likelihood ratio test (see Def. <a href="estimation-methods.html#def:LR">6.8</a>) to see if the two variables associated with annual income are jointly statistically significant (in the context of <code>eq1</code>):</p>
-<div class="sourceCode" id="cb126"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb124"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">eq1restr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span><span class="op">(</span><span class="va">Default</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">loan_amnt</span><span class="op">)</span> <span class="op">+</span> <span class="va">amt2income</span> <span class="op">+</span> <span class="va">delinq_2yrs</span>,</span>
 <span>                data<span class="op">=</span><span class="va">credit</span>,family<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/stats/family.html">binomial</a></span><span class="op">(</span>link<span class="op">=</span><span class="st">"probit"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">LRstat</span> <span class="op">&lt;-</span> <span class="fl">2</span><span class="op">*</span><span class="op">(</span><span class="va">logL1</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/stats/logLik.html">logLik</a></span><span class="op">(</span><span class="va">eq1restr</span><span class="op">)</span><span class="op">)</span></span>
@@ -444,7 +444,7 @@ Intuitively, <span class="math inline">\(R^2_{MF}=0\)</span> if the explanatory 
 </div>
 <div class="example">
 <p><span id="exm:Fisch142" class="example"><strong>Example 7.4  (Replicating Table 14.2 of Cameron and Trivedi (2005)) </strong></span>The following lines of codes replicate Table 14.2 of <span class="citation">Cameron and Trivedi (<a href="references.html#ref-Cameron_Trivedi_2005" role="doc-biblioref">2005</a>)</span> (see Example <a href="binary-choice-models.html#exm:FishingTable">7.2</a>).</p>
-<div class="sourceCode" id="cb127"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb125"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">data.reduced</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html">subset</a></span><span class="op">(</span><span class="va">Fishing</span>,<span class="va">mode</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"charter"</span>,<span class="st">"pier"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">data.reduced</span><span class="op">$</span><span class="va">lnrelp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">data.reduced</span><span class="op">$</span><span class="va">price.charter</span><span class="op">/</span><span class="va">data.reduced</span><span class="op">$</span><span class="va">price.pier</span><span class="op">)</span></span>
 <span><span class="va">data.reduced</span><span class="op">$</span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">*</span><span class="op">(</span><span class="va">data.reduced</span><span class="op">$</span><span class="va">mode</span><span class="op">==</span><span class="st">"charter"</span><span class="op">)</span></span>
@@ -504,7 +504,7 @@ Intuitively, <span class="math inline">\(R^2_{MF}=0\)</span> if the explanatory 
 <p>In the case of no predictive ability (worst situation), the ROC curve is a straight line between (0,0) and (1,1).</p>
 <div class="example">
 <p><span id="exm:FishingROC" class="example"><strong>Example 7.5  (ROC with the fishing-mode dataset) </strong></span>Figure <a href="binary-choice-models.html#fig:fishing3">7.5</a> shows the ROC curve associated with the probit model estimated in Example <a href="binary-choice-models.html#exm:Fisch142">7.4</a>.</p>
-<div class="sourceCode" id="cb129"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb127"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://expasy.org/tools/pROC/">pROC</a></span><span class="op">)</span></span>
 <span><span class="va">predict_model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.glm.html">predict.glm</a></span><span class="op">(</span><span class="va">reg.probit</span>,type <span class="op">=</span> <span class="st">"response"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/pROC/man/roc.html">roc</a></span><span class="op">(</span><span class="va">data.reduced</span><span class="op">$</span><span class="va">y</span>, <span class="va">predict_model</span>, percent<span class="op">=</span><span class="cn">T</span>,</span>
@@ -552,7 +552,7 @@ Figure 7.5: Application of the ROC methodology on the fishing-mode dataset.
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Econometrics and Statistics</strong>" was written by Jean-Paul Renne. It was last built on 2023-01-28.</p>
+    <p>"<strong>Econometrics and Statistics</strong>" was written by Jean-Paul Renne. It was last built on 2023-02-17.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

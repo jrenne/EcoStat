@@ -121,15 +121,11 @@ This sample mean is an estimator of the true (population) mean <span class="math
 Figure 2.1: Distribution of the number of doctor visits. Source: Swiss Household Panel.
 </p>
 </div>
+<p>Let us compute the sample mean, variance, and standard deviation:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">Nb.doct.visits</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/stats/cor.html">var</a></span><span class="op">(</span><span class="va">Nb.doct.visits</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<pre><code>##          [,1]     [,2]
-## [1,] 5.253816 79.50575</code></pre>
-<p>Let us compute the sample mean and variance:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">Nb.doct.visits</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/stats/cor.html">var</a></span><span class="op">(</span><span class="va">Nb.doct.visits</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<pre><code>##          [,1]     [,2]
-## [1,] 5.253816 79.50575</code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">Nb.doct.visits</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/stats/cor.html">var</a></span><span class="op">(</span><span class="va">Nb.doct.visits</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span><span class="op">(</span><span class="va">Nb.doct.visits</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code>##          [,1]     [,2]   [,3]
+## [1,] 5.253816 79.50575 8.9166</code></pre>
 </div>
 <p>How to know whether the sample mean is a good estimate of the true (population) average? In other words, how to measure the accuracy of the estimator?</p>
 <p>A first answer is provided by the Chebychev inequality. Assume the <span class="math inline">\(x_i\)</span>’s are independently drawn from a distribution of mean <span class="math inline">\(\mu\)</span> and variance <span class="math inline">\(\sigma^2\)</span>. We have:
@@ -160,7 +156,7 @@ Consider for instance the estimation of the average number of doctor visits (Exa
 </div>
 <p>According to the CLT, when <span class="math inline">\(n\)</span> is large and whatever the distribution of the <span class="math inline">\(x_i\)</span>’s (as long as it features an average <span class="math inline">\(\mu\)</span> and a variance <span class="math inline">\(\sigma^2\)</span>), the error between <span class="math inline">\(\bar{x}_n\)</span> and <span class="math inline">\(\mu\)</span> can be seen as a random variable that is normally distributed; it is of mean zero and its standard deviation is <span class="math inline">\(\sigma/\sqrt{n}\)</span>. (We then say that the convergence rate is <em>in <span class="math inline">\(\sqrt{n}\)</span></em>.) The knowledge of the quantiles of the normal distribution can then be used to compute approximate confidence intervals for <span class="math inline">\(\mu\)</span> (based on the sample <span class="math inline">\(\{x_1,\dots,x_n\}\)</span>).</p>
 <p>This <a href="https://jrenne.shinyapps.io/StatEcoII/">web interface</a> illustrates the CLT with simulations (select the “CLT” block).</p>
-<p>The CL theorem was first postulated by the mathematician Abraham de Moivre. In an article published in 1733, he used the normal distribution to approximate the distribution of the number of heads resulting from many tosses of a fair coin. This finding was nearly forgotten until Pierre-Simon Laplace recalled it in his<a href="https://archive.org/details/thorieanalytiqu01laplgoog">Théorie analytique des probabilités</a>, published in 1812. Laplace expanded De Moivre’s finding by approximating the binomial distribution with the normal distribution.</p>
+<p>The CL theorem was first postulated by the mathematician Abraham de Moivre. In an article published in 1733, he used the normal distribution to approximate the distribution of the number of heads resulting from many tosses of a fair coin. This finding was nearly forgotten until Pierre-Simon Laplace recalled it in his <a href="https://archive.org/details/thorieanalytiqu01laplgoog">Théorie analytique des probabilités</a>, published in 1812. Laplace expanded De Moivre’s finding by approximating the binomial distribution with the normal distribution.</p>
 <div class="exercise">
 <p><span id="exr:ExoBuffon" class="exercise"><strong>Exercise 2.1  </strong></span>Consider Buffon’s experiment (Example <a href="Basics.html#exm:Buffon">1.2</a>). We have seen that <span class="math inline">\(\pi\)</span> can be estimated by counting the fraction of times the needles cross the grooves of the floor.<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;More precisely, the expectation of this fraction is equal to &lt;span class="math inline"&gt;\(1/\pi\)&lt;/span&gt;.&lt;/p&gt;'><sup>2</sup></a> Using the CLT, determine the (approximate) minimal number <span class="math inline">\(n\)</span> of needles that one has to throw to get an estimate <span class="math inline">\(\hat\pi\)</span> (<span class="math inline">\(= 1/\bar{X}_n\)</span>) of <span class="math inline">\(\pi\)</span> that is such that there is a 95% chance that <span class="math inline">\(\pi \in [\hat\pi-0.01,\hat\pi+0.01]\)</span>?</p>
 </div>
@@ -198,7 +194,7 @@ This can be used to test the null hypothesis <span class="math inline">\(H_0: \;
 <div class="example">
 <p><span id="exm:comparSmplMeans" class="example"><strong>Example 2.2  (Comparison of sample means) </strong></span>Let us use the <a href="https://forscenter.ch/projects/swiss-household-panel/">Swiss Household Panel (SHP)</a> dataset to test the equality between men and women incomes, for Swiss people under the age of 35.</p>
 <p>The next lines of codes construct two samples of incomes; one for men (<code>income.m</code>), and one for women (<code>income.w</code>).</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">AEC</span><span class="op">)</span>;<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">logKDE</span><span class="op">)</span></span>
 <span><span class="va">dataset.m</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html">subset</a></span><span class="op">(</span><span class="va">shp</span>,<span class="op">(</span><span class="va">sex19</span><span class="op">==</span><span class="fl">1</span><span class="op">)</span><span class="op">&amp;</span><span class="op">(</span><span class="va">age19</span><span class="op">&lt;=</span><span class="fl">35</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">dataset.w</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html">subset</a></span><span class="op">(</span><span class="va">shp</span>,<span class="op">(</span><span class="va">sex19</span><span class="op">==</span><span class="fl">2</span><span class="op">)</span><span class="op">&amp;</span><span class="op">(</span><span class="va">age19</span><span class="op">&lt;=</span><span class="fl">35</span><span class="op">)</span><span class="op">)</span></span>
@@ -207,7 +203,7 @@ This can be used to test the null hypothesis <span class="math inline">\(H_0: \;
 <span><span class="va">income.m</span> <span class="op">&lt;-</span> <span class="va">income.m</span><span class="op">[</span><span class="va">income.m</span><span class="op">&gt;=</span><span class="fl">0</span><span class="op">]</span> <span class="co"># remove irrelevant data</span></span>
 <span><span class="va">income.w</span> <span class="op">&lt;-</span> <span class="va">income.w</span><span class="op">[</span><span class="va">income.w</span><span class="op">&gt;=</span><span class="fl">0</span><span class="op">]</span> <span class="co"># remove irrelevant data</span></span></code></pre></div>
 <p>Figure <a href="TCL.html#fig:RcompMeans">2.2</a> displays the empirical densities of incomes for men and women. Vertical dashed lines indicate sample means:</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>plt<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">.1</span>,<span class="fl">.95</span>,<span class="fl">.2</span>,<span class="fl">.95</span><span class="op">)</span><span class="op">)</span> <span class="co"># adjust margins</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/logKDE/man/logdensity.html">logdensity</a></span><span class="op">(</span><span class="va">income.w</span><span class="op">)</span>,lwd<span class="op">=</span><span class="fl">2</span>,xlim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">200000</span><span class="op">)</span>,main<span class="op">=</span><span class="st">""</span>,</span>
 <span>     xlab<span class="op">=</span><span class="st">"Yearly gross income (in CHF)"</span>,ylab<span class="op">=</span><span class="st">""</span><span class="op">)</span> <span class="co"># x and y labels</span></span>
@@ -222,7 +218,7 @@ Figure 2.2: Distribution of yearly gross incomes for Swiss residents under the a
 </p>
 </div>
 <p>Let us compute <span class="math inline">\(\bar{m}\)</span>, <span class="math inline">\(\bar{w}\)</span>, and <span class="math inline">\(\sigma\)</span>:</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">m.bar</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">income.m</span><span class="op">)</span></span>
 <span><span class="va">w.bar</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">income.w</span><span class="op">)</span></span>
 <span><span class="va">sigma</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html">var</a></span><span class="op">(</span><span class="va">income.m</span><span class="op">)</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">income.m</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/stats/cor.html">var</a></span><span class="op">(</span><span class="va">income.w</span><span class="op">)</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">income.w</span><span class="op">)</span><span class="op">)</span></span>
@@ -293,7 +289,7 @@ Figure 2.2: Distribution of yearly gross incomes for Swiss residents under the a
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Econometrics and Statistics</strong>" was written by Jean-Paul Renne. It was last built on 2023-01-28.</p>
+    <p>"<strong>Econometrics and Statistics</strong>" was written by Jean-Paul Renne. It was last built on 2023-02-17.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

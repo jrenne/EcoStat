@@ -35,12 +35,11 @@ Nb.doct.visits <- shp$p19c15
 Nb.doct.visits <- Nb.doct.visits[Nb.doct.visits>=0] # remove irrelevant observations
 par(plt=c(.15,.95,.2,.95))
 barplot(table(Nb.doct.visits),xlim=c(0,25))
-cbind(mean(Nb.doct.visits),var(Nb.doct.visits))
 ```
-Let us compute the sample mean and variance:
+Let us compute the sample mean, variance, and standard deviation:
 
 ```{r incomeDistri2}
-cbind(mean(Nb.doct.visits),var(Nb.doct.visits))
+cbind(mean(Nb.doct.visits),var(Nb.doct.visits),sd(Nb.doct.visits))
 ```
 
 :::
@@ -78,7 +77,7 @@ According to the CLT, when $n$ is large and whatever the distribution of the $x_
 
 This [web interface](https://jrenne.shinyapps.io/StatEcoII/) illustrates the CLT with simulations (select the "CLT" block).
 
-The CL theorem was first postulated by the mathematician Abraham de Moivre. In an article published in 1733, he used the normal distribution to approximate the distribution of the number of heads resulting from many tosses of a fair coin. This finding was nearly forgotten until Pierre-Simon Laplace recalled it in his[Théorie analytique des probabilités](https://archive.org/details/thorieanalytiqu01laplgoog), published in 1812. Laplace expanded De Moivre's finding by approximating the binomial distribution with the normal distribution.
+The CL theorem was first postulated by the mathematician Abraham de Moivre. In an article published in 1733, he used the normal distribution to approximate the distribution of the number of heads resulting from many tosses of a fair coin. This finding was nearly forgotten until Pierre-Simon Laplace recalled it in his [Théorie analytique des probabilités](https://archive.org/details/thorieanalytiqu01laplgoog), published in 1812. Laplace expanded De Moivre's finding by approximating the binomial distribution with the normal distribution.
 
 
 :::{.exercise #ExoBuffon}

@@ -306,7 +306,7 @@ JB = n \left( \frac{g_3^2}{6}+\frac{(g_4-3)^2}{24} \right) = \frac{n}{6}\left(g_
 <div class="example">
 <p><span id="exm:JB" class="example"><strong>Example 3.5  (Consistency of the Jarque-Bera normality test) </strong></span>This example illustrates the consistency of the JB test (see Def. <a href="Tests.html#def:asmyptconsisttest">3.3</a>).</p>
 <p>For each row of matrix <code>x</code>, the function <code>JB</code> (defined below) computes the Jarque-Bera test statistic. (That is, each row is considered as a given sample.)</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">JB</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">{</span></span>
 <span>  <span class="va">N</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> <span class="co"># number of samples</span></span>
 <span>  <span class="va">n</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span> <span class="co"># sample size</span></span>
@@ -320,7 +320,7 @@ JB = n \left( \frac{g_3^2}{6}+\frac{(g_4-3)^2}{24} \right) = \frac{n}{6}\left(g_
 <span>  <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="va">n</span><span class="op">*</span><span class="op">(</span><span class="va">g.3</span><span class="op">^</span><span class="fl">2</span><span class="op">/</span><span class="fl">6</span> <span class="op">+</span> <span class="op">(</span><span class="va">g.4</span><span class="op">-</span><span class="fl">3</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span><span class="op">/</span><span class="fl">24</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="op">}</span></span></code></pre></div>
 <p>Let us first consider the case where <span class="math inline">\(H_0\)</span> is satisfied. Figure <a href="Tests.html#fig:JBTest2">3.6</a> displays, for different sample sizes <span class="math inline">\(n\)</span>, the distribution of the JB statistics when the <span class="math inline">\(y_i\)</span>’s are normal, consistently with <span class="math inline">\(H_0\)</span>. It appears that when <span class="math inline">\(n\)</span> grows, the distribution indeed converges to the <span class="math inline">\(\chi^2(2)\)</span> distribution (as stated by Proposition <a href="Tests.html#prp:JB">3.6</a>).</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">all.n</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">5</span>,<span class="fl">10</span>,<span class="fl">20</span>,<span class="fl">100</span><span class="op">)</span></span>
 <span><span class="va">nb.sim</span> <span class="op">&lt;-</span> <span class="fl">10000</span></span>
 <span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="va">nb.sim</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">all.n</span><span class="op">)</span><span class="op">)</span>,<span class="va">nb.sim</span>,<span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">all.n</span><span class="op">)</span><span class="op">)</span></span>
@@ -378,7 +378,7 @@ Figure 3.7: Distribution of the JB test statistic when the <span class="math inl
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Econometrics and Statistics</strong>" was written by Jean-Paul Renne. It was last built on 2023-01-28.</p>
+    <p>"<strong>Econometrics and Statistics</strong>" was written by Jean-Paul Renne. It was last built on 2023-02-17.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

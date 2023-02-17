@@ -93,12 +93,12 @@
 </h2>
 <p><strong>Principal component analysis (PCA)</strong> is a classical and easy-to-use statistical method to reduce the dimension of large datasets containing variables that are linearly driven by a relatively small number of factors. This approach is widely used in data analysis and image compression.</p>
 <p>Suppose that we have <span class="math inline">\(T\)</span> observations of a <span class="math inline">\(n\)</span>-dimensional random vector <span class="math inline">\(x\)</span>, denoted by <span class="math inline">\(x_{1},x_{2},\ldots,x_{T}\)</span>. We suppose that each component of <span class="math inline">\(x\)</span> is of mean zero.</p>
-<p>Denote with <span class="math inline">\(X\)</span> the matrix given by <span class="math inline">\(\left[\begin{array}{cccc} x_{1} &amp; x_{2} &amp; \ldots &amp; x_{T}\end{array}\right]'\)</span>. Denote the <span class="math inline">\(j^{th}\)</span> column of <span class="math inline">\(X\)</span> by <span class="math inline">\(X_{j}\)</span>.</p>
+<p>Let denote with <span class="math inline">\(X\)</span> the matrix given by <span class="math inline">\(\left[\begin{array}{cccc} x_{1} &amp; x_{2} &amp; \ldots &amp; x_{T}\end{array}\right]'\)</span>. Denote the <span class="math inline">\(j^{th}\)</span> column of <span class="math inline">\(X\)</span> by <span class="math inline">\(X_{j}\)</span>.</p>
 <p>We want to find the linear combination of the <span class="math inline">\(x_{i}\)</span>’s (<span class="math inline">\(x.u\)</span>), with <span class="math inline">\(\left\Vert u\right\Vert =1\)</span>, with “maximum variance.” That is, we want to solve:
 <span class="math display" id="eq:PCA11">\[\begin{equation}
 \begin{array}{clll}
 \underset{u}{\arg\max} &amp; u'X'Xu. \\
-\mbox{s.t. } &amp; \left| u\right| =1
+\mbox{s.t. } &amp; \left\Vert u \right\Vert =1
 \end{array}\tag{9.1}
 \end{equation}\]</span></p>
 <p>Since <span class="math inline">\(X'X\)</span> is a positive definite matrix, it admits the following decomposition:
@@ -118,7 +118,7 @@ where <span class="math inline">\(P\)</span> is an orthogonal matrix whose colum
 y'Dy=\sum_{i=1}^{n}y_{i}^{2}\lambda_{i}\leq\lambda_{1}\sum_{i=1}^{n}y_{i}^{2}=\lambda_{1}.
 \]</span></p>
 <p>It is easily seen that the maximum is reached for <span class="math inline">\(y=\left[1,0,\cdots,0\right]'\)</span>. Therefore, the maximum of the optimization program (Eq. <a href="append.html#eq:PCA11">(9.1)</a>) is obtained for <span class="math inline">\(u=P\left[1,0,\cdots,0\right]'\)</span>. That is, <span class="math inline">\(u\)</span> is the eigenvector of <span class="math inline">\(X'X\)</span> that is associated with its larger eigenvalue (first column of <span class="math inline">\(P\)</span>).</p>
-<p>Let us denote with <span class="math inline">\(F\)</span> the vector that is given by the matrix product <span class="math inline">\(XP\)</span> (note that its last column is equal to <span class="math inline">\(Xu\)</span>). The columns of <span class="math inline">\(F\)</span>, denoted by <span class="math inline">\(F_{j}\)</span>, are called <strong>factors</strong>. We have:
+<p>Let us denote with <span class="math inline">\(F\)</span> the vector that is given by the matrix product <span class="math inline">\(XP\)</span>. The columns of <span class="math inline">\(F\)</span>, denoted by <span class="math inline">\(F_{j}\)</span>, are called <strong>factors</strong>. We have:
 <span class="math display">\[
 F'F=P'X'XP=D.
 \]</span>
@@ -128,20 +128,24 @@ Therefore, in particular, the <span class="math inline">\(F_{j}\)</span>’s are
 \hat{X}_{i,j} &amp; = &amp; p_{ij}F_{j}\\
 X_{i} &amp; = &amp; \sum_{j}\hat{X}_{i,j}=\sum_{j}p_{ij}F_{j}.
 \end{eqnarray*}\]</span></p>
-<p>Consider the share of variance that is explained –through the <span class="math inline">\(n\)</span> variables (<span class="math inline">\(X_{1},\ldots,X_{n}\)</span>)– by the first factor <span class="math inline">\(F_{1}\)</span>:
+<p>Consider the share of variance that is explained—through the <span class="math inline">\(n\)</span> variables (<span class="math inline">\(X_{1},\ldots,X_{n}\)</span>)—by the first factor <span class="math inline">\(F_{1}\)</span>:
 <span class="math display">\[\begin{eqnarray*}
-\frac{\sum_{i}\hat{X}_{i,1}\hat{X}'_{i,1}}{\sum_{i}X_{i}X'_{i}} &amp; = &amp; \frac{\sum_{i}p_{i1}F_{1}F'_{1}p_{i1}}{tr(X'X)} = \frac{\sum_{i}p_{i1}^{2}\lambda_{1}}{tr(X'X)} = \frac{\lambda_{1}}{\sum_{i}\lambda_{i}}.
+\frac{\sum_{i}\hat{X}'_{i,1}\hat{X}_{i,1}}{\sum_{i}X_{i}'X_{i}} &amp; = &amp; \frac{\sum_{i}p_{i1}F'_{1}F_{1}p_{i1}}{tr(X'X)} = \frac{\sum_{i}p_{i1}^{2}\lambda_{1}}{tr(X'X)} = \frac{\lambda_{1}}{\sum_{i}\lambda_{i}}.
 \end{eqnarray*}\]</span></p>
-<p>Intuitively, if the first eigenvalue is large, it means that the first factor embed a large share of the fluctutaions of the <span class="math inline">\(n\)</span> <span class="math inline">\(X_{i}\)</span>’s.</p>
+<p>Intuitively, if the first eigenvalue is large, it means that the first factor captures a large share of the fluctutaions of the <span class="math inline">\(n\)</span> <span class="math inline">\(X_{i}\)</span>’s.</p>
+<p>By the same token, it is easily seen that the fraction of the variance of the <span class="math inline">\(n\)</span> variables that is explained by factor <span class="math inline">\(j\)</span> is given by:
+<span class="math display">\[\begin{eqnarray*}
+\frac{\sum_{i}\hat{X}'_{i,j}\hat{X}_{i,j}}{\sum_{i}X_{i}'X_{i}} &amp; = &amp; \frac{\lambda_{j}}{\sum_{i}\lambda_{i}}.
+\end{eqnarray*}\]</span></p>
 <p>Let us illustrate PCA on the term structure of yields. The term strucutre of yields (or yield curve) is know to be driven by only a small number of factors (e.g., <span class="citation">Litterman and Scheinkman (<a href="references.html#ref-Litterman_Scheinkman_1991" role="doc-biblioref">1991</a>)</span>). One can typically employ PCA to recover such factors. The data used in the example below are taken from the <a href="https://fred.stlouisfed.org">Fred database</a> (tickers: “DGS6MO”,“DGS1”, …). The second plot shows the factor loardings, that indicate that the first factor is a level factor (loadings = black line), the second factor is a slope factor (loadings = blue line), the third factor is a curvature factor (loadings = red line).</p>
 <p>To run a PCA, one simply has to apply function <code>prcomp</code> to a matrix of data:</p>
-<div class="sourceCode" id="cb140"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb138"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">AEC</span><span class="op">)</span></span>
 <span><span class="va">USyields</span> <span class="op">&lt;-</span> <span class="va">USyields</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/stats/complete.cases.html">complete.cases</a></span><span class="op">(</span><span class="va">USyields</span><span class="op">)</span>,<span class="op">]</span></span>
 <span><span class="va">yds</span> <span class="op">&lt;-</span> <span class="va">USyields</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Y1"</span>,<span class="st">"Y2"</span>,<span class="st">"Y3"</span>,<span class="st">"Y5"</span>,<span class="st">"Y7"</span>,<span class="st">"Y10"</span>,<span class="st">"Y20"</span>,<span class="st">"Y30"</span><span class="op">)</span><span class="op">]</span></span>
 <span><span class="va">PCA.yds</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/prcomp.html">prcomp</a></span><span class="op">(</span><span class="va">yds</span>,center<span class="op">=</span><span class="cn">TRUE</span>,scale. <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p>Let us know visualize some results. The first plot of Figure <a href="append.html#fig:USydsPCA1">9.1</a> shows the share of total variance explained by the different principal components (PCs). The second plot shows the facotr loadings. The two bottom plots show how yields (in black) are fitted by linear combinations of the first two PCs only.</p>
-<div class="sourceCode" id="cb141"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb139"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>plt<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">.1</span>,<span class="fl">.95</span>,<span class="fl">.2</span>,<span class="fl">.8</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/barplot.html">barplot</a></span><span class="op">(</span><span class="va">PCA.yds</span><span class="op">$</span><span class="va">sdev</span><span class="op">^</span><span class="fl">2</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">PCA.yds</span><span class="op">$</span><span class="va">sdev</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span>,</span>
@@ -2262,7 +2266,7 @@ which leads to the result.</p>
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Econometrics and Statistics</strong>" was written by Jean-Paul Renne. It was last built on 2023-01-28.</p>
+    <p>"<strong>Econometrics and Statistics</strong>" was written by Jean-Paul Renne. It was last built on 2023-02-17.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
