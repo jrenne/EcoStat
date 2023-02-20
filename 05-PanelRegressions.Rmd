@@ -325,6 +325,8 @@ $$
 Using state and year fixed effects in the `CigarettesSW` panel dataset yields the following results:
 
 ```{r cigarettes2,warning=FALSE, message=FALSE}
+data("CigarettesSW", package = "AER")
+CigarettesSW$rprice  <- with(CigarettesSW, price/cpi) # compute real price
 CigarettesSW$rincome <- with(CigarettesSW, income/population/cpi)
 eq.pooled <- lm(log(packs)~log(rprice)+log(rincome),data=CigarettesSW)
 eq.LSDV <- lm(log(packs)~log(rprice)+log(rincome)+state,

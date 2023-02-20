@@ -1383,7 +1383,7 @@ $$
 \bv{X} = \left[
 \begin{array}{c}
 \bv{X}_1 \\
-\bv{X}_1 \\
+\bv{X}_2 \\
 \vdots\\
 \bv{X}_G
 \end{array}

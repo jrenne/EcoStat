@@ -131,7 +131,7 @@
 
 \title{Econometrics and Statistics}
 \author{Jean-Paul Renne}
-\date{2023-02-17}
+\date{2023-02-20}
 
 \usepackage{amsthm}
 \newtheorem{theorem}{Theorem}[chapter]
@@ -2551,7 +2551,7 @@ Consider a set \(\{n_1,n_2,\dots,n_G\}\) s.t. \(n=\sum_g n_g\), on which is base
 \mathbf{X} = \left[
 \begin{array}{c}
 \mathbf{X}_1 \\
-\mathbf{X}_1 \\
+\mathbf{X}_2 \\
 \vdots\\
 \mathbf{X}_G
 \end{array}
@@ -3209,6 +3209,8 @@ Using state and year fixed effects in the \texttt{CigarettesSW} panel dataset yi
 
 \begin{Shaded}
 \begin{Highlighting}[]
+\FunctionTok{data}\NormalTok{(}\StringTok{"CigarettesSW"}\NormalTok{, }\AttributeTok{package =} \StringTok{"AER"}\NormalTok{)}
+\NormalTok{CigarettesSW}\SpecialCharTok{$}\NormalTok{rprice  }\OtherTok{\textless{}{-}} \FunctionTok{with}\NormalTok{(CigarettesSW, price}\SpecialCharTok{/}\NormalTok{cpi) }\CommentTok{\# compute real price}
 \NormalTok{CigarettesSW}\SpecialCharTok{$}\NormalTok{rincome }\OtherTok{\textless{}{-}} \FunctionTok{with}\NormalTok{(CigarettesSW, income}\SpecialCharTok{/}\NormalTok{population}\SpecialCharTok{/}\NormalTok{cpi)}
 \NormalTok{eq.pooled }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(}\FunctionTok{log}\NormalTok{(packs)}\SpecialCharTok{\textasciitilde{}}\FunctionTok{log}\NormalTok{(rprice)}\SpecialCharTok{+}\FunctionTok{log}\NormalTok{(rincome),}\AttributeTok{data=}\NormalTok{CigarettesSW)}
 \NormalTok{eq.LSDV }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(}\FunctionTok{log}\NormalTok{(packs)}\SpecialCharTok{\textasciitilde{}}\FunctionTok{log}\NormalTok{(rprice)}\SpecialCharTok{+}\FunctionTok{log}\NormalTok{(rincome)}\SpecialCharTok{+}\NormalTok{state,}
