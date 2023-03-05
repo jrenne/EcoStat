@@ -131,7 +131,7 @@
 
 \title{Econometrics and Statistics}
 \author{Jean-Paul Renne}
-\date{2023-02-20}
+\date{2023-03-05}
 
 \usepackage{amsthm}
 \newtheorem{theorem}{Theorem}[chapter]
@@ -2403,18 +2403,33 @@ In the following example, we regress GDP growth rates from the \citet{JST_2017} 
 \NormalTok{JST.red }\OtherTok{\textless{}{-}} \FunctionTok{subset}\NormalTok{(JST,year}\SpecialCharTok{\textgreater{}}\DecValTok{1950}\NormalTok{)}
 \NormalTok{JST.red}\SpecialCharTok{$}\NormalTok{iso }\OtherTok{\textless{}{-}} \FunctionTok{as.factor}\NormalTok{(JST.red}\SpecialCharTok{$}\NormalTok{iso)}
 \NormalTok{JST.red}\SpecialCharTok{$}\NormalTok{year }\OtherTok{\textless{}{-}} \FunctionTok{as.factor}\NormalTok{(JST.red}\SpecialCharTok{$}\NormalTok{year)}
-\NormalTok{eq }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(growth}\SpecialCharTok{\textasciitilde{}}\NormalTok{crisisJST}\SpecialCharTok{+}\NormalTok{iso,}\AttributeTok{data=}\NormalTok{JST.red)}
-\FunctionTok{rbind}\NormalTok{(}\FunctionTok{coeftest}\NormalTok{(eq)[}\DecValTok{2}\NormalTok{,],}
-      \FunctionTok{coeftest}\NormalTok{(eq, }\AttributeTok{vcov =} \FunctionTok{vcovHC}\NormalTok{(eq, }\AttributeTok{type =} \StringTok{"HC0"}\NormalTok{))[}\DecValTok{2}\NormalTok{,],}
-      \FunctionTok{coeftest}\NormalTok{(eq, }\AttributeTok{vcov =} \FunctionTok{vcovHC}\NormalTok{(eq, }\AttributeTok{type =} \StringTok{"HC1"}\NormalTok{))[}\DecValTok{2}\NormalTok{,])}
+\NormalTok{eq }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(growth}\SpecialCharTok{\textasciitilde{}}\NormalTok{crisisJST}\SpecialCharTok{+}\NormalTok{iso}\SpecialCharTok{+}\NormalTok{year,}\AttributeTok{data=}\NormalTok{JST.red)}
+\NormalTok{vcovHC0 }\OtherTok{\textless{}{-}} \FunctionTok{vcovHC}\NormalTok{(eq, }\AttributeTok{type =} \StringTok{"HC0"}\NormalTok{)}
+\NormalTok{vcovHC1 }\OtherTok{\textless{}{-}} \FunctionTok{vcovHC}\NormalTok{(eq, }\AttributeTok{type =} \StringTok{"HC1"}\NormalTok{)}
+\NormalTok{stargazer}\SpecialCharTok{::}\FunctionTok{stargazer}\NormalTok{(eq, eq, eq,}\AttributeTok{type =} \StringTok{"text"}\NormalTok{,}
+                     \AttributeTok{column.labels =} \FunctionTok{c}\NormalTok{(}\StringTok{"No HAC"}\NormalTok{, }\StringTok{"HC0"}\NormalTok{,}\StringTok{"HC1"}\NormalTok{),}
+                     \AttributeTok{omit =} \FunctionTok{c}\NormalTok{(}\StringTok{"iso"}\NormalTok{,}\StringTok{"year"}\NormalTok{),}\AttributeTok{no.space =} \ConstantTok{TRUE}\NormalTok{,}\AttributeTok{keep.stat =} \StringTok{"n"}\NormalTok{,}
+                     \AttributeTok{se =} \FunctionTok{list}\NormalTok{(}\ConstantTok{NULL}\NormalTok{,}\FunctionTok{sqrt}\NormalTok{(}\FunctionTok{diag}\NormalTok{(vcovHC0)),}\FunctionTok{sqrt}\NormalTok{(}\FunctionTok{diag}\NormalTok{(vcovHC1))))}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-##         Estimate  Std. Error   t value     Pr(>|t|)
-## [1,] -0.02481424 0.005490411 -4.519560 6.789284e-06
-## [2,] -0.02481424 0.005605452 -4.426804 1.040602e-05
-## [3,] -0.02481424 0.005648268 -4.393247 1.212105e-05
+## 
+## ==========================================
+##                   Dependent variable:     
+##              -----------------------------
+##                         growth            
+##               No HAC      HC0       HC1   
+##                 (1)       (2)       (3)   
+## ------------------------------------------
+## crisisJST    -0.015*** -0.015*** -0.015***
+##               (0.005)   (0.005)   (0.006) 
+## Constant     0.042***  0.042***  0.042*** 
+##               (0.005)   (0.007)   (0.007) 
+## ------------------------------------------
+## Observations   1,258     1,258     1,258  
+## ==========================================
+## Note:          *p<0.1; **p<0.05; ***p<0.01
 \end{verbatim}
 
 \begin{example}[Heteroskedasticity and Autocorrelation (HAC)]
@@ -2656,20 +2671,36 @@ Let us come back to the analysis of the effect of systemic financial crises on G
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{eq }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(growth}\SpecialCharTok{\textasciitilde{}}\NormalTok{crisisJST}\SpecialCharTok{+}\NormalTok{iso,}\AttributeTok{data=}\NormalTok{JST.red)}
-\FunctionTok{rbind}\NormalTok{(}\FunctionTok{coeftest}\NormalTok{(eq)[}\DecValTok{2}\NormalTok{,],}
-      \FunctionTok{coeftest}\NormalTok{(eq, }\AttributeTok{vcov =} \FunctionTok{vcovHC}\NormalTok{(eq, }\AttributeTok{type =} \StringTok{"HC1"}\NormalTok{))[}\DecValTok{2}\NormalTok{,],}
-      \FunctionTok{coeftest}\NormalTok{(eq, }\AttributeTok{vcov =} \FunctionTok{vcovCL}\NormalTok{(eq, }\AttributeTok{cluster =}\NormalTok{ JST.red[, }\FunctionTok{c}\NormalTok{(}\StringTok{"iso"}\NormalTok{)]))[}\DecValTok{2}\NormalTok{,],}
-      \FunctionTok{coeftest}\NormalTok{(eq, }\AttributeTok{vcov =} \FunctionTok{vcovCL}\NormalTok{(eq, }\AttributeTok{cluster =}\NormalTok{ JST.red[, }\FunctionTok{c}\NormalTok{(}\StringTok{"iso"}\NormalTok{,}\StringTok{"year"}\NormalTok{)]))[}\DecValTok{2}\NormalTok{,])}
+\NormalTok{eq }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(growth}\SpecialCharTok{\textasciitilde{}}\NormalTok{crisisJST}\SpecialCharTok{+}\NormalTok{iso}\SpecialCharTok{+}\NormalTok{year,}\AttributeTok{data=}\NormalTok{JST.red)}
+\NormalTok{vcov1 }\OtherTok{\textless{}{-}} \FunctionTok{vcovHC}\NormalTok{(eq, }\AttributeTok{type =} \StringTok{"HC1"}\NormalTok{)}
+\NormalTok{vcov2 }\OtherTok{\textless{}{-}} \FunctionTok{vcovCL}\NormalTok{(eq, }\AttributeTok{cluster =}\NormalTok{ JST.red[, }\FunctionTok{c}\NormalTok{(}\StringTok{"iso"}\NormalTok{)])}
+\NormalTok{vcov3 }\OtherTok{\textless{}{-}} \FunctionTok{vcovCL}\NormalTok{(eq, }\AttributeTok{cluster =}\NormalTok{ JST.red[, }\FunctionTok{c}\NormalTok{(}\StringTok{"iso"}\NormalTok{,}\StringTok{"year"}\NormalTok{)])}
+\NormalTok{stargazer}\SpecialCharTok{::}\FunctionTok{stargazer}\NormalTok{(eq, eq, eq, eq,}\AttributeTok{type =} \StringTok{"text"}\NormalTok{,}
+                     \AttributeTok{column.labels =} \FunctionTok{c}\NormalTok{(}\StringTok{"No HAC"}\NormalTok{, }\StringTok{"Heterosk."}\NormalTok{,}
+                                       \StringTok{"1{-}way Clust."}\NormalTok{,}\StringTok{"1{-}way Clust."}\NormalTok{),}
+                     \AttributeTok{omit =} \FunctionTok{c}\NormalTok{(}\StringTok{"iso"}\NormalTok{,}\StringTok{"year"}\NormalTok{),}\AttributeTok{no.space =} \ConstantTok{TRUE}\NormalTok{,}\AttributeTok{keep.stat =} \StringTok{"n"}\NormalTok{,}
+                     \AttributeTok{se =} \FunctionTok{list}\NormalTok{(}\ConstantTok{NULL}\NormalTok{,}\FunctionTok{sqrt}\NormalTok{(}\FunctionTok{diag}\NormalTok{(vcov1)),}
+                               \FunctionTok{sqrt}\NormalTok{(}\FunctionTok{diag}\NormalTok{(vcov2)),}\FunctionTok{sqrt}\NormalTok{(}\FunctionTok{diag}\NormalTok{(vcov3))))}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-##         Estimate  Std. Error   t value     Pr(>|t|)
-## [1,] -0.02481424 0.005490411 -4.519560 6.789284e-06
-## [2,] -0.02481424 0.005648268 -4.393247 1.212105e-05
-## [3,] -0.02481424 0.005847708 -4.243413 2.365508e-05
-## [4,] -0.02481424 0.006546931 -3.790209 1.577572e-04
+## 
+## ==========================================================
+##                           Dependent variable:             
+##              ---------------------------------------------
+##                                 growth                    
+##               No HAC   Heterosk. 1-way Clust. 1-way Clust.
+##                 (1)       (2)        (3)          (4)     
+## ----------------------------------------------------------
+## crisisJST    -0.015*** -0.015***  -0.015***     -0.015**  
+##               (0.005)   (0.006)    (0.006)      (0.007)   
+## Constant     0.042***  0.042***    0.042***     0.042***  
+##               (0.005)   (0.007)    (0.007)      (0.002)   
+## ----------------------------------------------------------
+## Observations   1,258     1,258      1,258        1,258    
+## ==========================================================
+## Note:                          *p<0.1; **p<0.05; ***p<0.01
 \end{verbatim}
 
 \hypertarget{shrinkage-methods}{%

@@ -1291,14 +1291,29 @@ Figure 4.6: Situation of heteroskedasticity. The model is <span class="math inli
 <span><span class="va">JST.red</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html">subset</a></span><span class="op">(</span><span class="va">JST</span>,<span class="va">year</span><span class="op">&gt;</span><span class="fl">1950</span><span class="op">)</span></span>
 <span><span class="va">JST.red</span><span class="op">$</span><span class="va">iso</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="va">JST.red</span><span class="op">$</span><span class="va">iso</span><span class="op">)</span></span>
 <span><span class="va">JST.red</span><span class="op">$</span><span class="va">year</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="va">JST.red</span><span class="op">$</span><span class="va">year</span><span class="op">)</span></span>
-<span><span class="va">eq</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">growth</span><span class="op">~</span><span class="va">crisisJST</span><span class="op">+</span><span class="va">iso</span>,data<span class="op">=</span><span class="va">JST.red</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/lmtest/man/coeftest.html">coeftest</a></span><span class="op">(</span><span class="va">eq</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span>,<span class="op">]</span>,</span>
-<span>      <span class="fu"><a href="https://rdrr.io/pkg/lmtest/man/coeftest.html">coeftest</a></span><span class="op">(</span><span class="va">eq</span>, vcov <span class="op">=</span> <span class="fu"><a href="https://sandwich.R-Forge.R-project.org/reference/vcovHC.html">vcovHC</a></span><span class="op">(</span><span class="va">eq</span>, type <span class="op">=</span> <span class="st">"HC0"</span><span class="op">)</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span>,<span class="op">]</span>,</span>
-<span>      <span class="fu"><a href="https://rdrr.io/pkg/lmtest/man/coeftest.html">coeftest</a></span><span class="op">(</span><span class="va">eq</span>, vcov <span class="op">=</span> <span class="fu"><a href="https://sandwich.R-Forge.R-project.org/reference/vcovHC.html">vcovHC</a></span><span class="op">(</span><span class="va">eq</span>, type <span class="op">=</span> <span class="st">"HC1"</span><span class="op">)</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span>,<span class="op">]</span><span class="op">)</span></span></code></pre></div>
-<pre><code>##         Estimate  Std. Error   t value     Pr(&gt;|t|)
-## [1,] -0.02481424 0.005490411 -4.519560 6.789284e-06
-## [2,] -0.02481424 0.005605452 -4.426804 1.040602e-05
-## [3,] -0.02481424 0.005648268 -4.393247 1.212105e-05</code></pre>
+<span><span class="va">eq</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">growth</span><span class="op">~</span><span class="va">crisisJST</span><span class="op">+</span><span class="va">iso</span><span class="op">+</span><span class="va">year</span>,data<span class="op">=</span><span class="va">JST.red</span><span class="op">)</span></span>
+<span><span class="va">vcovHC0</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://sandwich.R-Forge.R-project.org/reference/vcovHC.html">vcovHC</a></span><span class="op">(</span><span class="va">eq</span>, type <span class="op">=</span> <span class="st">"HC0"</span><span class="op">)</span></span>
+<span><span class="va">vcovHC1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://sandwich.R-Forge.R-project.org/reference/vcovHC.html">vcovHC</a></span><span class="op">(</span><span class="va">eq</span>, type <span class="op">=</span> <span class="st">"HC1"</span><span class="op">)</span></span>
+<span><span class="fu">stargazer</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/stargazer/man/stargazer.html">stargazer</a></span><span class="op">(</span><span class="va">eq</span>, <span class="va">eq</span>, <span class="va">eq</span>,type <span class="op">=</span> <span class="st">"text"</span>,</span>
+<span>                     column.labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"No HAC"</span>, <span class="st">"HC0"</span>,<span class="st">"HC1"</span><span class="op">)</span>,</span>
+<span>                     omit <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"iso"</span>,<span class="st">"year"</span><span class="op">)</span>,no.space <span class="op">=</span> <span class="cn">TRUE</span>,keep.stat <span class="op">=</span> <span class="st">"n"</span>,</span>
+<span>                     se <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="cn">NULL</span>,<span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/diag.html">diag</a></span><span class="op">(</span><span class="va">vcovHC0</span><span class="op">)</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/diag.html">diag</a></span><span class="op">(</span><span class="va">vcovHC1</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## 
+## ==========================================
+##                   Dependent variable:     
+##              -----------------------------
+##                         growth            
+##               No HAC      HC0       HC1   
+##                 (1)       (2)       (3)   
+## ------------------------------------------
+## crisisJST    -0.015*** -0.015*** -0.015***
+##               (0.005)   (0.005)   (0.006) 
+## Constant     0.042***  0.042***  0.042*** 
+##               (0.005)   (0.007)   (0.007) 
+## ------------------------------------------
+## Observations   1,258     1,258     1,258  
+## ==========================================
+## Note:          *p&lt;0.1; **p&lt;0.05; ***p&lt;0.01</code></pre>
 <div class="example">
 <p><span id="exm:HCheterAC" class="example"><strong>Example 4.9  (Heteroskedasticity and Autocorrelation (HAC)) </strong></span><span class="citation">Newey and West (<a href="references.html#ref-Newey_West_1987" role="doc-biblioref">1987</a>)</span> have proposed a formula to address both heteroskedasticity and auto-correlation of the residuals (Eqs. <a href="ChapterLS.html#eq:heteroskedasticity">(4.24)</a> and <a href="ChapterLS.html#eq:autocorrelation">(4.25)</a>). They show that, if the correlation between terms <span class="math inline">\(i\)</span> and <span class="math inline">\(j\)</span> gets sufficiently small when <span class="math inline">\(|i-j|\)</span> increases:
 <span class="math display" id="eq:NW">\[\begin{eqnarray}
@@ -1499,16 +1514,32 @@ and we use:
 <p>As an alternative to the asymptotic approximation to the distribution of a statistic of interest, one can resort to bootstrap approximation (see Section 5 of <span class="citation">J. G. MacKinnon, Nielsen, and Webb (<a href="references.html#ref-MACKINNON2022" role="doc-biblioref">2022</a>)</span>). In R, the package <code>fwildclusterboot</code> allows to implement such approaches.<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;See, e.g., &lt;a href="https://cran.r-project.org/web/packages/fwildclusterboot/vignettes/fwildclusterboot.html"&gt;this tutorial by Alexander Fischer&lt;/a&gt;.&lt;/p&gt;'><sup>8</sup></a></p>
 <p>Let us come back to the analysis of the effect of systemic financial crises on GDP growth. Clustering the data at the country level and, further, at both the country and time levels gives the following:</p>
 <div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">eq</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">growth</span><span class="op">~</span><span class="va">crisisJST</span><span class="op">+</span><span class="va">iso</span>,data<span class="op">=</span><span class="va">JST.red</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/lmtest/man/coeftest.html">coeftest</a></span><span class="op">(</span><span class="va">eq</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span>,<span class="op">]</span>,</span>
-<span>      <span class="fu"><a href="https://rdrr.io/pkg/lmtest/man/coeftest.html">coeftest</a></span><span class="op">(</span><span class="va">eq</span>, vcov <span class="op">=</span> <span class="fu"><a href="https://sandwich.R-Forge.R-project.org/reference/vcovHC.html">vcovHC</a></span><span class="op">(</span><span class="va">eq</span>, type <span class="op">=</span> <span class="st">"HC1"</span><span class="op">)</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span>,<span class="op">]</span>,</span>
-<span>      <span class="fu"><a href="https://rdrr.io/pkg/lmtest/man/coeftest.html">coeftest</a></span><span class="op">(</span><span class="va">eq</span>, vcov <span class="op">=</span> <span class="fu"><a href="https://sandwich.R-Forge.R-project.org/reference/vcovCL.html">vcovCL</a></span><span class="op">(</span><span class="va">eq</span>, cluster <span class="op">=</span> <span class="va">JST.red</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"iso"</span><span class="op">)</span><span class="op">]</span><span class="op">)</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span>,<span class="op">]</span>,</span>
-<span>      <span class="fu"><a href="https://rdrr.io/pkg/lmtest/man/coeftest.html">coeftest</a></span><span class="op">(</span><span class="va">eq</span>, vcov <span class="op">=</span> <span class="fu"><a href="https://sandwich.R-Forge.R-project.org/reference/vcovCL.html">vcovCL</a></span><span class="op">(</span><span class="va">eq</span>, cluster <span class="op">=</span> <span class="va">JST.red</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"iso"</span>,<span class="st">"year"</span><span class="op">)</span><span class="op">]</span><span class="op">)</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span>,<span class="op">]</span><span class="op">)</span></span></code></pre></div>
-<pre><code>##         Estimate  Std. Error   t value     Pr(&gt;|t|)
-## [1,] -0.02481424 0.005490411 -4.519560 6.789284e-06
-## [2,] -0.02481424 0.005648268 -4.393247 1.212105e-05
-## [3,] -0.02481424 0.005847708 -4.243413 2.365508e-05
-## [4,] -0.02481424 0.006546931 -3.790209 1.577572e-04</code></pre>
+<code class="sourceCode R"><span><span class="va">eq</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">growth</span><span class="op">~</span><span class="va">crisisJST</span><span class="op">+</span><span class="va">iso</span><span class="op">+</span><span class="va">year</span>,data<span class="op">=</span><span class="va">JST.red</span><span class="op">)</span></span>
+<span><span class="va">vcov1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://sandwich.R-Forge.R-project.org/reference/vcovHC.html">vcovHC</a></span><span class="op">(</span><span class="va">eq</span>, type <span class="op">=</span> <span class="st">"HC1"</span><span class="op">)</span></span>
+<span><span class="va">vcov2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://sandwich.R-Forge.R-project.org/reference/vcovCL.html">vcovCL</a></span><span class="op">(</span><span class="va">eq</span>, cluster <span class="op">=</span> <span class="va">JST.red</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"iso"</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="va">vcov3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://sandwich.R-Forge.R-project.org/reference/vcovCL.html">vcovCL</a></span><span class="op">(</span><span class="va">eq</span>, cluster <span class="op">=</span> <span class="va">JST.red</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"iso"</span>,<span class="st">"year"</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="fu">stargazer</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/stargazer/man/stargazer.html">stargazer</a></span><span class="op">(</span><span class="va">eq</span>, <span class="va">eq</span>, <span class="va">eq</span>, <span class="va">eq</span>,type <span class="op">=</span> <span class="st">"text"</span>,</span>
+<span>                     column.labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"No HAC"</span>, <span class="st">"Heterosk."</span>,</span>
+<span>                                       <span class="st">"1-way Clust."</span>,<span class="st">"1-way Clust."</span><span class="op">)</span>,</span>
+<span>                     omit <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"iso"</span>,<span class="st">"year"</span><span class="op">)</span>,no.space <span class="op">=</span> <span class="cn">TRUE</span>,keep.stat <span class="op">=</span> <span class="st">"n"</span>,</span>
+<span>                     se <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="cn">NULL</span>,<span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/diag.html">diag</a></span><span class="op">(</span><span class="va">vcov1</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>                               <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/diag.html">diag</a></span><span class="op">(</span><span class="va">vcov2</span><span class="op">)</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/diag.html">diag</a></span><span class="op">(</span><span class="va">vcov3</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## 
+## ==========================================================
+##                           Dependent variable:             
+##              ---------------------------------------------
+##                                 growth                    
+##               No HAC   Heterosk. 1-way Clust. 1-way Clust.
+##                 (1)       (2)        (3)          (4)     
+## ----------------------------------------------------------
+## crisisJST    -0.015*** -0.015***  -0.015***     -0.015**  
+##               (0.005)   (0.006)    (0.006)      (0.007)   
+## Constant     0.042***  0.042***    0.042***     0.042***  
+##               (0.005)   (0.007)    (0.007)      (0.002)   
+## ----------------------------------------------------------
+## Observations   1,258     1,258      1,258        1,258    
+## ==========================================================
+## Note:                          *p&lt;0.1; **p&lt;0.05; ***p&lt;0.01</code></pre>
 </div>
 </div>
 <div id="shrinkage-methods" class="section level2" number="4.6">
@@ -1705,7 +1736,7 @@ f(\boldsymbol\beta) &amp; = &amp; \sum_{j=2}^K |\beta_j| \quad \mbox{(lasso)}.
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Econometrics and Statistics</strong>" was written by Jean-Paul Renne. It was last built on 2023-02-20.</p>
+    <p>"<strong>Econometrics and Statistics</strong>" was written by Jean-Paul Renne. It was last built on 2023-03-05.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

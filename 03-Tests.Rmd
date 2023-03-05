@@ -151,7 +151,7 @@ x.value <- threshold + .6
 arrows(x0 = x.value,y0 = .9*max.f,
        x1 = x.value,y1 = 0,
        angle = 10,length = .1,lty=1,col="blue",lwd=2)
-text(x = threshold,y=.93*max.f,"(Sample-based) Test statistics X",col="blue")
+text(x = threshold,y=.93*max.f,"(Sample-based) Test statistics S",col="blue")
 
 threshold <- x.value
 x.critic <- seq(min.x,threshold,by=.01)
@@ -191,7 +191,7 @@ f.x <- f(x,df)
 max.f <- max(f.x)
 
 par(plt=c(.15,.95,.2,.95))
-plot(x,f.x,type="l",lwd=2,ylim=c(0,1.5*max.f),xlab="Test statistic X",
+plot(x,f.x,type="l",lwd=2,ylim=c(0,1.5*max.f),xlab="Test statistic S",
      ylab="Density of test statistic under Ho")
 abline(h=0)
 alpha <- .05
@@ -231,7 +231,7 @@ f.x <- f(x,df)
 max.f <- max(f.x)
 
 par(plt=c(.15,.95,.2,.95))
-plot(x,f.x,type="l",lwd=2,ylim=c(0,1.5*max.f),xlab="Test statistic X",
+plot(x,f.x,type="l",lwd=2,ylim=c(0,1.5*max.f),xlab="Test statistic S",
      ylab="Density of test statistic under Ho")
 abline(h=0)
 alpha <- .05
@@ -249,7 +249,7 @@ x.value <- threshold - 2
 arrows(x0 = x.value,y0 = .9*max.f,
        x1 = x.value,y1 = 0,
        angle = 10,length = .1,lty=1,col="blue",lwd=2)
-text(x = threshold,y=.93*max.f,"(Sample-based) Test statistics X",col="blue")
+text(x = threshold,y=.93*max.f,"(Sample-based) Test statistics S",col="blue")
 
 threshold <- x.value
 #lines(c(threshold,threshold),c(0,f(threshold,df)),col="blue",lwd=2)

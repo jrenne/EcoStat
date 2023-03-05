@@ -1241,7 +1241,7 @@ The results show that the White formula yields, on average, an estimated standar
 
 In the following example, we regress GDP growth rates from the @JST_2017 database on a systemic financial crisis dummy. We compute the HC0- and HC1-based standard deviations of the parameter estimate, and compare it to the one based on the standard OLS formula. The adjusted standard deviations are close to the one provided by the non-adjusted OLS formula.
 
-```{r JSTcrises1}
+```{r JSTcrises1, warning=FALSE}
 library(lmtest)
 library(sandwich)
 nT <- dim(JST)[1]
@@ -1250,12 +1250,14 @@ JST$growth[2:nT] <- log(JST$rgdpbarro[2:nT]/JST$rgdpbarro[1:(nT-1)])
 JST.red <- subset(JST,year>1950)
 JST.red$iso <- as.factor(JST.red$iso)
 JST.red$year <- as.factor(JST.red$year)
-eq <- lm(growth~crisisJST+iso,data=JST.red)
-rbind(coeftest(eq)[2,],
-      coeftest(eq, vcov = vcovHC(eq, type = "HC0"))[2,],
-      coeftest(eq, vcov = vcovHC(eq, type = "HC1"))[2,])
+eq <- lm(growth~crisisJST+iso+year,data=JST.red)
+vcovHC0 <- vcovHC(eq, type = "HC0")
+vcovHC1 <- vcovHC(eq, type = "HC1")
+stargazer::stargazer(eq, eq, eq,type = "text",
+                     column.labels = c("No HAC", "HC0","HC1"),
+                     omit = c("iso","year"),no.space = TRUE,keep.stat = "n",
+                     se = list(NULL,sqrt(diag(vcovHC0)),sqrt(diag(vcovHC1))))
 ```
-
 
 :::{.example #HCheterAC name="Heteroskedasticity and Autocorrelation (HAC)"}
 
@@ -1493,13 +1495,17 @@ As an alternative to the asymptotic approximation to the distribution of a stati
 Let us come back to the analysis of the effect of systemic financial crises on GDP growth. Clustering the data at the country level and, further, at both the country and time levels gives the following:
 
 ```{r JSTcrises2,warning=FALSE}
-eq <- lm(growth~crisisJST+iso,data=JST.red)
-rbind(coeftest(eq)[2,],
-      coeftest(eq, vcov = vcovHC(eq, type = "HC1"))[2,],
-      coeftest(eq, vcov = vcovCL(eq, cluster = JST.red[, c("iso")]))[2,],
-      coeftest(eq, vcov = vcovCL(eq, cluster = JST.red[, c("iso","year")]))[2,])
+eq <- lm(growth~crisisJST+iso+year,data=JST.red)
+vcov1 <- vcovHC(eq, type = "HC1")
+vcov2 <- vcovCL(eq, cluster = JST.red[, c("iso")])
+vcov3 <- vcovCL(eq, cluster = JST.red[, c("iso","year")])
+stargazer::stargazer(eq, eq, eq, eq,type = "text",
+                     column.labels = c("No HAC", "Heterosk.",
+                                       "1-way Clust.","1-way Clust."),
+                     omit = c("iso","year"),no.space = TRUE,keep.stat = "n",
+                     se = list(NULL,sqrt(diag(vcov1)),
+                               sqrt(diag(vcov2)),sqrt(diag(vcov3))))
 ```
-
 
 
 ## Shrinkage methods
