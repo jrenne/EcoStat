@@ -266,14 +266,14 @@ ii. Under Hypotheses \@ref(hyp:fullrank) to \@ref(hyp:noncorrelResid), the condi
 ::: {.proof}
 Under Hypothesis \@ref(hyp:fullrank), $\bv{X}'\bv{X}$ can be inverted. We have:
 $$
-\bv{b} = (\bv{X}'\bv{X})^{-1} \bv{X}'\bv{y} = \boldsymbol\beta + (\bv{X}'\bv{X})^{-1} \bv{X}' \bv{\varepsilon}.
+\bv{b} = (\bv{X}'\bv{X})^{-1} \bv{X}'\bv{y} = \boldsymbol\beta + (\bv{X}'\bv{X})^{-1} \bv{X}' {\boldsymbol\varepsilon}.
 $$
 
-i. Let us consider the expectation of the last term, i.e. $\mathbb{E}((\bv{X}'\bv{X})^{-1} \bv{X}' \bv{\varepsilon})$. Using the law of iterated expectations, we obtain:
+i. Let us consider the expectation of the last term, i.e. $\mathbb{E}((\bv{X}'\bv{X})^{-1} \bv{X}' {\boldsymbol\varepsilon})$. Using the law of iterated expectations, we obtain:
 $$
-\mathbb{E}((\bv{X}'\bv{X})^{-1} \bv{X}' \bv{\varepsilon}) = \mathbb{E}(\mathbb{E}[(\bv{X}'\bv{X})^{-1} \bv{X}' \bv{\varepsilon}|\bv{X}]) = \mathbb{E}((\bv{X}'\bv{X})^{-1} \bv{X}'\mathbb{E}[\bv{\varepsilon}|\bv{X}]).
+\mathbb{E}((\bv{X}'\bv{X})^{-1} \bv{X}' {\boldsymbol\varepsilon}) = \mathbb{E}(\mathbb{E}[(\bv{X}'\bv{X})^{-1} \bv{X}' {\boldsymbol\varepsilon}|\bv{X}]) = \mathbb{E}((\bv{X}'\bv{X})^{-1} \bv{X}'\mathbb{E}[{\boldsymbol\varepsilon}|\bv{X}]).
 $$
-By Hypothesis \@ref(hyp:exogeneity), we have $\mathbb{E}[\bv{\varepsilon}|\bv{X}]=0$. Hence $\mathbb{E}((\bv{X}'\bv{X})^{-1} \bv{X}' \bv{\varepsilon}) =0$ and result (i) follows.
+By Hypothesis \@ref(hyp:exogeneity), we have $\mathbb{E}[{\boldsymbol\varepsilon}|\bv{X}]=0$. Hence $\mathbb{E}((\bv{X}'\bv{X})^{-1} \bv{X}' {\boldsymbol\varepsilon}) =0$ and result (i) follows.
 ii. $\mathbb{V}ar(\bv{b}|\bv{X}) = (\bv{X}'\bv{X})^{-1} \bv{X}' \mathbb{E}(\boldsymbol\varepsilon\boldsymbol\varepsilon'|\bv{X}) \bv{X} (\bv{X}'\bv{X})^{-1}$.
 By Prop. \@ref(prp:Sigma), if \@ref(hyp:homoskedasticity) and \@ref(hyp:noncorrelResid) hold, then we have $\mathbb{E}(\boldsymbol\varepsilon\boldsymbol\varepsilon'|\bv{X})=\mathbb{V}ar(\boldsymbol\varepsilon|\bv{X})=\sigma^2 Id$.
 :::

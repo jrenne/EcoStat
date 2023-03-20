@@ -159,7 +159,7 @@ where $V_{i,j}$ is the deterministic component of the utility associated with ch
 \end{eqnarray}
 where $F$ is the c.d.f. of $\varepsilon_{i,0}-\varepsilon_{i,1}$.
 
-Note that only the difference $\boldsymbol\theta_1-\boldsymbol\theta_0$ is identifiable (as opposed to $\boldsymbol\theta_1$ *and* $\boldsymbol\theta_0$). Indeed, replacing $U$ with $aU$ ($a>0$) gives the same model. This *scaling* issue can be solved by fixing the variance of $\varepsilon_{i,0}-\varepsilon_{i,1}$.
+Note that only the difference $\boldsymbol\theta_1-\boldsymbol\theta_0$ is identifiable (as opposed to $\boldsymbol\theta_1$ *and* $\boldsymbol\theta_0$). Moreover, replacing $U$ with $aU$ ($a>0$) gives the same model; this *scaling* issue can be solved by fixing the variance of $\varepsilon_{i,0}-\varepsilon_{i,1}$.
 
 :::{.example #migration name="Migration and income"}
 

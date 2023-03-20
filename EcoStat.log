@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999994 (TeX Live 2022) (preloaded format=xelatex 2023.1.3)  5 MAR 2023 11:57
+This is XeTeX, Version 3.141592653-2.6-0.999994 (TeX Live 2022) (preloaded format=xelatex 2023.1.3)  20 MAR 2023 10:36
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -902,16 +902,7 @@ File: EcoStat_files/figure-latex/heteroskedasticity-1.pdf Graphic file (type pdf
 [35]
 File: EcoStat_files/figure-latex/exmpSalarayPhDSHP-1.pdf Graphic file (type pdf)
 <use EcoStat_files/figure-latex/exmpSalarayPhDSHP-1.pdf>
-[36] [37]
-Missing character: There is no 𝜀 (U+1D700) in font [lmroman12-bold]:mapping=tex-text;!
-[38]
-Missing character: There is no 𝜀 (U+1D700) in font [lmroman12-bold]:mapping=tex-text;!
-Missing character: There is no 𝜀 (U+1D700) in font [lmroman12-bold]:mapping=tex-text;!
-Missing character: There is no 𝜀 (U+1D700) in font [lmroman12-bold]:mapping=tex-text;!
-Missing character: There is no 𝜀 (U+1D700) in font [lmroman12-bold]:mapping=tex-text;!
-Missing character: There is no 𝜀 (U+1D700) in font [lmroman12-bold]:mapping=tex-text;!
-Missing character: There is no 𝜀 (U+1D700) in font [lmroman12-bold]:mapping=tex-text;!
-[39] [40] [41] [42]
+[36] [37] [38] [39] [40] [41] [42]
 File: EcoStat_files/figure-latex/R2issue-1.pdf Graphic file (type pdf)
 <use EcoStat_files/figure-latex/R2issue-1.pdf>
 [43] [44] [45]

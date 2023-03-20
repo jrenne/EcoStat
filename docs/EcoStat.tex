@@ -131,7 +131,7 @@
 
 \title{Econometrics and Statistics}
 \author{Jean-Paul Renne}
-\date{2023-03-05}
+\date{2023-03-20}
 
 \usepackage{amsthm}
 \newtheorem{theorem}{Theorem}[chapter]
@@ -1268,18 +1268,18 @@ We have:
 
 Under Hypothesis \ref{hyp:fullrank}, \(\mathbf{X}'\mathbf{X}\) can be inverted. We have:
 \[
-\mathbf{b} = (\mathbf{X}'\mathbf{X})^{-1} \mathbf{X}'\mathbf{y} = \boldsymbol\beta + (\mathbf{X}'\mathbf{X})^{-1} \mathbf{X}' \mathbf{\varepsilon}.
+\mathbf{b} = (\mathbf{X}'\mathbf{X})^{-1} \mathbf{X}'\mathbf{y} = \boldsymbol\beta + (\mathbf{X}'\mathbf{X})^{-1} \mathbf{X}' {\boldsymbol\varepsilon}.
 \]
 
 \begin{enumerate}
 \def\labelenumi{\roman{enumi}.}
 \tightlist
 \item
-  Let us consider the expectation of the last term, i.e.~\(\mathbb{E}((\mathbf{X}'\mathbf{X})^{-1} \mathbf{X}' \mathbf{\varepsilon})\). Using the law of iterated expectations, we obtain:
+  Let us consider the expectation of the last term, i.e.~\(\mathbb{E}((\mathbf{X}'\mathbf{X})^{-1} \mathbf{X}' {\boldsymbol\varepsilon})\). Using the law of iterated expectations, we obtain:
   \[
-  \mathbb{E}((\mathbf{X}'\mathbf{X})^{-1} \mathbf{X}' \mathbf{\varepsilon}) = \mathbb{E}(\mathbb{E}[(\mathbf{X}'\mathbf{X})^{-1} \mathbf{X}' \mathbf{\varepsilon}|\mathbf{X}]) = \mathbb{E}((\mathbf{X}'\mathbf{X})^{-1} \mathbf{X}'\mathbb{E}[\mathbf{\varepsilon}|\mathbf{X}]).
+  \mathbb{E}((\mathbf{X}'\mathbf{X})^{-1} \mathbf{X}' {\boldsymbol\varepsilon}) = \mathbb{E}(\mathbb{E}[(\mathbf{X}'\mathbf{X})^{-1} \mathbf{X}' {\boldsymbol\varepsilon}|\mathbf{X}]) = \mathbb{E}((\mathbf{X}'\mathbf{X})^{-1} \mathbf{X}'\mathbb{E}[{\boldsymbol\varepsilon}|\mathbf{X}]).
   \]
-  By Hypothesis \ref{hyp:exogeneity}, we have \(\mathbb{E}[\mathbf{\varepsilon}|\mathbf{X}]=0\). Hence \(\mathbb{E}((\mathbf{X}'\mathbf{X})^{-1} \mathbf{X}' \mathbf{\varepsilon}) =0\) and result (i) follows.
+  By Hypothesis \ref{hyp:exogeneity}, we have \(\mathbb{E}[{\boldsymbol\varepsilon}|\mathbf{X}]=0\). Hence \(\mathbb{E}((\mathbf{X}'\mathbf{X})^{-1} \mathbf{X}' {\boldsymbol\varepsilon}) =0\) and result (i) follows.
 \item
   \(\mathbb{V}ar(\mathbf{b}|\mathbf{X}) = (\mathbf{X}'\mathbf{X})^{-1} \mathbf{X}' \mathbb{E}(\boldsymbol\varepsilon\boldsymbol\varepsilon'|\mathbf{X}) \mathbf{X} (\mathbf{X}'\mathbf{X})^{-1}\).
   By Prop. \ref{prp:Sigma}, if \ref{hyp:homoskedasticity} and \ref{hyp:noncorrelResid} hold, then we have \(\mathbb{E}(\boldsymbol\varepsilon\boldsymbol\varepsilon'|\mathbf{X})=\mathbb{V}ar(\boldsymbol\varepsilon|\mathbf{X})=\sigma^2 Id\).
@@ -5193,7 +5193,7 @@ where \(V_{i,j}\) is the deterministic component of the utility associated with 
 \end{eqnarray}
 where \(F\) is the c.d.f. of \(\varepsilon_{i,0}-\varepsilon_{i,1}\).
 
-Note that only the difference \(\boldsymbol\theta_1-\boldsymbol\theta_0\) is identifiable (as opposed to \(\boldsymbol\theta_1\) \emph{and} \(\boldsymbol\theta_0\)). Indeed, replacing \(U\) with \(aU\) (\(a>0\)) gives the same model. This \emph{scaling} issue can be solved by fixing the variance of \(\varepsilon_{i,0}-\varepsilon_{i,1}\).
+Note that only the difference \(\boldsymbol\theta_1-\boldsymbol\theta_0\) is identifiable (as opposed to \(\boldsymbol\theta_1\) \emph{and} \(\boldsymbol\theta_0\)). Moreover, replacing \(U\) with \(aU\) (\(a>0\)) gives the same model; this \emph{scaling} issue can be solved by fixing the variance of \(\varepsilon_{i,0}-\varepsilon_{i,1}\).
 
 \begin{example}[Migration and income]
 \protect\hypertarget{exm:migration}{}\label{exm:migration}The RUM approach has been used by \citet{Nakosteen_Zimmer_1980} to study migration choices. Their model is based on the comparison of marginal costs and benefits associated with migration. The main ingredients of their approach are as follows:

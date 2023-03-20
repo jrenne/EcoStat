@@ -335,14 +335,14 @@ where <span class="math inline">\(\overline{\mathbb{C}ov(W,Y)}\)</span> and <spa
 <div class="proof">
 <p><span id="unlabeled-div-10" class="proof"><em>Proof</em>. </span>Under Hypothesis <a href="ChapterLS.html#hyp:fullrank">4.1</a>, <span class="math inline">\(\mathbf{X}'\mathbf{X}\)</span> can be inverted. We have:
 <span class="math display">\[
-\mathbf{b} = (\mathbf{X}'\mathbf{X})^{-1} \mathbf{X}'\mathbf{y} = \boldsymbol\beta + (\mathbf{X}'\mathbf{X})^{-1} \mathbf{X}' \mathbf{\varepsilon}.
+\mathbf{b} = (\mathbf{X}'\mathbf{X})^{-1} \mathbf{X}'\mathbf{y} = \boldsymbol\beta + (\mathbf{X}'\mathbf{X})^{-1} \mathbf{X}' {\boldsymbol\varepsilon}.
 \]</span></p>
 <ol style="list-style-type: lower-roman">
-<li>Let us consider the expectation of the last term, i.e. <span class="math inline">\(\mathbb{E}((\mathbf{X}'\mathbf{X})^{-1} \mathbf{X}' \mathbf{\varepsilon})\)</span>. Using the law of iterated expectations, we obtain:
+<li>Let us consider the expectation of the last term, i.e. <span class="math inline">\(\mathbb{E}((\mathbf{X}'\mathbf{X})^{-1} \mathbf{X}' {\boldsymbol\varepsilon})\)</span>. Using the law of iterated expectations, we obtain:
 <span class="math display">\[
-\mathbb{E}((\mathbf{X}'\mathbf{X})^{-1} \mathbf{X}' \mathbf{\varepsilon}) = \mathbb{E}(\mathbb{E}[(\mathbf{X}'\mathbf{X})^{-1} \mathbf{X}' \mathbf{\varepsilon}|\mathbf{X}]) = \mathbb{E}((\mathbf{X}'\mathbf{X})^{-1} \mathbf{X}'\mathbb{E}[\mathbf{\varepsilon}|\mathbf{X}]).
+\mathbb{E}((\mathbf{X}'\mathbf{X})^{-1} \mathbf{X}' {\boldsymbol\varepsilon}) = \mathbb{E}(\mathbb{E}[(\mathbf{X}'\mathbf{X})^{-1} \mathbf{X}' {\boldsymbol\varepsilon}|\mathbf{X}]) = \mathbb{E}((\mathbf{X}'\mathbf{X})^{-1} \mathbf{X}'\mathbb{E}[{\boldsymbol\varepsilon}|\mathbf{X}]).
 \]</span>
-By Hypothesis <a href="ChapterLS.html#hyp:exogeneity">4.2</a>, we have <span class="math inline">\(\mathbb{E}[\mathbf{\varepsilon}|\mathbf{X}]=0\)</span>. Hence <span class="math inline">\(\mathbb{E}((\mathbf{X}'\mathbf{X})^{-1} \mathbf{X}' \mathbf{\varepsilon}) =0\)</span> and result (i) follows.</li>
+By Hypothesis <a href="ChapterLS.html#hyp:exogeneity">4.2</a>, we have <span class="math inline">\(\mathbb{E}[{\boldsymbol\varepsilon}|\mathbf{X}]=0\)</span>. Hence <span class="math inline">\(\mathbb{E}((\mathbf{X}'\mathbf{X})^{-1} \mathbf{X}' {\boldsymbol\varepsilon}) =0\)</span> and result (i) follows.</li>
 <li>
 <span class="math inline">\(\mathbb{V}ar(\mathbf{b}|\mathbf{X}) = (\mathbf{X}'\mathbf{X})^{-1} \mathbf{X}' \mathbb{E}(\boldsymbol\varepsilon\boldsymbol\varepsilon'|\mathbf{X}) \mathbf{X} (\mathbf{X}'\mathbf{X})^{-1}\)</span>.
 By Prop. <a href="ChapterLS.html#prp:Sigma">4.2</a>, if <a href="ChapterLS.html#hyp:homoskedasticity">4.3</a> and <a href="ChapterLS.html#hyp:noncorrelResid">4.4</a> hold, then we have <span class="math inline">\(\mathbb{E}(\boldsymbol\varepsilon\boldsymbol\varepsilon'|\mathbf{X})=\mathbb{V}ar(\boldsymbol\varepsilon|\mathbf{X})=\sigma^2 Id\)</span>.</li>
@@ -1736,7 +1736,7 @@ f(\boldsymbol\beta) &amp; = &amp; \sum_{j=2}^K |\beta_j| \quad \mbox{(lasso)}.
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Econometrics and Statistics</strong>" was written by Jean-Paul Renne. It was last built on 2023-03-05.</p>
+    <p>"<strong>Econometrics and Statistics</strong>" was written by Jean-Paul Renne. It was last built on 2023-03-20.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
