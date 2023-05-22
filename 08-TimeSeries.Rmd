@@ -702,7 +702,7 @@ $$
 where $y^*_{t+1}$ is the forecast of $y_{t+1}$ (function of $x_t$).
 
 :::{.proposition #smallestMSE name="Smallest MSE"}
-The smallest MSE is obtained with  MSEthe expectation of $y_{t+1}$ conditional on $x_t$.
+The smallest MSE is obtained with the expectation of $y_{t+1}$ conditional on $x_t$.
 :::
 :::{.proof}
 See Appendix \@ref(AppendixProof).

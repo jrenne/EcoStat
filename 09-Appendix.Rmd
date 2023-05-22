@@ -1017,13 +1017,15 @@ which leads to the result.
 ```{r Normal,echo=FALSE}
 columns <- (0:9)/100
 rows    <- (0:30)/10
+M <- matrix(rows,length(rows),length(columns)) +
+  t(matrix(columns,length(columns),length(rows)))
 
 max <- 3
-table_N01 <- pnorm(seq(0,max-.01,by=.01))
+table_N01 <- pnorm(M)
 table_N01 <- matrix(table_N01,ncol=10)
-colnames(table_N01) <- (0:9)/100
-rownames(table_N01) <- seq(0,max-.01,by=.1)
-knitr::kable(table_N01, caption = "Quantiles of the $\\mathcal{N}(0,1)$ distribution. If $a$ and $b$ are respectively the row and column number; then the corresponding cell gives $\\mathbb{P}(0<X\\le a+b)$, where $X \\sim \\mathcal{N}(0,1)$.", digits=4)
+colnames(table_N01) <- columns
+rownames(table_N01) <- rows
+knitr::kable(table_N01, caption = "Quantiles of the $\\mathcal{N}(0,1)$ distribution. If $a$ and $b$ are respectively the row and column number; then the corresponding cell gives $\\mathbb{P}(X\\le a+b)$, where $X \\sim \\mathcal{N}(0,1)$.", digits=4)
 ```
 
 

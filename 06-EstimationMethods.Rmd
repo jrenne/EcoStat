@@ -372,7 +372,7 @@ $$
 We often work with $\log \mathcal{L}$, the **log-likelihood function**.
 
 :::{.example #normal name="Gaussian distribution"}
-If $y_i \sim \mathcal{N}(\mu,\sigma^2)$, then
+If $y_i \sim \,i.i.d.\, \mathcal{N}(\mu,\sigma^2)$, then
 $$
 \log \mathcal{L}(\boldsymbol\theta;\bv{y}) = - \frac{1}{2}\sum_{i=1}^n\left( \log \sigma^2 + \log 2\pi + \frac{(y_i-\mu)^2}{\sigma^2} \right).
 $$

@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999994 (TeX Live 2022) (preloaded format=xelatex 2023.1.3)  20 MAR 2023 10:36
+This is XeTeX, Version 3.141592653-2.6-0.999994 (TeX Live 2022) (preloaded format=xelatex 2023.1.3)  22 MAY 2023 18:07
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1147,12 +1147,12 @@ LaTeX Warning: Reference `(' on page 182 undefined on input line 7375.
 LaTeX Warning: Reference `prp:estimVARGaussian' on page 184 undefined on input line 7464.
 
 [184] [185]
-Overfull \hbox (7.90913pt too wide) in paragraph at lines 7513--7578
+Overfull \hbox (7.90913pt too wide) in paragraph at lines 7513--7580
  [][] 
  []
 
 
-Overfull \hbox (58.83714pt too wide) in paragraph at lines 7690--7743
+Overfull \hbox (58.83714pt too wide) in paragraph at lines 7692--7745
  [][] 
  []
 
@@ -1171,7 +1171,7 @@ Package rerunfilecheck Info: File `EcoStat.out' has not changed.
 Here is how much of TeX's memory you used:
  19201 strings out of 478777
  363872 string characters out of 5850045
- 1961979 words of memory out of 5000000
+ 1962979 words of memory out of 5000000
  38864 multiletter control sequences out of 15000+600000
  524886 words of font info for 142 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
