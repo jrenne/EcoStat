@@ -7,7 +7,7 @@
 <title>Chapter 5 Panel regressions | Econometrics and Statistics</title>
 <meta name="author" content="Jean-Paul Renne">
 <meta name="description" content="5.1 Specification and notations A standard panel situation is as follows: the sample covers a lot of “entities”, indexed by \(i \in \{1,\dots,n\}\), with \(n\) large, and, for each entity, we...">
-<meta name="generator" content="bookdown 0.27 with bs4_book()">
+<meta name="generator" content="bookdown 0.34 with bs4_book()">
 <meta property="og:title" content="Chapter 5 Panel regressions | Econometrics and Statistics">
 <meta property="og:type" content="book">
 <meta property="og:description" content="5.1 Specification and notations A standard panel situation is as follows: the sample covers a lot of “entities”, indexed by \(i \in \{1,\dots,n\}\), with \(n\) large, and, for each entity, we...">
@@ -16,7 +16,7 @@
 <meta name="twitter:description" content="5.1 Specification and notations A standard panel situation is as follows: the sample covers a lot of “entities”, indexed by \(i \in \{1,\dots,n\}\), with \(n\) large, and, for each entity, we...">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.4.0/transition.js"></script><script src="libs/bs3compat-0.4.0/tabs.js"></script><script src="libs/bs3compat-0.4.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.5.0/transition.js"></script><script src="libs/bs3compat-0.5.0/tabs.js"></script><script src="libs/bs3compat-0.5.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
 <script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
     
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
@@ -119,7 +119,7 @@ y_{i,t} = \mathbf{x}'_{i,t}\underbrace{\boldsymbol\beta}_{K \times 1} + \underbr
 Figure 5.1: The data are the same for both panels. On Panel (b), blue dots are for <span class="math inline">\(t=1\)</span>, red dots are for <span class="math inline">\(t=2\)</span>. The lines relate the dots associated to the same entity <span class="math inline">\(i\)</span>.
 </p>
 </div>
-<p>Figure <a href="Panel.html#fig:cigarettes">5.2</a> presents the same type of plot based on the Cigarette Consumption Panel dataset (<code>CigarettesSW</code> dataset, used in <span class="citation">J. Stock and Watson (<a href="references.html#ref-Stock_Watson_2003" role="doc-biblioref">2003</a>)</span>). This dataset documents the average consumption of cigarettes in 48 continental US states for two dates (1985 and 1995).</p>
+<p>Figure <a href="Panel.html#fig:cigarettes">5.2</a> presents the same type of plot based on the Cigarette Consumption Panel dataset (<code>CigarettesSW</code> dataset, used in <span class="citation">J. Stock and Watson (<a href="references.html#ref-Stock_Watson_2003">2003</a>)</span>). This dataset documents the average consumption of cigarettes in 48 continental US states for two dates (1985 and 1995).</p>
 <div class="figure" style="text-align: left-aligned">
 <span style="display:block;" id="fig:cigarettes"></span>
 <img src="EcoStat_files/figure-html/cigarettes-1.png" alt="Cigarette consumption versus real price in the CigarettesSW panel dataset." width="95%"><p class="caption">
@@ -425,7 +425,7 @@ where the <span class="math inline">\(T\)</span>-dimensional vector <span class=
 ## ==========================================
 ## Note:          *p&lt;0.1; **p&lt;0.05; ***p&lt;0.01</code></pre>
 <div class="example">
-<p><span id="exm:JSTPanel" class="example"><strong>Example 5.1  (Housing prices and interest rates) </strong></span>In this example, we want to estimate the effect of short and long-term interest rate on housing prices. The data come from the <span class="citation">Jordà, Schularick, and Taylor (<a href="references.html#ref-JST_2017" role="doc-biblioref">2017</a>)</span> dataset (<a href="https://www.macrohistory.net">see this website</a>).</p>
+<p><span id="exm:JSTPanel" class="example"><strong>Example 5.1  (Housing prices and interest rates) </strong></span>In this example, we want to estimate the effect of short and long-term interest rate on housing prices. The data come from the <span class="citation">Jordà, Schularick, and Taylor (<a href="references.html#ref-JST_2017">2017</a>)</span> dataset (<a href="https://www.macrohistory.net">see this website</a>).</p>
 <div class="sourceCode" id="cb64"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">AEC</span><span class="op">)</span>;<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://sandwich.R-Forge.R-project.org/">sandwich</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">JST</span><span class="op">)</span>; <span class="va">JST</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html">subset</a></span><span class="op">(</span><span class="va">JST</span>,<span class="va">year</span><span class="op">&gt;</span><span class="fl">1950</span><span class="op">)</span>;<span class="va">N</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">JST</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></span>
@@ -585,7 +585,7 @@ and therefore use <span class="math inline">\(s^2_{pooled} - \hat{\sigma}_e^2\)<
 ## Adjusted R2    0.025       0.022        -0.067    
 ## ==================================================
 ## Note:                  *p&lt;0.1; **p&lt;0.05; ***p&lt;0.01</code></pre>
-<p>One can run an <span class="citation">Hausman (<a href="references.html#ref-Hausman_1978" role="doc-biblioref">1978</a>)</span> test in order to check whether or not the fixed-effect model is needed. Indeed, if this is not the case (i.e., if the covariates are not correlated to the disturbances), then it is preferable to use the random-effect estimation as the latter is more efficient.</p>
+<p>One can run an <span class="citation">Hausman (<a href="references.html#ref-Hausman_1978">1978</a>)</span> test in order to check whether or not the fixed-effect model is needed. Indeed, if this is not the case (i.e., if the covariates are not correlated to the disturbances), then it is preferable to use the random-effect estimation as the latter is more efficient.</p>
 <div class="sourceCode" id="cb68"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/plm/man/phtest.html">phtest</a></span><span class="op">(</span><span class="va">eq.FE</span>,<span class="va">eq.RE</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## 
@@ -782,7 +782,7 @@ Figure 5.5: illustration of the bias pertianing to the LSDV estimation approach 
 </p>
 </div>
 <p>In the previous example, the estimate of <span class="math inline">\(\rho\)</span> (whose true value is 0.8) is 0.531.</p>
-<p>To address this, one can resort to instrumental-variable regressions. <span class="citation">Anderson and Hsiao (<a href="references.html#ref-Anderson_Hsiao_1982" role="doc-biblioref">1982</a>)</span> have, in particular, proposed a first-differenced Two Stage Least Squares (2SLS) estimator (see Eq. <a href="ChapterLS.html#eq:IV">(4.22)</a> in Section <a href="ChapterLS.html#IV">4.4</a>). This estimation is based on the following transformation of the model:
+<p>To address this, one can resort to instrumental-variable regressions. <span class="citation">Anderson and Hsiao (<a href="references.html#ref-Anderson_Hsiao_1982">1982</a>)</span> have, in particular, proposed a first-differenced Two Stage Least Squares (2SLS) estimator (see Eq. <a href="ChapterLS.html#eq:IV">(4.22)</a> in Section <a href="ChapterLS.html#IV">4.4</a>). This estimation is based on the following transformation of the model:
 <span class="math display" id="eq:paneldynFisrtDiff">\[\begin{equation}
 \Delta y_{i,t} = \rho \Delta y_{i,t-1} + (\Delta \mathbf{x}_{i,t})'\boldsymbol\beta + \Delta\varepsilon_{i,t}.\tag{5.9}
 \end{equation}\]</span>
@@ -815,7 +815,7 @@ where <span class="math inline">\(\mathbf{z}_{i,t} = [y_{i,t},\mathbf{x}_{i,t}']
 \mathbb{E}(Z_i'\Delta  {\boldsymbol\varepsilon}_i)=0,
 \]</span></p>
 <p>with <span class="math inline">\(\Delta{\boldsymbol\varepsilon}_i = [ \Delta \varepsilon_{i,3},\dots,\Delta \varepsilon_{i,T}]'\)</span>.</p>
-<p>These restrictions are used in the GMM approach employed by <span class="citation">Arellano and Bond (<a href="references.html#ref-Arellano_Bond_1991" role="doc-biblioref">1991</a>)</span>. Specifically, a GMM estimator of the model parameters is given by:
+<p>These restrictions are used in the GMM approach employed by <span class="citation">Arellano and Bond (<a href="references.html#ref-Arellano_Bond_1991">1991</a>)</span>. Specifically, a GMM estimator of the model parameters is given by:
 <span class="math display">\[
 \mbox{argmin}\;\left(\frac{1}{n} \sum_{i=1}^n Z_i' \Delta \boldsymbol\varepsilon_i\right)'W_n\left(\frac{1}{n} \sum_{i=1}^n Z_i' \Delta \boldsymbol\varepsilon_i\right),
 \]</span>
@@ -839,7 +839,7 @@ H = \left[\begin{array}{ccccccc}
 \end{array}\right].
 \]</span></p>
 <p>It is straightforward to extend these GMM methods to cases where there is more than one lag of the dependent variable on the right-hand side of the equation or in cases where disturbances feature limited moving-average serial correlation.</p>
-<p>The <code>pdynmc</code> package allows to run these GMM approaches (see <span class="citation">Fritsch, Pua, and Schnurbus (<a href="references.html#ref-Fritsch_et_al_2019" role="doc-biblioref">2019</a>)</span>). The following lines of code allow to replicate the results of <span class="citation">Arellano and Bond (<a href="references.html#ref-Arellano_Bond_1991" role="doc-biblioref">1991</a>)</span>:</p>
+<p>The <code>pdynmc</code> package allows to run these GMM approaches (see <span class="citation">Fritsch, Pua, and Schnurbus (<a href="references.html#ref-Fritsch_et_al_2019">2019</a>)</span>). The following lines of code allow to replicate the results of <span class="citation">Arellano and Bond (<a href="references.html#ref-Arellano_Bond_1991">1991</a>)</span>:</p>
 <div class="sourceCode" id="cb74"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/markusfritsch/pdynmc">pdynmc</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">EmplUK</span>, package <span class="op">=</span> <span class="st">"plm"</span><span class="op">)</span></span>
@@ -871,7 +871,7 @@ H = \left[\begin{array}{ccccccc}
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">m1</span>,digits<span class="op">=</span><span class="fl">3</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## 
 ## Dynamic linear panel estimation (onestep)
-## Estimation steps: 1
+## GMM estimation steps: 1
 ## 
 ## Coefficients:
 ##             Estimate Std.Err.rob z-value.rob Pr(&gt;|z.rob|)    
@@ -909,7 +909,7 @@ H = \left[\begin{array}{ccccccc}
 ## -0.04024847  0.59192286 -0.56598515  0.10054264  0.01121551  0.02306871 
 ##        1981        1982        1983        1976 
 ## -0.02135806 -0.03111604 -0.01799335 -0.02336762</code></pre>
-<p><span class="citation">Arellano and Bond (<a href="references.html#ref-Arellano_Bond_1991" role="doc-biblioref">1991</a>)</span> have proposed a specification test. If the model is correctly specified, then the errors of Eq. <a href="Panel.html#eq:paneldynFisrtDiff">(5.9)</a> —that is the first-difference equation— should feature non-zero first-order auto-correlations, but zero higher-order autocorrelations.</p>
+<p><span class="citation">Arellano and Bond (<a href="references.html#ref-Arellano_Bond_1991">1991</a>)</span> have proposed a specification test. If the model is correctly specified, then the errors of Eq. <a href="Panel.html#eq:paneldynFisrtDiff">(5.9)</a> —that is the first-difference equation— should feature non-zero first-order auto-correlations, but zero higher-order autocorrelations.</p>
 <p>Function <code>mtest.fct</code> of package <code>pdynmc</code> implements this test. Here is its result in the present case:</p>
 <div class="sourceCode" id="cb77"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/pdynmc/man/mtest.fct.html">mtest.fct</a></span><span class="op">(</span><span class="va">m1</span>,order<span class="op">=</span><span class="fl">3</span><span class="op">)</span></span></code></pre></div>
@@ -941,7 +941,7 @@ H = \left[\begin{array}{ccccccc}
 <h2>
 <span class="header-section-number">5.6</span> Introduction to program evaluation<a class="anchor" aria-label="anchor" href="#introduction-to-program-evaluation"><i class="fas fa-link"></i></a>
 </h2>
-<p>This section brielfy introduces the econometrics of program evaluation. Program evaluation refer to the analysis of the causal effects of some “treatments” in a broad sense. These treatment can, e.g., correspond to the implementation (or announcement) of policy measures. A comprehensive review is proposed by <span class="citation">Abadie and Cattaneo (<a href="references.html#ref-Abadie_Cattaneo_2018" role="doc-biblioref">2018</a>)</span>. A seminal book on the subject is that of <span class="citation">Angrist and Pischke (<a href="references.html#ref-angrist_mostly_2008" role="doc-biblioref">2008</a>)</span>.</p>
+<p>This section brielfy introduces the econometrics of program evaluation. Program evaluation refer to the analysis of the causal effects of some “treatments” in a broad sense. These treatment can, e.g., correspond to the implementation (or announcement) of policy measures. A comprehensive review is proposed by <span class="citation">Abadie and Cattaneo (<a href="references.html#ref-Abadie_Cattaneo_2018">2018</a>)</span>. A seminal book on the subject is that of <span class="citation">Angrist and Pischke (<a href="references.html#ref-angrist_mostly_2008">2008</a>)</span>.</p>
 <div id="presentation-of-the-problem" class="section level3" number="5.6.1">
 <h3>
 <span class="header-section-number">5.6.1</span> Presentation of the problem<a class="anchor" aria-label="anchor" href="#presentation-of-the-problem"><i class="fas fa-link"></i></a>
@@ -1020,8 +1020,8 @@ Figure 5.6: Source: Abadie et al., (1998).
 <h3>
 <span class="header-section-number">5.6.4</span> Application of the DiD approach<a class="anchor" aria-label="anchor" href="#application-of-the-did-approach"><i class="fas fa-link"></i></a>
 </h3>
-<p>This example is based on the data used in <span class="citation">Meyer, Viscusi, and Durbin (<a href="references.html#ref-Meyer_Viscusi_Durbin_1995" role="doc-biblioref">1995</a>)</span>. This dataset is part of the <code>wooldridge</code> package. This paper examines the effect of workers’ compensation for injury on time out of work. It exploits a <strong>natural experiment</strong> approach of comparing individuals injured before and after increases in the maximum weekly benefit amount. Specifically, in 1980, the cap on weekly earnings covered by worker’s compensation was increased in Kentucky and Michigan. Let us check whether this new policy was followed by an increase in the amount of time workers spent unemployed (for example, higher compensation may reduce workers’ incentives to avoid injury).</p>
-<p>As shown in Figure <a href="Panel.html#fig:figMeyer">5.7</a>, the measure has only affected high-earning workers. The idea exploited by <span class="citation">Meyer, Viscusi, and Durbin (<a href="references.html#ref-Meyer_Viscusi_Durbin_1995" role="doc-biblioref">1995</a>)</span> was to compare the increase in time out of work before-after 1980 for higher-earnings workers on the one hand (entities who received the treatment) and low-earnings workers on the other hand (control group).</p>
+<p>This example is based on the data used in <span class="citation">Meyer, Viscusi, and Durbin (<a href="references.html#ref-Meyer_Viscusi_Durbin_1995">1995</a>)</span>. This dataset is part of the <code>wooldridge</code> package. This paper examines the effect of workers’ compensation for injury on time out of work. It exploits a <strong>natural experiment</strong> approach of comparing individuals injured before and after increases in the maximum weekly benefit amount. Specifically, in 1980, the cap on weekly earnings covered by worker’s compensation was increased in Kentucky and Michigan. Let us check whether this new policy was followed by an increase in the amount of time workers spent unemployed (for example, higher compensation may reduce workers’ incentives to avoid injury).</p>
+<p>As shown in Figure <a href="Panel.html#fig:figMeyer">5.7</a>, the measure has only affected high-earning workers. The idea exploited by <span class="citation">Meyer, Viscusi, and Durbin (<a href="references.html#ref-Meyer_Viscusi_Durbin_1995">1995</a>)</span> was to compare the increase in time out of work before-after 1980 for higher-earnings workers on the one hand (entities who received the treatment) and low-earnings workers on the other hand (control group).</p>
 <div class="figure" style="text-align: center">
 <span style="display:block;" id="fig:figMeyer"></span>
 <img src="images/Figure_Meyer_et_al.png" alt="Source: Meyer et al., (1995)." width="90%"><p class="caption">
@@ -1029,7 +1029,7 @@ Figure 5.7: Source: Meyer et al., (1995).
 </p>
 </div>
 <p>The next lines of codes replicate some of their results. The dependent variable is the logarithm of the duration of benefits. For more information use <code><a href="https://justinmshea.github.io/wooldridge/reference/injury.html">?injury</a></code>, after having loaded the <code>wooldridge</code> library.</p>
-<p>In the table of results below, the parameter of interest is the one associated with the interaction term <code>afchnge:highearn</code>. Columns 2 and 3 correspond to the first two column of Table 6 in <span class="citation">Meyer, Viscusi, and Durbin (<a href="references.html#ref-Meyer_Viscusi_Durbin_1995" role="doc-biblioref">1995</a>)</span>.</p>
+<p>In the table of results below, the parameter of interest is the one associated with the interaction term <code>afchnge:highearn</code>. Columns 2 and 3 correspond to the first two column of Table 6 in <span class="citation">Meyer, Viscusi, and Durbin (<a href="references.html#ref-Meyer_Viscusi_Durbin_1995">1995</a>)</span>.</p>
 <!-- See [this page](https://evalf20.classes.andrewheiss.com/example/diff-in-diff/) -->
 <div class="sourceCode" id="cb83"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://justinmshea.github.io/wooldridge/">wooldridge</a></span><span class="op">)</span></span>
@@ -1126,7 +1126,7 @@ Figure 5.7: Source: Meyer et al., (1995).
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Econometrics and Statistics</strong>" was written by Jean-Paul Renne. It was last built on 2023-05-22.</p>
+    <p>"<strong>Econometrics and Statistics</strong>" was written by Jean-Paul Renne. It was last built on 2023-10-04.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
@@ -1139,7 +1139,7 @@ Figure 5.7: Source: Meyer et al., (1995).
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

@@ -7,7 +7,7 @@
 <title>Chapter 6 Estimation Methods | Econometrics and Statistics</title>
 <meta name="author" content="Jean-Paul Renne">
 <meta name="description" content="This chapter presents three approaches to estimate parametric models: the General Method of Moments (GMM), the Maximum Likelihood approach (ML), and the Bayesian approach. The general context is...">
-<meta name="generator" content="bookdown 0.27 with bs4_book()">
+<meta name="generator" content="bookdown 0.34 with bs4_book()">
 <meta property="og:title" content="Chapter 6 Estimation Methods | Econometrics and Statistics">
 <meta property="og:type" content="book">
 <meta property="og:description" content="This chapter presents three approaches to estimate parametric models: the General Method of Moments (GMM), the Maximum Likelihood approach (ML), and the Bayesian approach. The general context is...">
@@ -16,7 +16,7 @@
 <meta name="twitter:description" content="This chapter presents three approaches to estimate parametric models: the General Method of Moments (GMM), the Maximum Likelihood approach (ML), and the Bayesian approach. The general context is...">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.4.0/transition.js"></script><script src="libs/bs3compat-0.4.0/tabs.js"></script><script src="libs/bs3compat-0.4.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.5.0/transition.js"></script><script src="libs/bs3compat-0.5.0/tabs.js"></script><script src="libs/bs3compat-0.5.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
 <script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
     
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
@@ -145,7 +145,7 @@ where <span class="math inline">\(\Gamma_\nu := \mathbb{E}[h(x_i;\boldsymbol\the
 <span class="math display">\[
 \hat{\Gamma}_{\nu,n} = \frac{1}{n} \sum_{i=\nu + 1}^{n} h(x_i;\hat{\boldsymbol\theta}_n)h(x_{i-\nu};\hat{\boldsymbol\theta}_n)',
 \]</span>
-then <span class="math inline">\(S\)</span> can be approximated by the <span class="citation">Newey and West (<a href="references.html#ref-Newey_West_1987" role="doc-biblioref">1987</a>)</span> formula (similar to Eq. <a href="TS.html#eq:NWest">(8.6)</a>):
+then <span class="math inline">\(S\)</span> can be approximated by the <span class="citation">Newey and West (<a href="references.html#ref-Newey_West_1987">1987</a>)</span> formula (similar to Eq. <a href="TS.html#eq:NWest">(8.6)</a>):
 <span class="math display" id="eq:Shat">\[\begin{equation}
 \hat{\Gamma}_{0,n} + \sum_{\nu=1}^{q}\left[1-\frac{\nu}{q+1}\right](\hat{\Gamma}_{\nu,n}+\hat{\Gamma}_{\nu,n}').    \tag{6.2}
 \end{equation}\]</span></p>
@@ -176,7 +176,7 @@ In practice, the previous matrix is computed numerically.</p>
 <h3>
 <span class="header-section-number">6.1.3</span> Testing hypotheses in the GMM framework<a class="anchor" aria-label="anchor" href="#overidentif"><i class="fas fa-link"></i></a>
 </h3>
-<p>A first important test is the one concerning the validity of the moment restrictions (Sargan-Hansen test; <span class="citation">Sargan (<a href="references.html#ref-Sargan_1958" role="doc-biblioref">1958</a>)</span> and <span class="citation">Hansen (<a href="references.html#ref-Hansen_1982" role="doc-biblioref">1982</a>)</span>). Assume that the number of restrictions imposed is larger than the number of parameters to estimate (<span class="math inline">\(r&gt;K\)</span>). In this case, the restrictions are said to be over-identifiying.</p>
+<p>A first important test is the one concerning the validity of the moment restrictions (Sargan-Hansen test; <span class="citation">Sargan (<a href="references.html#ref-Sargan_1958">1958</a>)</span> and <span class="citation">Hansen (<a href="references.html#ref-Hansen_1982">1982</a>)</span>). Assume that the number of restrictions imposed is larger than the number of parameters to estimate (<span class="math inline">\(r&gt;K\)</span>). In this case, the restrictions are said to be over-identifiying.</p>
 <p>Under correct specification, we asymptotically have:
 <span class="math display">\[
 \sqrt{n}g(\underline{y_n};{\boldsymbol\theta}_0)  \sim \mathcal{N}(0,S).
@@ -304,8 +304,8 @@ Specifically, the number of restrictions is <span class="math inline">\(n_R \tim
 <span><span class="va">std.dev</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/diag.html">diag</a></span><span class="op">(</span><span class="va">V</span><span class="op">)</span><span class="op">)</span>;<span class="va">t.stud</span> <span class="op">&lt;-</span> <span class="va">theta</span><span class="op">/</span><span class="va">std.dev</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="va">theta</span>,<span class="va">std.dev</span>,<span class="va">t.stud</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##            theta    std.dev     t.stud
-## [1,]  -0.7180716  0.4646617 -1.5453642
-## [2,] -11.2042452 17.1039449 -0.6550679</code></pre>
+## [1,]  -0.7012031  0.4901903 -1.4304712
+## [2,] -11.7593311 17.2713445 -0.6808579</code></pre>
 <p>The Hansen statistic can be used to test the model (see Eq. <a href="estimation-methods.html#eq:HansenSargan">(6.5)</a>). If the model is correct, we have:
 <span class="math display">\[
 T g(\underline{y_T};{\boldsymbol\theta})'\, S^{-1} \, g(\underline{y_T};{\boldsymbol\theta}) \sim \,i.i.d.\,\chi^2(J - K),
@@ -317,7 +317,7 @@ where <span class="math inline">\(J\)</span> is the number of moment constraints
 <span><span class="va">pvalue</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Chisquare.html">pchisq</a></span><span class="op">(</span>q <span class="op">=</span> <span class="va">Hansen_stat</span>,df <span class="op">=</span> <span class="va">n_R</span><span class="op">*</span><span class="va">n_z</span> <span class="op">-</span> <span class="va">n_F</span><span class="op">)</span></span>
 <span><span class="va">pvalue</span></span></code></pre></div>
 <pre><code>##           [,1]
-## [1,] 0.8789782</code></pre>
+## [1,] 0.8802086</code></pre>
 </div>
 </div>
 <div id="secMLE" class="section level2" number="6.2">
@@ -887,7 +887,7 @@ which is an example of symmetric proposal distribution (see Eq. <a href="estimat
 <span class="math display">\[
 \tilde{\boldsymbol\theta} = {\boldsymbol\theta} + \varepsilon,
 \]</span>
-where <span class="math inline">\(\varepsilon\)</span> is a <span class="math inline">\(K\)</span>-dimensional vector of independent zero-mean normal disturbances of variance <span class="math inline">\(\sigma^2\)</span>.<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;We could also have different variances for the different components of &lt;span class="math inline"&gt;\({\boldsymbol\theta}\)&lt;/span&gt;. However, this may lead to complicated settings. A useful practice consists in looking for model (re)parametrization –based, e.g., on exponential and/or logistic functions– that are such that the components of &lt;span class="math inline"&gt;\({\boldsymbol\theta}\)&lt;/span&gt; are all expected to be of the order of magnitude of the unity.&lt;/p&gt;'><sup>17</sup></a> One then has to determine an appropriate value for <span class="math inline">\(\sigma\)</span>. If it is too low, then <span class="math inline">\(\alpha\)</span> will be close to 1 (as <span class="math inline">\(\tilde{{\boldsymbol\theta}}_i\)</span> will be close to <span class="math inline">\({\boldsymbol\theta}_{i-1}\)</span>), and we will accept very often the proposed value (<span class="math inline">\(\tilde{{\boldsymbol\theta}}_i\)</span>). This seems to be a favourable situation. But it may not be. Indeed, it means that it will take a large number of iterations to explore the whole distribution of <span class="math inline">\({\boldsymbol\theta}\)</span>. What if <span class="math inline">\(\sigma\)</span> is very large? In this case, it is likely that the porposed values (<span class="math inline">\(\tilde{{\boldsymbol\theta}}_i\)</span>) will often result in poor likelihoods; The probability of acceptance will then be low and the Markov chain may be blocked at its initial value. Therefore, intermediate values of <span class="math inline">\(\sigma^2\)</span> have to be determined. The acceptance rate (i.e., the average value of <span class="math inline">\(\alpha(\tilde{{\boldsymbol\theta}},{\boldsymbol\theta}_{i-1})\)</span>) can be used as a guide for that. Indeed, a literature explores the optimal values for such acceptance rate (in order to obtain the best possible fit of the posterior for a minimum number of algorithm iterations). In particular, following <span class="citation">Roberts, Gelman, and Gilks (<a href="references.html#ref-Roberts_Gelman_Gilks_1997" role="doc-biblioref">1997</a>)</span>, people often target acceptance rate of the order of magnitude of 20%.</p>
+where <span class="math inline">\(\varepsilon\)</span> is a <span class="math inline">\(K\)</span>-dimensional vector of independent zero-mean normal disturbances of variance <span class="math inline">\(\sigma^2\)</span>.<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;We could also have different variances for the different components of &lt;span class="math inline"&gt;\({\boldsymbol\theta}\)&lt;/span&gt;. However, this may lead to complicated settings. A useful practice consists in looking for model (re)parametrization –based, e.g., on exponential and/or logistic functions– that are such that the components of &lt;span class="math inline"&gt;\({\boldsymbol\theta}\)&lt;/span&gt; are all expected to be of the order of magnitude of the unity.&lt;/p&gt;'><sup>17</sup></a> One then has to determine an appropriate value for <span class="math inline">\(\sigma\)</span>. If it is too low, then <span class="math inline">\(\alpha\)</span> will be close to 1 (as <span class="math inline">\(\tilde{{\boldsymbol\theta}}_i\)</span> will be close to <span class="math inline">\({\boldsymbol\theta}_{i-1}\)</span>), and we will accept very often the proposed value (<span class="math inline">\(\tilde{{\boldsymbol\theta}}_i\)</span>). This seems to be a favourable situation. But it may not be. Indeed, it means that it will take a large number of iterations to explore the whole distribution of <span class="math inline">\({\boldsymbol\theta}\)</span>. What if <span class="math inline">\(\sigma\)</span> is very large? In this case, it is likely that the porposed values (<span class="math inline">\(\tilde{{\boldsymbol\theta}}_i\)</span>) will often result in poor likelihoods; The probability of acceptance will then be low and the Markov chain may be blocked at its initial value. Therefore, intermediate values of <span class="math inline">\(\sigma^2\)</span> have to be determined. The acceptance rate (i.e., the average value of <span class="math inline">\(\alpha(\tilde{{\boldsymbol\theta}},{\boldsymbol\theta}_{i-1})\)</span>) can be used as a guide for that. Indeed, a literature explores the optimal values for such acceptance rate (in order to obtain the best possible fit of the posterior for a minimum number of algorithm iterations). In particular, following <span class="citation">Roberts, Gelman, and Gilks (<a href="references.html#ref-Roberts_Gelman_Gilks_1997">1997</a>)</span>, people often target acceptance rate of the order of magnitude of 20%.</p>
 <p>It is important to note that, to implement this approach, one only has to be able to compute the joint p.d.f. <span class="math inline">\(q({\boldsymbol\theta},\mathbf{y})=f_{Y|{\boldsymbol\theta}}(\mathbf{y},{\boldsymbol\theta})f_{\boldsymbol\theta}({\boldsymbol\theta})\)</span> (Eq. <a href="estimation-methods.html#eq:post2">(6.17)</a>). That is, as soon as one can evaluate the likelihood (<span class="math inline">\(f_{Y|{\boldsymbol\theta}}(\mathbf{y},{\boldsymbol\theta})\)</span>) and the prior (<span class="math inline">\(f_{\boldsymbol\theta}({\boldsymbol\theta})\)</span>), we can employ this methodology.</p>
 </div>
 <div id="example-ar1-specification" class="section level3" number="6.3.3">
@@ -1050,7 +1050,7 @@ Figure 6.6: The upper line of plot compares prior (black) and posterior (red) di
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Econometrics and Statistics</strong>" was written by Jean-Paul Renne. It was last built on 2023-05-22.</p>
+    <p>"<strong>Econometrics and Statistics</strong>" was written by Jean-Paul Renne. It was last built on 2023-10-04.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
@@ -1063,7 +1063,7 @@ Figure 6.6: The upper line of plot compares prior (black) and posterior (red) di
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

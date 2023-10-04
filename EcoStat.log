@@ -1,14 +1,15 @@
-This is XeTeX, Version 3.141592653-2.6-0.999994 (TeX Live 2022) (preloaded format=xelatex 2023.1.3)  22 MAY 2023 18:07
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.9.6)  4 OCT 2023 22:06
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
 **EcoStat.tex
 (./EcoStat.tex
-LaTeX2e <2022-11-01> patch level 1
-L3 programming layer <2022-12-17> (/Users/jrenne/Library/TinyTeX/texmf-dist/tex/latex/base/book.cls
-Document Class: book 2022/07/02 v1.4n Standard LaTeX document class
+LaTeX2e <2023-06-01> patch level 1
+L3 programming layer <2023-08-29>
+(/Users/jrenne/Library/TinyTeX/texmf-dist/tex/latex/base/book.cls
+Document Class: book 2023/05/17 v1.4n Standard LaTeX document class
 (/Users/jrenne/Library/TinyTeX/texmf-dist/tex/latex/base/bk12.clo
-File: bk12.clo 2022/07/02 v1.4n Standard LaTeX file (size option)
+File: bk12.clo 2023/05/17 v1.4n Standard LaTeX file (size option)
 )
 \c@part=\count181
 \c@chapter=\count182
@@ -23,14 +24,14 @@ File: bk12.clo 2022/07/02 v1.4n Standard LaTeX file (size option)
 \belowcaptionskip=\skip49
 \bibindent=\dimen140
 ) (/Users/jrenne/Library/TinyTeX/texmf-dist/tex/latex/amsmath/amsmath.sty
-Package: amsmath 2022/04/08 v2.17n AMS math features
+Package: amsmath 2023/05/13 v2.17o AMS math features
 \@mathmargin=\skip50
 For additional information on amsmath, use the `?' option.
 (/Users/jrenne/Library/TinyTeX/texmf-dist/tex/latex/amsmath/amstext.sty
 Package: amstext 2021/08/26 v2.01 AMS text
 (/Users/jrenne/Library/TinyTeX/texmf-dist/tex/latex/amsmath/amsgen.sty
 File: amsgen.sty 1999/11/30 v2.0 generic functions
-\@emptytoks=\toks16
+\@emptytoks=\toks17
 \ex@=\dimen141
 )) (/Users/jrenne/Library/TinyTeX/texmf-dist/tex/latex/amsmath/amsbsy.sty
 Package: amsbsy 1999/11/29 v1.2d Bold Symbols
@@ -68,21 +69,21 @@ LaTeX Info: Redefining \Relbar on input line 971.
 \dotsspace@=\muskip16
 \c@parentequation=\count197
 \dspbrk@lvl=\count198
-\tag@help=\toks17
+\tag@help=\toks18
 \row@=\count199
 \column@=\count266
 \maxfields@=\count267
-\andhelp@=\toks18
+\andhelp@=\toks19
 \eqnshift@=\dimen144
 \alignsep@=\dimen145
 \tagshift@=\dimen146
 \tagwidth@=\dimen147
 \totwidth@=\dimen148
 \lineht@=\dimen149
-\@envbody=\toks19
+\@envbody=\toks20
 \multlinegap=\skip51
 \multlinetaggap=\skip52
-\mathdisplay@stack=\toks20
+\mathdisplay@stack=\toks21
 LaTeX Info: Redefining \[ on input line 2953.
 LaTeX Info: Redefining \] on input line 2954.
 ) (/Users/jrenne/Library/TinyTeX/texmf-dist/tex/latex/amsfonts/amssymb.sty
@@ -94,7 +95,56 @@ Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
 LaTeX Font Info:    Redeclaring math symbol \hbar on input line 98.
 LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
 (Font)                  U/euf/m/n --> U/euf/b/n on input line 106.
-)) (/Users/jrenne/Library/TinyTeX/texmf-dist/tex/latex/lm/lmodern.sty
+)) (/Users/jrenne/Library/TinyTeX/texmf-dist/tex/generic/iftex/iftex.sty
+Package: iftex 2022/02/03 v1.0f TeX engine tests
+) (/Users/jrenne/Library/TinyTeX/texmf-dist/tex/latex/unicode-math/unicode-math.sty (/Users/jrenne/Library/TinyTeX/texmf-dist/tex/latex/l3kernel/expl3.sty
+Package: expl3 2023-08-29 L3 programming layer (loader) 
+(/Users/jrenne/Library/TinyTeX/texmf-dist/tex/latex/l3backend/l3backend-xetex.def
+File: l3backend-xetex.def 2023-04-19 L3 backend support: XeTeX
+\g__graphics_track_int=\count268
+\l__pdf_internal_box=\box53
+\g__pdf_backend_object_int=\count269
+\g__pdf_backend_annotation_int=\count270
+\g__pdf_backend_link_int=\count271
+))
+Package: unicode-math 2023/08/13 v0.8r Unicode maths in XeLaTeX and LuaLaTeX
+(/Users/jrenne/Library/TinyTeX/texmf-dist/tex/latex/unicode-math/unicode-math-xetex.sty
+Package: unicode-math-xetex 2023/08/13 v0.8r Unicode maths in XeLaTeX and LuaLaTeX
+(/Users/jrenne/Library/TinyTeX/texmf-dist/tex/latex/l3packages/xparse/xparse.sty
+Package: xparse 2023-08-29 L3 Experimental document command parser
+) (/Users/jrenne/Library/TinyTeX/texmf-dist/tex/latex/l3packages/l3keys2e/l3keys2e.sty
+Package: l3keys2e 2023-08-29 LaTeX2e option processing using LaTeX3 keys
+) (/Users/jrenne/Library/TinyTeX/texmf-dist/tex/latex/fontspec/fontspec.sty
+Package: fontspec 2022/01/15 v2.8a Font selection for XeLaTeX and LuaLaTeX
+(/Users/jrenne/Library/TinyTeX/texmf-dist/tex/latex/fontspec/fontspec-xetex.sty
+Package: fontspec-xetex 2022/01/15 v2.8a Font selection for XeLaTeX and LuaLaTeX
+\l__fontspec_script_int=\count272
+\l__fontspec_language_int=\count273
+\l__fontspec_strnum_int=\count274
+\l__fontspec_tmp_int=\count275
+\l__fontspec_tmpa_int=\count276
+\l__fontspec_tmpb_int=\count277
+\l__fontspec_tmpc_int=\count278
+\l__fontspec_em_int=\count279
+\l__fontspec_emdef_int=\count280
+\l__fontspec_strong_int=\count281
+\l__fontspec_strongdef_int=\count282
+\l__fontspec_tmpa_dim=\dimen150
+\l__fontspec_tmpb_dim=\dimen151
+\l__fontspec_tmpc_dim=\dimen152
+(/Users/jrenne/Library/TinyTeX/texmf-dist/tex/latex/base/fontenc.sty
+Package: fontenc 2021/04/29 v2.0v Standard LaTeX package
+) (/Users/jrenne/Library/TinyTeX/texmf-dist/tex/latex/fontspec/fontspec.cfg))) (/Users/jrenne/Library/TinyTeX/texmf-dist/tex/latex/base/fix-cm.sty
+Package: fix-cm 2020/11/24 v1.1t fixes to LaTeX
+(/Users/jrenne/Library/TinyTeX/texmf-dist/tex/latex/base/ts1enc.def
+File: ts1enc.def 2001/06/05 v3.0e (jk/car/fm) Standard LaTeX file
+LaTeX Font Info:    Redeclaring font encoding TS1 on input line 47.
+))
+\g__um_fam_int=\count283
+\g__um_fonts_used_int=\count284
+\l__um_primecount_int=\count285
+\g__um_primekern_muskip=\muskip17
+(/Users/jrenne/Library/TinyTeX/texmf-dist/tex/latex/unicode-math/unicode-math-table.tex))) (/Users/jrenne/Library/TinyTeX/texmf-dist/tex/latex/lm/lmodern.sty
 Package: lmodern 2015/05/01 v1.6.1 Latin Modern Fonts
 LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
 (Font)                  OT1/cmr/m/n --> OT1/lmr/m/n on input line 22.
@@ -128,56 +178,7 @@ LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
 (Font)                  OT1/cmr/bx/it --> OT1/lmr/bx/it on input line 37.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
 (Font)                  OT1/cmtt/m/n --> OT1/lmtt/m/n on input line 38.
-) (/Users/jrenne/Library/TinyTeX/texmf-dist/tex/generic/iftex/iftex.sty
-Package: iftex 2022/02/03 v1.0f TeX engine tests
-) (/Users/jrenne/Library/TinyTeX/texmf-dist/tex/latex/unicode-math/unicode-math.sty (/Users/jrenne/Library/TinyTeX/texmf-dist/tex/latex/l3kernel/expl3.sty
-Package: expl3 2022-12-17 L3 programming layer (loader) 
-(/Users/jrenne/Library/TinyTeX/texmf-dist/tex/latex/l3backend/l3backend-xetex.def
-File: l3backend-xetex.def 2022-10-26 L3 backend support: XeTeX
-\g__graphics_track_int=\count268
-\l__pdf_internal_box=\box53
-\g__pdf_backend_object_int=\count269
-\g__pdf_backend_annotation_int=\count270
-\g__pdf_backend_link_int=\count271
-))
-Package: unicode-math 2020/01/31 v0.8q Unicode maths in XeLaTeX and LuaLaTeX
-(/Users/jrenne/Library/TinyTeX/texmf-dist/tex/latex/unicode-math/unicode-math-xetex.sty
-Package: unicode-math-xetex 2020/01/31 v0.8q Unicode maths in XeLaTeX and LuaLaTeX
-(/Users/jrenne/Library/TinyTeX/texmf-dist/tex/latex/l3packages/xparse/xparse.sty
-Package: xparse 2022-12-17 L3 Experimental document command parser
-) (/Users/jrenne/Library/TinyTeX/texmf-dist/tex/latex/l3packages/l3keys2e/l3keys2e.sty
-Package: l3keys2e 2022-12-17 LaTeX2e option processing using LaTeX3 keys
-) (/Users/jrenne/Library/TinyTeX/texmf-dist/tex/latex/fontspec/fontspec.sty
-Package: fontspec 2022/01/15 v2.8a Font selection for XeLaTeX and LuaLaTeX
-(/Users/jrenne/Library/TinyTeX/texmf-dist/tex/latex/fontspec/fontspec-xetex.sty
-Package: fontspec-xetex 2022/01/15 v2.8a Font selection for XeLaTeX and LuaLaTeX
-\l__fontspec_script_int=\count272
-\l__fontspec_language_int=\count273
-\l__fontspec_strnum_int=\count274
-\l__fontspec_tmp_int=\count275
-\l__fontspec_tmpa_int=\count276
-\l__fontspec_tmpb_int=\count277
-\l__fontspec_tmpc_int=\count278
-\l__fontspec_em_int=\count279
-\l__fontspec_emdef_int=\count280
-\l__fontspec_strong_int=\count281
-\l__fontspec_strongdef_int=\count282
-\l__fontspec_tmpa_dim=\dimen150
-\l__fontspec_tmpb_dim=\dimen151
-\l__fontspec_tmpc_dim=\dimen152
-(/Users/jrenne/Library/TinyTeX/texmf-dist/tex/latex/base/fontenc.sty
-Package: fontenc 2021/04/29 v2.0v Standard LaTeX package
-) (/Users/jrenne/Library/TinyTeX/texmf-dist/tex/latex/fontspec/fontspec.cfg))) (/Users/jrenne/Library/TinyTeX/texmf-dist/tex/latex/base/fix-cm.sty
-Package: fix-cm 2020/11/24 v1.1t fixes to LaTeX
-(/Users/jrenne/Library/TinyTeX/texmf-dist/tex/latex/base/ts1enc.def
-File: ts1enc.def 2001/06/05 v3.0e (jk/car/fm) Standard LaTeX file
-LaTeX Font Info:    Redeclaring font encoding TS1 on input line 47.
-))
-\g__um_fam_int=\count283
-\g__um_fonts_used_int=\count284
-\l__um_primecount_int=\count285
-\g__um_primekern_muskip=\muskip17
-(/Users/jrenne/Library/TinyTeX/texmf-dist/tex/latex/unicode-math/unicode-math-table.tex))) (/Users/jrenne/Library/TinyTeX/texmf-dist/tex/latex/xcolor/xcolor.sty
+) (/Users/jrenne/Library/TinyTeX/texmf-dist/tex/latex/xcolor/xcolor.sty
 Package: xcolor 2022/06/12 v2.14 LaTeX color extensions (UK)
 (/Users/jrenne/Library/TinyTeX/texmf-dist/tex/latex/graphics-cfg/color.cfg
 File: color.cfg 2016/01/02 v1.6 sample color configuration
@@ -195,10 +196,10 @@ Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1374.
 Package xcolor Info: Model `Gray' substituted by `gray' on input line 1375.
 Package xcolor Info: Model `wave' substituted by `hsb' on input line 1376.
 ) (/Users/jrenne/Library/TinyTeX/texmf-dist/tex/latex/fancyvrb/fancyvrb.sty
-Package: fancyvrb 2022/06/06 4.5 verbatim text (tvz,hv)
+Package: fancyvrb 2023/01/19 4.5a verbatim text (tvz,hv)
 (/Users/jrenne/Library/TinyTeX/texmf-dist/tex/latex/graphics/keyval.sty
 Package: keyval 2022/05/29 v1.15 key=value parser (DPC)
-\KV@toks@=\toks21
+\KV@toks@=\toks22
 )
 \FV@CodeLineNo=\count286
 \FV@InFile=\read2
@@ -230,7 +231,7 @@ Package: longtable 2021-09-01 v4.17 Multi-page Table package (DPC)
 \LT@rows=\count291
 \c@LT@tables=\count292
 \c@LT@chunks=\count293
-\LT@p@ftn=\toks22
+\LT@p@ftn=\toks23
 ) (/Users/jrenne/Library/TinyTeX/texmf-dist/tex/latex/booktabs/booktabs.sty
 Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
 \heavyrulewidth=\dimen158
@@ -255,7 +256,7 @@ Package: array 2022/09/04 v2.5g Tabular extension package (FMi)
 \col@sep=\dimen171
 \ar@mcellbox=\box60
 \extrarowheight=\dimen172
-\NC@list=\toks23
+\NC@list=\toks24
 \extratabsurround=\skip58
 \backup@length=\skip59
 \ar@cellbox=\box61
@@ -293,15 +294,15 @@ Package graphics Info: Driver file: xetex.def on input line 107.
 \Gin@req@width=\dimen177
 ) (/Users/jrenne/Library/TinyTeX/texmf-dist/tex/latex/amscls/amsthm.sty
 Package: amsthm 2020/05/29 v2.20.6
-\thm@style=\toks24
-\thm@bodyfont=\toks25
-\thm@headfont=\toks26
-\thm@notefont=\toks27
-\thm@headpunct=\toks28
+\thm@style=\toks25
+\thm@bodyfont=\toks26
+\thm@headfont=\toks27
+\thm@notefont=\toks28
+\thm@headpunct=\toks29
 \thm@preskip=\skip63
 \thm@postskip=\skip64
 \thm@headsep=\skip65
-\dth@everypar=\toks29
+\dth@everypar=\toks30
 ) (/Users/jrenne/Library/TinyTeX/texmf-dist/tex/latex/geometry/geometry.sty
 Package: geometry 2020/01/02 v5.9 Page Geometry
 (/Users/jrenne/Library/TinyTeX/texmf-dist/tex/generic/iftex/ifvtex.sty
@@ -318,7 +319,7 @@ Package: ifvtex 2019/10/25 v1.7 ifvtex legacy package. Use iftex instead.
 \Gm@layoutheight=\dimen183
 \Gm@layouthoffset=\dimen184
 \Gm@layoutvoffset=\dimen185
-\Gm@dimlist=\toks30
+\Gm@dimlist=\toks31
 ) (/Users/jrenne/Library/TinyTeX/texmf-dist/tex/latex/natbib/natbib.sty
 Package: natbib 2010/09/13 8.31b (PWD, AO)
 \bibhang=\skip66
@@ -326,7 +327,7 @@ Package: natbib 2010/09/13 8.31b (PWD, AO)
 LaTeX Info: Redefining \cite on input line 694.
 \c@NAT@ctr=\count305
 ) (/Users/jrenne/Library/TinyTeX/texmf-dist/tex/latex/hyperref/hyperref.sty
-Package: hyperref 2022-11-13 v7.00u Hypertext links for LaTeX
+Package: hyperref 2023-07-08 v7.01b Hypertext links for LaTeX
 (/Users/jrenne/Library/TinyTeX/texmf-dist/tex/generic/ltxcmds/ltxcmds.sty
 Package: ltxcmds 2020-05-10 v1.25 LaTeX kernel commands for general use (HO)
 ) (/Users/jrenne/Library/TinyTeX/texmf-dist/tex/generic/pdftexcmds/pdftexcmds.sty
@@ -350,7 +351,7 @@ Package: letltxmacro 2019/12/03 v1.6 Let assignment for LaTeX macros (HO)
 ) (/Users/jrenne/Library/TinyTeX/texmf-dist/tex/latex/auxhook/auxhook.sty
 Package: auxhook 2019-12-17 v1.6 Hooks for auxiliary files (HO)
 ) (/Users/jrenne/Library/TinyTeX/texmf-dist/tex/latex/hyperref/nameref.sty
-Package: nameref 2022-05-17 v2.50 Cross-referencing by name of section
+Package: nameref 2023-08-07 v2.53 Cross-referencing by name of section
 (/Users/jrenne/Library/TinyTeX/texmf-dist/tex/latex/refcount/refcount.sty
 Package: refcount 2019/12/15 v3.6 Data extraction from label references (HO)
 ) (/Users/jrenne/Library/TinyTeX/texmf-dist/tex/generic/gettitlestring/gettitlestring.sty
@@ -364,30 +365,28 @@ Package: kvoptions 2022-06-15 v3.15 Key value format for package options (HO)
 \Hy@linkcounter=\count307
 \Hy@pagecounter=\count308
 (/Users/jrenne/Library/TinyTeX/texmf-dist/tex/latex/hyperref/pd1enc.def
-File: pd1enc.def 2022-11-13 v7.00u Hyperref: PDFDocEncoding definition (HO)
+File: pd1enc.def 2023-07-08 v7.01b Hyperref: PDFDocEncoding definition (HO)
 ) (/Users/jrenne/Library/TinyTeX/texmf-dist/tex/generic/intcalc/intcalc.sty
 Package: intcalc 2019/12/15 v1.3 Expandable calculations with integers (HO)
-) (/Users/jrenne/Library/TinyTeX/texmf-dist/tex/generic/etexcmds/etexcmds.sty
-Package: etexcmds 2019/12/15 v1.7 Avoid name clashes with e-TeX commands (HO)
 )
 \Hy@SavedSpaceFactor=\count309
 (/Users/jrenne/Library/TinyTeX/texmf-dist/tex/latex/hyperref/puenc.def
-File: puenc.def 2022-11-13 v7.00u Hyperref: PDF Unicode definition (HO)
+File: puenc.def 2023-07-08 v7.01b Hyperref: PDF Unicode definition (HO)
 )
-Package hyperref Info: Option `unicode' set `true' on input line 4045.
-Package hyperref Info: Hyper figures OFF on input line 4162.
-Package hyperref Info: Link nesting OFF on input line 4167.
-Package hyperref Info: Hyper index ON on input line 4170.
-Package hyperref Info: Plain pages OFF on input line 4177.
-Package hyperref Info: Backreferencing OFF on input line 4182.
+Package hyperref Info: Option `unicode' set `true' on input line 4050.
+Package hyperref Info: Hyper figures OFF on input line 4167.
+Package hyperref Info: Link nesting OFF on input line 4172.
+Package hyperref Info: Hyper index ON on input line 4175.
+Package hyperref Info: Plain pages OFF on input line 4182.
+Package hyperref Info: Backreferencing OFF on input line 4187.
 Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
-Package hyperref Info: Bookmarks ON on input line 4410.
+Package hyperref Info: Bookmarks ON on input line 4434.
 \c@Hy@tempcnt=\count310
 (/Users/jrenne/Library/TinyTeX/texmf-dist/tex/latex/url/url.sty
 \Urlmuskip=\muskip18
 Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
 )
-LaTeX Info: Redefining \url on input line 4748.
+LaTeX Info: Redefining \url on input line 4772.
 \XeTeXLinkMargin=\dimen187
 (/Users/jrenne/Library/TinyTeX/texmf-dist/tex/generic/bitset/bitset.sty
 Package: bitset 2019/12/09 v1.3 Handle bit-vector datatype (HO)
@@ -397,13 +396,13 @@ Package: bigintcalc 2019/12/15 v1.5 Expandable calculations on big integers (HO)
 \Fld@menulength=\count311
 \Field@Width=\dimen188
 \Fld@charsize=\dimen189
-Package hyperref Info: Hyper figures OFF on input line 6027.
-Package hyperref Info: Link nesting OFF on input line 6032.
-Package hyperref Info: Hyper index ON on input line 6035.
-Package hyperref Info: backreferencing OFF on input line 6042.
-Package hyperref Info: Link coloring OFF on input line 6047.
-Package hyperref Info: Link coloring with OCG OFF on input line 6052.
-Package hyperref Info: PDF/A mode OFF on input line 6057.
+Package hyperref Info: Hyper figures OFF on input line 6051.
+Package hyperref Info: Link nesting OFF on input line 6056.
+Package hyperref Info: Hyper index ON on input line 6059.
+Package hyperref Info: backreferencing OFF on input line 6066.
+Package hyperref Info: Link coloring OFF on input line 6071.
+Package hyperref Info: Link coloring with OCG OFF on input line 6076.
+Package hyperref Info: PDF/A mode OFF on input line 6081.
 (/Users/jrenne/Library/TinyTeX/texmf-dist/tex/latex/base/atbegshi-ltx.sty
 Package: atbegshi-ltx 2021/01/10 v1.0c Emulation of the original atbegshi
 package with kernel methods
@@ -414,7 +413,7 @@ package with kernel methods
 )
 Package hyperref Info: Driver (autodetected): hxetex.
 (/Users/jrenne/Library/TinyTeX/texmf-dist/tex/latex/hyperref/hxetex.def
-File: hxetex.def 2022-11-13 v7.00u Hyperref driver for XeTeX
+File: hxetex.def 2023-07-08 v7.01b Hyperref driver for XeTeX
 (/Users/jrenne/Library/TinyTeX/texmf-dist/tex/generic/stringenc/stringenc.sty
 Package: stringenc 2019/11/29 v1.12 Convert strings between diff. encodings (HO)
 )
@@ -457,40 +456,40 @@ LaTeX Warning: Label `thm:LindbergLevyCLT' multiply defined.
 )
 \openout1 = `EcoStat.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 153.
-LaTeX Font Info:    ... okay on input line 153.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 153.
-LaTeX Font Info:    ... okay on input line 153.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 153.
-LaTeX Font Info:    ... okay on input line 153.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 153.
-LaTeX Font Info:    ... okay on input line 153.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 153.
-LaTeX Font Info:    ... okay on input line 153.
-LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 153.
-LaTeX Font Info:    ... okay on input line 153.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 153.
-LaTeX Font Info:    ... okay on input line 153.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 153.
-LaTeX Font Info:    ... okay on input line 153.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 153.
-LaTeX Font Info:    ... okay on input line 153.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 153.
-LaTeX Font Info:    ... okay on input line 153.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 156.
+LaTeX Font Info:    ... okay on input line 156.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 156.
+LaTeX Font Info:    ... okay on input line 156.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 156.
+LaTeX Font Info:    ... okay on input line 156.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 156.
+LaTeX Font Info:    ... okay on input line 156.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 156.
+LaTeX Font Info:    ... okay on input line 156.
+LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 156.
+LaTeX Font Info:    ... okay on input line 156.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 156.
+LaTeX Font Info:    ... okay on input line 156.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 156.
+LaTeX Font Info:    ... okay on input line 156.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 156.
+LaTeX Font Info:    ... okay on input line 156.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 156.
+LaTeX Font Info:    ... okay on input line 156.
 LaTeX Font Info:    Overwriting math alphabet `\mathrm' in version `normal'
-(Font)                  OT1/lmr/m/n --> TU/lmr/m/n on input line 153.
+(Font)                  OT1/lmr/m/n --> TU/lmr/m/n on input line 156.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `normal'
-(Font)                  OT1/lmr/m/it --> TU/lmr/m/it on input line 153.
+(Font)                  OT1/lmr/m/it --> TU/lmr/m/it on input line 156.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `normal'
-(Font)                  OT1/lmr/bx/n --> TU/lmr/bx/n on input line 153.
+(Font)                  OT1/lmr/bx/n --> TU/lmr/bx/n on input line 156.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `normal'
-(Font)                  OT1/lmss/m/n --> TU/lmss/m/n on input line 153.
+(Font)                  OT1/lmss/m/n --> TU/lmss/m/n on input line 156.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
-(Font)                  OT1/lmss/bx/n --> TU/lmss/bx/n on input line 153.
+(Font)                  OT1/lmss/bx/n --> TU/lmss/bx/n on input line 156.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `normal'
-(Font)                  OT1/lmtt/m/n --> TU/lmtt/m/n on input line 153.
+(Font)                  OT1/lmtt/m/n --> TU/lmtt/m/n on input line 156.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
-(Font)                  OT1/lmtt/m/n --> TU/lmtt/bx/n on input line 153.
+(Font)                  OT1/lmtt/m/n --> TU/lmtt/bx/n on input line 156.
 
 Package fontspec Info: latinmodern-math scale = 0.9999970497384594.
 
@@ -516,7 +515,7 @@ Package fontspec Info: Font family 'latinmodern-math.otf(0)' created for font
 (fontspec)             - 'bold small caps'  (b/sc) with NFSS spec.: 
 
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(0)/m/n' will be
-(Font)              scaled to size 12.0pt on input line 153.
+(Font)              scaled to size 12.0pt on input line 156.
 
 Package fontspec Info: latinmodern-math scale = 0.9999970497384594.
 
@@ -548,15 +547,15 @@ Package fontspec Info: Font family 'latinmodern-math.otf(1)' created for font
 (fontspec)             - 'bold small caps'  (b/sc) with NFSS spec.: 
 
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 12.0pt on input line 153.
+(Font)              scaled to size 12.0pt on input line 156.
 LaTeX Font Info:    Encoding `OT1' has changed to `TU' for symbol font
-(Font)              `operators' in the math version `normal' on input line 153.
+(Font)              `operators' in the math version `normal' on input line 156.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
-(Font)                  OT1/lmr/m/n --> TU/latinmodern-math.otf(1)/m/n on input line 153.
+(Font)                  OT1/lmr/m/n --> TU/latinmodern-math.otf(1)/m/n on input line 156.
 LaTeX Font Info:    Encoding `OT1' has changed to `TU' for symbol font
-(Font)              `operators' in the math version `bold' on input line 153.
+(Font)              `operators' in the math version `bold' on input line 156.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
-(Font)                  OT1/lmr/bx/n --> TU/latinmodern-math.otf(1)/b/n on input line 153.
+(Font)                  OT1/lmr/bx/n --> TU/latinmodern-math.otf(1)/b/n on input line 156.
 
 Package fontspec Info: latinmodern-math scale = 0.9999970497384594.
 
@@ -635,13 +634,13 @@ Package fontspec Info: Font family 'latinmodern-math.otf(2)' created for font
 (fontspec)             \fontdimen 21\font =0pt\relax 
 
 LaTeX Font Info:    Encoding `OMS' has changed to `TU' for symbol font
-(Font)              `symbols' in the math version `normal' on input line 153.
+(Font)              `symbols' in the math version `normal' on input line 156.
 LaTeX Font Info:    Overwriting symbol font `symbols' in version `normal'
-(Font)                  OMS/lmsy/m/n --> TU/latinmodern-math.otf(2)/m/n on input line 153.
+(Font)                  OMS/lmsy/m/n --> TU/latinmodern-math.otf(2)/m/n on input line 156.
 LaTeX Font Info:    Encoding `OMS' has changed to `TU' for symbol font
-(Font)              `symbols' in the math version `bold' on input line 153.
+(Font)              `symbols' in the math version `bold' on input line 156.
 LaTeX Font Info:    Overwriting symbol font `symbols' in version `bold'
-(Font)                  OMS/lmsy/b/n --> TU/latinmodern-math.otf(2)/b/n on input line 153.
+(Font)                  OMS/lmsy/b/n --> TU/latinmodern-math.otf(2)/b/n on input line 156.
 
 Package fontspec Info: latinmodern-math scale = 0.9999970497384594.
 
@@ -702,13 +701,13 @@ Package fontspec Info: Font family 'latinmodern-math.otf(3)' created for font
 (fontspec)             =7.2pt\relax \fontdimen 13\font =0pt\relax 
 
 LaTeX Font Info:    Encoding `OMX' has changed to `TU' for symbol font
-(Font)              `largesymbols' in the math version `normal' on input line 153.
+(Font)              `largesymbols' in the math version `normal' on input line 156.
 LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `normal'
-(Font)                  OMX/lmex/m/n --> TU/latinmodern-math.otf(3)/m/n on input line 153.
+(Font)                  OMX/lmex/m/n --> TU/latinmodern-math.otf(3)/m/n on input line 156.
 LaTeX Font Info:    Encoding `OMX' has changed to `TU' for symbol font
-(Font)              `largesymbols' in the math version `bold' on input line 153.
+(Font)              `largesymbols' in the math version `bold' on input line 156.
 LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `bold'
-(Font)                  OMX/lmex/m/n --> TU/latinmodern-math.otf(3)/b/n on input line 153.
+(Font)                  OMX/lmex/m/n --> TU/latinmodern-math.otf(3)/b/n on input line 156.
 *geometry* driver: auto-detecting
 *geometry* detected driver: xetex
 *geometry* verbose mode - [ preamble ] result:
@@ -743,38 +742,38 @@ LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `bold'
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-Package hyperref Info: Link coloring OFF on input line 153.
+Package hyperref Info: Link coloring OFF on input line 156.
 (./EcoStat.out) (./EcoStat.out)
 \@outlinefile=\write4
 \openout4 = `EcoStat.out'.
 
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 14.4pt on input line 155.
+(Font)              scaled to size 14.4pt on input line 158.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 10.0pt on input line 155.
+(Font)              scaled to size 10.0pt on input line 158.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 7.0pt on input line 155.
-LaTeX Font Info:    Trying to load font information for OML+lmm on input line 155.
+(Font)              scaled to size 7.0pt on input line 158.
+LaTeX Font Info:    Trying to load font information for OML+lmm on input line 158.
 (/Users/jrenne/Library/TinyTeX/texmf-dist/tex/latex/lm/omllmm.fd
 File: omllmm.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 14.4013pt on input line 155.
+(Font)              scaled to size 14.4013pt on input line 158.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 10.00092pt on input line 155.
+(Font)              scaled to size 10.00092pt on input line 158.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 7.00064pt on input line 155.
+(Font)              scaled to size 7.00064pt on input line 158.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 14.39845pt on input line 155.
+(Font)              scaled to size 14.39845pt on input line 158.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 9.99893pt on input line 155.
+(Font)              scaled to size 9.99893pt on input line 158.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 6.99925pt on input line 155.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 155.
+(Font)              scaled to size 6.99925pt on input line 158.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 158.
 (/Users/jrenne/Library/TinyTeX/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 155.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 158.
 (/Users/jrenne/Library/TinyTeX/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ) [1
@@ -804,7 +803,10 @@ LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
 \openout5 = `EcoStat.toc'.
 
 [4]
-Underfull \hbox (badness 10000) in paragraph at lines 199--201
+LaTeX Font Info:    Font shape `TU/lmtt/bx/n' in size <12> not available
+(Font)              Font shape `TU/lmtt/b/n' tried instead on input line 174.
+
+Underfull \hbox (badness 10000) in paragraph at lines 202--204
 []\TU/lmr/m/n/12 R: []$[][][][][] [] [] [] [][][][] [] [] [][] [][][][][][][] [] [][][] [] [][][] [] [][][][][][][] [] [][][][][][][] [][] [][][][][][][] [] [][] [] [][][]$[] (by Em-
  []
 
@@ -820,7 +822,7 @@ File: EcoStat_files/figure-latex/essai3d2-1.pdf Graphic file (type pdf)
 File: EcoStat_files/figure-latex/essai3d-1.pdf Graphic file (type pdf)
 <use EcoStat_files/figure-latex/essai3d-1.pdf>
 [8] [9]
-Underfull \hbox (badness 2762) in paragraph at lines 310--311
+Underfull \hbox (badness 2762) in paragraph at lines 313--314
 []\TU/lmr/m/n/12 If $[]$ and $[]$ are independent, then $[][][][][][][][][][][] [] [][][][][][][][][][][][][][]$ and
  []
 
@@ -831,11 +833,11 @@ File: EcoStat_files/figure-latex/Buffon-1.pdf Graphic file (type pdf)
 <use EcoStat_files/figure-latex/Buffon-1.pdf>
 [11] [12]
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 5.0pt on input line 429.
+(Font)              scaled to size 5.0pt on input line 432.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 5.00046pt on input line 429.
+(Font)              scaled to size 5.00046pt on input line 432.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 4.99947pt on input line 429.
+(Font)              scaled to size 4.99947pt on input line 432.
 File: EcoStat_files/figure-latex/figCauchy-1.pdf Graphic file (type pdf)
 <use EcoStat_files/figure-latex/figCauchy-1.pdf>
 [13] [14]
@@ -847,23 +849,23 @@ File: EcoStat_files/figure-latex/incomeDistri-1.pdf Graphic file (type pdf)
 <use EcoStat_files/figure-latex/incomeDistri-1.pdf>
 [16] [17]
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/b/n' will be
-(Font)              scaled to size 12.0pt on input line 565.
+(Font)              scaled to size 12.0pt on input line 568.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/b/n' will be
-(Font)              scaled to size 8.4pt on input line 565.
+(Font)              scaled to size 8.4pt on input line 568.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/b/n' will be
-(Font)              scaled to size 6.0pt on input line 565.
+(Font)              scaled to size 6.0pt on input line 568.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/b/n' will be
-(Font)              scaled to size 12.0011pt on input line 565.
+(Font)              scaled to size 12.0011pt on input line 568.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/b/n' will be
-(Font)              scaled to size 8.40076pt on input line 565.
+(Font)              scaled to size 8.40076pt on input line 568.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/b/n' will be
-(Font)              scaled to size 6.00055pt on input line 565.
+(Font)              scaled to size 6.00055pt on input line 568.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/b/n' will be
-(Font)              scaled to size 11.99872pt on input line 565.
+(Font)              scaled to size 11.99872pt on input line 568.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/b/n' will be
-(Font)              scaled to size 8.3991pt on input line 565.
+(Font)              scaled to size 8.3991pt on input line 568.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/b/n' will be
-(Font)              scaled to size 5.99936pt on input line 565.
+(Font)              scaled to size 5.99936pt on input line 568.
 [18]
 File: EcoStat_files/figure-latex/RcompMeans-1.pdf Graphic file (type pdf)
 <use EcoStat_files/figure-latex/RcompMeans-1.pdf>
@@ -884,10 +886,7 @@ File: EcoStat_files/figure-latex/IllusTestOneSided2-1.pdf Graphic file (type pdf
 [25] [26]
 File: EcoStat_files/figure-latex/FactoryR-1.pdf Graphic file (type pdf)
 <use EcoStat_files/figure-latex/FactoryR-1.pdf>
-[27] [28] [29]
-LaTeX Font Info:    Font shape `TU/lmtt/bx/n' in size <12> not available
-(Font)              Font shape `TU/lmtt/b/n' tried instead on input line 923.
-[30]
+[27] [28] [29] [30]
 File: EcoStat_files/figure-latex/JBTest2-1.pdf Graphic file (type pdf)
 <use EcoStat_files/figure-latex/JBTest2-1.pdf>
 File: EcoStat_files/figure-latex/JBTest3-1.pdf Graphic file (type pdf)
@@ -909,12 +908,12 @@ File: EcoStat_files/figure-latex/R2issue-1.pdf Graphic file (type pdf)
 File: EcoStat_files/figure-latex/chartStudent-1.pdf Graphic file (type pdf)
 <use EcoStat_files/figure-latex/chartStudent-1.pdf>
 [46] [47] [48] [49]
-Overfull \hbox (7.91257pt too wide) in paragraph at lines 1734--1735
+Overfull \hbox (7.91257pt too wide) in paragraph at lines 1737--1738
 []\TU/lmr/m/n/12 By Proposition []9.5[] (in Appendix []9.2[]), we have: $[][] [] [] [] [][][][][][][][][][][][][][][][][][][][][][][][] []
  []
 
 [50] [51] [52] [53] [54]
-Underfull \hbox (badness 1442) in paragraph at lines 1935--1938
+Underfull \hbox (badness 1442) in paragraph at lines 1938--1941
 \TU/lmr/m/n/12 By continuity of the inverse function (everywhere but at 0): $[][] []
  []
 
@@ -924,7 +923,7 @@ File: EcoStat_files/figure-latex/figureIV-1.pdf Graphic file (type pdf)
 [56] [57]
 
 LaTeX Font Warning: Font shape `TU/lmtt/bx/it' in size <12> not available
-(Font)              Font shape `TU/lmtt/b/sl' tried instead on input line 2030.
+(Font)              Font shape `TU/lmtt/b/sl' tried instead on input line 2033.
 
 [58] [59]
 Underfull \vbox (badness 10000) has occurred while \output is active []
@@ -1014,17 +1013,17 @@ File: EcoStat_files/figure-latex/MLE2-1.pdf Graphic file (type pdf)
 File: EcoStat_files/figure-latex/MLE3-1.pdf Graphic file (type pdf)
 <use EcoStat_files/figure-latex/MLE3-1.pdf>
 [113] [114]
-Underfull \hbox (badness 1721) in paragraph at lines 4428--4429
+Underfull \hbox (badness 1721) in paragraph at lines 4432--4433
 []\TU/lmr/m/n/12 The Cauchy-Schwarz inequality implies that $[] []
  []
 
 
-Underfull \hbox (badness 4001) in paragraph at lines 4428--4429
+Underfull \hbox (badness 4001) in paragraph at lines 4432--4433
 [][][][][][][][][][][][] [][][][] [][][][][]$\TU/lmr/m/n/12 . Now, $[][][][][][][][][] [][][][] [][][] [] [][] [][][][][][][][][] [][][][] []
  []
 
 
-Overfull \hbox (20.45735pt too wide) in paragraph at lines 4428--4429
+Overfull \hbox (20.45735pt too wide) in paragraph at lines 4432--4433
 [] [][] [][][][][][][][] [][][][] [] []$ \TU/lmr/m/n/12 because $[]$ is unbiased. Therefore $[][][][][][][][][][][] [] [][][][][][][][][][] [][][][][][][][][][]$.
  []
 
@@ -1036,23 +1035,23 @@ File: EcoStat_files/figure-latex/smidistri-1.pdf Graphic file (type pdf)
 <use EcoStat_files/figure-latex/smidistri-1.pdf>
 [120] [121] [122]
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/b/n' will be
-(Font)              scaled to size 10.0pt on input line 4824.
+(Font)              scaled to size 10.0pt on input line 4828.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/b/n' will be
-(Font)              scaled to size 7.0pt on input line 4824.
+(Font)              scaled to size 7.0pt on input line 4828.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/b/n' will be
-(Font)              scaled to size 5.0pt on input line 4824.
+(Font)              scaled to size 5.0pt on input line 4828.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/b/n' will be
-(Font)              scaled to size 10.00092pt on input line 4824.
+(Font)              scaled to size 10.00092pt on input line 4828.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/b/n' will be
-(Font)              scaled to size 7.00064pt on input line 4824.
+(Font)              scaled to size 7.00064pt on input line 4828.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/b/n' will be
-(Font)              scaled to size 5.00046pt on input line 4824.
+(Font)              scaled to size 5.00046pt on input line 4828.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/b/n' will be
-(Font)              scaled to size 9.99893pt on input line 4824.
+(Font)              scaled to size 9.99893pt on input line 4828.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/b/n' will be
-(Font)              scaled to size 6.99925pt on input line 4824.
+(Font)              scaled to size 6.99925pt on input line 4828.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/b/n' will be
-(Font)              scaled to size 4.99947pt on input line 4824.
+(Font)              scaled to size 4.99947pt on input line 4828.
 [123] [124] [125] [126]
 File: EcoStat_files/figure-latex/MCMC1-1.pdf Graphic file (type pdf)
 <use EcoStat_files/figure-latex/MCMC1-1.pdf>
@@ -1095,11 +1094,12 @@ File: EcoStat_files/figure-latex/nonstat1-1.pdf Graphic file (type pdf)
 [146]
 File: EcoStat_files/figure-latex/nonstat2-1.pdf Graphic file (type pdf)
 <use EcoStat_files/figure-latex/nonstat2-1.pdf>
+[147]
 File: EcoStat_files/figure-latex/autocov-1.pdf Graphic file (type pdf)
 <use EcoStat_files/figure-latex/autocov-1.pdf>
 File: EcoStat_files/figure-latex/autocov2-1.pdf Graphic file (type pdf)
 <use EcoStat_files/figure-latex/autocov2-1.pdf>
-[147] [148] [149]
+[148] [149]
 File: EcoStat_files/figure-latex/TVTCL-1.pdf Graphic file (type pdf)
 <use EcoStat_files/figure-latex/TVTCL-1.pdf>
 [150] [151] [152]
@@ -1108,57 +1108,61 @@ File: EcoStat_files/figure-latex/simMA-1.pdf Graphic file (type pdf)
 [153] [154] [155] [156] [157] [158]
 File: EcoStat_files/figure-latex/pacf-1.pdf Graphic file (type pdf)
 <use EcoStat_files/figure-latex/pacf-1.pdf>
-[159] [160] [161] [162] [163] [164]
-Chapter 9.
-[165
+[159] [160] [161] [162] [163] [164] [165] [166
 
-] [166]
+]
+Chapter 9.
+[167] [168]
 File: EcoStat_files/figure-latex/USydsPCA1-1.pdf Graphic file (type pdf)
 <use EcoStat_files/figure-latex/USydsPCA1-1.pdf>
-[167] [168] [169] [170]
-Underfull \hbox (badness 2237) in paragraph at lines 6849--6850
+[169] [170] [171] [172]
+Underfull \hbox (badness 2237) in paragraph at lines 6856--6857
 []$[] [] [] [][][][]$ \TU/lmr/m/n/12 is a convex function. Therefore $[][][][] [] [][][][][][][][][][][] []
  []
 
-[171]
+[173]
 File: EcoStat_files/figure-latex/Cauchy-1.pdf Graphic file (type pdf)
 <use EcoStat_files/figure-latex/Cauchy-1.pdf>
-[172] [173] [174]
+[174] [175] [176]
 
-Package hyperref Warning: Suppressing link with empty target on input line 7018.
+Package hyperref Warning: Suppressing link with empty target on input line 7025.
 
-[175]
-Overfull \hbox (31.16512pt too wide) in paragraph at lines 7089--7090
+[177]
+Overfull \hbox (31.16512pt too wide) in paragraph at lines 7096--7097
 []\TU/lmr/m/n/12 Let us introduce the r.v. $[][] [][] [][][] [] [][]$. We have $[][][][][] [] [][]$.
  []
 
-[176]
+[178]
 File: EcoStat_files/figure-latex/inverseMills-1.pdf Graphic file (type pdf)
 <use EcoStat_files/figure-latex/inverseMills-1.pdf>
-[177] [178] [179] [180] [181]
+[179] [180] [181] [182] [183]
 
-LaTeX Warning: Reference `(' on page 182 undefined on input line 7360.
+LaTeX Warning: Reference `(' on page 184 undefined on input line 7367.
 
 
-LaTeX Warning: Reference `(' on page 182 undefined on input line 7375.
-
-[182] [183]
-
-LaTeX Warning: Reference `prp:estimVARGaussian' on page 184 undefined on input line 7464.
+LaTeX Warning: Reference `(' on page 184 undefined on input line 7382.
 
 [184] [185]
-Overfull \hbox (7.90913pt too wide) in paragraph at lines 7513--7580
+
+LaTeX Warning: Reference `prp:estimVARGaussian' on page 186 undefined on input line 7471.
+
+[186] [187]
+Overfull \hbox (7.90913pt too wide) in paragraph at lines 7520--7587
  [][] 
  []
 
 
-Overfull \hbox (58.83714pt too wide) in paragraph at lines 7692--7745
+Overfull \hbox (58.83714pt too wide) in paragraph at lines 7699--7752
  [][] 
  []
 
-(./EcoStat.bbl [186] [187] [188] [189] [190] [191
+(./EcoStat.bbl [188] [189] [190] [191] [192] [193
 
-] [192]) [193] (./EcoStat.aux)
+] [194]) [195] (./EcoStat.aux)
+ ***********
+LaTeX2e <2023-06-01> patch level 1
+L3 programming layer <2023-08-29>
+ ***********
 
 LaTeX Warning: There were undefined references.
 
@@ -1169,12 +1173,12 @@ Package rerunfilecheck Info: File `EcoStat.out' has not changed.
 (rerunfilecheck)             Checksum: 8BA2376D98308C4C07ED6E66AA5A1F54;9666.
  ) 
 Here is how much of TeX's memory you used:
- 19201 strings out of 478777
- 363872 string characters out of 5850045
- 1962979 words of memory out of 5000000
- 38864 multiletter control sequences out of 15000+600000
- 524886 words of font info for 142 fonts, out of 8000000 for 9000
+ 19132 strings out of 477590
+ 361226 string characters out of 5817911
+ 2031438 words of memory out of 5000000
+ 39991 multiletter control sequences out of 15000+600000
+ 570668 words of font info for 146 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 86i,14n,121p,1845b,586s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 90i,14n,120p,1845b,609s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on EcoStat.pdf (193 pages).
+Output written on EcoStat.pdf (195 pages).

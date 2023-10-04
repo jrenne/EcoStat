@@ -1545,6 +1545,7 @@ To begin with, let us define the variables we want to consider:
 ```{r lasso1, warning=FALSE, message=FALSE}
 library(AEC)
 library(glmnet)
+credit <- credit[complete.cases(credit),]
 credit$owner <- 1*(credit$home_ownership=="OWN")
 credit$renter <- 1*(credit$home_ownership=="MORTGAGE")
 credit$verification_status <- 1*(credit$verification_status=="Not Verified")

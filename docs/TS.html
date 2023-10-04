@@ -7,7 +7,7 @@
 <title>Chapter 8 Time Series | Econometrics and Statistics</title>
 <meta name="author" content="Jean-Paul Renne">
 <meta name="description" content="8.1 Introduction to time series A time series is an infinite sequence of random variables indexed by time: \(\{y_t\}_{t=-\infty}^{+\infty}=\{\dots, y_{-2},y_{-1},y_{0},y_{1},\dots,y_t,\dots\}\),...">
-<meta name="generator" content="bookdown 0.27 with bs4_book()">
+<meta name="generator" content="bookdown 0.34 with bs4_book()">
 <meta property="og:title" content="Chapter 8 Time Series | Econometrics and Statistics">
 <meta property="og:type" content="book">
 <meta property="og:description" content="8.1 Introduction to time series A time series is an infinite sequence of random variables indexed by time: \(\{y_t\}_{t=-\infty}^{+\infty}=\{\dots, y_{-2},y_{-1},y_{0},y_{1},\dots,y_t,\dots\}\),...">
@@ -16,7 +16,7 @@
 <meta name="twitter:description" content="8.1 Introduction to time series A time series is an infinite sequence of random variables indexed by time: \(\{y_t\}_{t=-\infty}^{+\infty}=\{\dots, y_{-2},y_{-1},y_{0},y_{1},\dots,y_t,\dots\}\),...">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.4.0/transition.js"></script><script src="libs/bs3compat-0.4.0/tabs.js"></script><script src="libs/bs3compat-0.4.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.5.0/transition.js"></script><script src="libs/bs3compat-0.5.0/tabs.js"></script><script src="libs/bs3compat-0.5.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
 <script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
     
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
@@ -92,7 +92,7 @@
 <span class="header-section-number">8.1</span> Introduction to time series<a class="anchor" aria-label="anchor" href="#introduction-to-time-series"><i class="fas fa-link"></i></a>
 </h2>
 <p>A time series is an infinite sequence of random variables indexed by time: <span class="math inline">\(\{y_t\}_{t=-\infty}^{+\infty}=\{\dots, y_{-2},y_{-1},y_{0},y_{1},\dots,y_t,\dots\}\)</span>, <span class="math inline">\(y_i \in \mathbb{R}^k\)</span>. In practice, we only observe samples, typically: <span class="math inline">\(\{y_{1},\dots,y_T\}\)</span>.</p>
-<p>Standard time series models are built using <strong>shocks</strong> that we will often denote by <span class="math inline">\(\varepsilon_t\)</span>. Typically, <span class="math inline">\(\mathbb{E}(\varepsilon_t)=0\)</span>. In many models, the shocks are supposed to be i.i.d., but there exist other (less restrictive) notions of shocks. In particular, the definition of many processes is based on whote noises:</p>
+<p>Standard time series models are built using <strong>shocks</strong> that we will often denote by <span class="math inline">\(\varepsilon_t\)</span>. Typically, <span class="math inline">\(\mathbb{E}(\varepsilon_t)=0\)</span>. In many models, the shocks are supposed to be i.i.d., but there exist other (less restrictive) notions of shocks. In particular, the definition of many processes is based on white noises:</p>
 <div class="definition">
 <p><span id="def:whitenoise" class="definition"><strong>Definition 8.1  (White noise) </strong></span>The process <span class="math inline">\(\{\varepsilon_t\}_{t \in] -\infty,+\infty[}\)</span> is a white noise if, for all <span class="math inline">\(t\)</span>:</p>
 <ol style="list-style-type: lower-alpha">
@@ -119,12 +119,13 @@
 where <span class="math inline">\(z_t \sim i.i.d.\,\mathcal{N}(0,1)\)</span> and <span class="math inline">\(\sigma_t^2 = w + \alpha \varepsilon_{t-1}^2\)</span>.</p>
 </div>
 <div class="example">
-<p><span id="exm:whiteNotMDS" class="example"><strong>Example 8.2  </strong></span>A white noise process is not necessarily a MDS. This is for instance the following process:
+<p><span id="exm:whiteNotMDS" class="example"><strong>Example 8.2  </strong></span>A (weak) white noise process is not necessarily a MDS. This is for instance the following process:
 <span class="math display">\[
 \varepsilon_{t} = z_t + z_{t-1}z_{t-2},
 \]</span>
 where <span class="math inline">\(z_t \sim i.i.d.\mathcal{N}(0,1)\)</span>.</p>
 </div>
+<p>In the following, to simplify the exposition, we will essentially consider <strong>strong white noises</strong>. A strong white noise is a particular case of white noise where the <span class="math inline">\(\varepsilon_{t}\)</span>’s are serially independent. Using the law of iterated expectation, it can be shown that a strong white noise is a martingale difference sequence. Indeed, when the <span class="math inline">\(\varepsilon_{t}\)</span>’s are serially independent, we have that <span class="math inline">\(\mathbb{E}(\varepsilon_{t}|\varepsilon_{t-1},\varepsilon_{t-2},\dots)=\mathbb{E}(\varepsilon_{t})=0\)</span>.</p>
 <p>Let us now introduce the lag operator. The lag operator, denoted by <span class="math inline">\(L\)</span>, is defined on the time series space and is defined by:
 <span class="math display" id="eq:lagOp">\[\begin{equation}
 L: \{y_t\}_{t=-\infty}^{+\infty} \rightarrow \{w_t\}_{t=-\infty}^{+\infty} \quad \mbox{with} \quad w_t = y_{t-1}.\tag{8.1}
@@ -192,7 +193,7 @@ Figure 8.2: Example of a process that is covariance stationary but not strictly 
 \rho_j = \frac{\gamma_j}{\gamma_0}.
 \]</span></p>
 </div>
-<p>Consider a long historical time series of the Swiss GDP growth, taken from the <span class="citation">Jordà, Schularick, and Taylor (<a href="references.html#ref-JST_2017" role="doc-biblioref">2017</a>)</span> dataset.<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;Version 6 of the dataset, available on &lt;a href="https://www.macrohistory.net"&gt;this website&lt;/a&gt;.&lt;/p&gt;'><sup>18</sup></a></p>
+<p>Consider a long historical time series of the Swiss GDP growth, taken from the <span class="citation">Jordà, Schularick, and Taylor (<a href="references.html#ref-JST_2017">2017</a>)</span> dataset.<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;Version 6 of the dataset, available on &lt;a href="https://www.macrohistory.net"&gt;this website&lt;/a&gt;.&lt;/p&gt;'><sup>18</sup></a></p>
 <div class="figure" style="text-align: left-aligned">
 <span style="display:block;" id="fig:autocov"></span>
 <img src="EcoStat_files/figure-html/autocov-1.png" alt="Annual growth rate of Swiss GDP, based on the Jorda-Schularick-Taylor Macrohistory Database." width="95%"><p class="caption">
@@ -228,7 +229,7 @@ Figure 8.4: For order <span class="math inline">\(j\)</span>, the slope of the b
 <p>[Mean square (m.s.) and distribution (d.) convergences: see Definitions <a href="append.html#def:cvgceDistri">9.17</a> and <a href="append.html#def:convergenceLr">9.15</a>.]</p>
 </div>
 <div class="proof">
-<p><span id="unlabeled-div-34" class="proof"><em>Proof</em>. </span>By Proposition <a href="append.html#prp:absMs">9.8</a>, Eq. <a href="TS.html#eq:TCL2">(8.3)</a> implies Eq. <a href="TS.html#eq:TCL20">(8.2)</a>. For Eq. <a href="TS.html#eq:TCL2">(8.3)</a>, see Appendix <a href="append.html#AppendixProof">9.5</a>. For Eq. <a href="TS.html#eq:TCL4ts">(8.4)</a>, see <span class="citation">Anderson (<a href="references.html#ref-Anderson_1971" role="doc-biblioref">1971</a>)</span>, p. 429.</p>
+<p><span id="unlabeled-div-34" class="proof"><em>Proof</em>. </span>By Proposition <a href="append.html#prp:absMs">9.8</a>, Eq. <a href="TS.html#eq:TCL2">(8.3)</a> implies Eq. <a href="TS.html#eq:TCL20">(8.2)</a>. For Eq. <a href="TS.html#eq:TCL2">(8.3)</a>, see Appendix <a href="append.html#AppendixProof">9.5</a>. For Eq. <a href="TS.html#eq:TCL4ts">(8.4)</a>, see <span class="citation">Anderson (<a href="references.html#ref-Anderson_1971">1971</a>)</span>, p. 429.</p>
 </div>
 <div class="definition">
 <p><span id="def:LRV" class="definition"><strong>Definition 8.9  (Long-run variance) </strong></span>Under the assumptions of Theorem <a href="TS.html#thm:CLTcovstat">8.1</a>, the limit appearing in Eq. <a href="TS.html#eq:TCL2">(8.3)</a> exists and is called <strong>long-run variance</strong>. It is denoted by <span class="math inline">\(S\)</span>, i.e.:
@@ -241,7 +242,7 @@ S = \Sigma_{j=-\infty}^{+\infty} \gamma_j  = \mbox{lim}_{T \rightarrow +\infty} 
 \hat\gamma_0 + 2 \sum_{\nu=1}^{q} \hat\gamma_\nu, \tag{8.5}
 \end{equation}\]</span>
 where <span class="math inline">\(\hat\gamma_\nu = \frac{1}{T}\sum_{\nu+1}^{T} (y_t - \bar{y})(y_{t-\nu} - \bar{y})\)</span>.</p>
-<p>However, for small samples, Eq. <a href="TS.html#eq:covSmplMean">(8.5)</a> does not necessarily result in a positive definite matrix. <span class="citation">Newey and West (<a href="references.html#ref-Newey_West_1987" role="doc-biblioref">1987</a>)</span> have proposed an estimator that does not have this defect. Their estimator is given by:
+<p>However, for small samples, Eq. <a href="TS.html#eq:covSmplMean">(8.5)</a> does not necessarily result in a positive definite matrix. <span class="citation">Newey and West (<a href="references.html#ref-Newey_West_1987">1987</a>)</span> have proposed an estimator that does not have this defect. Their estimator is given by:
 <span class="math display" id="eq:NWest">\[\begin{equation}
 S^{NW}=\hat\gamma_0 + 2 \sum_{\nu=1}^{q}\left(1-\frac{\nu}{q+1}\right) \hat\gamma_\nu.\tag{8.6}
 \end{equation}\]</span></p>
@@ -649,7 +650,7 @@ Figure 8.7: ACF/PACF analysis of two processes (MA process on the left, AR on th
 <h2>
 <span class="header-section-number">8.3</span> Forecasting<a class="anchor" aria-label="anchor" href="#forecasting"><i class="fas fa-link"></i></a>
 </h2>
-<p>Forecasting has always been an important part of the time series field (<span class="citation">De Gooijer and Hyndman (<a href="references.html#ref-DEGOOIJER2006443" role="doc-biblioref">2006</a>)</span>). Macroeconomic forecasts are done in many places: Public Administration (notably Treasuries), Central Banks, International Institutions (e.g. IMF, OECD), banks, big firms. These institutions are interested in the <strong>point estimates</strong> (<span class="math inline">\(\sim\)</span> most likely value) of the variable of interest. They also sometimes need to measure the <strong>uncertainty</strong> (<span class="math inline">\(\sim\)</span> dispersion of likely outcomes) associated to the point estimates.<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;In its inflation report, the Bank of England displays charts showing the conditional distribution of future inflation, called fan charts. This fan charts show the uncertainty associated with future inflation. See &lt;a href="https://www.bankofengland.co.uk/quarterly-bulletin/1998/q1/the-inflation-report-projections-understanding-the-fan-chart"&gt;this page&lt;/a&gt;.&lt;/p&gt;'><sup>19</sup></a></p>
+<p>Forecasting has always been an important part of the time series field (<span class="citation">De Gooijer and Hyndman (<a href="references.html#ref-DEGOOIJER2006443">2006</a>)</span>). Macroeconomic forecasts are done in many places: Public Administration (notably Treasuries), Central Banks, International Institutions (e.g. IMF, OECD), banks, big firms. These institutions are interested in the <strong>point estimates</strong> (<span class="math inline">\(\sim\)</span> most likely value) of the variable of interest. They also sometimes need to measure the <strong>uncertainty</strong> (<span class="math inline">\(\sim\)</span> dispersion of likely outcomes) associated to the point estimates.<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;In its inflation report, the Bank of England displays charts showing the conditional distribution of future inflation, called fan charts. This fan charts show the uncertainty associated with future inflation. See &lt;a href="https://www.bankofengland.co.uk/quarterly-bulletin/1998/q1/the-inflation-report-projections-understanding-the-fan-chart"&gt;this page&lt;/a&gt;.&lt;/p&gt;'><sup>19</sup></a></p>
 <p>Forecasts produced by professional forecasters are available on these web pages:</p>
 <ul>
 <li>
@@ -747,7 +748,7 @@ with <span class="math inline">\(\boldsymbol\mu = [\mu,\dots,\mu]'\)</span> (<sp
 Therefore:
 <span class="math display">\[\begin{eqnarray*}
 \mathbb{E}(\mathbf{y}_{t+h}|y_{t},y_{t-1},\dots) &amp;=&amp; \boldsymbol\mu + F^{h}(\mathbf{y}_t - \boldsymbol\mu)\\
-\mathbb{V}ar\left( [\mathbf{y}_{t+h} - \mathbb{E}(\mathbf{y}_{t+h}|y_{t},y_{t-1},\dots)] \right) &amp;=&amp; \Sigma + F\Sigma F' + \dots + F^{h-1}\Sigma (F^{h-1})',
+\mathbb{V}ar\left([\mathbf{y}_{t+h} - \mathbb{E}(\mathbf{y}_{t+h}|y_{t},y_{t-1},\dots)] \right) &amp;=&amp; \Sigma + F\Sigma F' + \dots + F^{h-1}\Sigma (F^{h-1})',
 \end{eqnarray*}\]</span>
 where:
 <span class="math display">\[
@@ -780,7 +781,7 @@ which can be exploited recursively.</p>
 <li>Use the remaining available periods (<span class="math inline">\(T^*+1,\dots,T\)</span>) to compute <strong>out-of-sample</strong> forecasting errors (and compute their MSE). In an out-of-sample exercise, it is important to make sure that the data used to produce a forecasts (as of date <span class="math inline">\(T^*\)</span>) where indeed available on date <span class="math inline">\(T^*\)</span>.</li>
 </ol>
 <p><strong>Diebold-Mariano test</strong></p>
-<p>How to compare different forecasting approaches? <span class="citation">Diebold and Mariano (<a href="references.html#ref-Diebold_Mariano_1995" role="doc-biblioref">1995</a>)</span> have proposed a simple test to address this question.</p>
+<p>How to compare different forecasting approaches? <span class="citation">Diebold and Mariano (<a href="references.html#ref-Diebold_Mariano_1995">1995</a>)</span> have proposed a simple test to address this question.</p>
 <p>Assume that you want to compare approaches A and B. You have historical data sets and you have implemented both approaches in the past, providing you with two sets of forecasting errors: <span class="math inline">\(\{e^{A}_t\}_{t=1,\dots,T}\)</span> and <span class="math inline">\(\{e^{B}_t\}_{t=1,\dots,T}\)</span>.</p>
 <p>It may be the case that your forecasts serve a specific purpose and that, for instance, you dislike positive forecasting errors and you care less about negative errors. We assume you are able to formalise this by means of a <strong>loss function <span class="math inline">\(L(e)\)</span></strong>. For instance:</p>
 <ul>
@@ -792,7 +793,7 @@ which can be exploited recursively.</p>
 \sqrt{T} \bar{d}_T \overset{d}{\rightarrow} \mathcal{N}\left(0,\sum_{j=-\infty}^{+\infty} \gamma_j \right),
 \]</span><br>
 where the <span class="math inline">\(\gamma_j\)</span>s are the autocovariances of <span class="math inline">\(d_t\)</span>.</p>
-<p>Hence, assuming that <span class="math inline">\(\hat{\sigma}^2\)</span> is a consistent estimate of <span class="math inline">\(\sum_{j=-\infty}^{+\infty} \gamma_j\)</span> (for instance the one given by <span class="citation">Newey and West (<a href="references.html#ref-Newey_West_1987" role="doc-biblioref">1987</a>)</span>), we have, under <span class="math inline">\(H_0\)</span>:
+<p>Hence, assuming that <span class="math inline">\(\hat{\sigma}^2\)</span> is a consistent estimate of <span class="math inline">\(\sum_{j=-\infty}^{+\infty} \gamma_j\)</span> (for instance the one given by <span class="citation">Newey and West (<a href="references.html#ref-Newey_West_1987">1987</a>)</span>), we have, under <span class="math inline">\(H_0\)</span>:
 <span class="math display">\[
 DM_T := \sqrt{T}\frac{\bar{d}_T}{\sqrt{\hat{\sigma}^2}} \overset{d}{\rightarrow}  \mathcal{N}(0,1).
 \]</span>
@@ -802,7 +803,7 @@ DM_T := \sqrt{T}\frac{\bar{d}_T}{\sqrt{\hat{\sigma}^2}} \overset{d}{\rightarrow}
 \]</span>
 where <span class="math inline">\(\Phi\)</span> is the c.d.f. of the standard normal distribution.</p>
 <div class="example">
-<p><span id="exm:SwissOutOfSample" class="example"><strong>Example 8.5  (Forecasting Swiss GDP growth) </strong></span>We use a long historical time series of the Swiss GDP growth taken from the <span class="citation">Jordà, Schularick, and Taylor (<a href="references.html#ref-JST_2017" role="doc-biblioref">2017</a>)</span> dataset.<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;See &lt;a href="https://www.macrohistory.net/database/"&gt;this website&lt;/a&gt;.&lt;/p&gt;'><sup>22</sup></a></p>
+<p><span id="exm:SwissOutOfSample" class="example"><strong>Example 8.5  (Forecasting Swiss GDP growth) </strong></span>We use a long historical time series of the Swiss GDP growth taken from the <span class="citation">Jordà, Schularick, and Taylor (<a href="references.html#ref-JST_2017">2017</a>)</span> dataset.<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;See &lt;a href="https://www.macrohistory.net/database/"&gt;this website&lt;/a&gt;.&lt;/p&gt;'><sup>22</sup></a></p>
 <p>We want to forecast this GDP growth. We envision two specifications : an AR(1) specification (the one advocated by the AIC criteria), and an ARMA(2,2) specification. We are interested in 2-year-ahead forecasts (i.e., <span class="math inline">\(h=2\)</span> since the data are yearly).</p>
 <div class="sourceCode" id="cb132"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">AEC</span><span class="op">)</span></span>
@@ -889,7 +890,7 @@ where <span class="math inline">\(\Phi\)</span> is the c.d.f. of the standard no
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Econometrics and Statistics</strong>" was written by Jean-Paul Renne. It was last built on 2023-05-22.</p>
+    <p>"<strong>Econometrics and Statistics</strong>" was written by Jean-Paul Renne. It was last built on 2023-10-04.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
@@ -902,7 +903,7 @@ where <span class="math inline">\(\Phi\)</span> is the c.d.f. of the standard no
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

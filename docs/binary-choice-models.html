@@ -7,7 +7,7 @@
 <title>Chapter 7 Binary-choice models | Econometrics and Statistics</title>
 <meta name="author" content="Jean-Paul Renne">
 <meta name="description" content="In microeconometric models, the variables of interest often feature restricted distributions —for instance with discontinuous support—, which necessitates specific models. Typically, in many...">
-<meta name="generator" content="bookdown 0.27 with bs4_book()">
+<meta name="generator" content="bookdown 0.34 with bs4_book()">
 <meta property="og:title" content="Chapter 7 Binary-choice models | Econometrics and Statistics">
 <meta property="og:type" content="book">
 <meta property="og:description" content="In microeconometric models, the variables of interest often feature restricted distributions —for instance with discontinuous support—, which necessitates specific models. Typically, in many...">
@@ -16,7 +16,7 @@
 <meta name="twitter:description" content="In microeconometric models, the variables of interest often feature restricted distributions —for instance with discontinuous support—, which necessitates specific models. Typically, in many...">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.4.0/transition.js"></script><script src="libs/bs3compat-0.4.0/tabs.js"></script><script src="libs/bs3compat-0.4.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.5.0/transition.js"></script><script src="libs/bs3compat-0.5.0/tabs.js"></script><script src="libs/bs3compat-0.5.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
 <script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
     
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
@@ -213,7 +213,7 @@ where <span class="math inline">\(V_{i,j}\)</span> is the deterministic componen
 where <span class="math inline">\(F\)</span> is the c.d.f. of <span class="math inline">\(\varepsilon_{i,0}-\varepsilon_{i,1}\)</span>.</p>
 <p>Note that only the difference <span class="math inline">\(\boldsymbol\theta_1-\boldsymbol\theta_0\)</span> is identifiable (as opposed to <span class="math inline">\(\boldsymbol\theta_1\)</span> <em>and</em> <span class="math inline">\(\boldsymbol\theta_0\)</span>). Moreover, replacing <span class="math inline">\(U\)</span> with <span class="math inline">\(aU\)</span> (<span class="math inline">\(a&gt;0\)</span>) gives the same model; this <em>scaling</em> issue can be solved by fixing the variance of <span class="math inline">\(\varepsilon_{i,0}-\varepsilon_{i,1}\)</span>.</p>
 <div class="example">
-<p><span id="exm:migration" class="example"><strong>Example 7.1  (Migration and income) </strong></span>The RUM approach has been used by <span class="citation">Nakosteen and Zimmer (<a href="references.html#ref-Nakosteen_Zimmer_1980" role="doc-biblioref">1980</a>)</span> to study migration choices. Their model is based on the comparison of marginal costs and benefits associated with migration. The main ingredients of their approach are as follows:</p>
+<p><span id="exm:migration" class="example"><strong>Example 7.1  (Migration and income) </strong></span>The RUM approach has been used by <span class="citation">Nakosteen and Zimmer (<a href="references.html#ref-Nakosteen_Zimmer_1980">1980</a>)</span> to study migration choices. Their model is based on the comparison of marginal costs and benefits associated with migration. The main ingredients of their approach are as follows:</p>
 <ul>
 <li>Wage that can be earned at the present location: <span class="math inline">\(y_p^* = \boldsymbol\theta_p'\mathbf{x}_p + \varepsilon_p\)</span>.</li>
 <li>Migration cost: <span class="math inline">\(C^*= \boldsymbol\theta_c'\mathbf{x}_c + \varepsilon_c\)</span>.</li>
@@ -248,7 +248,7 @@ and, if <span class="math inline">\(\theta^{(u)}_{1}=\theta^{(u)}_{0}=\theta^{(u
 \mathbb{P}(y_i = 1|\mathbf{x}_i;\boldsymbol\theta)  = F\left({\theta^{(u)}_{1}}'(\mathbf{u}_{i,1}-\mathbf{u}_{i,0})+[\boldsymbol\theta_1^{(v)}-\boldsymbol\theta_0^{(v)}]'\mathbf{v}_i\right).\tag{7.6}
 \end{equation}\]</span></p>
 <div class="example">
-<p><span id="exm:FishingTable" class="example"><strong>Example 7.2  (Fishing-mode dataset) </strong></span>The fishing-mode dataset used in <span class="citation">Cameron and Trivedi (<a href="references.html#ref-Cameron_Trivedi_2005" role="doc-biblioref">2005</a>)</span> (Chapters 14 and 15) contains alternative-specific variables. Specifically, for each individual, the price and catch rate depend on the fishing model. In the table reported below, lines <code>price</code> and <code>catch</code> correspond to the prices and catch rates associated with the chosen alternative.</p>
+<p><span id="exm:FishingTable" class="example"><strong>Example 7.2  (Fishing-mode dataset) </strong></span>The fishing-mode dataset used in <span class="citation">Cameron and Trivedi (<a href="references.html#ref-Cameron_Trivedi_2005">2005</a>)</span> (Chapters 14 and 15) contains alternative-specific variables. Specifically, for each individual, the price and catch rate depend on the fishing model. In the table reported below, lines <code>price</code> and <code>catch</code> correspond to the prices and catch rates associated with the chosen alternative.</p>
 <div class="sourceCode" id="cb111"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://cran.r-project.org/package=mlogit">mlogit</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"Fishing"</span>,package<span class="op">=</span><span class="st">"mlogit"</span><span class="op">)</span></span>
@@ -370,34 +370,34 @@ Intuitively, <span class="math inline">\(R^2_{MF}=0\)</span> if the explanatory 
 ##                                 Default             
 ##                        (1)        (2)        (3)    
 ## ----------------------------------------------------
-## gradeB                                     0.400*** 
+## gradeB                                     0.399*** 
 ##                                            (0.055)  
-## gradeC                                     0.587*** 
+## gradeC                                     0.588*** 
 ##                                            (0.057)  
 ## gradeD                                     0.820*** 
 ##                                            (0.061)  
-## gradeE                                     0.874*** 
-##                                            (0.091)  
-## gradeF                                     1.230*** 
-##                                            (0.147)  
+## gradeE                                     0.857*** 
+##                                            (0.092)  
+## gradeF                                     1.243*** 
+##                                            (0.148)  
 ## gradeG                                     1.439*** 
 ##                                            (0.227)  
-## log(loan_amnt)                  -0.149**  -0.194*** 
+## log(loan_amnt)                  -0.150**  -0.194*** 
 ##                                 (0.060)    (0.061)  
-## amt2income                      1.266***   1.222*** 
-##                                 (0.383)    (0.393)  
-## delinq_2yrs                     0.096***    0.009   
+## amt2income                      1.281***   1.227*** 
+##                                 (0.384)    (0.393)  
+## delinq_2yrs                     0.097***    0.010   
 ##                                 (0.034)    (0.035)  
-## log(annual_inc)                 -1.444**    -0.874  
-##                                 (0.569)    (0.586)  
-## I(log(annual_inc)2)             0.064**     0.038   
+## log(annual_inc)                 -1.464**    -0.933  
+##                                 (0.573)    (0.589)  
+## I(log(annual_inc)2)             0.065***    0.041   
 ##                                 (0.025)    (0.026)  
-## Constant            -1.231***   7.937***    4.749   
-##                      (0.017)    (3.060)    (3.154)  
+## Constant            -1.232***   8.035***    5.078   
+##                      (0.017)    (3.084)    (3.172)  
 ## ----------------------------------------------------
-## Observations          9,156      9,156      9,156   
-## Log Likelihood      -3,157.696 -3,120.625 -2,981.343
-## Akaike Inf. Crit.   6,317.392  6,253.250  5,986.686 
+## Observations          9,136      9,136      9,136   
+## Log Likelihood      -3,144.885 -3,107.976 -2,969.893
+## Akaike Inf. Crit.   6,291.769  6,227.953  5,963.787 
 ## ====================================================
 ## Note:                    *p&lt;0.1; **p&lt;0.05; ***p&lt;0.01</code></pre>
 <p>Let us compute the pseudo R2 for the last two models:</p>
@@ -406,18 +406,18 @@ Intuitively, <span class="math inline">\(R^2_{MF}=0\)</span> if the explanatory 
 <span><span class="va">pseudoR2_eq1</span> <span class="op">&lt;-</span> <span class="fl">1</span> <span class="op">-</span> <span class="va">logL1</span><span class="op">/</span><span class="va">logL0</span> <span class="co"># pseudo R2</span></span>
 <span><span class="va">pseudoR2_eq2</span> <span class="op">&lt;-</span> <span class="fl">1</span> <span class="op">-</span> <span class="va">logL2</span><span class="op">/</span><span class="va">logL0</span> <span class="co"># pseudo R2</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">pseudoR2_eq1</span>,<span class="va">pseudoR2_eq2</span><span class="op">)</span></span></code></pre></div>
-<pre><code>## [1] 0.01173993 0.05584870</code></pre>
+<pre><code>## [1] 0.01173598 0.05564314</code></pre>
 <p>Let us now compute the (average) marginal effects, using method ii of Section <a href="binary-choice-models.html#marginalFX">7.4</a>:</p>
 <div class="sourceCode" id="cb118"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">dnorm</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">eq2</span><span class="op">)</span><span class="op">)</span>,na.rm<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span><span class="op">*</span><span class="va">eq2</span><span class="op">$</span><span class="va">coefficients</span></span></code></pre></div>
 <pre><code>##          (Intercept)               gradeB               gradeC 
-##          0.840731198          0.070747353          0.103944305 
+##          0.897407028          0.070553003          0.103863394 
 ##               gradeD               gradeE               gradeF 
-##          0.145089219          0.154773742          0.217702041 
+##          0.144908685          0.151503823          0.219580148 
 ##               gradeG       log(loan_amnt)           amt2income 
-##          0.254722161         -0.034289921          0.216251992 
+##          0.254274012         -0.034339187          0.216888760 
 ##          delinq_2yrs      log(annual_inc) I(log(annual_inc)^2) 
-##          0.001574178         -0.154701321          0.006813694</code></pre>
+##          0.001704091         -0.164789009          0.007268356</code></pre>
 <p>There is an issue for the <code>annual_inc</code> variable. Indeed, the previous computation does not realize that this variable appears twice among the explanatory variables (through <code>log(annual_inc)</code> and <code>I(log(annual_inc)^2)</code>). To address this, one can proceed as follows: (1) we construct a new counterfactual dataset where annual incomes are increased by 1%, (2) we use the model to compute model-implied probabilities of default on this new dataset and (3), we subtract the probabilities resulting from the original dataset from these counterfactual probabilities:</p>
 <div class="sourceCode" id="cb120"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">new_credit</span> <span class="op">&lt;-</span> <span class="va">credit</span></span>
@@ -426,24 +426,24 @@ Intuitively, <span class="math inline">\(R^2_{MF}=0\)</span> if the explanatory 
 <span><span class="co"># This is equivalent to pnorm(predict(eq2, newdata = credit))</span></span>
 <span><span class="va">new_predict_eq2</span>  <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">eq2</span>, newdata <span class="op">=</span> <span class="va">new_credit</span>, type <span class="op">=</span> <span class="st">"response"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">new_predict_eq2</span> <span class="op">-</span> <span class="va">bas_predict_eq2</span><span class="op">)</span></span></code></pre></div>
-<pre><code>## [1] -6.562126e-05</code></pre>
+<pre><code>## [1] -6.732923e-05</code></pre>
 <p>The negative sign means that, on average across the entities considered in the analysis, a 1% increase in annual income results in a decrease in the default probability. This average effect is however pretty low. To get an economic sense of the size of this effect, let us compute the average effect associated with a unit increase in the number of delinquencies:</p>
 <div class="sourceCode" id="cb122"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">new_credit</span> <span class="op">&lt;-</span> <span class="va">credit</span></span>
 <span><span class="va">new_credit</span><span class="op">$</span><span class="va">delinq_2yrs</span> <span class="op">&lt;-</span> <span class="va">credit</span><span class="op">$</span><span class="va">delinq_2yrs</span> <span class="op">+</span> <span class="fl">1</span></span>
 <span><span class="va">new_predict_eq2</span>  <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">eq2</span>, newdata <span class="op">=</span> <span class="va">new_credit</span>, type <span class="op">=</span> <span class="st">"response"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">new_predict_eq2</span> <span class="op">-</span> <span class="va">bas_predict_eq2</span><span class="op">)</span></span></code></pre></div>
-<pre><code>## [1] 0.001582332</code></pre>
+<pre><code>## [1] 0.001713678</code></pre>
 <p>We can employ a likelihood ratio test (see Def. <a href="estimation-methods.html#def:LR">6.8</a>) to see if the two variables associated with annual income are jointly statistically significant (in the context of <code>eq1</code>):</p>
 <div class="sourceCode" id="cb124"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">eq1restr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span><span class="op">(</span><span class="va">Default</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">loan_amnt</span><span class="op">)</span> <span class="op">+</span> <span class="va">amt2income</span> <span class="op">+</span> <span class="va">delinq_2yrs</span>,</span>
 <span>                data<span class="op">=</span><span class="va">credit</span>,family<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/stats/family.html">binomial</a></span><span class="op">(</span>link<span class="op">=</span><span class="st">"probit"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">LRstat</span> <span class="op">&lt;-</span> <span class="fl">2</span><span class="op">*</span><span class="op">(</span><span class="va">logL1</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/stats/logLik.html">logLik</a></span><span class="op">(</span><span class="va">eq1restr</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">pvalue</span> <span class="op">&lt;-</span> <span class="fl">1</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Chisquare.html">pchisq</a></span><span class="op">(</span><span class="va">LRstat</span>,df<span class="op">=</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p>The computation gives a p-value of 0.0436.</p>
+<p>The computation gives a p-value of 0.041.</p>
 </div>
 <div class="example">
-<p><span id="exm:Fisch142" class="example"><strong>Example 7.4  (Replicating Table 14.2 of Cameron and Trivedi (2005)) </strong></span>The following lines of codes replicate Table 14.2 of <span class="citation">Cameron and Trivedi (<a href="references.html#ref-Cameron_Trivedi_2005" role="doc-biblioref">2005</a>)</span> (see Example <a href="binary-choice-models.html#exm:FishingTable">7.2</a>).</p>
+<p><span id="exm:Fisch142" class="example"><strong>Example 7.4  (Replicating Table 14.2 of Cameron and Trivedi (2005)) </strong></span>The following lines of codes replicate Table 14.2 of <span class="citation">Cameron and Trivedi (<a href="references.html#ref-Cameron_Trivedi_2005">2005</a>)</span> (see Example <a href="binary-choice-models.html#exm:FishingTable">7.2</a>).</p>
 <div class="sourceCode" id="cb125"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">data.reduced</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html">subset</a></span><span class="op">(</span><span class="va">Fishing</span>,<span class="va">mode</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"charter"</span>,<span class="st">"pier"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">data.reduced</span><span class="op">$</span><span class="va">lnrelp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">data.reduced</span><span class="op">$</span><span class="va">price.charter</span><span class="op">/</span><span class="va">data.reduced</span><span class="op">$</span><span class="va">price.pier</span><span class="op">)</span></span>
@@ -552,7 +552,7 @@ Figure 7.5: Application of the ROC methodology on the fishing-mode dataset.
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Econometrics and Statistics</strong>" was written by Jean-Paul Renne. It was last built on 2023-05-22.</p>
+    <p>"<strong>Econometrics and Statistics</strong>" was written by Jean-Paul Renne. It was last built on 2023-10-04.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
@@ -565,7 +565,7 @@ Figure 7.5: Application of the ROC methodology on the fishing-mode dataset.
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

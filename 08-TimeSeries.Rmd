@@ -4,7 +4,7 @@
 
 A time series is an infinite sequence of random variables indexed by time: $\{y_t\}_{t=-\infty}^{+\infty}=\{\dots, y_{-2},y_{-1},y_{0},y_{1},\dots,y_t,\dots\}$, $y_i \in \mathbb{R}^k$. In practice, we only observe samples, typically: $\{y_{1},\dots,y_T\}$.
 
-Standard time series models are built using **shocks** that we will often denote by $\varepsilon_t$. Typically, $\mathbb{E}(\varepsilon_t)=0$. In many models, the shocks are supposed to be i.i.d., but there exist other (less restrictive) notions of shocks. In particular, the definition of many processes is based on whote noises:
+Standard time series models are built using **shocks** that we will often denote by $\varepsilon_t$. Typically, $\mathbb{E}(\varepsilon_t)=0$. In many models, the shocks are supposed to be i.i.d., but there exist other (less restrictive) notions of shocks. In particular, the definition of many processes is based on white noises:
 
 :::{.definition #whitenoise name="White noise"}
 The process $\{\varepsilon_t\}_{t \in] -\infty,+\infty[}$ is a white noise if, for all $t$:
@@ -34,12 +34,14 @@ where $z_t \sim i.i.d.\,\mathcal{N}(0,1)$ and $\sigma_t^2 = w + \alpha \varepsil
 :::
 
 :::{.example #whiteNotMDS}
-A white noise process is not necessarily a MDS. This is for instance the following process:
+A (weak) white noise process is not necessarily a MDS. This is for instance the following process:
 $$
 \varepsilon_{t} = z_t + z_{t-1}z_{t-2},
 $$
 where $z_t \sim i.i.d.\mathcal{N}(0,1)$.
 :::
+
+In the following, to simplify the exposition, we will essentially consider **strong white noises**. A strong white noise is a particular case of white noise where the $\varepsilon_{t}$'s are serially independent. Using the law of iterated expectation, it can be shown that a strong white noise is a martingale difference sequence. Indeed, when the $\varepsilon_{t}$'s are serially independent, we have that $\mathbb{E}(\varepsilon_{t}|\varepsilon_{t-1},\varepsilon_{t-2},\dots)=\mathbb{E}(\varepsilon_{t})=0$.
 
 
 
@@ -790,7 +792,7 @@ $$
 Therefore:
 \begin{eqnarray*}
 \mathbb{E}(\bv{y}_{t+h}|y_{t},y_{t-1},\dots) &=& \boldsymbol\mu + F^{h}(\bv{y}_t - \boldsymbol\mu)\\
-\mathbb{V}ar\left( [\bv{y}_{t+h} - \mathbb{E}(\bv{y}_{t+h}|y_{t},y_{t-1},\dots)] \right) &=& \Sigma + F\Sigma F' + \dots + F^{h-1}\Sigma (F^{h-1})',
+\mathbb{V}ar\left([\bv{y}_{t+h} - \mathbb{E}(\bv{y}_{t+h}|y_{t},y_{t-1},\dots)] \right) &=& \Sigma + F\Sigma F' + \dots + F^{h-1}\Sigma (F^{h-1})',
 \end{eqnarray*}
 where:
 $$
