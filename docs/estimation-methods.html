@@ -245,7 +245,7 @@ Specifically, the number of restrictions is <span class="math inline">\(n_R \tim
 <span><span class="op">}</span></span>
 <span><span class="va">vix</span> <span class="op">&lt;-</span> <span class="fu">f</span><span class="op">(</span><span class="st">"VIXCLS"</span><span class="op">)</span> <span class="co"># VIX</span></span>
 <span><span class="va">pce</span> <span class="op">&lt;-</span> <span class="fu">f</span><span class="op">(</span><span class="st">"PCE"</span><span class="op">)</span> <span class="co"># Personal consumption expenditures</span></span>
-<span><span class="va">sto</span> <span class="op">&lt;-</span> <span class="fu">f</span><span class="op">(</span><span class="st">"WILL5000PRFC"</span><span class="op">)</span> <span class="co"># Wilshire 5000 Full Cap Price Index</span></span>
+<span><span class="va">sto</span> <span class="op">&lt;-</span> <span class="fu">f</span><span class="op">(</span><span class="st">"SPASTT01USM661N"</span><span class="op">)</span> <span class="co"># Stock price index</span></span>
 <span><span class="va">bdr</span> <span class="op">&lt;-</span> <span class="fu">f</span><span class="op">(</span><span class="st">"BAMLCC0A4BBBTRIV"</span><span class="op">)</span> <span class="co"># ICE BofA BBB US Corp. Index Tot. Return</span></span>
 <span><span class="cn">T</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">vix</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></span>
 <span><span class="va">dvix</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">vix</span><span class="op">$</span><span class="va">value</span><span class="op">[</span><span class="fl">3</span><span class="op">:</span><span class="cn">T</span><span class="op">]</span><span class="op">/</span><span class="va">vix</span><span class="op">$</span><span class="va">value</span><span class="op">[</span><span class="fl">2</span><span class="op">:</span><span class="op">(</span><span class="cn">T</span><span class="op">-</span><span class="fl">1</span><span class="op">)</span><span class="op">]</span><span class="op">)</span> <span class="co"># change in VIX t+1</span></span>
@@ -303,9 +303,9 @@ Specifically, the number of restrictions is <span class="math inline">\(n_R \tim
 <span><span class="va">V</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">/</span><span class="cn">T</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/pkg/Matrix/man/solve-methods.html">solve</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span><span class="va">D</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html">%*%</a></span> <span class="va">W</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html">%*%</a></span> <span class="va">D</span><span class="op">)</span></span>
 <span><span class="va">std.dev</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/diag.html">diag</a></span><span class="op">(</span><span class="va">V</span><span class="op">)</span><span class="op">)</span>;<span class="va">t.stud</span> <span class="op">&lt;-</span> <span class="va">theta</span><span class="op">/</span><span class="va">std.dev</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="va">theta</span>,<span class="va">std.dev</span>,<span class="va">t.stud</span><span class="op">)</span></span></code></pre></div>
-<pre><code>##            theta    std.dev     t.stud
-## [1,]  -0.7012031  0.4901903 -1.4304712
-## [2,] -11.7593311 17.2713445 -0.6808579</code></pre>
+<pre><code>##           theta    std.dev    t.stud
+## [1,]  -1.394063  0.9848289 -1.415538
+## [2,] -83.513127 49.3625267 -1.691833</code></pre>
 <p>The Hansen statistic can be used to test the model (see Eq. <a href="estimation-methods.html#eq:HansenSargan">(6.5)</a>). If the model is correct, we have:
 <span class="math display">\[
 T g(\underline{y_T};{\boldsymbol\theta})'\, S^{-1} \, g(\underline{y_T};{\boldsymbol\theta}) \sim \,i.i.d.\,\chi^2(J - K),
@@ -316,8 +316,8 @@ where <span class="math inline">\(J\)</span> is the number of moment constraints
 <span><span class="va">Hansen_stat</span> <span class="op">&lt;-</span> <span class="cn">T</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span><span class="va">g</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html">%*%</a></span> <span class="va">W</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html">%*%</a></span> <span class="va">g</span></span>
 <span><span class="va">pvalue</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Chisquare.html">pchisq</a></span><span class="op">(</span>q <span class="op">=</span> <span class="va">Hansen_stat</span>,df <span class="op">=</span> <span class="va">n_R</span><span class="op">*</span><span class="va">n_z</span> <span class="op">-</span> <span class="va">n_F</span><span class="op">)</span></span>
 <span><span class="va">pvalue</span></span></code></pre></div>
-<pre><code>##           [,1]
-## [1,] 0.8802086</code></pre>
+<pre><code>##         [,1]
+## [1,] 0.29865</code></pre>
 </div>
 </div>
 <div id="secMLE" class="section level2" number="6.2">
@@ -1050,7 +1050,7 @@ Figure 6.6: The upper line of plot compares prior (black) and posterior (red) di
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Econometrics and Statistics</strong>" was written by Jean-Paul Renne. It was last built on 2023-10-04.</p>
+    <p>"<strong>Econometrics and Statistics</strong>" was written by Jean-Paul Renne. It was last built on 2024-09-22.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

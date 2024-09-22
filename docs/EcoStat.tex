@@ -134,7 +134,7 @@
 
 \title{Econometrics and Statistics}
 \author{Jean-Paul Renne}
-\date{2023-10-04}
+\date{2024-09-22}
 
 \usepackage{amsthm}
 \newtheorem{theorem}{Theorem}[chapter]
@@ -2366,29 +2366,33 @@ We simulate 1000 samples of the same model with \(n=200\). For each sample, we c
 
 \begin{Shaded}
 \begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(sandwich)}
 \NormalTok{n }\OtherTok{\textless{}{-}} \DecValTok{200} \CommentTok{\# sample size}
-\NormalTok{N }\OtherTok{\textless{}{-}} \DecValTok{1000} \CommentTok{\# number of simulated samples}
+\NormalTok{N }\OtherTok{\textless{}{-}} \DecValTok{500} \CommentTok{\# number of simulated samples}
 \NormalTok{XX }\OtherTok{\textless{}{-}} \FunctionTok{matrix}\NormalTok{(}\FunctionTok{rt}\NormalTok{(n}\SpecialCharTok{*}\NormalTok{N,}\AttributeTok{df=}\DecValTok{6}\NormalTok{),n,N)}
 \NormalTok{YY }\OtherTok{\textless{}{-}} \FunctionTok{matrix}\NormalTok{(XX }\SpecialCharTok{+}\NormalTok{ XX}\SpecialCharTok{*}\FunctionTok{rnorm}\NormalTok{(n),n,N)}
-\NormalTok{all\_b       }\OtherTok{\textless{}{-}} \ConstantTok{NULL}\NormalTok{;all\_V\_OLS   }\OtherTok{\textless{}{-}} \ConstantTok{NULL}\NormalTok{;all\_V\_White }\OtherTok{\textless{}{-}} \ConstantTok{NULL}
+\NormalTok{all\_b       }\OtherTok{\textless{}{-}} \ConstantTok{NULL}\NormalTok{;all\_V\_OLS   }\OtherTok{\textless{}{-}} \ConstantTok{NULL}
+\NormalTok{all\_V\_White\_HC0 }\OtherTok{\textless{}{-}} \ConstantTok{NULL}\NormalTok{;all\_V\_White\_HC1 }\OtherTok{\textless{}{-}} \ConstantTok{NULL}
 \ControlFlowTok{for}\NormalTok{(j }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\NormalTok{N)\{}
 \NormalTok{  Y }\OtherTok{\textless{}{-}} \FunctionTok{matrix}\NormalTok{(YY[,j],}\AttributeTok{ncol=}\DecValTok{1}\NormalTok{)}
 \NormalTok{  X }\OtherTok{\textless{}{-}} \FunctionTok{matrix}\NormalTok{(XX[,j],}\AttributeTok{ncol=}\DecValTok{1}\NormalTok{)}
-\NormalTok{  b }\OtherTok{\textless{}{-}} \FunctionTok{solve}\NormalTok{(}\FunctionTok{t}\NormalTok{(X)}\SpecialCharTok{\%*\%}\NormalTok{X) }\SpecialCharTok{\%*\%} \FunctionTok{t}\NormalTok{(X)}\SpecialCharTok{\%*\%}\NormalTok{Y}
-\NormalTok{  e }\OtherTok{\textless{}{-}}\NormalTok{ Y }\SpecialCharTok{{-}}\NormalTok{ X }\SpecialCharTok{\%*\%}\NormalTok{ b}
-\NormalTok{  S }\OtherTok{\textless{}{-}} \DecValTok{1}\SpecialCharTok{/}\NormalTok{n }\SpecialCharTok{*} \FunctionTok{t}\NormalTok{(X) }\SpecialCharTok{\%*\%} \FunctionTok{diag}\NormalTok{(}\FunctionTok{c}\NormalTok{(e}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)) }\SpecialCharTok{\%*\%}\NormalTok{ X}
-\NormalTok{  V\_OLS   }\OtherTok{\textless{}{-}} \FunctionTok{solve}\NormalTok{(}\FunctionTok{t}\NormalTok{(X)}\SpecialCharTok{\%*\%}\NormalTok{X) }\SpecialCharTok{*} \FunctionTok{var}\NormalTok{(e)}
-\NormalTok{  V\_White }\OtherTok{\textless{}{-}} \DecValTok{1}\SpecialCharTok{/}\NormalTok{n }\SpecialCharTok{*}\NormalTok{ (}\FunctionTok{solve}\NormalTok{(}\DecValTok{1}\SpecialCharTok{/}\NormalTok{n}\SpecialCharTok{*}\FunctionTok{t}\NormalTok{(X)}\SpecialCharTok{\%*\%}\NormalTok{X)) }\SpecialCharTok{\%*\%}\NormalTok{ S }\SpecialCharTok{\%*\%}\NormalTok{ (}\FunctionTok{solve}\NormalTok{(}\DecValTok{1}\SpecialCharTok{/}\NormalTok{n}\SpecialCharTok{*}\FunctionTok{t}\NormalTok{(X)}\SpecialCharTok{\%*\%}\NormalTok{X))}
+\NormalTok{  eq }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(Y}\SpecialCharTok{\textasciitilde{}}\NormalTok{X)}
+\NormalTok{  b }\OtherTok{\textless{}{-}}\NormalTok{ eq}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{2}\NormalTok{]}
+\NormalTok{  V\_OLS   }\OtherTok{\textless{}{-}} \FunctionTok{vcov}\NormalTok{(eq)[}\DecValTok{2}\NormalTok{,}\DecValTok{2}\NormalTok{]}
+\NormalTok{  V\_White\_HC0 }\OtherTok{\textless{}{-}} \FunctionTok{vcovHC}\NormalTok{(eq, }\AttributeTok{type =} \StringTok{"HC0"}\NormalTok{)[}\DecValTok{2}\NormalTok{,}\DecValTok{2}\NormalTok{]}
+\NormalTok{  V\_White\_HC1 }\OtherTok{\textless{}{-}} \FunctionTok{vcovHC}\NormalTok{(eq, }\AttributeTok{type =} \StringTok{"HC1"}\NormalTok{)[}\DecValTok{2}\NormalTok{,}\DecValTok{2}\NormalTok{]}
 \NormalTok{  all\_b       }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(all\_b,b)}
 \NormalTok{  all\_V\_OLS   }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(all\_V\_OLS,V\_OLS)}
-\NormalTok{  all\_V\_White }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(all\_V\_White,V\_White)}
+\NormalTok{  all\_V\_White\_HC0 }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(all\_V\_White\_HC0,V\_White\_HC0)}
+\NormalTok{  all\_V\_White\_HC1 }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(all\_V\_White\_HC1,V\_White\_HC1)}
 \NormalTok{\}}
-\FunctionTok{c}\NormalTok{(}\FunctionTok{sd}\NormalTok{(all\_b),}\FunctionTok{mean}\NormalTok{(}\FunctionTok{sqrt}\NormalTok{(all\_V\_OLS)),}\FunctionTok{mean}\NormalTok{(}\FunctionTok{sqrt}\NormalTok{(all\_V\_White)))}
+\FunctionTok{c}\NormalTok{(}\FunctionTok{sd}\NormalTok{(all\_b),}\FunctionTok{mean}\NormalTok{(}\FunctionTok{sqrt}\NormalTok{(all\_V\_OLS)),}
+  \FunctionTok{mean}\NormalTok{(}\FunctionTok{sqrt}\NormalTok{(all\_V\_White\_HC0)),}\FunctionTok{mean}\NormalTok{(}\FunctionTok{sqrt}\NormalTok{(all\_V\_White\_HC1)))}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 0.14024423 0.06748804 0.13973431
+## [1] 0.1240897 0.0627644 0.1281167 0.1287622
 \end{verbatim}
 
 The results show that the White formula yields, on average, an estimated standard deviation that is much closer to the ``true'' value than the standard OLS formula. The latter underestimate the standard deviation of \(b\).
@@ -2410,7 +2414,7 @@ In the following example, we regress GDP growth rates from the \citet{JST_2017} 
 \NormalTok{vcovHC0 }\OtherTok{\textless{}{-}} \FunctionTok{vcovHC}\NormalTok{(eq, }\AttributeTok{type =} \StringTok{"HC0"}\NormalTok{)}
 \NormalTok{vcovHC1 }\OtherTok{\textless{}{-}} \FunctionTok{vcovHC}\NormalTok{(eq, }\AttributeTok{type =} \StringTok{"HC1"}\NormalTok{)}
 \NormalTok{stargazer}\SpecialCharTok{::}\FunctionTok{stargazer}\NormalTok{(eq, eq, eq,}\AttributeTok{type =} \StringTok{"text"}\NormalTok{,}
-                     \AttributeTok{column.labels =} \FunctionTok{c}\NormalTok{(}\StringTok{"No HAC"}\NormalTok{, }\StringTok{"HC0"}\NormalTok{,}\StringTok{"HC1"}\NormalTok{),}
+                     \AttributeTok{column.labels =} \FunctionTok{c}\NormalTok{(}\StringTok{"No HC"}\NormalTok{, }\StringTok{"HC0"}\NormalTok{,}\StringTok{"HC1"}\NormalTok{),}
                      \AttributeTok{omit =} \FunctionTok{c}\NormalTok{(}\StringTok{"iso"}\NormalTok{,}\StringTok{"year"}\NormalTok{),}\AttributeTok{no.space =} \ConstantTok{TRUE}\NormalTok{,}\AttributeTok{keep.stat =} \StringTok{"n"}\NormalTok{,}
                      \AttributeTok{se =} \FunctionTok{list}\NormalTok{(}\ConstantTok{NULL}\NormalTok{,}\FunctionTok{sqrt}\NormalTok{(}\FunctionTok{diag}\NormalTok{(vcovHC0)),}\FunctionTok{sqrt}\NormalTok{(}\FunctionTok{diag}\NormalTok{(vcovHC1))))}
 \end{Highlighting}
@@ -2422,7 +2426,7 @@ In the following example, we regress GDP growth rates from the \citet{JST_2017} 
 ##                   Dependent variable:     
 ##              -----------------------------
 ##                         growth            
-##               No HAC      HC0       HC1   
+##                No HC      HC0       HC1   
 ##                 (1)       (2)       (3)   
 ## ------------------------------------------
 ## crisisJST    -0.015*** -0.015*** -0.015***
@@ -2459,7 +2463,7 @@ We simulate 500 samples of the same model with \(n=200\). For each sample, we co
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{library}\NormalTok{(AEC)}
+\FunctionTok{library}\NormalTok{(AEC);}\FunctionTok{library}\NormalTok{(sandwich)}
 \NormalTok{n }\OtherTok{\textless{}{-}} \DecValTok{100} \CommentTok{\# sample length}
 \NormalTok{nb.sim }\OtherTok{\textless{}{-}} \DecValTok{500} \CommentTok{\# number of simulated samples}
 \NormalTok{all.b }\OtherTok{\textless{}{-}} \ConstantTok{NULL}\NormalTok{;all.OLS.stdv.b }\OtherTok{\textless{}{-}} \ConstantTok{NULL}
@@ -2474,16 +2478,10 @@ We simulate 500 samples of the same model with \(n=200\). For each sample, we co
 \NormalTok{  eq }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(y}\SpecialCharTok{\textasciitilde{}}\NormalTok{x)}
 \NormalTok{  all.b }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(all.b,eq}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{2}\NormalTok{])}
 \NormalTok{  all.OLS.stdv.b }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(all.OLS.stdv.b,}\FunctionTok{summary}\NormalTok{(eq)}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{2}\NormalTok{,}\DecValTok{2}\NormalTok{])}
-\NormalTok{  X }\OtherTok{\textless{}{-}} \FunctionTok{cbind}\NormalTok{(}\FunctionTok{rep}\NormalTok{(}\DecValTok{1}\NormalTok{,n),x)}
-\NormalTok{  XX }\OtherTok{\textless{}{-}} \FunctionTok{t}\NormalTok{(X) }\SpecialCharTok{\%*\%}\NormalTok{ X;XX\_1 }\OtherTok{\textless{}{-}} \FunctionTok{solve}\NormalTok{(XX)}
-\NormalTok{  E2 }\OtherTok{\textless{}{-}} \FunctionTok{diag}\NormalTok{(eq}\SpecialCharTok{$}\NormalTok{residuals}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)}
-\NormalTok{  White.V }\OtherTok{\textless{}{-}}\NormalTok{ XX\_1 }\SpecialCharTok{\%*\%}\NormalTok{ (}\FunctionTok{t}\NormalTok{(X) }\SpecialCharTok{\%*\%}\NormalTok{ E2 }\SpecialCharTok{\%*\%}\NormalTok{ X) }\SpecialCharTok{\%*\%}\NormalTok{ XX\_1}
+\NormalTok{  White.V }\OtherTok{\textless{}{-}} \FunctionTok{vcovHC}\NormalTok{(eq, }\AttributeTok{type=}\StringTok{"HC1"}\NormalTok{)}
+\NormalTok{  NWest.V }\OtherTok{\textless{}{-}} \FunctionTok{NeweyWest}\NormalTok{(eq)}
 \NormalTok{  all.Whi.stdv.b }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(all.Whi.stdv.b,}\FunctionTok{sqrt}\NormalTok{(White.V[}\DecValTok{2}\NormalTok{,}\DecValTok{2}\NormalTok{]))}
-  \CommentTok{\# HAC:}
-\NormalTok{  U }\OtherTok{\textless{}{-}}\NormalTok{ X }\SpecialCharTok{*} \FunctionTok{cbind}\NormalTok{(eq}\SpecialCharTok{$}\NormalTok{residuals,eq}\SpecialCharTok{$}\NormalTok{residuals)}
-\NormalTok{  XSigmaX }\OtherTok{\textless{}{-}} \FunctionTok{NW.LongRunVariance}\NormalTok{(U,}\DecValTok{5}\NormalTok{)}
-\NormalTok{  NW.V }\OtherTok{\textless{}{-}} \DecValTok{1}\SpecialCharTok{/}\NormalTok{n }\SpecialCharTok{*}\NormalTok{ (n}\SpecialCharTok{*}\NormalTok{XX\_1) }\SpecialCharTok{\%*\%}\NormalTok{ XSigmaX }\SpecialCharTok{\%*\%}\NormalTok{ (n}\SpecialCharTok{*}\NormalTok{XX\_1)}
-\NormalTok{  all.NW.stdv.b }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(all.NW.stdv.b,}\FunctionTok{sqrt}\NormalTok{(NW.V[}\DecValTok{2}\NormalTok{,}\DecValTok{2}\NormalTok{]))}
+\NormalTok{  all.NW.stdv.b  }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(all.NW.stdv.b, }\FunctionTok{sqrt}\NormalTok{(NWest.V[}\DecValTok{2}\NormalTok{,}\DecValTok{2}\NormalTok{]))}
 \NormalTok{\}}
 \FunctionTok{cbind}\NormalTok{(}\FunctionTok{sd}\NormalTok{(all.b),}\FunctionTok{mean}\NormalTok{(all.OLS.stdv.b),}
       \FunctionTok{mean}\NormalTok{(all.Whi.stdv.b),}\FunctionTok{mean}\NormalTok{(all.NW.stdv.b))}
@@ -2491,8 +2489,8 @@ We simulate 500 samples of the same model with \(n=200\). For each sample, we co
 \end{Shaded}
 
 \begin{verbatim}
-##          [,1]      [,2]      [,3]     [,4]
-## [1,] 0.201172 0.1013048 0.0962689 0.146974
+##           [,1]      [,2]      [,3]      [,4]
+## [1,] 0.2192314 0.1015817 0.0978282 0.1912018
 \end{verbatim}
 
 The results show that the Newey-West formula yields, on average, an estimated standard deviation that is closer to the ``true'' value than the standard OLS formula. The latter underestimate the standard deviation of \(b\).
@@ -2865,7 +2863,7 @@ The \texttt{glmnet} package (see \href{https://glmnet.stanford.edu/articles/glmn
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 0.001688943
+## [1] 0.004282086
 \end{verbatim}
 
 \begin{Shaded}
@@ -2876,7 +2874,7 @@ The \texttt{glmnet} package (see \href{https://glmnet.stanford.edu/articles/glmn
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 0.002450367
+## [1] 0.004699584
 \end{verbatim}
 
 \begin{Shaded}
@@ -2888,24 +2886,24 @@ The \texttt{glmnet} package (see \href{https://glmnet.stanford.edu/articles/glmn
 \begin{verbatim}
 ## 18 x 1 sparse Matrix of class "dgCMatrix"
 ##                                 s1
-## (Intercept)           9.724122e-16
-## delinq_2yrs           8.250272e-02
-## annual_inc            1.340310e-02
+## (Intercept)           1.079910e-15
+## delinq_2yrs           9.364945e-02
+## annual_inc            1.019866e-02
 ## annual_inc2           .           
-## log_annual_inc       -5.506265e-02
-## dti                  -2.575761e-02
-## installment           8.283350e+00
-## verification_status  -2.752505e-03
-## funded_amnt          -7.395113e+00
-## funded_amnt2         -4.730294e-01
-## log_funded_amnt      -2.149838e-01
-## pub_rec               5.086954e-02
-## emp_length_10        -1.837606e-02
-## owner                -1.150301e-02
-## renter               -3.806605e-02
-## pub_rec_bankruptcies -1.206656e-02
-## revol_util            2.131955e-01
-## revol_bal            -2.355392e-02
+## log_annual_inc       -5.285472e-02
+## dti                  -2.249588e-02
+## installment           7.299546e+00
+## verification_status   .           
+## funded_amnt          -6.550874e+00
+## funded_amnt2         -3.598220e-01
+## log_funded_amnt      -1.838827e-01
+## pub_rec               4.582058e-02
+## emp_length_10        -1.970788e-02
+## owner                -8.766370e-03
+## renter               -4.224765e-02
+## pub_rec_bankruptcies  .           
+## revol_util            2.418006e-01
+## revol_bal            -2.431620e-02
 \end{verbatim}
 
 \begin{Shaded}
@@ -2917,11 +2915,11 @@ The \texttt{glmnet} package (see \href{https://glmnet.stanford.edu/articles/glmn
 
 \begin{verbatim}
 ##       lambda.min
-## 21529  0.3593072
-## 21547 -0.1740482
-## 21579  0.6535896
-## 21583 -0.2678118
-## 21608 -0.2125907
+## 21529  0.3251772
+## 21547 -0.1847952
+## 21579  0.6847148
+## 21583 -0.2662681
+## 21608 -0.2047079
 \end{verbatim}
 
 \hypertarget{Panel}{%
@@ -4153,7 +4151,7 @@ Specifically, the number of restrictions is \(n_R \times n_z\). Let us implement
 \NormalTok{\}}
 \NormalTok{vix }\OtherTok{\textless{}{-}} \FunctionTok{f}\NormalTok{(}\StringTok{"VIXCLS"}\NormalTok{) }\CommentTok{\# VIX}
 \NormalTok{pce }\OtherTok{\textless{}{-}} \FunctionTok{f}\NormalTok{(}\StringTok{"PCE"}\NormalTok{) }\CommentTok{\# Personal consumption expenditures}
-\NormalTok{sto }\OtherTok{\textless{}{-}} \FunctionTok{f}\NormalTok{(}\StringTok{"WILL5000PRFC"}\NormalTok{) }\CommentTok{\# Wilshire 5000 Full Cap Price Index}
+\NormalTok{sto }\OtherTok{\textless{}{-}} \FunctionTok{f}\NormalTok{(}\StringTok{"SPASTT01USM661N"}\NormalTok{) }\CommentTok{\# Stock price index}
 \NormalTok{bdr }\OtherTok{\textless{}{-}} \FunctionTok{f}\NormalTok{(}\StringTok{"BAMLCC0A4BBBTRIV"}\NormalTok{) }\CommentTok{\# ICE BofA BBB US Corp. Index Tot. Return}
 \NormalTok{T }\OtherTok{\textless{}{-}} \FunctionTok{dim}\NormalTok{(vix)[}\DecValTok{1}\NormalTok{]}
 \NormalTok{dvix }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(vix}\SpecialCharTok{$}\NormalTok{value[}\DecValTok{3}\SpecialCharTok{:}\NormalTok{T]}\SpecialCharTok{/}\NormalTok{vix}\SpecialCharTok{$}\NormalTok{value[}\DecValTok{2}\SpecialCharTok{:}\NormalTok{(T}\DecValTok{{-}1}\NormalTok{)]) }\CommentTok{\# change in VIX t+1}
@@ -4235,9 +4233,9 @@ Finally, let's compute the standard deviation of the parameter estimates, using 
 \end{Shaded}
 
 \begin{verbatim}
-##            theta    std.dev     t.stud
-## [1,]  -0.7012031  0.4901903 -1.4304712
-## [2,] -11.7593311 17.2713445 -0.6808579
+##           theta    std.dev    t.stud
+## [1,]  -1.394063  0.9848289 -1.415538
+## [2,] -83.513127 49.3625267 -1.691833
 \end{verbatim}
 
 The Hansen statistic can be used to test the model (see Eq. \eqref{eq:HansenSargan}). If the model is correct, we have:
@@ -4256,8 +4254,8 @@ where \(J\) is the number of moment constraints (\(n_z \times n_r\) here) and \(
 \end{Shaded}
 
 \begin{verbatim}
-##           [,1]
-## [1,] 0.8802086
+##         [,1]
+## [1,] 0.29865
 \end{verbatim}
 
 \hypertarget{secMLE}{%
@@ -7205,7 +7203,7 @@ Because the latter convergence is uniform (Assumption v), the solution \(\boldsy
 \mbox{argmax}_\theta \mathbb{E}_{\boldsymbol\theta_0}(\log f(Y;\boldsymbol\theta)) = \mbox{argmax}_\theta \int_{\mathcal{Y}} \log f(y;\boldsymbol\theta)f(y;\boldsymbol\theta_0) dy.
 \]
 
-Properties of the Kullback information measure (see Prop. \ref{prp:Kullback}), together with the identifiability assumption (ii) implies that the solution to the limit problem is unique and equal to \(\boldsymbol\theta_0\).
+The properties of the Kullback information measure (see Prop. \ref{prp:Kullback}), together with the identifiability assumption (ii), imply that the solution to the limit problem is unique and equal to \(\boldsymbol\theta_0\).
 
 Consider a r.v. sequence \(\boldsymbol\theta\) that converges to \(\boldsymbol\theta_0\). The Taylor expansion of the score in a neighborood of \(\boldsymbol\theta_0\) yields to:
 \[

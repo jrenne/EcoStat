@@ -1216,24 +1216,28 @@ plot(x,y,pch=19)
 We simulate 1000 samples of the same model with $n=200$. For each sample, we compute the OLS estimate of $\beta$ ($=1$). For each of the 1000 OLS estimations, we employ (a) the standard OLS variance formula ($s^2 (\bv{X}'\bv{X})^{-1}$) and (b) the White formula to estimate the variance of $b$. For each formula, we compute the average of the 1000 resulting standard deviations and compare these with the standard deviation of the 1000 OLS estimate of $\beta$. 
 
 ```{r simulHeterosk2, echo=TRUE, fig.cap="The model is $y_i = x_i + \\varepsilon_i, \\quad \\varepsilon_i \\sim \\mathcal{N}(0,x_i^2)$, where the $x_i$'s are i.i.d. $t(6)$. Comparison between the true distribution (in red) of the OLS estimate of $\\boldsymbol\\beta$ ($=1$) and the one obtained when using the standard formula for the standard deviation of $\\bv{b}$ (in blue).", fig.asp = .6, out.width = "90%", fig.align = "left-aligned"}
+library(sandwich)
 n <- 200 # sample size
-N <- 1000 # number of simulated samples
+N <- 500 # number of simulated samples
 XX <- matrix(rt(n*N,df=6),n,N)
 YY <- matrix(XX + XX*rnorm(n),n,N)
-all_b       <- NULL;all_V_OLS   <- NULL;all_V_White <- NULL
+all_b       <- NULL;all_V_OLS   <- NULL
+all_V_White_HC0 <- NULL;all_V_White_HC1 <- NULL
 for(j in 1:N){
   Y <- matrix(YY[,j],ncol=1)
   X <- matrix(XX[,j],ncol=1)
-  b <- solve(t(X)%*%X) %*% t(X)%*%Y
-  e <- Y - X %*% b
-  S <- 1/n * t(X) %*% diag(c(e^2)) %*% X
-  V_OLS   <- solve(t(X)%*%X) * var(e)
-  V_White <- 1/n * (solve(1/n*t(X)%*%X)) %*% S %*% (solve(1/n*t(X)%*%X))
+  eq <- lm(Y~X)
+  b <- eq$coefficients[2]
+  V_OLS   <- vcov(eq)[2,2]
+  V_White_HC0 <- vcovHC(eq, type = "HC0")[2,2]
+  V_White_HC1 <- vcovHC(eq, type = "HC1")[2,2]
   all_b       <- c(all_b,b)
   all_V_OLS   <- c(all_V_OLS,V_OLS)
-  all_V_White <- c(all_V_White,V_White)
+  all_V_White_HC0 <- c(all_V_White_HC0,V_White_HC0)
+  all_V_White_HC1 <- c(all_V_White_HC1,V_White_HC1)
 }
-c(sd(all_b),mean(sqrt(all_V_OLS)),mean(sqrt(all_V_White)))
+c(sd(all_b),mean(sqrt(all_V_OLS)),
+  mean(sqrt(all_V_White_HC0)),mean(sqrt(all_V_White_HC1)))
 ```
 
 The results show that the White formula yields, on average, an estimated standard deviation that is much closer to the "true" value than the standard OLS formula. The latter underestimate the standard deviation of $b$.
@@ -1254,7 +1258,7 @@ eq <- lm(growth~crisisJST+iso+year,data=JST.red)
 vcovHC0 <- vcovHC(eq, type = "HC0")
 vcovHC1 <- vcovHC(eq, type = "HC1")
 stargazer::stargazer(eq, eq, eq,type = "text",
-                     column.labels = c("No HAC", "HC0","HC1"),
+                     column.labels = c("No HC", "HC0","HC1"),
                      omit = c("iso","year"),no.space = TRUE,keep.stat = "n",
                      se = list(NULL,sqrt(diag(vcovHC0)),sqrt(diag(vcovHC1))))
 ```
@@ -1283,7 +1287,7 @@ where the $u_i$'s and the $v_i$'s are i.i.d. $\mathcal{N}(0,1)$.
 We simulate 500 samples of the same model with $n=200$. For each sample, we compute the OLS estimate of $\beta$ (=1). For each of the 1000 OLS estimations, we employ (a) the standard OLS variance formula ($s^2 (\bv{X}'\bv{X})^{-1}$), (b) the White formula, and (c) the Newey-West formula to estimate the variance of $b$. For each formula, we compute the average of the 500 resulting standard  deviations and compare these with the standard deviation of the 500 OLS estimate of $\beta$. 
 
 ```{r regressNW}
-library(AEC)
+library(AEC);library(sandwich)
 n <- 100 # sample length
 nb.sim <- 500 # number of simulated samples
 all.b <- NULL;all.OLS.stdv.b <- NULL
@@ -1298,16 +1302,10 @@ for(i in 1:nb.sim){
   eq <- lm(y~x)
   all.b <- c(all.b,eq$coefficients[2])
   all.OLS.stdv.b <- c(all.OLS.stdv.b,summary(eq)$coefficients[2,2])
-  X <- cbind(rep(1,n),x)
-  XX <- t(X) %*% X;XX_1 <- solve(XX)
-  E2 <- diag(eq$residuals^2)
-  White.V <- XX_1 %*% (t(X) %*% E2 %*% X) %*% XX_1
+  White.V <- vcovHC(eq, type="HC1")
+  NWest.V <- NeweyWest(eq)
   all.Whi.stdv.b <- c(all.Whi.stdv.b,sqrt(White.V[2,2]))
-  # HAC:
-  U <- X * cbind(eq$residuals,eq$residuals)
-  XSigmaX <- NW.LongRunVariance(U,5)
-  NW.V <- 1/n * (n*XX_1) %*% XSigmaX %*% (n*XX_1)
-  all.NW.stdv.b <- c(all.NW.stdv.b,sqrt(NW.V[2,2]))
+  all.NW.stdv.b  <- c(all.NW.stdv.b, sqrt(NWest.V[2,2]))
 }
 cbind(sd(all.b),mean(all.OLS.stdv.b),
       mean(all.Whi.stdv.b),mean(all.NW.stdv.b))

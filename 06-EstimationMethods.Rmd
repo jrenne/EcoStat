@@ -169,7 +169,7 @@ f <- function(ticker){
 }
 vix <- f("VIXCLS") # VIX
 pce <- f("PCE") # Personal consumption expenditures
-sto <- f("WILL5000PRFC") # Wilshire 5000 Full Cap Price Index
+sto <- f("SPASTT01USM661N") # Stock price index
 bdr <- f("BAMLCC0A4BBBTRIV") # ICE BofA BBB US Corp. Index Tot. Return
 T <- dim(vix)[1]
 dvix <- c(vix$value[3:T]/vix$value[2:(T-1)]) # change in VIX t+1

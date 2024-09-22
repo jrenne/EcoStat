@@ -698,7 +698,7 @@ $$
 \mbox{argmax}_\theta \mathbb{E}_{\boldsymbol\theta_0}(\log f(Y;\boldsymbol\theta)) = \mbox{argmax}_\theta \int_{\mathcal{Y}} \log f(y;\boldsymbol\theta)f(y;\boldsymbol\theta_0) dy.
 $$
 
-Properties of the Kullback information measure (see Prop. \@ref(prp:Kullback)), together with the identifiability assumption (ii) implies that the solution to the limit problem is unique and equal to $\boldsymbol\theta_0$.
+The properties of the Kullback information measure (see Prop. \@ref(prp:Kullback)), together with the identifiability assumption (ii), imply that the solution to the limit problem is unique and equal to $\boldsymbol\theta_0$.
 
 Consider a r.v. sequence $\boldsymbol\theta$ that converges to $\boldsymbol\theta_0$. The Taylor expansion of the score in a neighborood of $\boldsymbol\theta_0$ yields to:
 $$

@@ -1260,25 +1260,29 @@ Figure 4.6: Situation of heteroskedasticity. The model is <span class="math inli
 </div>
 <p>We simulate 1000 samples of the same model with <span class="math inline">\(n=200\)</span>. For each sample, we compute the OLS estimate of <span class="math inline">\(\beta\)</span> (<span class="math inline">\(=1\)</span>). For each of the 1000 OLS estimations, we employ (a) the standard OLS variance formula (<span class="math inline">\(s^2 (\mathbf{X}'\mathbf{X})^{-1}\)</span>) and (b) the White formula to estimate the variance of <span class="math inline">\(b\)</span>. For each formula, we compute the average of the 1000 resulting standard deviations and compare these with the standard deviation of the 1000 OLS estimate of <span class="math inline">\(\beta\)</span>.</p>
 <div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">n</span> <span class="op">&lt;-</span> <span class="fl">200</span> <span class="co"># sample size</span></span>
-<span><span class="va">N</span> <span class="op">&lt;-</span> <span class="fl">1000</span> <span class="co"># number of simulated samples</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://sandwich.R-Forge.R-project.org/">sandwich</a></span><span class="op">)</span></span>
+<span><span class="va">n</span> <span class="op">&lt;-</span> <span class="fl">200</span> <span class="co"># sample size</span></span>
+<span><span class="va">N</span> <span class="op">&lt;-</span> <span class="fl">500</span> <span class="co"># number of simulated samples</span></span>
 <span><span class="va">XX</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/TDist.html">rt</a></span><span class="op">(</span><span class="va">n</span><span class="op">*</span><span class="va">N</span>,df<span class="op">=</span><span class="fl">6</span><span class="op">)</span>,<span class="va">n</span>,<span class="va">N</span><span class="op">)</span></span>
 <span><span class="va">YY</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="va">XX</span> <span class="op">+</span> <span class="va">XX</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span>,<span class="va">n</span>,<span class="va">N</span><span class="op">)</span></span>
-<span><span class="va">all_b</span>       <span class="op">&lt;-</span> <span class="cn">NULL</span>;<span class="va">all_V_OLS</span>   <span class="op">&lt;-</span> <span class="cn">NULL</span>;<span class="va">all_V_White</span> <span class="op">&lt;-</span> <span class="cn">NULL</span></span>
+<span><span class="va">all_b</span>       <span class="op">&lt;-</span> <span class="cn">NULL</span>;<span class="va">all_V_OLS</span>   <span class="op">&lt;-</span> <span class="cn">NULL</span></span>
+<span><span class="va">all_V_White_HC0</span> <span class="op">&lt;-</span> <span class="cn">NULL</span>;<span class="va">all_V_White_HC1</span> <span class="op">&lt;-</span> <span class="cn">NULL</span></span>
 <span><span class="kw">for</span><span class="op">(</span><span class="va">j</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="va">N</span><span class="op">)</span><span class="op">{</span></span>
 <span>  <span class="va">Y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="va">YY</span><span class="op">[</span>,<span class="va">j</span><span class="op">]</span>,ncol<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span>
 <span>  <span class="va">X</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="va">XX</span><span class="op">[</span>,<span class="va">j</span><span class="op">]</span>,ncol<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span>
-<span>  <span class="va">b</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/solve.html">solve</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span><span class="va">X</span><span class="op">)</span><span class="op"><a href="https://rdrr.io/r/base/matmult.html">%*%</a></span><span class="va">X</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html">%*%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span><span class="va">X</span><span class="op">)</span><span class="op"><a href="https://rdrr.io/r/base/matmult.html">%*%</a></span><span class="va">Y</span></span>
-<span>  <span class="va">e</span> <span class="op">&lt;-</span> <span class="va">Y</span> <span class="op">-</span> <span class="va">X</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html">%*%</a></span> <span class="va">b</span></span>
-<span>  <span class="va">S</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">/</span><span class="va">n</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span><span class="va">X</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html">%*%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/diag.html">diag</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">e</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html">%*%</a></span> <span class="va">X</span></span>
-<span>  <span class="va">V_OLS</span>   <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/solve.html">solve</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span><span class="va">X</span><span class="op">)</span><span class="op"><a href="https://rdrr.io/r/base/matmult.html">%*%</a></span><span class="va">X</span><span class="op">)</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/stats/cor.html">var</a></span><span class="op">(</span><span class="va">e</span><span class="op">)</span></span>
-<span>  <span class="va">V_White</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">/</span><span class="va">n</span> <span class="op">*</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/solve.html">solve</a></span><span class="op">(</span><span class="fl">1</span><span class="op">/</span><span class="va">n</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span><span class="va">X</span><span class="op">)</span><span class="op"><a href="https://rdrr.io/r/base/matmult.html">%*%</a></span><span class="va">X</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html">%*%</a></span> <span class="va">S</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html">%*%</a></span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/solve.html">solve</a></span><span class="op">(</span><span class="fl">1</span><span class="op">/</span><span class="va">n</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span><span class="va">X</span><span class="op">)</span><span class="op"><a href="https://rdrr.io/r/base/matmult.html">%*%</a></span><span class="va">X</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="va">eq</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">Y</span><span class="op">~</span><span class="va">X</span><span class="op">)</span></span>
+<span>  <span class="va">b</span> <span class="op">&lt;-</span> <span class="va">eq</span><span class="op">$</span><span class="va">coefficients</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span></span>
+<span>  <span class="va">V_OLS</span>   <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/vcov.html">vcov</a></span><span class="op">(</span><span class="va">eq</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span>,<span class="fl">2</span><span class="op">]</span></span>
+<span>  <span class="va">V_White_HC0</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://sandwich.R-Forge.R-project.org/reference/vcovHC.html">vcovHC</a></span><span class="op">(</span><span class="va">eq</span>, type <span class="op">=</span> <span class="st">"HC0"</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span>,<span class="fl">2</span><span class="op">]</span></span>
+<span>  <span class="va">V_White_HC1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://sandwich.R-Forge.R-project.org/reference/vcovHC.html">vcovHC</a></span><span class="op">(</span><span class="va">eq</span>, type <span class="op">=</span> <span class="st">"HC1"</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span>,<span class="fl">2</span><span class="op">]</span></span>
 <span>  <span class="va">all_b</span>       <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">all_b</span>,<span class="va">b</span><span class="op">)</span></span>
 <span>  <span class="va">all_V_OLS</span>   <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">all_V_OLS</span>,<span class="va">V_OLS</span><span class="op">)</span></span>
-<span>  <span class="va">all_V_White</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">all_V_White</span>,<span class="va">V_White</span><span class="op">)</span></span>
+<span>  <span class="va">all_V_White_HC0</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">all_V_White_HC0</span>,<span class="va">V_White_HC0</span><span class="op">)</span></span>
+<span>  <span class="va">all_V_White_HC1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">all_V_White_HC1</span>,<span class="va">V_White_HC1</span><span class="op">)</span></span>
 <span><span class="op">}</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span><span class="op">(</span><span class="va">all_b</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="va">all_V_OLS</span><span class="op">)</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="va">all_V_White</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<pre><code>## [1] 0.14024423 0.06748804 0.13973431</code></pre>
+<span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span><span class="op">(</span><span class="va">all_b</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="va">all_V_OLS</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="va">all_V_White_HC0</span><span class="op">)</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="va">all_V_White_HC1</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code>## [1] 0.1240897 0.0627644 0.1281167 0.1287622</code></pre>
 <p>The results show that the White formula yields, on average, an estimated standard deviation that is much closer to the “true” value than the standard OLS formula. The latter underestimate the standard deviation of <span class="math inline">\(b\)</span>.</p>
 </div>
 <p>In the following example, we regress GDP growth rates from the <span class="citation">Jordà, Schularick, and Taylor (<a href="references.html#ref-JST_2017">2017</a>)</span> database on a systemic financial crisis dummy. We compute the HC0- and HC1-based standard deviations of the parameter estimate, and compare it to the one based on the standard OLS formula. The adjusted standard deviations are close to the one provided by the non-adjusted OLS formula.</p>
@@ -1295,7 +1299,7 @@ Figure 4.6: Situation of heteroskedasticity. The model is <span class="math inli
 <span><span class="va">vcovHC0</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://sandwich.R-Forge.R-project.org/reference/vcovHC.html">vcovHC</a></span><span class="op">(</span><span class="va">eq</span>, type <span class="op">=</span> <span class="st">"HC0"</span><span class="op">)</span></span>
 <span><span class="va">vcovHC1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://sandwich.R-Forge.R-project.org/reference/vcovHC.html">vcovHC</a></span><span class="op">(</span><span class="va">eq</span>, type <span class="op">=</span> <span class="st">"HC1"</span><span class="op">)</span></span>
 <span><span class="fu">stargazer</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/stargazer/man/stargazer.html">stargazer</a></span><span class="op">(</span><span class="va">eq</span>, <span class="va">eq</span>, <span class="va">eq</span>,type <span class="op">=</span> <span class="st">"text"</span>,</span>
-<span>                     column.labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"No HAC"</span>, <span class="st">"HC0"</span>,<span class="st">"HC1"</span><span class="op">)</span>,</span>
+<span>                     column.labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"No HC"</span>, <span class="st">"HC0"</span>,<span class="st">"HC1"</span><span class="op">)</span>,</span>
 <span>                     omit <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"iso"</span>,<span class="st">"year"</span><span class="op">)</span>,no.space <span class="op">=</span> <span class="cn">TRUE</span>,keep.stat <span class="op">=</span> <span class="st">"n"</span>,</span>
 <span>                     se <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="cn">NULL</span>,<span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/diag.html">diag</a></span><span class="op">(</span><span class="va">vcovHC0</span><span class="op">)</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/diag.html">diag</a></span><span class="op">(</span><span class="va">vcovHC1</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## 
@@ -1303,7 +1307,7 @@ Figure 4.6: Situation of heteroskedasticity. The model is <span class="math inli
 ##                   Dependent variable:     
 ##              -----------------------------
 ##                         growth            
-##               No HAC      HC0       HC1   
+##                No HC      HC0       HC1   
 ##                 (1)       (2)       (3)   
 ## ------------------------------------------
 ## crisisJST    -0.015*** -0.015*** -0.015***
@@ -1334,7 +1338,7 @@ x_i = 0.8 x_{i-1} + u_i \quad and \quad \varepsilon_i = 0.8 \varepsilon_{i-1} + 
 where the <span class="math inline">\(u_i\)</span>’s and the <span class="math inline">\(v_i\)</span>’s are i.i.d. <span class="math inline">\(\mathcal{N}(0,1)\)</span>.</p>
 <p>We simulate 500 samples of the same model with <span class="math inline">\(n=200\)</span>. For each sample, we compute the OLS estimate of <span class="math inline">\(\beta\)</span> (=1). For each of the 1000 OLS estimations, we employ (a) the standard OLS variance formula (<span class="math inline">\(s^2 (\mathbf{X}'\mathbf{X})^{-1}\)</span>), (b) the White formula, and (c) the Newey-West formula to estimate the variance of <span class="math inline">\(b\)</span>. For each formula, we compute the average of the 500 resulting standard deviations and compare these with the standard deviation of the 500 OLS estimate of <span class="math inline">\(\beta\)</span>.</p>
 <div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">AEC</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">AEC</span><span class="op">)</span>;<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://sandwich.R-Forge.R-project.org/">sandwich</a></span><span class="op">)</span></span>
 <span><span class="va">n</span> <span class="op">&lt;-</span> <span class="fl">100</span> <span class="co"># sample length</span></span>
 <span><span class="va">nb.sim</span> <span class="op">&lt;-</span> <span class="fl">500</span> <span class="co"># number of simulated samples</span></span>
 <span><span class="va">all.b</span> <span class="op">&lt;-</span> <span class="cn">NULL</span>;<span class="va">all.OLS.stdv.b</span> <span class="op">&lt;-</span> <span class="cn">NULL</span></span>
@@ -1349,21 +1353,15 @@ where the <span class="math inline">\(u_i\)</span>’s and the <span class="math
 <span>  <span class="va">eq</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">y</span><span class="op">~</span><span class="va">x</span><span class="op">)</span></span>
 <span>  <span class="va">all.b</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">all.b</span>,<span class="va">eq</span><span class="op">$</span><span class="va">coefficients</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span></span>
 <span>  <span class="va">all.OLS.stdv.b</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">all.OLS.stdv.b</span>,<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">eq</span><span class="op">)</span><span class="op">$</span><span class="va">coefficients</span><span class="op">[</span><span class="fl">2</span>,<span class="fl">2</span><span class="op">]</span><span class="op">)</span></span>
-<span>  <span class="va">X</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">1</span>,<span class="va">n</span><span class="op">)</span>,<span class="va">x</span><span class="op">)</span></span>
-<span>  <span class="va">XX</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span><span class="va">X</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html">%*%</a></span> <span class="va">X</span>;<span class="va">XX_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/solve.html">solve</a></span><span class="op">(</span><span class="va">XX</span><span class="op">)</span></span>
-<span>  <span class="va">E2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/diag.html">diag</a></span><span class="op">(</span><span class="va">eq</span><span class="op">$</span><span class="va">residuals</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span></span>
-<span>  <span class="va">White.V</span> <span class="op">&lt;-</span> <span class="va">XX_1</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html">%*%</a></span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span><span class="va">X</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html">%*%</a></span> <span class="va">E2</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html">%*%</a></span> <span class="va">X</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html">%*%</a></span> <span class="va">XX_1</span></span>
+<span>  <span class="va">White.V</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://sandwich.R-Forge.R-project.org/reference/vcovHC.html">vcovHC</a></span><span class="op">(</span><span class="va">eq</span>, type<span class="op">=</span><span class="st">"HC1"</span><span class="op">)</span></span>
+<span>  <span class="va">NWest.V</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://sandwich.R-Forge.R-project.org/reference/NeweyWest.html">NeweyWest</a></span><span class="op">(</span><span class="va">eq</span><span class="op">)</span></span>
 <span>  <span class="va">all.Whi.stdv.b</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">all.Whi.stdv.b</span>,<span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="va">White.V</span><span class="op">[</span><span class="fl">2</span>,<span class="fl">2</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span>
-<span>  <span class="co"># HAC:</span></span>
-<span>  <span class="va">U</span> <span class="op">&lt;-</span> <span class="va">X</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="va">eq</span><span class="op">$</span><span class="va">residuals</span>,<span class="va">eq</span><span class="op">$</span><span class="va">residuals</span><span class="op">)</span></span>
-<span>  <span class="va">XSigmaX</span> <span class="op">&lt;-</span> <span class="fu">NW.LongRunVariance</span><span class="op">(</span><span class="va">U</span>,<span class="fl">5</span><span class="op">)</span></span>
-<span>  <span class="va">NW.V</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">/</span><span class="va">n</span> <span class="op">*</span> <span class="op">(</span><span class="va">n</span><span class="op">*</span><span class="va">XX_1</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html">%*%</a></span> <span class="va">XSigmaX</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html">%*%</a></span> <span class="op">(</span><span class="va">n</span><span class="op">*</span><span class="va">XX_1</span><span class="op">)</span></span>
-<span>  <span class="va">all.NW.stdv.b</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">all.NW.stdv.b</span>,<span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="va">NW.V</span><span class="op">[</span><span class="fl">2</span>,<span class="fl">2</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="va">all.NW.stdv.b</span>  <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">all.NW.stdv.b</span>, <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="va">NWest.V</span><span class="op">[</span><span class="fl">2</span>,<span class="fl">2</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="op">}</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span><span class="op">(</span><span class="va">all.b</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">all.OLS.stdv.b</span><span class="op">)</span>,</span>
 <span>      <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">all.Whi.stdv.b</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">all.NW.stdv.b</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<pre><code>##          [,1]      [,2]      [,3]     [,4]
-## [1,] 0.201172 0.1013048 0.0962689 0.146974</code></pre>
+<pre><code>##           [,1]      [,2]      [,3]      [,4]
+## [1,] 0.2192314 0.1015817 0.0978282 0.1912018</code></pre>
 <p>The results show that the Newey-West formula yields, on average, an estimated standard deviation that is closer to the “true” value than the standard OLS formula. The latter underestimate the standard deviation of <span class="math inline">\(b\)</span>.</p>
 </div>
 <p>What precedes suggest that, when the residuals feature autocorrelation, it is important to use appropriately adjusted covariance matrices to make statistical inference. How to detect autocorrelation in residuals? A popular test has been proposed by <span class="citation">Durbin and Watson (<a href="references.html#ref-Durbin_Watson_1950">1950</a>)</span> and <span class="citation">Durbin and Watson (<a href="references.html#ref-Durbin_Watson_1951">1951</a>)</span>. The Durbin-Watson test statistic is:
@@ -1645,42 +1643,42 @@ f(\boldsymbol\beta) &amp; = &amp; \sum_{j=2}^K |\beta_j| \quad \mbox{(lasso)}.
 <div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># lambda.min: lambda that gives minimum mean cross-validated error</span></span>
 <span><span class="va">cvglmnet</span><span class="op">$</span><span class="va">lambda.min</span> </span></code></pre></div>
-<pre><code>## [1] 0.001688943</code></pre>
+<pre><code>## [1] 0.004282086</code></pre>
 <div class="sourceCode" id="cb55"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># lambda.1se: largest lambda s.t. cost within the one-std-dev cv-based band</span></span>
 <span><span class="va">cvglmnet</span><span class="op">$</span><span class="va">lambda.1se</span></span></code></pre></div>
-<pre><code>## [1] 0.002450367</code></pre>
+<pre><code>## [1] 0.004699584</code></pre>
 <div class="sourceCode" id="cb57"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/coef.html">coef</a></span><span class="op">(</span><span class="va">cvglmnet</span>, s <span class="op">=</span> <span class="st">"lambda.min"</span><span class="op">)</span> <span class="co"># associated parameters</span></span></code></pre></div>
 <pre><code>## 18 x 1 sparse Matrix of class "dgCMatrix"
 ##                                 s1
-## (Intercept)           9.724122e-16
-## delinq_2yrs           8.250272e-02
-## annual_inc            1.340310e-02
+## (Intercept)           1.079910e-15
+## delinq_2yrs           9.364945e-02
+## annual_inc            1.019866e-02
 ## annual_inc2           .           
-## log_annual_inc       -5.506265e-02
-## dti                  -2.575761e-02
-## installment           8.283350e+00
-## verification_status  -2.752505e-03
-## funded_amnt          -7.395113e+00
-## funded_amnt2         -4.730294e-01
-## log_funded_amnt      -2.149838e-01
-## pub_rec               5.086954e-02
-## emp_length_10        -1.837606e-02
-## owner                -1.150301e-02
-## renter               -3.806605e-02
-## pub_rec_bankruptcies -1.206656e-02
-## revol_util            2.131955e-01
-## revol_bal            -2.355392e-02</code></pre>
+## log_annual_inc       -5.285472e-02
+## dti                  -2.249588e-02
+## installment           7.299546e+00
+## verification_status   .           
+## funded_amnt          -6.550874e+00
+## funded_amnt2         -3.598220e-01
+## log_funded_amnt      -1.838827e-01
+## pub_rec               4.582058e-02
+## emp_length_10        -1.970788e-02
+## owner                -8.766370e-03
+## renter               -4.224765e-02
+## pub_rec_bankruptcies  .           
+## revol_util            2.418006e-01
+## revol_bal            -2.431620e-02</code></pre>
 <div class="sourceCode" id="cb59"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># predicted values of y for specific values of x:</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">cvglmnet</span>, newx <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>,<span class="op">]</span>, s <span class="op">=</span> <span class="st">"lambda.min"</span><span class="op">)</span> </span></code></pre></div>
 <pre><code>##       lambda.min
-## 21529  0.3593072
-## 21547 -0.1740482
-## 21579  0.6535896
-## 21583 -0.2678118
-## 21608 -0.2125907</code></pre>
+## 21529  0.3251772
+## 21547 -0.1847952
+## 21579  0.6847148
+## 21583 -0.2662681
+## 21608 -0.2047079</code></pre>
 
 </div>
 </div>
@@ -1737,7 +1735,7 @@ f(\boldsymbol\beta) &amp; = &amp; \sum_{j=2}^K |\beta_j| \quad \mbox{(lasso)}.
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Econometrics and Statistics</strong>" was written by Jean-Paul Renne. It was last built on 2023-10-04.</p>
+    <p>"<strong>Econometrics and Statistics</strong>" was written by Jean-Paul Renne. It was last built on 2024-09-22.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
