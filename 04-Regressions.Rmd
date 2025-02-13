@@ -1554,7 +1554,7 @@ credit$annual_inc2 <- (credit$annual_inc)^2
 credit$funded_amnt2 <- (credit$funded_amnt)^2
 x <- subset(credit,
             select = c(delinq_2yrs,annual_inc,annual_inc2,log_annual_inc,
-                       dti,installment,verification_status,funded_amnt,
+                       dti,installment,funded_amnt,
                        funded_amnt2,log_funded_amnt,pub_rec,emp_length_10,
                        owner,renter,pub_rec_bankruptcies,revol_util,revol_bal))
 ```
@@ -1564,7 +1564,11 @@ Let us standardize the data:
 ```{r lasso2}
 y <- scale(credit$int_rate)
 x <- scale(x)
+indic_complete_cases <- complete.cases(x)
+y <- y[indic_complete_cases]  # to remove observations with NaN's
+x <- x[indic_complete_cases,] # to remove observations with NaN's
 ```
+
 Next, we define the set of $\lambda$ we will use, and run the ridge and lasso regressions:
 
 ```{r lasso3}

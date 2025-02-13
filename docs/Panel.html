@@ -439,10 +439,10 @@ where the <span class="math inline">\(T\)</span>-dimensional vector <span class=
 <span><span class="va">eq1_FE</span>   <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">dhpreal</span> <span class="op">~</span> <span class="va">stir</span> <span class="op">+</span> <span class="va">ltrate</span> <span class="op">+</span> <span class="va">iso</span> <span class="op">+</span> <span class="va">YEAR</span>,data<span class="op">=</span><span class="va">JST</span><span class="op">)</span></span>
 <span><span class="va">eq2_noFE</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">dhpreal</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html">I</a></span><span class="op">(</span><span class="va">ltrate</span><span class="op">-</span><span class="va">stir</span><span class="op">)</span>,data<span class="op">=</span><span class="va">JST</span><span class="op">)</span></span>
 <span><span class="va">eq2_FE</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">dhpreal</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html">I</a></span><span class="op">(</span><span class="va">ltrate</span><span class="op">-</span><span class="va">stir</span><span class="op">)</span> <span class="op">+</span> <span class="va">iso</span> <span class="op">+</span> <span class="va">YEAR</span>,data<span class="op">=</span><span class="va">JST</span><span class="op">)</span></span>
-<span><span class="va">vcov_cluster1_noFE</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://sandwich.R-Forge.R-project.org/reference/vcovHC.html">vcovHC</a></span><span class="op">(</span><span class="va">eq1_noFE</span>, cluster <span class="op">=</span> <span class="va">JST</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"iso"</span>,<span class="st">"YEAR"</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span>
-<span><span class="va">vcov_cluster1_FE</span>   <span class="op">&lt;-</span> <span class="fu"><a href="https://sandwich.R-Forge.R-project.org/reference/vcovHC.html">vcovHC</a></span><span class="op">(</span><span class="va">eq1_FE</span>, cluster <span class="op">=</span> <span class="va">JST</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"iso"</span>,<span class="st">"YEAR"</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span>
-<span><span class="va">vcov_cluster2_noFE</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://sandwich.R-Forge.R-project.org/reference/vcovHC.html">vcovHC</a></span><span class="op">(</span><span class="va">eq2_noFE</span>, cluster <span class="op">=</span> <span class="va">JST</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"iso"</span>,<span class="st">"YEAR"</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span>
-<span><span class="va">vcov_cluster2_FE</span>   <span class="op">&lt;-</span> <span class="fu"><a href="https://sandwich.R-Forge.R-project.org/reference/vcovHC.html">vcovHC</a></span><span class="op">(</span><span class="va">eq2_FE</span>, cluster <span class="op">=</span> <span class="va">JST</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"iso"</span>,<span class="st">"YEAR"</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="va">vcov_cluster1_noFE</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://sandwich.R-Forge.R-project.org/reference/vcovCL.html">vcovCL</a></span><span class="op">(</span><span class="va">eq1_noFE</span>, cluster <span class="op">=</span> <span class="va">JST</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"iso"</span>,<span class="st">"YEAR"</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="va">vcov_cluster1_FE</span>   <span class="op">&lt;-</span> <span class="fu"><a href="https://sandwich.R-Forge.R-project.org/reference/vcovCL.html">vcovCL</a></span><span class="op">(</span><span class="va">eq1_FE</span>, cluster <span class="op">=</span> <span class="va">JST</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"iso"</span>,<span class="st">"YEAR"</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="va">vcov_cluster2_noFE</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://sandwich.R-Forge.R-project.org/reference/vcovCL.html">vcovCL</a></span><span class="op">(</span><span class="va">eq2_noFE</span>, cluster <span class="op">=</span> <span class="va">JST</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"iso"</span>,<span class="st">"YEAR"</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="va">vcov_cluster2_FE</span>   <span class="op">&lt;-</span> <span class="fu"><a href="https://sandwich.R-Forge.R-project.org/reference/vcovCL.html">vcovCL</a></span><span class="op">(</span><span class="va">eq2_FE</span>, cluster <span class="op">=</span> <span class="va">JST</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"iso"</span>,<span class="st">"YEAR"</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="va">robust_se_FE1_noFE</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/diag.html">diag</a></span><span class="op">(</span><span class="va">vcov_cluster1_noFE</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">robust_se_FE1_FE</span>   <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/diag.html">diag</a></span><span class="op">(</span><span class="va">vcov_cluster1_FE</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">robust_se_FE2_noFE</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/diag.html">diag</a></span><span class="op">(</span><span class="va">vcov_cluster2_noFE</span><span class="op">)</span><span class="op">)</span></span>
@@ -455,28 +455,28 @@ where the <span class="math inline">\(T\)</span>-dimensional vector <span class=
 <span>                     se <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">robust_se_FE1_noFE</span>,<span class="va">robust_se_FE1_FE</span>,</span>
 <span>                               <span class="va">robust_se_FE2_noFE</span>,<span class="va">robust_se_FE2_FE</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>## 
-## =======================================================
-##                           Dependent variable:          
-##                  --------------------------------------
-##                                 dhpreal                
-##                    no FE   with FE    no FE    with FE 
-##                     (1)      (2)       (3)       (4)   
-## -------------------------------------------------------
-## stir             0.485***  0.532***                    
-##                   (0.149)  (0.170)                     
-##                                                        
-## ltrate           -0.690*** -0.384**                    
-##                   (0.164)  (0.182)                     
-##                                                        
-## I(ltrate - stir)                    -0.476*** -0.475***
-##                                      (0.145)   (0.159) 
-##                                                        
-## -------------------------------------------------------
-## Country FE          No       Yes       No        Yes   
-## Year FE             No       Yes       No        Yes   
-## Observations       1,141    1,141     1,141     1,141  
-## =======================================================
-## Note:                       *p&lt;0.1; **p&lt;0.05; ***p&lt;0.01</code></pre>
+## ==================================================
+##                         Dependent variable:       
+##                  ---------------------------------
+##                               dhpreal             
+##                   no FE   with FE  no FE  with FE 
+##                    (1)      (2)     (3)     (4)   
+## --------------------------------------------------
+## stir              0.485*  0.532**                 
+##                  (0.271)  (0.240)                 
+##                                                   
+## ltrate           -0.690** -0.384*                 
+##                  (0.269)  (0.200)                 
+##                                                   
+## I(ltrate - stir)                  -0.476* -0.475**
+##                                   (0.255) (0.213) 
+##                                                   
+## --------------------------------------------------
+## Country FE          No      Yes     No      Yes   
+## Year FE             No      Yes     No      Yes   
+## Observations      1,141    1,141   1,141   1,141  
+## ==================================================
+## Note:                  *p&lt;0.1; **p&lt;0.05; ***p&lt;0.01</code></pre>
 </div>
 </div>
 <div id="RandomEffect" class="section level2" number="5.4">
@@ -1126,7 +1126,7 @@ Figure 5.7: Source: Meyer et al., (1995).
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Econometrics and Statistics</strong>" was written by Jean-Paul Renne. It was last built on 2024-09-22.</p>
+    <p>"<strong>Econometrics and Statistics</strong>" was written by Jean-Paul Renne. It was last built on 2025-02-13.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

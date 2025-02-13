@@ -842,7 +842,7 @@ It may be the case that your forecasts serve a specific purpose and that, for in
 * If you dislike large positive errors, you may set $L(e)=\exp(e)$.
 * If you are concerned about both positive and negative errors (indifferently), you may set $L(e)=e^2$ (standard approach).
 
-Let us define the sequence $\{d_t\}_{t=1,\dots,T} \equiv \{L(e^{A}_t)-L(e^{B}_t)\}_{t=1,\dots,T}$ and assume that this sequence is covariance stationary. We consider the following null hypothesis: $H_0:$ $\bar{d}=0$, where $\bar{d}$ denotes the population mean of the $d_t$s. Under $H_0$ and under the assumption of covariance-stationarity of $d_t$, we have (Theorem \@ref{(hm:CLTcovstat)):
+Let us define the sequence $\{d_t\}_{t=1,\dots,T} \equiv \{L(e^{A}_t)-L(e^{B}_t)\}_{t=1,\dots,T}$ and assume that this sequence is covariance stationary. We consider the following null hypothesis: $H_0:$ $\bar{d}=0$, where $\bar{d}$ denotes the population mean of the $d_t$s. Under $H_0$ and under the assumption of covariance-stationarity of $d_t$, we have (Theorem \@ref(thm:CLTcovstat)):
 $$
 \sqrt{T} \bar{d}_T \overset{d}{\rightarrow} \mathcal{N}\left(0,\sum_{j=-\infty}^{+\infty} \gamma_j \right),
 $$	

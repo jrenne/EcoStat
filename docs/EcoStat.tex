@@ -134,7 +134,7 @@
 
 \title{Econometrics and Statistics}
 \author{Jean-Paul Renne}
-\date{2024-09-22}
+\date{2025-02-13}
 
 \usepackage{amsthm}
 \newtheorem{theorem}{Theorem}[chapter]
@@ -2752,7 +2752,7 @@ To begin with, let us define the variables we want to consider:
 \NormalTok{credit}\SpecialCharTok{$}\NormalTok{funded\_amnt2 }\OtherTok{\textless{}{-}}\NormalTok{ (credit}\SpecialCharTok{$}\NormalTok{funded\_amnt)}\SpecialCharTok{\^{}}\DecValTok{2}
 \NormalTok{x }\OtherTok{\textless{}{-}} \FunctionTok{subset}\NormalTok{(credit,}
             \AttributeTok{select =} \FunctionTok{c}\NormalTok{(delinq\_2yrs,annual\_inc,annual\_inc2,log\_annual\_inc,}
-\NormalTok{                       dti,installment,verification\_status,funded\_amnt,}
+\NormalTok{                       dti,installment,funded\_amnt,}
 \NormalTok{                       funded\_amnt2,log\_funded\_amnt,pub\_rec,emp\_length\_10,}
 \NormalTok{                       owner,renter,pub\_rec\_bankruptcies,revol\_util,revol\_bal))}
 \end{Highlighting}
@@ -2764,6 +2764,9 @@ Let us standardize the data:
 \begin{Highlighting}[]
 \NormalTok{y }\OtherTok{\textless{}{-}} \FunctionTok{scale}\NormalTok{(credit}\SpecialCharTok{$}\NormalTok{int\_rate)}
 \NormalTok{x }\OtherTok{\textless{}{-}} \FunctionTok{scale}\NormalTok{(x)}
+\NormalTok{indic\_complete\_cases }\OtherTok{\textless{}{-}} \FunctionTok{complete.cases}\NormalTok{(x)}
+\NormalTok{y }\OtherTok{\textless{}{-}}\NormalTok{ y[indic\_complete\_cases]  }\CommentTok{\# to remove observations with NaN\textquotesingle{}s}
+\NormalTok{x }\OtherTok{\textless{}{-}}\NormalTok{ x[indic\_complete\_cases,] }\CommentTok{\# to remove observations with NaN\textquotesingle{}s}
 \end{Highlighting}
 \end{Shaded}
 
@@ -2814,24 +2817,23 @@ Let us take two values of \(\lambda\) and see the associated estimated parameter
 
 \begin{verbatim}
 ##                               [,1]          [,2]
-## (Intercept)           1.765744e-15  1.110598e-15
-## delinq_2yrs           8.676715e-02  9.670622e-02
-## annual_inc            0.000000e+00  9.311857e-03
+## (Intercept)           1.765744e-15  1.110599e-15
+## delinq_2yrs           8.676715e-02  9.670618e-02
+## annual_inc            0.000000e+00  9.311842e-03
 ## annual_inc2           0.000000e+00  0.000000e+00
-## log_annual_inc        0.000000e+00 -5.234723e-02
+## log_annual_inc        0.000000e+00 -5.234722e-02
 ## dti                   0.000000e+00 -2.151014e-02
-## installment           1.009769e-01  7.029179e+00
-## verification_status   0.000000e+00  0.000000e+00
-## funded_amnt           0.000000e+00 -6.317410e+00
-## funded_amnt2          0.000000e+00 -3.297231e-01
-## log_funded_amnt       0.000000e+00 -1.759008e-01
-## pub_rec               0.000000e+00  4.703269e-02
-## emp_length_10         0.000000e+00 -2.007768e-02
-## owner                 0.000000e+00 -7.949554e-03
-## renter               -7.300395e-03 -4.329810e-02
+## installment           1.009769e-01  7.029183e+00
+## funded_amnt           0.000000e+00 -6.317414e+00
+## funded_amnt2          0.000000e+00 -3.297226e-01
+## log_funded_amnt       0.000000e+00 -1.759003e-01
+## pub_rec               0.000000e+00  4.703266e-02
+## emp_length_10         0.000000e+00 -2.007767e-02
+## owner                 0.000000e+00 -7.949553e-03
+## renter               -7.300395e-03 -4.329808e-02
 ## pub_rec_bankruptcies  0.000000e+00  0.000000e+00
-## revol_util            3.803039e-01  2.496733e-01
-## revol_bal             0.000000e+00 -2.454181e-02
+## revol_util            3.803039e-01  2.496732e-01
+## revol_bal             0.000000e+00 -2.454180e-02
 \end{verbatim}
 
 \begin{Shaded}
@@ -2884,7 +2886,7 @@ The \texttt{glmnet} package (see \href{https://glmnet.stanford.edu/articles/glmn
 \end{Shaded}
 
 \begin{verbatim}
-## 18 x 1 sparse Matrix of class "dgCMatrix"
+## 17 x 1 sparse Matrix of class "dgCMatrix"
 ##                                 s1
 ## (Intercept)           1.079910e-15
 ## delinq_2yrs           9.364945e-02
@@ -2893,7 +2895,6 @@ The \texttt{glmnet} package (see \href{https://glmnet.stanford.edu/articles/glmn
 ## log_annual_inc       -5.285472e-02
 ## dti                  -2.249588e-02
 ## installment           7.299546e+00
-## verification_status   .           
 ## funded_amnt          -6.550874e+00
 ## funded_amnt2         -3.598220e-01
 ## log_funded_amnt      -1.838827e-01
@@ -3302,10 +3303,10 @@ In this example, we want to estimate the effect of short and long-term interest 
 \NormalTok{eq1\_FE   }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(dhpreal }\SpecialCharTok{\textasciitilde{}}\NormalTok{ stir }\SpecialCharTok{+}\NormalTok{ ltrate }\SpecialCharTok{+}\NormalTok{ iso }\SpecialCharTok{+}\NormalTok{ YEAR,}\AttributeTok{data=}\NormalTok{JST)}
 \NormalTok{eq2\_noFE }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(dhpreal }\SpecialCharTok{\textasciitilde{}} \FunctionTok{I}\NormalTok{(ltrate}\SpecialCharTok{{-}}\NormalTok{stir),}\AttributeTok{data=}\NormalTok{JST)}
 \NormalTok{eq2\_FE }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(dhpreal }\SpecialCharTok{\textasciitilde{}} \FunctionTok{I}\NormalTok{(ltrate}\SpecialCharTok{{-}}\NormalTok{stir) }\SpecialCharTok{+}\NormalTok{ iso }\SpecialCharTok{+}\NormalTok{ YEAR,}\AttributeTok{data=}\NormalTok{JST)}
-\NormalTok{vcov\_cluster1\_noFE }\OtherTok{\textless{}{-}} \FunctionTok{vcovHC}\NormalTok{(eq1\_noFE, }\AttributeTok{cluster =}\NormalTok{ JST[, }\FunctionTok{c}\NormalTok{(}\StringTok{"iso"}\NormalTok{,}\StringTok{"YEAR"}\NormalTok{)])}
-\NormalTok{vcov\_cluster1\_FE   }\OtherTok{\textless{}{-}} \FunctionTok{vcovHC}\NormalTok{(eq1\_FE, }\AttributeTok{cluster =}\NormalTok{ JST[, }\FunctionTok{c}\NormalTok{(}\StringTok{"iso"}\NormalTok{,}\StringTok{"YEAR"}\NormalTok{)])}
-\NormalTok{vcov\_cluster2\_noFE }\OtherTok{\textless{}{-}} \FunctionTok{vcovHC}\NormalTok{(eq2\_noFE, }\AttributeTok{cluster =}\NormalTok{ JST[, }\FunctionTok{c}\NormalTok{(}\StringTok{"iso"}\NormalTok{,}\StringTok{"YEAR"}\NormalTok{)])}
-\NormalTok{vcov\_cluster2\_FE   }\OtherTok{\textless{}{-}} \FunctionTok{vcovHC}\NormalTok{(eq2\_FE, }\AttributeTok{cluster =}\NormalTok{ JST[, }\FunctionTok{c}\NormalTok{(}\StringTok{"iso"}\NormalTok{,}\StringTok{"YEAR"}\NormalTok{)])}
+\NormalTok{vcov\_cluster1\_noFE }\OtherTok{\textless{}{-}} \FunctionTok{vcovCL}\NormalTok{(eq1\_noFE, }\AttributeTok{cluster =}\NormalTok{ JST[, }\FunctionTok{c}\NormalTok{(}\StringTok{"iso"}\NormalTok{,}\StringTok{"YEAR"}\NormalTok{)])}
+\NormalTok{vcov\_cluster1\_FE   }\OtherTok{\textless{}{-}} \FunctionTok{vcovCL}\NormalTok{(eq1\_FE, }\AttributeTok{cluster =}\NormalTok{ JST[, }\FunctionTok{c}\NormalTok{(}\StringTok{"iso"}\NormalTok{,}\StringTok{"YEAR"}\NormalTok{)])}
+\NormalTok{vcov\_cluster2\_noFE }\OtherTok{\textless{}{-}} \FunctionTok{vcovCL}\NormalTok{(eq2\_noFE, }\AttributeTok{cluster =}\NormalTok{ JST[, }\FunctionTok{c}\NormalTok{(}\StringTok{"iso"}\NormalTok{,}\StringTok{"YEAR"}\NormalTok{)])}
+\NormalTok{vcov\_cluster2\_FE   }\OtherTok{\textless{}{-}} \FunctionTok{vcovCL}\NormalTok{(eq2\_FE, }\AttributeTok{cluster =}\NormalTok{ JST[, }\FunctionTok{c}\NormalTok{(}\StringTok{"iso"}\NormalTok{,}\StringTok{"YEAR"}\NormalTok{)])}
 \NormalTok{robust\_se\_FE1\_noFE }\OtherTok{\textless{}{-}} \FunctionTok{sqrt}\NormalTok{(}\FunctionTok{diag}\NormalTok{(vcov\_cluster1\_noFE))}
 \NormalTok{robust\_se\_FE1\_FE   }\OtherTok{\textless{}{-}} \FunctionTok{sqrt}\NormalTok{(}\FunctionTok{diag}\NormalTok{(vcov\_cluster1\_FE))}
 \NormalTok{robust\_se\_FE2\_noFE }\OtherTok{\textless{}{-}} \FunctionTok{sqrt}\NormalTok{(}\FunctionTok{diag}\NormalTok{(vcov\_cluster2\_noFE))}
@@ -3322,28 +3323,28 @@ In this example, we want to estimate the effect of short and long-term interest 
 
 \begin{verbatim}
 ## 
-## =======================================================
-##                           Dependent variable:          
-##                  --------------------------------------
-##                                 dhpreal                
-##                    no FE   with FE    no FE    with FE 
-##                     (1)      (2)       (3)       (4)   
-## -------------------------------------------------------
-## stir             0.485***  0.532***                    
-##                   (0.149)  (0.170)                     
-##                                                        
-## ltrate           -0.690*** -0.384**                    
-##                   (0.164)  (0.182)                     
-##                                                        
-## I(ltrate - stir)                    -0.476*** -0.475***
-##                                      (0.145)   (0.159) 
-##                                                        
-## -------------------------------------------------------
-## Country FE          No       Yes       No        Yes   
-## Year FE             No       Yes       No        Yes   
-## Observations       1,141    1,141     1,141     1,141  
-## =======================================================
-## Note:                       *p<0.1; **p<0.05; ***p<0.01
+## ==================================================
+##                         Dependent variable:       
+##                  ---------------------------------
+##                               dhpreal             
+##                   no FE   with FE  no FE  with FE 
+##                    (1)      (2)     (3)     (4)   
+## --------------------------------------------------
+## stir              0.485*  0.532**                 
+##                  (0.271)  (0.240)                 
+##                                                   
+## ltrate           -0.690** -0.384*                 
+##                  (0.269)  (0.200)                 
+##                                                   
+## I(ltrate - stir)                  -0.476* -0.475**
+##                                   (0.255) (0.213) 
+##                                                   
+## --------------------------------------------------
+## Country FE          No      Yes     No      Yes   
+## Year FE             No      Yes     No      Yes   
+## Observations      1,141    1,141   1,141   1,141  
+## ==================================================
+## Note:                  *p<0.1; **p<0.05; ***p<0.01
 \end{verbatim}
 
 \end{example}
@@ -4234,8 +4235,8 @@ Finally, let's compute the standard deviation of the parameter estimates, using 
 
 \begin{verbatim}
 ##           theta    std.dev    t.stud
-## [1,]  -1.394063  0.9848289 -1.415538
-## [2,] -83.513127 49.3625267 -1.691833
+## [1,]  -1.352152  0.9725812 -1.390272
+## [2,] -80.373739 48.2598742 -1.665436
 \end{verbatim}
 
 The Hansen statistic can be used to test the model (see Eq. \eqref{eq:HansenSargan}). If the model is correct, we have:
@@ -4254,8 +4255,8 @@ where \(J\) is the number of moment constraints (\(n_z \times n_r\) here) and \(
 \end{Shaded}
 
 \begin{verbatim}
-##         [,1]
-## [1,] 0.29865
+##           [,1]
+## [1,] 0.3133884
 \end{verbatim}
 
 \hypertarget{secMLE}{%
@@ -6393,7 +6394,7 @@ It may be the case that your forecasts serve a specific purpose and that, for in
   If you are concerned about both positive and negative errors (indifferently), you may set \(L(e)=e^2\) (standard approach).
 \end{itemize}
 
-Let us define the sequence \(\{d_t\}_{t=1,\dots,T} \equiv \{L(e^{A}_t)-L(e^{B}_t)\}_{t=1,\dots,T}\) and assume that this sequence is covariance stationary. We consider the following null hypothesis: \(H_0:\) \(\bar{d}=0\), where \(\bar{d}\) denotes the population mean of the \(d_t\)s. Under \(H_0\) and under the assumption of covariance-stationarity of \(d_t\), we have (Theorem @ref\{(hm:CLTcovstat)):
+Let us define the sequence \(\{d_t\}_{t=1,\dots,T} \equiv \{L(e^{A}_t)-L(e^{B}_t)\}_{t=1,\dots,T}\) and assume that this sequence is covariance stationary. We consider the following null hypothesis: \(H_0:\) \(\bar{d}=0\), where \(\bar{d}\) denotes the population mean of the \(d_t\)s. Under \(H_0\) and under the assumption of covariance-stationarity of \(d_t\), we have (Theorem \ref{thm:CLTcovstat}):
 \[
 \sqrt{T} \bar{d}_T \overset{d}{\rightarrow} \mathcal{N}\left(0,\sum_{j=-\infty}^{+\infty} \gamma_j \right),
 \]\\

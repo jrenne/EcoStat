@@ -1581,13 +1581,16 @@ f(\boldsymbol\beta) &amp; = &amp; \sum_{j=2}^K |\beta_j| \quad \mbox{(lasso)}.
 <span><span class="va">credit</span><span class="op">$</span><span class="va">funded_amnt2</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="va">credit</span><span class="op">$</span><span class="va">funded_amnt</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span></span>
 <span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html">subset</a></span><span class="op">(</span><span class="va">credit</span>,</span>
 <span>            select <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">delinq_2yrs</span>,<span class="va">annual_inc</span>,<span class="va">annual_inc2</span>,<span class="va">log_annual_inc</span>,</span>
-<span>                       <span class="va">dti</span>,<span class="va">installment</span>,<span class="va">verification_status</span>,<span class="va">funded_amnt</span>,</span>
+<span>                       <span class="va">dti</span>,<span class="va">installment</span>,<span class="va">funded_amnt</span>,</span>
 <span>                       <span class="va">funded_amnt2</span>,<span class="va">log_funded_amnt</span>,<span class="va">pub_rec</span>,<span class="va">emp_length_10</span>,</span>
 <span>                       <span class="va">owner</span>,<span class="va">renter</span>,<span class="va">pub_rec_bankruptcies</span>,<span class="va">revol_util</span>,<span class="va">revol_bal</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>Let us standardize the data:</p>
 <div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/scale.html">scale</a></span><span class="op">(</span><span class="va">credit</span><span class="op">$</span><span class="va">int_rate</span><span class="op">)</span></span>
-<span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/scale.html">scale</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/scale.html">scale</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
+<span><span class="va">indic_complete_cases</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/complete.cases.html">complete.cases</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
+<span><span class="va">y</span> <span class="op">&lt;-</span> <span class="va">y</span><span class="op">[</span><span class="va">indic_complete_cases</span><span class="op">]</span>  <span class="co"># to remove observations with NaN's</span></span>
+<span><span class="va">x</span> <span class="op">&lt;-</span> <span class="va">x</span><span class="op">[</span><span class="va">indic_complete_cases</span>,<span class="op">]</span> <span class="co"># to remove observations with NaN's</span></span></code></pre></div>
 <p>Next, we define the set of <span class="math inline">\(\lambda\)</span> we will use, and run the ridge and lasso regressions:</p>
 <div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">grid.lambda</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">.2</span>,by<span class="op">=</span><span class="fl">.005</span><span class="op">)</span></span>
@@ -1611,24 +1614,23 @@ f(\boldsymbol\beta) &amp; = &amp; \sum_{j=2}^K |\beta_j| \quad \mbox{(lasso)}.
 <div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/coef.html">coef</a></span><span class="op">(</span><span class="va">result.lasso</span><span class="op">)</span><span class="op">[</span>,<span class="va">i</span><span class="op">]</span>,<span class="fu"><a href="https://rdrr.io/r/stats/coef.html">coef</a></span><span class="op">(</span><span class="va">result.lasso</span><span class="op">)</span><span class="op">[</span>,<span class="va">j</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
 <pre><code>##                               [,1]          [,2]
-## (Intercept)           1.765744e-15  1.110598e-15
-## delinq_2yrs           8.676715e-02  9.670622e-02
-## annual_inc            0.000000e+00  9.311857e-03
+## (Intercept)           1.765744e-15  1.110599e-15
+## delinq_2yrs           8.676715e-02  9.670618e-02
+## annual_inc            0.000000e+00  9.311842e-03
 ## annual_inc2           0.000000e+00  0.000000e+00
-## log_annual_inc        0.000000e+00 -5.234723e-02
+## log_annual_inc        0.000000e+00 -5.234722e-02
 ## dti                   0.000000e+00 -2.151014e-02
-## installment           1.009769e-01  7.029179e+00
-## verification_status   0.000000e+00  0.000000e+00
-## funded_amnt           0.000000e+00 -6.317410e+00
-## funded_amnt2          0.000000e+00 -3.297231e-01
-## log_funded_amnt       0.000000e+00 -1.759008e-01
-## pub_rec               0.000000e+00  4.703269e-02
-## emp_length_10         0.000000e+00 -2.007768e-02
-## owner                 0.000000e+00 -7.949554e-03
-## renter               -7.300395e-03 -4.329810e-02
+## installment           1.009769e-01  7.029183e+00
+## funded_amnt           0.000000e+00 -6.317414e+00
+## funded_amnt2          0.000000e+00 -3.297226e-01
+## log_funded_amnt       0.000000e+00 -1.759003e-01
+## pub_rec               0.000000e+00  4.703266e-02
+## emp_length_10         0.000000e+00 -2.007767e-02
+## owner                 0.000000e+00 -7.949553e-03
+## renter               -7.300395e-03 -4.329808e-02
 ## pub_rec_bankruptcies  0.000000e+00  0.000000e+00
-## revol_util            3.803039e-01  2.496733e-01
-## revol_bal             0.000000e+00 -2.454181e-02</code></pre>
+## revol_util            3.803039e-01  2.496732e-01
+## revol_bal             0.000000e+00 -2.454180e-02</code></pre>
 <div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Compute values of y predicted by the model, for all lambdas:</span></span>
 <span><span class="va">pred1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">result.lasso</span>,<span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span></span>
@@ -1650,7 +1652,7 @@ f(\boldsymbol\beta) &amp; = &amp; \sum_{j=2}^K |\beta_j| \quad \mbox{(lasso)}.
 <pre><code>## [1] 0.004699584</code></pre>
 <div class="sourceCode" id="cb57"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/coef.html">coef</a></span><span class="op">(</span><span class="va">cvglmnet</span>, s <span class="op">=</span> <span class="st">"lambda.min"</span><span class="op">)</span> <span class="co"># associated parameters</span></span></code></pre></div>
-<pre><code>## 18 x 1 sparse Matrix of class "dgCMatrix"
+<pre><code>## 17 x 1 sparse Matrix of class "dgCMatrix"
 ##                                 s1
 ## (Intercept)           1.079910e-15
 ## delinq_2yrs           9.364945e-02
@@ -1659,7 +1661,6 @@ f(\boldsymbol\beta) &amp; = &amp; \sum_{j=2}^K |\beta_j| \quad \mbox{(lasso)}.
 ## log_annual_inc       -5.285472e-02
 ## dti                  -2.249588e-02
 ## installment           7.299546e+00
-## verification_status   .           
 ## funded_amnt          -6.550874e+00
 ## funded_amnt2         -3.598220e-01
 ## log_funded_amnt      -1.838827e-01
@@ -1735,7 +1736,7 @@ f(\boldsymbol\beta) &amp; = &amp; \sum_{j=2}^K |\beta_j| \quad \mbox{(lasso)}.
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Econometrics and Statistics</strong>" was written by Jean-Paul Renne. It was last built on 2024-09-22.</p>
+    <p>"<strong>Econometrics and Statistics</strong>" was written by Jean-Paul Renne. It was last built on 2025-02-13.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
