@@ -165,9 +165,9 @@ These assumptions are analogous to those introduced in the standard linear regre
 
 In matrix form, for a given $i$, the model writes:
 $$
-\bv{y}_i = \bv{x}_i \boldsymbol\beta + \bv{1}\alpha_i + \boldsymbol\varepsilon_i,
+\bv{y}_i = \bv{x}_i \boldsymbol\beta + \bv{1}_T\alpha_i + \boldsymbol\varepsilon_i,
 $$
-where $\bv{1}$ is a $T$-dimensional vector of ones.
+where $\bv{1}_T$ is a $T$-dimensional vector of ones.
 
 This is the **Least Square Dummy Variable (LSDV)** model:
 \begin{equation}
@@ -183,10 +183,10 @@ This is the **Least Square Dummy Variable (LSDV)** model:
 with:
 $$
 \bv{D} = \underbrace{ \left[\begin{array}{cccc}
-\bv{1}&\bv{0}&\dots&\bv{0}\\
-\bv{0}&\bv{1}&\dots&\bv{0}\\
+\bv{1}_T&\bv{0}&\dots&\bv{0}\\
+\bv{0}&\bv{1}_T&\dots&\bv{0}\\
 &&\vdots&\\
-\bv{0}&\bv{0}&\dots&\bv{1}\\
+\bv{0}&\bv{0}&\dots&\bv{1}_T\\
 \end{array}\right]}_{(nT \times n)}.
 $$
 
@@ -236,7 +236,7 @@ s^2 \left( \bv{Z}'\bv{Z}\right)^{-1} \quad with \quad s^2 = \frac{\bv{e}'\bv{e}}
 $$
 where $\bv{e}$ is the $(nT) \times 1$ vector of OLS residuals.
 
-There is an alternative way of expressing the LSDV estimators. It involves the residual-maker matrix matrix $\bv{M_D}=\bv{I} - \bv{D}(\bv{D}'\bv{D})^{-1}\bv{D}'$ (see Eq. \@ref(eq:Mres)), which acts as an operator that removes entity-specific means, i.e.:
+There is an alternative way of expressing the LSDV estimators. It involves the residual-maker matrix matrix $\bv{M_D}=Id - \bv{D}(\bv{D}'\bv{D})^{-1}\bv{D}'$ (see Eq. \@ref(eq:Mres)), which acts as an operator that removes entity-specific means, i.e.:
 $$
 \tilde{\bv{Y}} = \bv{M_D}\bv{Y}, \quad \tilde{\bv{X}} = \bv{M_D}\bv{X} \quad and \quad \tilde{\boldsymbol\varepsilon} = \bv{M_D}\boldsymbol\varepsilon.
 $$
@@ -360,6 +360,16 @@ eq1_noFE <- lm(dhpreal ~ stir + ltrate,data=JST)
 eq1_FE   <- lm(dhpreal ~ stir + ltrate + iso + YEAR,data=JST)
 eq2_noFE <- lm(dhpreal ~ I(ltrate-stir),data=JST)
 eq2_FE <- lm(dhpreal ~ I(ltrate-stir) + iso + YEAR,data=JST)
+stargazer::stargazer(eq1_noFE, eq1_FE, eq2_noFE, eq2_FE, type = "text",
+                     column.labels = c("no FE", "with FE", "no FE","with FE"),
+                     omit = c("iso","YEAR","Constant"),keep.stat = "n",
+                     add.lines=list(c('Country FE','No','Yes','No','Yes'),
+                                    c('Year FE','No','Yes','No','Yes')))
+```
+
+If we suspect heteroskedasticity and autocorrelation (HAC) in the residuals, we can apply cluster corrections (see Section \@ref(Clusters)):
+
+```{r JSTpanel20, warning=FALSE, message=FALSE}
 vcov_cluster1_noFE <- vcovCL(eq1_noFE, cluster = JST[, c("iso","YEAR")])
 vcov_cluster1_FE   <- vcovCL(eq1_FE, cluster = JST[, c("iso","YEAR")])
 vcov_cluster2_noFE <- vcovCL(eq2_noFE, cluster = JST[, c("iso","YEAR")])
@@ -417,13 +427,16 @@ $$
 \vdots && \ddots && \vdots \\
 \sigma_u^2 & \sigma_u^2 & \sigma_u^2 & \dots & \sigma_\varepsilon^2+\sigma_u^2\\
 \end{array}
-\right] = \sigma_\varepsilon^2\bv{I} + \sigma_u^2\bv{1}\bv{1}'.
+\right] = \sigma_\varepsilon^2Id_T + \sigma_u^2\bv{1}_T\bv{1}_T',
 $$
+where $Id_T$ is the identity matrix of dimension $T \times T$, and $\bv{1}_T$ is a $T$-dimensional vector of ones.
 
 Denoting by $\boldsymbol\Sigma$ the covariance matrix of $\boldsymbol\eta = [\boldsymbol\eta_1',\dots,\boldsymbol\eta_n']'$, we have:
 $$
-\boldsymbol\Sigma = \bv{I} \otimes \boldsymbol\Gamma.
+\boldsymbol\Sigma = Id_n \otimes \boldsymbol\Gamma.
 $$
+
+where $Id_n$ is the identity matrix of dimension $n \times n$.
 
 If we knew $\boldsymbol\Sigma$, we would apply (feasible) GLS (Eq. \@ref(eq:betaGLS), in Section \@ref(GLS)):
 $$
@@ -431,9 +444,9 @@ $$
 $$
 (As explained in Section \@ref(GLS), this amounts to regressing ${\boldsymbol\Sigma^{-1/2}}'\bv{y}$ on ${\boldsymbol\Sigma^{-1/2}}'\bv{X}$.)
 
-It can be checked that $\boldsymbol\Sigma^{-1/2} = \bv{I} \otimes (\boldsymbol\Gamma^{-1/2})$ where
+It can be checked that $\boldsymbol\Sigma^{-1/2} = Id_n \otimes (\boldsymbol\Gamma^{-1/2})$ where
 $$
-\boldsymbol\Gamma^{-1/2} = \frac{1}{\sigma_\varepsilon}\left( \bv{I} - \frac{\theta}{T}\bv{1}\bv{1}'\right),\quad \mbox{with}\quad\theta = 1 - \frac{\sigma_\varepsilon}{\sqrt{\sigma_\varepsilon^2+T\sigma_u^2}}.
+\boldsymbol\Gamma^{-1/2} = \frac{1}{\sigma_\varepsilon}\left( Id_T - \frac{\theta}{T}\bv{1}_T\bv{1}_T'\right),\quad \mbox{with}\quad\theta = 1 - \frac{\sigma_\varepsilon}{\sqrt{\sigma_\varepsilon^2+T\sigma_u^2}}.
 $$
 
 Hence, if we knew $\boldsymbol\Sigma$, we would transform the data as follows:
@@ -447,7 +460,7 @@ y_{i,t} - \bar{y}_i = [\bv{x}_{i,t} - \bar{\bv{x}}_i]'\boldsymbol\beta + (\varep
 \end{equation}
 The previous equation can be consistently estimated by OLS. (Although the residuals are correlated across $t$'s for the observations pertaining to a given entity, the OLS remain consistent; see Prop. \@ref(prp:XXX).)
 
-We have $\mathbb{E}\left[\sum_{i=1}^{T}(\varepsilon_{i,t}-\bar{\varepsilon}_i)^2\right] = (T-1)\sigma_{\varepsilon}^2$.
+We have $\mathbb{E}\left[\sum_{t=1}^{T}(\varepsilon_{i,t}-\bar{\varepsilon}_i)^2\right] = (T-1)\sigma_{\varepsilon}^2$.
 
 The $\varepsilon_{i,t}$'s are not observed but $\bv{b}$, the OLS estimator of $\boldsymbol\beta$ in Eq. \@ref(eq:OLSRUM), is a consistent estimator of $\boldsymbol\beta$. Using an adjustment for the degrees of freedom, we can approximate their variance with:
 $$
@@ -657,7 +670,7 @@ In several cases, auto-correlation in the variable of interest may stem from an 
 y_{i,t} = \rho y_{i,t-1} + \bv{x}'_{i,t}\underbrace{\boldsymbol\beta}_{K \times 1} + \underbrace{\alpha_i}_{\mbox{Individual effects}} + \varepsilon_{i,t}.(\#eq:paneldyn)
 \end{equation}
 
-In that case, even if the explanatory variables $\bv{x}_{i,t}$  are uncorrelated to the errors $\varepsilon_{i,t}$, we have that the additional *explanatory variable* $y_{i,t-1}$ correlates to the errors $\varepsilon_{i,t-1},\varepsilon_{i,t-2},\dots,\varepsilon_{i,1}$.  As a result, the LSDV estimate of the model parameters $\{\rho,\boldsymbol\beta\}$ may be biased, even if $n$ is large. To see this, notice that the LSDV regression amounts to regressing $\widetilde{\bv{y}}$ on $\widetilde{\bv{X}}$ (see Eq. \@ref(eq:bfixedeffects)), where the elements of $\widetilde{\bv{X}}$ are the explanatory variables to which we subtract their within-sample means. In particular, we have:
+In that case, even if the explanatory variables $\bv{x}_{i,t}$  are uncorrelated to the errors $\varepsilon_{i,t}$, we have that the additional *explanatory variable* $y_{i,t-1}$ correlates to the errors $\varepsilon_{i,t-1},\varepsilon_{i,t-2},\dots,\varepsilon_{i,1}$.  As a result, the LSDV estimate of the model parameters $\{\rho,\boldsymbol\beta\}$ may be biased, even if $n$ is large. To see this, notice that the LSDV regression amounts to regressing $\widetilde{\bv{y}}$ on $\widetilde{\bv{X}}$ (see Eq. \@ref(eq:bfixedeffects)), where the elements of $\widetilde{\bv{X}}$ are the explanatory variables from which we subtract their within-sample means. In particular, we have:
 $$
 \tilde{y}_{i,t-1} = y_{i,t-1} - \frac{1}{T} \sum_{s=1}^{T} y_{i,s-1},
 $$
@@ -932,14 +945,14 @@ knitr::include_graphics("images/Abadie_et_al_2018.png")
 ```
 
 
-In practice, implementing this approach consists in running a linear regression of the type of Eq. \@ref(eq:DiD). These regressions also usually involve controls on top of the fixed effects $\mu_i$. As illustrated in the next subsection, the parameter of interest ($\beta_1$) is often associated with an interaction term.
+In practice, implementing this approach consists in running a linear regression of the type of Eq. \@ref(eq:DiD). These regressions often use time-invariant characteristics as controls instead of the ixed effects $\mu_i$. As illustrated in the next subsection, the parameter of interest ($\beta_1$) is often associated with an interaction term.
 
 <!-- Diff-in-Diff: [Card and Krueger (1994)](https://towardsdatascience.com/analyze-causal-effect-using-diff-in-diff-model-85e07b17e7b7) -->
 
 
 ### Application of the DiD approach
 
-This example is based on the data used in @Meyer_Viscusi_Durbin_1995. This dataset is part of the `wooldridge` package. This paper examines the effect of workers' compensation for injury on time out of work. It exploits a **natural experiment** approach of comparing individuals injured before and after increases in the maximum weekly benefit amount. Specifically, in 1980, the cap on weekly earnings covered by worker’s compensation was increased in Kentucky and Michigan. Let us check whether this new policy was followed by an increase in the amount of time workers spent unemployed (for example, higher compensation may reduce workers' incentives to avoid injury).
+This example is based on the data used in @Meyer_Viscusi_Durbin_1995. This dataset is part of the `wooldridge` package. This paper examines the effect of workers' compensation for injury on time out of work. It exploits a **natural experiment** approach of comparing individuals injured before and after increases in the maximum weekly benefit amount. Specifically, in 1980, the cap on weekly earnings covered by worker’s compensation was increased in Kentucky and Michigan. This can be exploited to check whether this new policy was followed by an increase in the amount of time workers spent unemployed (for example, higher compensation may reduce workers' incentives to avoid injury).
 
 As shown in Figure \@ref(fig:figMeyer), the measure has only affected high-earning workers. The idea exploited by @Meyer_Viscusi_Durbin_1995 was to compare the increase in time out of work before-after 1980 for higher-earnings workers on the one hand (entities who received the treatment) and low-earnings workers on the other hand (control group).
 

@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2024.4.17)  16 FEB 2025 10:14
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2024.4.17)  16 FEB 2025 12:11
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -982,22 +982,21 @@ File: EcoStat_files/figure-latex/simulPanel-1.pdf Graphic file (type pdf)
 <use EcoStat_files/figure-latex/simulPanel-1.pdf>
 File: EcoStat_files/figure-latex/cigarettes-1.pdf Graphic file (type pdf)
 <use EcoStat_files/figure-latex/cigarettes-1.pdf>
-[82] [83] [84] [85] [86] [87]
-Underfull \vbox (badness 1552) has occurred while \output is active []
-
-[88] [89] [90]
+[82] [83] [84] [85] [86] [87] [88] [89] [90] [91]
 File: EcoStat_files/figure-latex/airbnb-1.pdf Graphic file (type pdf)
 <use EcoStat_files/figure-latex/airbnb-1.pdf>
-[91] [92]
+[92] [93]
 File: EcoStat_files/figure-latex/airbnb3-1.pdf Graphic file (type pdf)
 <use EcoStat_files/figure-latex/airbnb3-1.pdf>
-[93] [94]
+
+Underfull \vbox (badness 3942) has occurred while \output is active []
+
+[94] [95]
 File: EcoStat_files/figure-latex/dynpanel1-1.pdf Graphic file (type pdf)
 <use EcoStat_files/figure-latex/dynpanel1-1.pdf>
-[95] [96] [97] [98] [99] [100] [101]
+[96] [97] [98] [99] [100] [101] [102]
 File: images/Abadie_et_al_2018.pdf Graphic file (type pdf)
 <use images/Abadie_et_al_2018.pdf>
-[102]
 File: images/Figure_Meyer_et_al.pdf Graphic file (type pdf)
 <use images/Figure_Meyer_et_al.pdf>
 [103] [104] [105] [106
@@ -1013,17 +1012,17 @@ File: EcoStat_files/figure-latex/MLE2-1.pdf Graphic file (type pdf)
 File: EcoStat_files/figure-latex/MLE3-1.pdf Graphic file (type pdf)
 <use EcoStat_files/figure-latex/MLE3-1.pdf>
 [115] [116]
-Underfull \hbox (badness 1721) in paragraph at lines 4456--4457
+Underfull \hbox (badness 1721) in paragraph at lines 4497--4498
 []\TU/lmr/m/n/12 The Cauchy-Schwarz inequality implies that $[] []
  []
 
 
-Underfull \hbox (badness 4001) in paragraph at lines 4456--4457
+Underfull \hbox (badness 4001) in paragraph at lines 4497--4498
 [][][][][][][][][][][][] [][][][] [][][][][]$\TU/lmr/m/n/12 . Now, $[][][][][][][][][] [][][][] [][][] [] [][] [][][][][][][][][] [][][][] []
  []
 
 
-Overfull \hbox (20.45735pt too wide) in paragraph at lines 4456--4457
+Overfull \hbox (20.45735pt too wide) in paragraph at lines 4497--4498
 [] [][] [][][][][][][][] [][][][] [] []$ \TU/lmr/m/n/12 because $[]$ is unbiased. Therefore $[][][][][][][][][][][] [] [][][][][][][][][][] [][][][][][][][][][]$.
  []
 
@@ -1035,23 +1034,23 @@ File: EcoStat_files/figure-latex/smidistri-1.pdf Graphic file (type pdf)
 <use EcoStat_files/figure-latex/smidistri-1.pdf>
 [122] [123] [124]
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/b/n' will be
-(Font)              scaled to size 10.0pt on input line 4852.
+(Font)              scaled to size 10.0pt on input line 4893.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/b/n' will be
-(Font)              scaled to size 7.0pt on input line 4852.
+(Font)              scaled to size 7.0pt on input line 4893.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/b/n' will be
-(Font)              scaled to size 5.0pt on input line 4852.
+(Font)              scaled to size 5.0pt on input line 4893.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/b/n' will be
-(Font)              scaled to size 10.00092pt on input line 4852.
+(Font)              scaled to size 10.00092pt on input line 4893.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/b/n' will be
-(Font)              scaled to size 7.00064pt on input line 4852.
+(Font)              scaled to size 7.00064pt on input line 4893.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/b/n' will be
-(Font)              scaled to size 5.00046pt on input line 4852.
+(Font)              scaled to size 5.00046pt on input line 4893.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/b/n' will be
-(Font)              scaled to size 9.99893pt on input line 4852.
+(Font)              scaled to size 9.99893pt on input line 4893.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/b/n' will be
-(Font)              scaled to size 6.99925pt on input line 4852.
+(Font)              scaled to size 6.99925pt on input line 4893.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/b/n' will be
-(Font)              scaled to size 4.99947pt on input line 4852.
+(Font)              scaled to size 4.99947pt on input line 4893.
 [125] [126] [127] [128]
 File: EcoStat_files/figure-latex/MCMC1-1.pdf Graphic file (type pdf)
 <use EcoStat_files/figure-latex/MCMC1-1.pdf>
@@ -1116,7 +1115,7 @@ Chapter 9.
 File: EcoStat_files/figure-latex/USydsPCA1-1.pdf Graphic file (type pdf)
 <use EcoStat_files/figure-latex/USydsPCA1-1.pdf>
 [171] [172] [173] [174]
-Underfull \hbox (badness 2237) in paragraph at lines 6880--6881
+Underfull \hbox (badness 2237) in paragraph at lines 6921--6922
 []$[] [] [] [][][][]$ \TU/lmr/m/n/12 is a convex function. Therefore $[][][][] [] [][][][][][][][][][][] []
  []
 
@@ -1125,10 +1124,10 @@ File: EcoStat_files/figure-latex/Cauchy-1.pdf Graphic file (type pdf)
 <use EcoStat_files/figure-latex/Cauchy-1.pdf>
 [176] [177] [178]
 
-Package hyperref Warning: Suppressing link with empty target on input line 7049.
+Package hyperref Warning: Suppressing link with empty target on input line 7090.
 
 [179]
-Overfull \hbox (31.16512pt too wide) in paragraph at lines 7120--7121
+Overfull \hbox (31.16512pt too wide) in paragraph at lines 7161--7162
 []\TU/lmr/m/n/12 Let us introduce the r.v. $[][] [][] [][][] [] [][]$. We have $[][][][][] [] [][]$.
  []
 
@@ -1137,22 +1136,22 @@ File: EcoStat_files/figure-latex/inverseMills-1.pdf Graphic file (type pdf)
 <use EcoStat_files/figure-latex/inverseMills-1.pdf>
 [181] [182] [183] [184] [185]
 
-LaTeX Warning: Reference `(' on page 186 undefined on input line 7391.
+LaTeX Warning: Reference `(' on page 186 undefined on input line 7432.
 
 
-LaTeX Warning: Reference `(' on page 186 undefined on input line 7406.
+LaTeX Warning: Reference `(' on page 186 undefined on input line 7447.
 
 [186] [187]
 
-LaTeX Warning: Reference `prp:estimVARGaussian' on page 188 undefined on input line 7495.
+LaTeX Warning: Reference `prp:estimVARGaussian' on page 188 undefined on input line 7536.
 
 [188] [189]
-Overfull \hbox (7.90913pt too wide) in paragraph at lines 7544--7611
+Overfull \hbox (7.90913pt too wide) in paragraph at lines 7585--7652
  [][] 
  []
 
 
-Overfull \hbox (58.83714pt too wide) in paragraph at lines 7723--7776
+Overfull \hbox (58.83714pt too wide) in paragraph at lines 7764--7817
  [][] 
  []
 

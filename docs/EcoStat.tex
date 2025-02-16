@@ -1194,7 +1194,7 @@ The estimated residuals are:
 \begin{equation}
 \mathbf{e} = \mathbf{y} - \mathbf{X} (\mathbf{X}'\mathbf{X})^{-1} \mathbf{X}' \mathbf{y} = \mathbf{M} \mathbf{y},\label{eq:Mres}
 \end{equation}
-where \(\mathbf{M} := \mathbf{I} - \mathbf{X} (\mathbf{X}'\mathbf{X})^{-1} \mathbf{X}'\) is called the \textbf{residual maker} matrix.
+where \(\mathbf{M} := Id - \mathbf{X} (\mathbf{X}'\mathbf{X})^{-1} \mathbf{X}'\) is called the \textbf{residual maker} matrix.
 
 Moreover, the fitted values \(\hat{\mathbf{y}}\) are given by:
 \begin{equation}
@@ -1322,7 +1322,7 @@ Together, Hypotheses \ref{hyp:fullrank} to \ref{hyp:noncorrelResid} form the so-
 \end{theorem}
 
 \begin{proof}
-Consider \(\mathbf{b}^* = C \mathbf{y}\), another linear unbiased estimator of \(\boldsymbol\beta\). Since it is unbiased, we must have \(\mathbb{E}(C\mathbf{y}|\mathbf{X}) = \mathbb{E}(C\mathbf{X}\boldsymbol\beta + C\boldsymbol\varepsilon|\mathbf{X}) = \boldsymbol\beta\). We have \(\mathbb{E}(C\boldsymbol\varepsilon|\mathbf{X})=C\mathbb{E}(\boldsymbol\varepsilon|\mathbf{X})=0\) (by \ref{hyp:exogeneity}). Therefore \(\mathbf{b}^*\) is unbiased if \(\mathbb{E}(C\mathbf{X})\boldsymbol\beta=\boldsymbol\beta\). This has to be the case for any \(\boldsymbol\beta\), which implies that we must have \(C\mathbf{X}=\mathbf{I}\). Let us compute \(\mathbb{V}ar(\mathbf{b^*}|\mathbf{X})\). For this, we introduce \(D = C - (\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\), which is such that \(D\mathbf{y}=\mathbf{b}^*-\mathbf{b}\). The fact that \(C\mathbf{X}=\mathbf{I}\) implies that \(D\mathbf{X} = \mathbf{0}\). We have \(\mathbb{V}ar(\mathbf{b^*}|\mathbf{X}) = \mathbb{V}ar(C \mathbf{y}|\mathbf{X}) =\mathbb{V}ar(C \boldsymbol\varepsilon|\mathbf{X}) = \sigma^2CC'\) (by Assumptions \ref{hyp:homoskedasticity} and \ref{hyp:noncorrelResid}, see Prop. \ref{prp:Sigma}). Using \(C=D+(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\) and exploiting the fact that \(D\mathbf{X} = \mathbf{0}\) leads to:
+Consider \(\mathbf{b}^* = C \mathbf{y}\), another linear unbiased estimator of \(\boldsymbol\beta\). Since it is unbiased, we must have \(\mathbb{E}(C\mathbf{y}|\mathbf{X}) = \mathbb{E}(C\mathbf{X}\boldsymbol\beta + C\boldsymbol\varepsilon|\mathbf{X}) = \boldsymbol\beta\). We have \(\mathbb{E}(C\boldsymbol\varepsilon|\mathbf{X})=C\mathbb{E}(\boldsymbol\varepsilon|\mathbf{X})=0\) (by \ref{hyp:exogeneity}). Therefore \(\mathbf{b}^*\) is unbiased if \(\mathbb{E}(C\mathbf{X})\boldsymbol\beta=\boldsymbol\beta\). This has to be the case for any \(\boldsymbol\beta\), which implies that we must have \(C\mathbf{X}=Id\). Let us compute \(\mathbb{V}ar(\mathbf{b^*}|\mathbf{X})\). For this, we introduce \(D = C - (\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\), which is such that \(D\mathbf{y}=\mathbf{b}^*-\mathbf{b}\). The fact that \(C\mathbf{X}=Id\) implies that \(D\mathbf{X} = \mathbf{0}\). We have \(\mathbb{V}ar(\mathbf{b^*}|\mathbf{X}) = \mathbb{V}ar(C \mathbf{y}|\mathbf{X}) =\mathbb{V}ar(C \boldsymbol\varepsilon|\mathbf{X}) = \sigma^2CC'\) (by Assumptions \ref{hyp:homoskedasticity} and \ref{hyp:noncorrelResid}, see Prop. \ref{prp:Sigma}). Using \(C=D+(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\) and exploiting the fact that \(D\mathbf{X} = \mathbf{0}\) leads to:
 \[
 \mathbb{V}ar(\mathbf{b^*}|\mathbf{X}) =\sigma^2\left[(D+(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}')(D+(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}')'\right] = \mathbb{V}ar(\mathbf{b}|\mathbf{X}) + \sigma^2 \mathbf{D}\mathbf{D}'.
 \]
@@ -1340,7 +1340,7 @@ The Frish-Waugh theorem (Theorem \ref{thm:FW}) reveals the relationship between 
 \item
   \(\mathbf{b}^{\mathbf{y}/\mathbf{X}}\): OLS estimates of \(\boldsymbol\beta\),
 \item
-  \(\mathbf{M}^{\mathbf{X}}\): residual-maker matrix of any regression on \(\mathbf{X}\) (given by \(\mathbf{I} - \mathbf{X} (\mathbf{X}'\mathbf{X})^{-1} \mathbf{X}'\)),
+  \(\mathbf{M}^{\mathbf{X}}\): residual-maker matrix of any regression on \(\mathbf{X}\) (given by \(Id - \mathbf{X} (\mathbf{X}'\mathbf{X})^{-1} \mathbf{X}'\)),
 \item
   \(\mathbf{P}^{\mathbf{X}}\): projection matrix of any regression on \(\mathbf{X}\) (given by \(\mathbf{X} (\mathbf{X}'\mathbf{X})^{-1} \mathbf{X}'\)).
 \end{itemize}
@@ -2258,7 +2258,7 @@ In some cases ---in particular when one assumes a parametric formulation for \(\
 
 Assume \(\boldsymbol\Sigma\) is known (``feasible GLS''). Because \(\boldsymbol\Sigma\) is symmetric positive, it admits a spectral decomposition of the form \(\boldsymbol\Sigma = \mathbf{C} \boldsymbol\Lambda \mathbf{C}'\), where \(\mathbf{C}\) is an orthogonal matrix (i.e.~\(\mathbf{C}\mathbf{C}'=Id\)) and \(\boldsymbol\Lambda\) is a diagonal matrix (the diagonal entries are the eigenvalues of \(\boldsymbol\Sigma\)).
 
-We have \(\boldsymbol\Sigma = (\mathbf{P}\mathbf{P}')^{-1}\) with \(\mathbf{P} = \mathbf{C}\boldsymbol\Lambda^{-1/2}\). Consider the transformed model:
+We have \(\boldsymbol\Sigma = (\mathbf{P}\mathbf{P}')^{-1}\) with \(\mathbf{P} = \mathbf{C}\boldsymbol\Lambda^{-1/2}\). (We also have \(\mathbf{P}=\boldsymbol\Sigma^{-1/2}\).) Consider the transformed model:
 \[
 \mathbf{P}'\mathbf{y} = \mathbf{P}'\mathbf{X}\boldsymbol\beta + \mathbf{P}'\boldsymbol\varepsilon \quad \mbox{or} \quad \mathbf{y}^* = \mathbf{X}^*\boldsymbol\beta + \boldsymbol\varepsilon^*.
 \]
@@ -3127,9 +3127,9 @@ These assumptions are analogous to those introduced in the standard linear regre
 
 In matrix form, for a given \(i\), the model writes:
 \[
-\mathbf{y}_i = \mathbf{x}_i \boldsymbol\beta + \mathbf{1}\alpha_i + \boldsymbol\varepsilon_i,
+\mathbf{y}_i = \mathbf{x}_i \boldsymbol\beta + \mathbf{1}_T\alpha_i + \boldsymbol\varepsilon_i,
 \]
-where \(\mathbf{1}\) is a \(T\)-dimensional vector of ones.
+where \(\mathbf{1}_T\) is a \(T\)-dimensional vector of ones.
 
 This is the \textbf{Least Square Dummy Variable (LSDV)} model:
 \begin{equation}
@@ -3145,10 +3145,10 @@ This is the \textbf{Least Square Dummy Variable (LSDV)} model:
 with:
 \[
 \mathbf{D} = \underbrace{ \left[\begin{array}{cccc}
-\mathbf{1}&\mathbf{0}&\dots&\mathbf{0}\\
-\mathbf{0}&\mathbf{1}&\dots&\mathbf{0}\\
+\mathbf{1}_T&\mathbf{0}&\dots&\mathbf{0}\\
+\mathbf{0}&\mathbf{1}_T&\dots&\mathbf{0}\\
 &&\vdots&\\
-\mathbf{0}&\mathbf{0}&\dots&\mathbf{1}\\
+\mathbf{0}&\mathbf{0}&\dots&\mathbf{1}_T\\
 \end{array}\right]}_{(nT \times n)}.
 \]
 
@@ -3198,7 +3198,7 @@ s^2 \left( \mathbf{Z}'\mathbf{Z}\right)^{-1} \quad with \quad s^2 = \frac{\mathb
 \]
 where \(\mathbf{e}\) is the \((nT) \times 1\) vector of OLS residuals.
 
-There is an alternative way of expressing the LSDV estimators. It involves the residual-maker matrix matrix \(\mathbf{M_D}=\mathbf{I} - \mathbf{D}(\mathbf{D}'\mathbf{D})^{-1}\mathbf{D}'\) (see Eq. \eqref{eq:Mres}), which acts as an operator that removes entity-specific means, i.e.:
+There is an alternative way of expressing the LSDV estimators. It involves the residual-maker matrix matrix \(\mathbf{M_D}=Id - \mathbf{D}(\mathbf{D}'\mathbf{D})^{-1}\mathbf{D}'\) (see Eq. \eqref{eq:Mres}), which acts as an operator that removes entity-specific means, i.e.:
 \[
 \tilde{\mathbf{Y}} = \mathbf{M_D}\mathbf{Y}, \quad \tilde{\mathbf{X}} = \mathbf{M_D}\mathbf{X} \quad and \quad \tilde{\boldsymbol\varepsilon} = \mathbf{M_D}\boldsymbol\varepsilon.
 \]
@@ -3328,6 +3328,44 @@ In this example, we want to estimate the effect of short and long-term interest 
 \NormalTok{eq1\_FE   }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(dhpreal }\SpecialCharTok{\textasciitilde{}}\NormalTok{ stir }\SpecialCharTok{+}\NormalTok{ ltrate }\SpecialCharTok{+}\NormalTok{ iso }\SpecialCharTok{+}\NormalTok{ YEAR,}\AttributeTok{data=}\NormalTok{JST)}
 \NormalTok{eq2\_noFE }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(dhpreal }\SpecialCharTok{\textasciitilde{}} \FunctionTok{I}\NormalTok{(ltrate}\SpecialCharTok{{-}}\NormalTok{stir),}\AttributeTok{data=}\NormalTok{JST)}
 \NormalTok{eq2\_FE }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(dhpreal }\SpecialCharTok{\textasciitilde{}} \FunctionTok{I}\NormalTok{(ltrate}\SpecialCharTok{{-}}\NormalTok{stir) }\SpecialCharTok{+}\NormalTok{ iso }\SpecialCharTok{+}\NormalTok{ YEAR,}\AttributeTok{data=}\NormalTok{JST)}
+\NormalTok{stargazer}\SpecialCharTok{::}\FunctionTok{stargazer}\NormalTok{(eq1\_noFE, eq1\_FE, eq2\_noFE, eq2\_FE, }\AttributeTok{type =} \StringTok{"text"}\NormalTok{,}
+                     \AttributeTok{column.labels =} \FunctionTok{c}\NormalTok{(}\StringTok{"no FE"}\NormalTok{, }\StringTok{"with FE"}\NormalTok{, }\StringTok{"no FE"}\NormalTok{,}\StringTok{"with FE"}\NormalTok{),}
+                     \AttributeTok{omit =} \FunctionTok{c}\NormalTok{(}\StringTok{"iso"}\NormalTok{,}\StringTok{"YEAR"}\NormalTok{,}\StringTok{"Constant"}\NormalTok{),}\AttributeTok{keep.stat =} \StringTok{"n"}\NormalTok{,}
+                     \AttributeTok{add.lines=}\FunctionTok{list}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{\textquotesingle{}Country FE\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}No\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}Yes\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}No\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}Yes\textquotesingle{}}\NormalTok{),}
+                                    \FunctionTok{c}\NormalTok{(}\StringTok{\textquotesingle{}Year FE\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}No\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}Yes\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}No\textquotesingle{}}\NormalTok{,}\StringTok{\textquotesingle{}Yes\textquotesingle{}}\NormalTok{)))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## ========================================================
+##                            Dependent variable:          
+##                  ---------------------------------------
+##                                  dhpreal                
+##                    no FE    with FE    no FE    with FE 
+##                     (1)       (2)       (3)       (4)   
+## --------------------------------------------------------
+## stir             0.485***  0.532***                     
+##                   (0.114)   (0.134)                     
+##                                                         
+## ltrate           -0.690*** -0.384***                    
+##                   (0.127)   (0.145)                     
+##                                                         
+## I(ltrate - stir)                     -0.476*** -0.475***
+##                                       (0.115)   (0.125) 
+##                                                         
+## --------------------------------------------------------
+## Country FE          No        Yes       No        Yes   
+## Year FE             No        Yes       No        Yes   
+## Observations       1,141     1,141     1,141     1,141  
+## ========================================================
+## Note:                        *p<0.1; **p<0.05; ***p<0.01
+\end{verbatim}
+
+If we suspect heteroskedasticity and autocorrelation (HAC) in the residuals, we can apply cluster corrections (see Section \ref{Clusters}):
+
+\begin{Shaded}
+\begin{Highlighting}[]
 \NormalTok{vcov\_cluster1\_noFE }\OtherTok{\textless{}{-}} \FunctionTok{vcovCL}\NormalTok{(eq1\_noFE, }\AttributeTok{cluster =}\NormalTok{ JST[, }\FunctionTok{c}\NormalTok{(}\StringTok{"iso"}\NormalTok{,}\StringTok{"YEAR"}\NormalTok{)])}
 \NormalTok{vcov\_cluster1\_FE   }\OtherTok{\textless{}{-}} \FunctionTok{vcovCL}\NormalTok{(eq1\_FE, }\AttributeTok{cluster =}\NormalTok{ JST[, }\FunctionTok{c}\NormalTok{(}\StringTok{"iso"}\NormalTok{,}\StringTok{"YEAR"}\NormalTok{)])}
 \NormalTok{vcov\_cluster2\_noFE }\OtherTok{\textless{}{-}} \FunctionTok{vcovCL}\NormalTok{(eq2\_noFE, }\AttributeTok{cluster =}\NormalTok{ JST[, }\FunctionTok{c}\NormalTok{(}\StringTok{"iso"}\NormalTok{,}\StringTok{"YEAR"}\NormalTok{)])}
@@ -3411,13 +3449,16 @@ Introducing the notations \(\eta_{i,t} = u_i + \varepsilon_{i,t}\) and \(\boldsy
 \vdots && \ddots && \vdots \\
 \sigma_u^2 & \sigma_u^2 & \sigma_u^2 & \dots & \sigma_\varepsilon^2+\sigma_u^2\\
 \end{array}
-\right] = \sigma_\varepsilon^2\mathbf{I} + \sigma_u^2\mathbf{1}\mathbf{1}'.
+\right] = \sigma_\varepsilon^2Id_T + \sigma_u^2\mathbf{1}_T\mathbf{1}_T',
 \]
+where \(Id_T\) is the identity matrix of dimension \(T \times T\), and \(\mathbf{1}_T\) is a \(T\)-dimensional vector of ones.
 
 Denoting by \(\boldsymbol\Sigma\) the covariance matrix of \(\boldsymbol\eta = [\boldsymbol\eta_1',\dots,\boldsymbol\eta_n']'\), we have:
 \[
-\boldsymbol\Sigma = \mathbf{I} \otimes \boldsymbol\Gamma.
+\boldsymbol\Sigma = Id_n \otimes \boldsymbol\Gamma.
 \]
+
+where \(Id_n\) is the identity matrix of dimension \(n \times n\).
 
 If we knew \(\boldsymbol\Sigma\), we would apply (feasible) GLS (Eq. \eqref{eq:betaGLS}, in Section \ref{GLS}):
 \[
@@ -3425,9 +3466,9 @@ If we knew \(\boldsymbol\Sigma\), we would apply (feasible) GLS (Eq. \eqref{eq:b
 \]
 (As explained in Section \ref{GLS}, this amounts to regressing \({\boldsymbol\Sigma^{-1/2}}'\mathbf{y}\) on \({\boldsymbol\Sigma^{-1/2}}'\mathbf{X}\).)
 
-It can be checked that \(\boldsymbol\Sigma^{-1/2} = \mathbf{I} \otimes (\boldsymbol\Gamma^{-1/2})\) where
+It can be checked that \(\boldsymbol\Sigma^{-1/2} = Id_n \otimes (\boldsymbol\Gamma^{-1/2})\) where
 \[
-\boldsymbol\Gamma^{-1/2} = \frac{1}{\sigma_\varepsilon}\left( \mathbf{I} - \frac{\theta}{T}\mathbf{1}\mathbf{1}'\right),\quad \mbox{with}\quad\theta = 1 - \frac{\sigma_\varepsilon}{\sqrt{\sigma_\varepsilon^2+T\sigma_u^2}}.
+\boldsymbol\Gamma^{-1/2} = \frac{1}{\sigma_\varepsilon}\left( Id_T - \frac{\theta}{T}\mathbf{1}_T\mathbf{1}_T'\right),\quad \mbox{with}\quad\theta = 1 - \frac{\sigma_\varepsilon}{\sqrt{\sigma_\varepsilon^2+T\sigma_u^2}}.
 \]
 
 Hence, if we knew \(\boldsymbol\Sigma\), we would transform the data as follows:
@@ -3441,7 +3482,7 @@ y_{i,t} - \bar{y}_i = [\mathbf{x}_{i,t} - \bar{\mathbf{x}}_i]'\boldsymbol\beta +
 \end{equation}
 The previous equation can be consistently estimated by OLS. (Although the residuals are correlated across \(t\)'s for the observations pertaining to a given entity, the OLS remain consistent; see Prop. \ref{prp:XXX}.)
 
-We have \(\mathbb{E}\left[\sum_{i=1}^{T}(\varepsilon_{i,t}-\bar{\varepsilon}_i)^2\right] = (T-1)\sigma_{\varepsilon}^2\).
+We have \(\mathbb{E}\left[\sum_{t=1}^{T}(\varepsilon_{i,t}-\bar{\varepsilon}_i)^2\right] = (T-1)\sigma_{\varepsilon}^2\).
 
 The \(\varepsilon_{i,t}\)'s are not observed but \(\mathbf{b}\), the OLS estimator of \(\boldsymbol\beta\) in Eq. \eqref{eq:OLSRUM}, is a consistent estimator of \(\boldsymbol\beta\). Using an adjustment for the degrees of freedom, we can approximate their variance with:
 \[
@@ -3586,7 +3627,7 @@ In several cases, auto-correlation in the variable of interest may stem from an 
 y_{i,t} = \rho y_{i,t-1} + \mathbf{x}'_{i,t}\underbrace{\boldsymbol\beta}_{K \times 1} + \underbrace{\alpha_i}_{\mbox{Individual effects}} + \varepsilon_{i,t}.\label{eq:paneldyn}
 \end{equation}
 
-In that case, even if the explanatory variables \(\mathbf{x}_{i,t}\) are uncorrelated to the errors \(\varepsilon_{i,t}\), we have that the additional \emph{explanatory variable} \(y_{i,t-1}\) correlates to the errors \(\varepsilon_{i,t-1},\varepsilon_{i,t-2},\dots,\varepsilon_{i,1}\). As a result, the LSDV estimate of the model parameters \(\{\rho,\boldsymbol\beta\}\) may be biased, even if \(n\) is large. To see this, notice that the LSDV regression amounts to regressing \(\widetilde{\mathbf{y}}\) on \(\widetilde{\mathbf{X}}\) (see Eq. \eqref{eq:bfixedeffects}), where the elements of \(\widetilde{\mathbf{X}}\) are the explanatory variables to which we subtract their within-sample means. In particular, we have:
+In that case, even if the explanatory variables \(\mathbf{x}_{i,t}\) are uncorrelated to the errors \(\varepsilon_{i,t}\), we have that the additional \emph{explanatory variable} \(y_{i,t-1}\) correlates to the errors \(\varepsilon_{i,t-1},\varepsilon_{i,t-2},\dots,\varepsilon_{i,1}\). As a result, the LSDV estimate of the model parameters \(\{\rho,\boldsymbol\beta\}\) may be biased, even if \(n\) is large. To see this, notice that the LSDV regression amounts to regressing \(\widetilde{\mathbf{y}}\) on \(\widetilde{\mathbf{X}}\) (see Eq. \eqref{eq:bfixedeffects}), where the elements of \(\widetilde{\mathbf{X}}\) are the explanatory variables from which we subtract their within-sample means. In particular, we have:
 \[
 \tilde{y}_{i,t-1} = y_{i,t-1} - \frac{1}{T} \sum_{s=1}^{T} y_{i,s-1},
 \]
@@ -3918,12 +3959,12 @@ This is illustrated by Figure \ref{fig:figAbadie}, which represents the generic 
 \caption{Source: Abadie et al., (1998).}\label{fig:figAbadie}
 \end{figure}
 
-In practice, implementing this approach consists in running a linear regression of the type of Eq. \eqref{eq:DiD}. These regressions also usually involve controls on top of the fixed effects \(\mu_i\). As illustrated in the next subsection, the parameter of interest (\(\beta_1\)) is often associated with an interaction term.
+In practice, implementing this approach consists in running a linear regression of the type of Eq. \eqref{eq:DiD}. These regressions often use time-invariant characteristics as controls instead of the ixed effects \(\mu_i\). As illustrated in the next subsection, the parameter of interest (\(\beta_1\)) is often associated with an interaction term.
 
 \hypertarget{application-of-the-did-approach}{%
 \subsection{Application of the DiD approach}\label{application-of-the-did-approach}}
 
-This example is based on the data used in \citet{Meyer_Viscusi_Durbin_1995}. This dataset is part of the \texttt{wooldridge} package. This paper examines the effect of workers' compensation for injury on time out of work. It exploits a \textbf{natural experiment} approach of comparing individuals injured before and after increases in the maximum weekly benefit amount. Specifically, in 1980, the cap on weekly earnings covered by worker's compensation was increased in Kentucky and Michigan. Let us check whether this new policy was followed by an increase in the amount of time workers spent unemployed (for example, higher compensation may reduce workers' incentives to avoid injury).
+This example is based on the data used in \citet{Meyer_Viscusi_Durbin_1995}. This dataset is part of the \texttt{wooldridge} package. This paper examines the effect of workers' compensation for injury on time out of work. It exploits a \textbf{natural experiment} approach of comparing individuals injured before and after increases in the maximum weekly benefit amount. Specifically, in 1980, the cap on weekly earnings covered by worker's compensation was increased in Kentucky and Michigan. This can be exploited to check whether this new policy was followed by an increase in the amount of time workers spent unemployed (for example, higher compensation may reduce workers' incentives to avoid injury).
 
 As shown in Figure \ref{fig:figMeyer}, the measure has only affected high-earning workers. The idea exploited by \citet{Meyer_Viscusi_Durbin_1995} was to compare the increase in time out of work before-after 1980 for higher-earnings workers on the one hand (entities who received the treatment) and low-earnings workers on the other hand (control group).
 
