@@ -194,12 +194,37 @@ lines(trans3d(x=c(min.x,max.x), y = c(max(all.y),max(all.y)),
 ```
 
 
+Figure \@ref(fig:figFXYdecompo) illustrates why we have
+\begin{eqnarray*}
+&&\mathbb{P}(x < X \le x + \varepsilon,y < Y \le y + \varepsilon)\\
+&=& F_{XY}(x + \varepsilon,y + \varepsilon)-F_{XY}(x,y + \varepsilon)-F_{XY}(x + \varepsilon,y)+F_{XY}(x,y).
+\end{eqnarray*}
+Let us denote by $P_\Omega$ the probability that the point of coordinate $(X,Y)$ is included in the $\Omega$ area. We have:
+$$
+P_{B} = P_{B+C+D+E} - P_{E+D} - P_{E+C} + P_E,
+$$
+which implies that
+\begin{eqnarray*}
+&&\mathbb{P}(x<X\le x+ \varepsilon,y<Y\le y+ \varepsilon) \\
+&=& \mathbb{P}(X\le x+ \varepsilon,Y\le y+ \varepsilon)  - \mathbb{P}(X\le x+ \varepsilon,Y\le y)  - \mathbb{P}(X\le x,Y\le y+ \varepsilon)\\
+&&+ \mathbb{P}(X\le x,Y\le y).
+\end{eqnarray*}
+
+```{r figFXYdecompo, fig.align = 'center', out.width = "80%", fig.cap = "Area $B+C+D+E$ encompasses the points with coordinates $(X,Y)$ such that $X\\le x+\\varepsilon$ and $Y \\le y + \\varepsilon$. Area $D+E$ encompasses the points with coordinates $(X,Y)$ such that $X\\le x+\\varepsilon$ and $Y \\le y$. Area $C+E$ encompasses the points with coordinates $(X,Y)$ such that $X\\le x$ and $Y \\le y + \\varepsilon$.", echo=FALSE}
+knitr::include_graphics("images/tikzplot.png")
+```
+
+
 :::{.definition #condcdf name="Conditional probability distribution function"}
 If $X$ and $Y$ are continuous r.v., then the distribution of $X$ conditional on $Y=y$, which we denote by $f_{X|Y}(x,y)$, satisfies:
 $$
 f_{X|Y}(x,y)=\lim_{\varepsilon \rightarrow 0} \frac{\mathbb{P}(x < X \le x + \varepsilon|Y=y)}{\varepsilon}.
 $$
 :::
+
+
+
+
 
 :::{.proposition #condcdf name="Conditional probability distribution function"}
 We have

@@ -1,87 +1,87 @@
 \contentsline {chapter}{\numberline {1}Basic statistical results}{7}{chapter.1}%
 \contentsline {section}{\numberline {1.1}Cumulative and probability density funtions (c.d.f. and p.d.f.)}{7}{section.1.1}%
-\contentsline {section}{\numberline {1.2}Law of iterated expectations}{10}{section.1.2}%
-\contentsline {section}{\numberline {1.3}Law of total variance}{12}{section.1.3}%
-\contentsline {section}{\numberline {1.4}About consistent estimators}{12}{section.1.4}%
-\contentsline {chapter}{\numberline {2}Central Limit Theorem}{15}{chapter.2}%
-\contentsline {section}{\numberline {2.1}Law of large numbers}{15}{section.2.1}%
-\contentsline {section}{\numberline {2.2}Central Limit Theorem (CLT)}{17}{section.2.2}%
-\contentsline {section}{\numberline {2.3}Comparison of sample means}{18}{section.2.3}%
-\contentsline {chapter}{\numberline {3}Statistical tests}{21}{chapter.3}%
-\contentsline {section}{\numberline {3.1}Size and power of a test}{22}{section.3.1}%
-\contentsline {section}{\numberline {3.2}The different types of statistical tests}{23}{section.3.2}%
-\contentsline {section}{\numberline {3.3}Asymptotic properties of statistical tests}{27}{section.3.3}%
-\contentsline {section}{\numberline {3.4}Example: Normality tests}{29}{section.3.4}%
-\contentsline {chapter}{\numberline {4}Linear Regressions}{33}{chapter.4}%
-\contentsline {section}{\numberline {4.1}Hypotheses}{33}{section.4.1}%
-\contentsline {section}{\numberline {4.2}Least square estimation}{37}{section.4.2}%
-\contentsline {subsection}{\numberline {4.2.1}Derivation of the OLS formula}{37}{subsection.4.2.1}%
-\contentsline {subsection}{\numberline {4.2.2}Properties of the OLS estimate (small sample)}{38}{subsection.4.2.2}%
-\contentsline {subsection}{\numberline {4.2.3}Goodness of fit}{41}{subsection.4.2.3}%
-\contentsline {subsection}{\numberline {4.2.4}Inference and confidence intervals (in small sample)}{44}{subsection.4.2.4}%
-\contentsline {subsection}{\numberline {4.2.5}Testing a set of linear restrictions}{49}{subsection.4.2.5}%
-\contentsline {subsection}{\numberline {4.2.6}Large Sample Properties}{51}{subsection.4.2.6}%
-\contentsline {section}{\numberline {4.3}Common pitfalls in linear regressions}{52}{section.4.3}%
-\contentsline {subsection}{\numberline {4.3.1}Multicollinearity}{52}{subsection.4.3.1}%
-\contentsline {subsection}{\numberline {4.3.2}Omitted variables}{52}{subsection.4.3.2}%
-\contentsline {subsection}{\numberline {4.3.3}Irrelevant variable}{53}{subsection.4.3.3}%
-\contentsline {section}{\numberline {4.4}Instrumental Variables}{54}{section.4.4}%
-\contentsline {section}{\numberline {4.5}General Regression Model (GRM) and robust covariance matrices}{60}{section.4.5}%
-\contentsline {subsection}{\numberline {4.5.1}Presentation of the General Regression Model (GRM)}{61}{subsection.4.5.1}%
-\contentsline {subsection}{\numberline {4.5.2}Generalized Least Squares}{62}{subsection.4.5.2}%
-\contentsline {subsection}{\numberline {4.5.3}Asymptotic properties of the OLS estimator in the GRM framework}{62}{subsection.4.5.3}%
-\contentsline {subsection}{\numberline {4.5.4}HAC-robust covariance matrices}{64}{subsection.4.5.4}%
-\contentsline {subsection}{\numberline {4.5.5}Cluster-robust covariance matrices}{69}{subsection.4.5.5}%
-\contentsline {section}{\numberline {4.6}Shrinkage methods}{73}{section.4.6}%
-\contentsline {chapter}{\numberline {5}Panel regressions}{79}{chapter.5}%
-\contentsline {section}{\numberline {5.1}Specification and notations}{79}{section.5.1}%
-\contentsline {section}{\numberline {5.2}Three standard cases}{82}{section.5.2}%
-\contentsline {section}{\numberline {5.3}Estimation of Fixed-Effects Models}{82}{section.5.3}%
-\contentsline {section}{\numberline {5.4}Estimation of random effects models}{86}{section.5.4}%
-\contentsline {section}{\numberline {5.5}Dynamic Panel Regressions}{91}{section.5.5}%
-\contentsline {section}{\numberline {5.6}Introduction to program evaluation}{98}{section.5.6}%
-\contentsline {subsection}{\numberline {5.6.1}Presentation of the problem}{98}{subsection.5.6.1}%
-\contentsline {subsection}{\numberline {5.6.2}Randomized controlled trials (RCTs)}{99}{subsection.5.6.2}%
-\contentsline {subsection}{\numberline {5.6.3}Difference-in-Difference (DiD) approach}{99}{subsection.5.6.3}%
-\contentsline {subsection}{\numberline {5.6.4}Application of the DiD approach}{101}{subsection.5.6.4}%
-\contentsline {chapter}{\numberline {6}Estimation Methods}{105}{chapter.6}%
-\contentsline {section}{\numberline {6.1}Generalized Method of Moments (GMM)}{105}{section.6.1}%
-\contentsline {subsection}{\numberline {6.1.1}Definition of the GMM estimator}{105}{subsection.6.1.1}%
-\contentsline {subsection}{\numberline {6.1.2}Asymptotic distribution of the GMM estimator}{107}{subsection.6.1.2}%
-\contentsline {subsection}{\numberline {6.1.3}Testing hypotheses in the GMM framework}{107}{subsection.6.1.3}%
-\contentsline {subsection}{\numberline {6.1.4}Example: Estimation of the Stochastic Discount Factor (s.d.f.)}{108}{subsection.6.1.4}%
-\contentsline {section}{\numberline {6.2}Maximum Likelihood Estimation}{111}{section.6.2}%
-\contentsline {subsection}{\numberline {6.2.1}Intuition}{111}{subsection.6.2.1}%
-\contentsline {subsection}{\numberline {6.2.2}Definition and properties}{113}{subsection.6.2.2}%
-\contentsline {subsection}{\numberline {6.2.3}To sum up -- MLE in practice}{116}{subsection.6.2.3}%
-\contentsline {subsection}{\numberline {6.2.4}Example: MLE estimation of a mixture of Gaussian distribution}{117}{subsection.6.2.4}%
-\contentsline {subsection}{\numberline {6.2.5}Test procedures}{121}{subsection.6.2.5}%
-\contentsline {section}{\numberline {6.3}Bayesian approach}{123}{section.6.3}%
-\contentsline {subsection}{\numberline {6.3.1}Introduction}{123}{subsection.6.3.1}%
-\contentsline {subsection}{\numberline {6.3.2}Monte-Carlo Markov Chains}{124}{subsection.6.3.2}%
-\contentsline {subsection}{\numberline {6.3.3}Example: AR(1) specification}{126}{subsection.6.3.3}%
-\contentsline {chapter}{\numberline {7}Binary-choice models}{131}{chapter.7}%
-\contentsline {section}{\numberline {7.1}Interpretation in terms of latent variable, and utility-based models}{133}{section.7.1}%
-\contentsline {section}{\numberline {7.2}Alternative-Varying Regressors}{135}{section.7.2}%
-\contentsline {section}{\numberline {7.3}Estimation}{137}{section.7.3}%
-\contentsline {section}{\numberline {7.4}Marginal effects}{138}{section.7.4}%
-\contentsline {section}{\numberline {7.5}Goodness of fit}{138}{section.7.5}%
-\contentsline {section}{\numberline {7.6}Predictions and ROC curves}{143}{section.7.6}%
-\contentsline {chapter}{\numberline {8}Time Series}{145}{chapter.8}%
-\contentsline {section}{\numberline {8.1}Introduction to time series}{145}{section.8.1}%
-\contentsline {section}{\numberline {8.2}Univariate processes}{152}{section.8.2}%
-\contentsline {subsection}{\numberline {8.2.1}Moving Average (MA) processes}{152}{subsection.8.2.1}%
-\contentsline {subsection}{\numberline {8.2.2}Auto-Regressive (AR) processes}{155}{subsection.8.2.2}%
-\contentsline {subsection}{\numberline {8.2.3}PACF approach to identify AR/MA processes}{158}{subsection.8.2.3}%
-\contentsline {section}{\numberline {8.3}Forecasting}{159}{section.8.3}%
-\contentsline {chapter}{\numberline {9}Appendix}{167}{chapter.9}%
-\contentsline {section}{\numberline {9.1}Principal component analysis (PCA)}{167}{section.9.1}%
-\contentsline {section}{\numberline {9.2}Linear algebra: definitions and results}{169}{section.9.2}%
-\contentsline {section}{\numberline {9.3}Statistical analysis: definitions and results}{172}{section.9.3}%
-\contentsline {subsection}{\numberline {9.3.1}Moments and statistics}{172}{subsection.9.3.1}%
-\contentsline {subsection}{\numberline {9.3.2}Standard distributions}{174}{subsection.9.3.2}%
-\contentsline {subsection}{\numberline {9.3.3}Stochastic convergences}{175}{subsection.9.3.3}%
-\contentsline {subsection}{\numberline {9.3.4}Central limit theorem}{178}{subsection.9.3.4}%
-\contentsline {section}{\numberline {9.4}Some properties of Gaussian variables}{178}{section.9.4}%
-\contentsline {section}{\numberline {9.5}Proofs}{180}{section.9.5}%
-\contentsline {section}{\numberline {9.6}Statistical Tables}{188}{section.9.6}%
+\contentsline {section}{\numberline {1.2}Law of iterated expectations}{11}{section.1.2}%
+\contentsline {section}{\numberline {1.3}Law of total variance}{13}{section.1.3}%
+\contentsline {section}{\numberline {1.4}About consistent estimators}{14}{section.1.4}%
+\contentsline {chapter}{\numberline {2}Central Limit Theorem}{17}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Law of large numbers}{17}{section.2.1}%
+\contentsline {section}{\numberline {2.2}Central Limit Theorem (CLT)}{19}{section.2.2}%
+\contentsline {section}{\numberline {2.3}Comparison of sample means}{20}{section.2.3}%
+\contentsline {chapter}{\numberline {3}Statistical tests}{23}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Size and power of a test}{24}{section.3.1}%
+\contentsline {section}{\numberline {3.2}The different types of statistical tests}{25}{section.3.2}%
+\contentsline {section}{\numberline {3.3}Asymptotic properties of statistical tests}{29}{section.3.3}%
+\contentsline {section}{\numberline {3.4}Example: Normality tests}{31}{section.3.4}%
+\contentsline {chapter}{\numberline {4}Linear Regressions}{35}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Hypotheses}{35}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Least square estimation}{39}{section.4.2}%
+\contentsline {subsection}{\numberline {4.2.1}Derivation of the OLS formula}{39}{subsection.4.2.1}%
+\contentsline {subsection}{\numberline {4.2.2}Properties of the OLS estimate (small sample)}{40}{subsection.4.2.2}%
+\contentsline {subsection}{\numberline {4.2.3}Goodness of fit}{43}{subsection.4.2.3}%
+\contentsline {subsection}{\numberline {4.2.4}Inference and confidence intervals (in small sample)}{46}{subsection.4.2.4}%
+\contentsline {subsection}{\numberline {4.2.5}Testing a set of linear restrictions}{51}{subsection.4.2.5}%
+\contentsline {subsection}{\numberline {4.2.6}Large Sample Properties}{53}{subsection.4.2.6}%
+\contentsline {section}{\numberline {4.3}Common pitfalls in linear regressions}{54}{section.4.3}%
+\contentsline {subsection}{\numberline {4.3.1}Multicollinearity}{54}{subsection.4.3.1}%
+\contentsline {subsection}{\numberline {4.3.2}Omitted variables}{54}{subsection.4.3.2}%
+\contentsline {subsection}{\numberline {4.3.3}Irrelevant variable}{55}{subsection.4.3.3}%
+\contentsline {section}{\numberline {4.4}Instrumental Variables}{56}{section.4.4}%
+\contentsline {section}{\numberline {4.5}General Regression Model (GRM) and robust covariance matrices}{62}{section.4.5}%
+\contentsline {subsection}{\numberline {4.5.1}Presentation of the General Regression Model (GRM)}{63}{subsection.4.5.1}%
+\contentsline {subsection}{\numberline {4.5.2}Generalized Least Squares}{64}{subsection.4.5.2}%
+\contentsline {subsection}{\numberline {4.5.3}Asymptotic properties of the OLS estimator in the GRM framework}{64}{subsection.4.5.3}%
+\contentsline {subsection}{\numberline {4.5.4}HAC-robust covariance matrices}{66}{subsection.4.5.4}%
+\contentsline {subsection}{\numberline {4.5.5}Cluster-robust covariance matrices}{71}{subsection.4.5.5}%
+\contentsline {section}{\numberline {4.6}Shrinkage methods}{75}{section.4.6}%
+\contentsline {chapter}{\numberline {5}Panel regressions}{81}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Specification and notations}{81}{section.5.1}%
+\contentsline {section}{\numberline {5.2}Three standard cases}{84}{section.5.2}%
+\contentsline {section}{\numberline {5.3}Estimation of Fixed-Effects Models}{84}{section.5.3}%
+\contentsline {section}{\numberline {5.4}Estimation of random effects models}{88}{section.5.4}%
+\contentsline {section}{\numberline {5.5}Dynamic Panel Regressions}{93}{section.5.5}%
+\contentsline {section}{\numberline {5.6}Introduction to program evaluation}{100}{section.5.6}%
+\contentsline {subsection}{\numberline {5.6.1}Presentation of the problem}{100}{subsection.5.6.1}%
+\contentsline {subsection}{\numberline {5.6.2}Randomized controlled trials (RCTs)}{101}{subsection.5.6.2}%
+\contentsline {subsection}{\numberline {5.6.3}Difference-in-Difference (DiD) approach}{101}{subsection.5.6.3}%
+\contentsline {subsection}{\numberline {5.6.4}Application of the DiD approach}{103}{subsection.5.6.4}%
+\contentsline {chapter}{\numberline {6}Estimation Methods}{107}{chapter.6}%
+\contentsline {section}{\numberline {6.1}Generalized Method of Moments (GMM)}{107}{section.6.1}%
+\contentsline {subsection}{\numberline {6.1.1}Definition of the GMM estimator}{107}{subsection.6.1.1}%
+\contentsline {subsection}{\numberline {6.1.2}Asymptotic distribution of the GMM estimator}{109}{subsection.6.1.2}%
+\contentsline {subsection}{\numberline {6.1.3}Testing hypotheses in the GMM framework}{109}{subsection.6.1.3}%
+\contentsline {subsection}{\numberline {6.1.4}Example: Estimation of the Stochastic Discount Factor (s.d.f.)}{110}{subsection.6.1.4}%
+\contentsline {section}{\numberline {6.2}Maximum Likelihood Estimation}{113}{section.6.2}%
+\contentsline {subsection}{\numberline {6.2.1}Intuition}{113}{subsection.6.2.1}%
+\contentsline {subsection}{\numberline {6.2.2}Definition and properties}{115}{subsection.6.2.2}%
+\contentsline {subsection}{\numberline {6.2.3}To sum up -- MLE in practice}{118}{subsection.6.2.3}%
+\contentsline {subsection}{\numberline {6.2.4}Example: MLE estimation of a mixture of Gaussian distribution}{119}{subsection.6.2.4}%
+\contentsline {subsection}{\numberline {6.2.5}Test procedures}{123}{subsection.6.2.5}%
+\contentsline {section}{\numberline {6.3}Bayesian approach}{125}{section.6.3}%
+\contentsline {subsection}{\numberline {6.3.1}Introduction}{125}{subsection.6.3.1}%
+\contentsline {subsection}{\numberline {6.3.2}Monte-Carlo Markov Chains}{126}{subsection.6.3.2}%
+\contentsline {subsection}{\numberline {6.3.3}Example: AR(1) specification}{128}{subsection.6.3.3}%
+\contentsline {chapter}{\numberline {7}Binary-choice models}{133}{chapter.7}%
+\contentsline {section}{\numberline {7.1}Interpretation in terms of latent variable, and utility-based models}{135}{section.7.1}%
+\contentsline {section}{\numberline {7.2}Alternative-Varying Regressors}{137}{section.7.2}%
+\contentsline {section}{\numberline {7.3}Estimation}{139}{section.7.3}%
+\contentsline {section}{\numberline {7.4}Marginal effects}{140}{section.7.4}%
+\contentsline {section}{\numberline {7.5}Goodness of fit}{140}{section.7.5}%
+\contentsline {section}{\numberline {7.6}Predictions and ROC curves}{145}{section.7.6}%
+\contentsline {chapter}{\numberline {8}Time Series}{147}{chapter.8}%
+\contentsline {section}{\numberline {8.1}Introduction to time series}{147}{section.8.1}%
+\contentsline {section}{\numberline {8.2}Univariate processes}{154}{section.8.2}%
+\contentsline {subsection}{\numberline {8.2.1}Moving Average (MA) processes}{154}{subsection.8.2.1}%
+\contentsline {subsection}{\numberline {8.2.2}Auto-Regressive (AR) processes}{157}{subsection.8.2.2}%
+\contentsline {subsection}{\numberline {8.2.3}PACF approach to identify AR/MA processes}{160}{subsection.8.2.3}%
+\contentsline {section}{\numberline {8.3}Forecasting}{161}{section.8.3}%
+\contentsline {chapter}{\numberline {9}Appendix}{169}{chapter.9}%
+\contentsline {section}{\numberline {9.1}Principal component analysis (PCA)}{169}{section.9.1}%
+\contentsline {section}{\numberline {9.2}Linear algebra: definitions and results}{171}{section.9.2}%
+\contentsline {section}{\numberline {9.3}Statistical analysis: definitions and results}{174}{section.9.3}%
+\contentsline {subsection}{\numberline {9.3.1}Moments and statistics}{174}{subsection.9.3.1}%
+\contentsline {subsection}{\numberline {9.3.2}Standard distributions}{176}{subsection.9.3.2}%
+\contentsline {subsection}{\numberline {9.3.3}Stochastic convergences}{177}{subsection.9.3.3}%
+\contentsline {subsection}{\numberline {9.3.4}Central limit theorem}{180}{subsection.9.3.4}%
+\contentsline {section}{\numberline {9.4}Some properties of Gaussian variables}{180}{section.9.4}%
+\contentsline {section}{\numberline {9.5}Proofs}{182}{section.9.5}%
+\contentsline {section}{\numberline {9.6}Statistical Tables}{190}{section.9.6}%

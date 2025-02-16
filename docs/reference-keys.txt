@@ -5,6 +5,7 @@ def:jointcdf
 fig:essai3d2
 def:jointpdf
 fig:essai3d
+fig:figFXYdecompo
 def:condcdf
 prp:condcdf
 def:independent

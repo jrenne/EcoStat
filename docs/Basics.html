@@ -143,6 +143,27 @@ Figure 1.1: The volume between the horizontal plane (<span class="math inline">\
 Figure 1.2: Assume that the basis of the black column is defined by those points whose <span class="math inline">\(x\)</span>-coordinates are between <span class="math inline">\(x\)</span> and <span class="math inline">\(x+\varepsilon\)</span> and <span class="math inline">\(y\)</span>-coordinates are between <span class="math inline">\(y\)</span> and <span class="math inline">\(y+\varepsilon\)</span>. Then the volume of the black column is equal to <span class="math inline">\(\mathbb{P}(x &lt; X \le x+\varepsilon,y &lt; Y \le y+\varepsilon)\)</span>, which is approximately equal to <span class="math inline">\(f_{XY}(x,y)\varepsilon^2\)</span> if <span class="math inline">\(\varepsilon\)</span> is small.
 </p>
 </div>
+<p>Figure <a href="Basics.html#fig:figFXYdecompo">1.3</a> illustrates why we have
+<span class="math display">\[\begin{eqnarray*}
+&amp;&amp;\mathbb{P}(x &lt; X \le x + \varepsilon,y &lt; Y \le y + \varepsilon)\\
+&amp;=&amp; F_{XY}(x + \varepsilon,y + \varepsilon)-F_{XY}(x,y + \varepsilon)-F_{XY}(x + \varepsilon,y)+F_{XY}(x,y).
+\end{eqnarray*}\]</span>
+Let us denote by <span class="math inline">\(P_\Omega\)</span> the probability that the point of coordinate <span class="math inline">\((X,Y)\)</span> is included in the <span class="math inline">\(\Omega\)</span> area. We have:
+<span class="math display">\[
+P_{B} = P_{B+C+D+E} - P_{E+D} - P_{E+C} + P_E,
+\]</span>
+which implies that
+<span class="math display">\[\begin{eqnarray*}
+&amp;&amp;\mathbb{P}(x&lt;X\le x+ \varepsilon,y&lt;Y\le y+ \varepsilon) \\
+&amp;=&amp; \mathbb{P}(X\le x+ \varepsilon,Y\le y+ \varepsilon)  - \mathbb{P}(X\le x+ \varepsilon,Y\le y)  - \mathbb{P}(X\le x,Y\le y+ \varepsilon)\\
+&amp;&amp;+ \mathbb{P}(X\le x,Y\le y).
+\end{eqnarray*}\]</span></p>
+<div class="figure" style="text-align: center">
+<span style="display:block;" id="fig:figFXYdecompo"></span>
+<img src="images/tikzplot.png" alt="Area $B+C+D+E$ encompasses the points with coordinates $(X,Y)$ such that $X\le x+\varepsilon$ and $Y \le y + \varepsilon$. Area $D+E$ encompasses the points with coordinates $(X,Y)$ such that $X\le x+\varepsilon$ and $Y \le y$. Area $C+E$ encompasses the points with coordinates $(X,Y)$ such that $X\le x$ and $Y \le y + \varepsilon$." width="80%"><p class="caption">
+Figure 1.3: Area <span class="math inline">\(B+C+D+E\)</span> encompasses the points with coordinates <span class="math inline">\((X,Y)\)</span> such that <span class="math inline">\(X\le x+\varepsilon\)</span> and <span class="math inline">\(Y \le y + \varepsilon\)</span>. Area <span class="math inline">\(D+E\)</span> encompasses the points with coordinates <span class="math inline">\((X,Y)\)</span> such that <span class="math inline">\(X\le x+\varepsilon\)</span> and <span class="math inline">\(Y \le y\)</span>. Area <span class="math inline">\(C+E\)</span> encompasses the points with coordinates <span class="math inline">\((X,Y)\)</span> such that <span class="math inline">\(X\le x\)</span> and <span class="math inline">\(Y \le y + \varepsilon\)</span>.
+</p>
+</div>
 <div class="definition">
 <p><span id="def:condcdf" class="definition"><strong>Definition 1.5  (Conditional probability distribution function) </strong></span>If <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are continuous r.v., then the distribution of <span class="math inline">\(X\)</span> conditional on <span class="math inline">\(Y=y\)</span>, which we denote by <span class="math inline">\(f_{X|Y}(x,y)\)</span>, satisfies:
 <span class="math display">\[
@@ -216,11 +237,11 @@ where <span class="math inline">\(B\)</span>, <span class="math inline">\(Y_1\)<
 <span class="math display">\[
 B \sim \mbox{Bernoulli}(p),\quad Y_1 \sim \mathcal{N}(\mu_1,\sigma_1^2), \quad \mbox{and}\quad Y_2 \sim \mathcal{N}(\mu_2,\sigma_2^2).
 \]</span></p>
-<p>Figure <a href="Basics.html#fig:mixtureG">1.3</a> displays the pdfs associated with three different mixtures of Gaussian distributions. (This <a href="https://jrenne.shinyapps.io/density/">web-interface</a> allows to produce the pdf associated for any other parameterization.)</p>
+<p>Figure <a href="Basics.html#fig:mixtureG">1.4</a> displays the pdfs associated with three different mixtures of Gaussian distributions. (This <a href="https://jrenne.shinyapps.io/density/">web-interface</a> allows to produce the pdf associated for any other parameterization.)</p>
 <div class="figure" style="text-align: left-aligned">
 <span style="display:block;" id="fig:mixtureG"></span>
 <img src="EcoStat_files/figure-html/mixtureG-1.png" alt="Example of pdfs of mixtures of Gaussian distribututions." width="95%"><p class="caption">
-Figure 1.3: Example of pdfs of mixtures of Gaussian distribututions.
+Figure 1.4: Example of pdfs of mixtures of Gaussian distribututions.
 </p>
 </div>
 <p>The law of iterated expectations gives:
@@ -239,11 +260,11 @@ X = \left\{
 \end{array}
 \right.
 \]</span>
-Conditionally on <span class="math inline">\(\theta\)</span>, it can be seen that we have <span class="math inline">\(\mathbb{E}(X|\theta)=\cos(\theta)/2\)</span> (see Figure <a href="Basics.html#fig:Buffon">1.4</a>).</p>
+Conditionally on <span class="math inline">\(\theta\)</span>, it can be seen that we have <span class="math inline">\(\mathbb{E}(X|\theta)=\cos(\theta)/2\)</span> (see Figure <a href="Basics.html#fig:Buffon">1.5</a>).</p>
 <div class="figure" style="text-align: left-aligned">
 <span style="display:block;" id="fig:Buffon"></span>
 <img src="EcoStat_files/figure-html/Buffon-1.png" alt="Schematic representation of the problem." width="95%"><p class="caption">
-Figure 1.4: Schematic representation of the problem.
+Figure 1.5: Schematic representation of the problem.
 </p>
 </div>
 <p>It is reasonable to assume that <span class="math inline">\(\theta\)</span> is uniformly distributed on <span class="math inline">\([-\pi/2,\pi/2]\)</span>, therefore:
@@ -322,7 +343,7 @@ Figure 1.4: Schematic representation of the problem.
 <div class="figure" style="text-align: left-aligned">
 <span style="display:block;" id="fig:figCauchy"></span>
 <img src="EcoStat_files/figure-html/figCauchy-1.png" alt="Simulation of $\bar{X}_n$ when $X_i \sim i.i.d. \mbox{Cauchy}$." width="95%"><p class="caption">
-Figure 1.5: Simulation of <span class="math inline">\(\bar{X}_n\)</span> when <span class="math inline">\(X_i \sim i.i.d. \mbox{Cauchy}\)</span>.
+Figure 1.6: Simulation of <span class="math inline">\(\bar{X}_n\)</span> when <span class="math inline">\(X_i \sim i.i.d. \mbox{Cauchy}\)</span>.
 </p>
 </div>
 </div>
@@ -357,7 +378,7 @@ Figure 1.5: Simulation of <span class="math inline">\(\bar{X}_n\)</span> when <s
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Econometrics and Statistics</strong>" was written by Jean-Paul Renne. It was last built on 2025-02-13.</p>
+    <p>"<strong>Econometrics and Statistics</strong>" was written by Jean-Paul Renne. It was last built on 2025-02-16.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

@@ -134,7 +134,7 @@
 
 \title{Econometrics and Statistics}
 \author{Jean-Paul Renne}
-\date{2025-02-13}
+\date{2025-02-16}
 
 \usepackage{amsthm}
 \newtheorem{theorem}{Theorem}[chapter]
@@ -263,6 +263,31 @@ In particular, we have:
 
 \begin{figure}
 \includegraphics[width=0.95\linewidth]{EcoStat_files/figure-latex/essai3d-1} \caption{Assume that the basis of the black column is defined by those points whose $x$-coordinates are between $x$ and $x+\varepsilon$ and $y$-coordinates are between $y$ and $y+\varepsilon$. Then the volume of the black column is equal to $\mathbb{P}(x < X \le x+\varepsilon,y < Y \le y+\varepsilon)$, which is approximately equal to $f_{XY}(x,y)\varepsilon^2$ if $\varepsilon$ is small.}\label{fig:essai3d}
+\end{figure}
+
+Figure \ref{fig:figFXYdecompo} illustrates why we have
+\begin{eqnarray*}
+&&\mathbb{P}(x < X \le x + \varepsilon,y < Y \le y + \varepsilon)\\
+&=& F_{XY}(x + \varepsilon,y + \varepsilon)-F_{XY}(x,y + \varepsilon)-F_{XY}(x + \varepsilon,y)+F_{XY}(x,y).
+\end{eqnarray*}
+Let us denote by \(P_\Omega\) the probability that the point of coordinate \((X,Y)\) is included in the \(\Omega\) area. We have:
+\[
+P_{B} = P_{B+C+D+E} - P_{E+D} - P_{E+C} + P_E,
+\]
+which implies that
+\begin{eqnarray*}
+&&\mathbb{P}(x<X\le x+ \varepsilon,y<Y\le y+ \varepsilon) \\
+&=& \mathbb{P}(X\le x+ \varepsilon,Y\le y+ \varepsilon)  - \mathbb{P}(X\le x+ \varepsilon,Y\le y)  - \mathbb{P}(X\le x,Y\le y+ \varepsilon)\\
+&&+ \mathbb{P}(X\le x,Y\le y).
+\end{eqnarray*}
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.8\linewidth]{images/tikzplot} 
+
+}
+
+\caption{Area $B+C+D+E$ encompasses the points with coordinates $(X,Y)$ such that $X\le x+\varepsilon$ and $Y \le y + \varepsilon$. Area $D+E$ encompasses the points with coordinates $(X,Y)$ such that $X\le x+\varepsilon$ and $Y \le y$. Area $C+E$ encompasses the points with coordinates $(X,Y)$ such that $X\le x$ and $Y \le y + \varepsilon$.}\label{fig:figFXYdecompo}
 \end{figure}
 
 \begin{definition}[Conditional probability distribution function]
