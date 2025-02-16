@@ -21,7 +21,7 @@ css: "my-style.css"
 
 <!-- # Before starting {#intro .unlisted .unnumbered} -->
 
-This course covers various econometric topics, including linear regression models, discrete-choice models, and an introduction to time series analysis. It provides examples or simulations based on R codes. This course has been developed by [Jean-Paul Renne](https://sites.google.com/site/jeanpaulrenne/home).
+This course covers various econometric topics, including linear regression models, discrete-choice models, and an introduction to time series analysis. It provides examples or simulations based on R codes. This course has been developed by [Jean-Paul Renne](https://www.jprenne.com).
 
 The R codes use various packages that can be obtained from [CRAN](https://cran.r-project.org). Several pieces of code also involve procedures and data from a companion package (`AEC`). This `AEC` package is available on GitHub. To install it, one need to employ the `devtools` library:
 
