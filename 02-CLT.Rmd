@@ -18,7 +18,7 @@ This sample mean is an estimator of the true (population) mean $\mathbb{E}(x_i)$
 
 :::{.theorem #LLN name="Law of large numbers"}
 
-The sample mean is a consistent estimator of the population mean. In other words, the sample mean converges in probability to the population mean.
+If the random variables $x_i$ are i.i.d. and if $\mathbb{E}(x_i)=\mu < \infty$, then the sample mean ($\overline{x}_n$) is a consistent estimator of the population mean ($\mu$). In other words, the sample mean converges in probability to the population mean.
 :::
 :::{.proof}
 See Appendix \@ref(CLTappend).
