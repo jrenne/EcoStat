@@ -54,7 +54,7 @@ The Chebychev inequality (Proposition \@ref(prp:chebychev)) states that, for any
 $$
 \mathbb{P}(|\bar{x}_n-\mu|>\varepsilon) \le \frac{\mathbb{V}ar(\mu - \bar{x}_n)}{\varepsilon^2} = \frac{\sigma^2}{n\varepsilon^2} \underset{n \rightarrow \infty}{\rightarrow} 0.
 $$
-Consider for instance the estimation of the average number of doctor visits (Example \@ref(exm:doctorVisits)). In this example, the sample length is $n=$ `r length(Nb.doct.visits)`, we  have $\bar{x}_n=$ `r round(mean(Nb.doct.visits),2)`, and the variance $\sigma^2$ was approximately equal to `r round(var(Nb.doct.visits),2)`. Therefore, taking $\varepsilon=0.5$, we have that $\mathbb{P}(\bar{x}_n-0.5<\mu<\bar{x}_n+0.5)$ is lower than $\frac{\sigma^2}{n\varepsilon^2} \approx$
+Consider for instance the estimation of the average number of doctor visits (Example \@ref(exm:doctorVisits)). In this example, the sample length is $n=$ `r length(Nb.doct.visits)`, we  have $\bar{x}_n=$ `r round(mean(Nb.doct.visits),2)`, and the variance $\sigma^2$ was approximately equal to `r round(var(Nb.doct.visits),2)`. Therefore, taking $\varepsilon=0.5$, we have that $\mathbb{P}(|\bar{x}_n-\mu|>\varepsilon)$ is lower than $\frac{\sigma^2}{n\varepsilon^2} \approx$
 `r round(var(Nb.doct.visits)/(length(Nb.doct.visits)*0.5^2),3)`.
 
 However, this only gives bounds for such probabilities. The central limit theorem provides richer information, as it gives the approximate distribution of the estimation error.
