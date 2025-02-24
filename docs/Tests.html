@@ -170,8 +170,8 @@ Figure 3.4: One-sided test. Under <span class="math inline">\(H_0\)</span>, <spa
 </p>
 </div>
 <div class="example">
-<p><span id="exm:Factory" class="example"><strong>Example 3.2  (A practical illustration of size and power) </strong></span>Consider a factory that produces metal cylinders whose diameter has to be equal to 1,cm. The tolerance is <span class="math inline">\(a=0.01\)</span> cm. More precisely, more than 90% of the pieces have to satisfy the tolerance for the whole production (say 1.000.000 pieces) to be bought by the client.</p>
-<p>The production technology is such that a proportion <span class="math inline">\(\theta\)</span> (imperfectly known) of the pieces does not satisfy the tolerance. The (population) parameter <span class="math inline">\(\theta\)</span> could be computed by measuring all the pieces but this would be costly. Instead, it is decided that <span class="math inline">\(n \ll 1.000.000\)</span> pieces will be measured. In this context, the null hypothesis <span class="math inline">\(H_0\)</span> is <span class="math inline">\(\theta &lt; 10\%\)</span>. The producing firm would like <span class="math inline">\(H_0\)</span> to be true.</p>
+<p><span id="exm:Factory" class="example"><strong>Example 3.2  (A practical illustration of size and power) </strong></span>Consider a factory that produces metal cylinders whose diameter has to be equal to 1 cm. The tolerance is <span class="math inline">\(a=0.01\)</span> cm. More precisely, more than 90% of the parts have to satisfy the tolerance for the whole production (say 1.000.000 parts) to be bought by the client.</p>
+<p>The production technology is such that a proportion <span class="math inline">\(\theta\)</span> (imperfectly known) of the parts does not satisfy the tolerance. The (population) parameter <span class="math inline">\(\theta\)</span> could be computed by measuring all the parts but this would be costly. Instead, it is decided that <span class="math inline">\(n \ll 1.000.000\)</span> parts will be measured. In this context, the null hypothesis <span class="math inline">\(H_0\)</span> is <span class="math inline">\(\theta &lt; 10\%\)</span>. The producing firm would like <span class="math inline">\(H_0\)</span> to be true.</p>
 <p>Let us denote by <span class="math inline">\(d_i\)</span> the binary indicator defined as:
 <span class="math display">\[
 d_i = \left\{
@@ -181,7 +181,7 @@ d_i = \left\{
 \end{array}
 \right.
 \]</span></p>
-<p>We set <span class="math inline">\(x_n=\sum_{i=1}^n d_i\)</span>. That is, <span class="math inline">\(x_n\)</span> is the number of measured pieces that do not satisfy the tolerance (out of <span class="math inline">\(n\)</span>).</p>
+<p>We set <span class="math inline">\(x_n=\sum_{i=1}^n d_i\)</span>. That is, <span class="math inline">\(x_n\)</span> is the number of measured parts that do not satisfy the tolerance (out of <span class="math inline">\(n\)</span>).</p>
 <p>The decision rule is: accept <span class="math inline">\(H_0\)</span> if <span class="math inline">\(\dfrac{x_n}{n} \le b\)</span>, reject otherwise. A natural choice for <span class="math inline">\(b\)</span> is <span class="math inline">\(b=0.1\)</span>. However, this would not be a conservative choice, since it remains likely that <span class="math inline">\(x_n&lt;0.1\)</span> even if <span class="math inline">\(\mathbb{E}(x_n)=\theta&gt;0.1\)</span> (especially if <span class="math inline">\(n\)</span> is small). Hence, if one chooses <span class="math inline">\(b=0.1\)</span>, the probability of false negative may be high.</p>
 <p>In this simple example, the size and the power of the test can be computed analytically. The test statistic is <span class="math inline">\(S_n=\frac{x_n}{n}\)</span> and the critical region is <span class="math inline">\(\Omega = [b,1]\)</span>. The probability to reject <span class="math inline">\(H_0\)</span> is:
 <span class="math display">\[\begin{eqnarray*}
@@ -378,7 +378,7 @@ Figure 3.7: Distribution of the JB test statistic when the <span class="math inl
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Econometrics and Statistics</strong>" was written by Jean-Paul Renne. It was last built on 2025-02-19.</p>
+    <p>"<strong>Econometrics and Statistics</strong>" was written by Jean-Paul Renne. It was last built on 2025-02-24.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

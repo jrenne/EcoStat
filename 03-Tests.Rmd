@@ -273,9 +273,9 @@ text(x = min.x + .8*(max.x-min.x),y=1.35*max.f,
 
 :::{.example #Factory name="A practical illustration of size and power"}
 
-Consider a factory that produces metal cylinders whose diameter has to be equal to 1\,cm. The tolerance is $a=0.01$ cm. More precisely, more than 90\% of the pieces have to satisfy the tolerance for the whole production (say 1.000.000 pieces) to be bought by the client.
+Consider a factory that produces metal cylinders whose diameter has to be equal to 1 cm. The tolerance is $a=0.01$ cm. More precisely, more than 90\% of the parts have to satisfy the tolerance for the whole production (say 1.000.000 parts) to be bought by the client.
 
-The production technology is such that a proportion $\theta$ (imperfectly known) of the pieces does not satisfy the tolerance. The (population) parameter $\theta$ could be computed by measuring all the pieces but this would be costly. Instead, it is decided that $n \ll 1.000.000$ pieces will be measured. In this context, the null hypothesis $H_0$ is $\theta < 10\%$. The producing firm would like $H_0$ to be true.
+The production technology is such that a proportion $\theta$ (imperfectly known) of the parts does not satisfy the tolerance. The (population) parameter $\theta$ could be computed by measuring all the parts but this would be costly. Instead, it is decided that $n \ll 1.000.000$ parts will be measured. In this context, the null hypothesis $H_0$ is $\theta < 10\%$. The producing firm would like $H_0$ to be true.
 
 Let us denote by $d_i$ the binary indicator defined as:
 $$
@@ -287,7 +287,7 @@ d_i = \left\{
 \right.
 $$
 
-We set $x_n=\sum_{i=1}^n d_i$. That is, $x_n$ is the number of measured pieces that do not satisfy the tolerance (out of $n$).
+We set $x_n=\sum_{i=1}^n d_i$. That is, $x_n$ is the number of measured parts that do not satisfy the tolerance (out of $n$).
 
 The decision rule is: accept $H_0$ if $\dfrac{x_n}{n} \le b$, reject otherwise. A natural choice for $b$ is $b=0.1$. However, this would not be a conservative choice, since it remains likely that $x_n<0.1$ even if $\mathbb{E}(x_n)=\theta>0.1$ (especially if $n$ is small). Hence, if one chooses $b=0.1$, the probability of false negative may be high.
 
