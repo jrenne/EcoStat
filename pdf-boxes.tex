@@ -27,6 +27,8 @@
 % theorem environments. H placement keeps figures inside their statement box.
 \definecolor{DefinitionFill}{HTML}{F2F6F8}
 \definecolor{ResultFill}{HTML}{F0F5F1}
+\definecolor{ExampleFill}{HTML}{FAF6ED}
+\definecolor{ExampleRule}{HTML}{B39A68}
 \definecolor{ResultRule}{HTML}{70917C}
 \mdfdefinestyle{definitionframe}{style=textbookbox,needspace=8\baselineskip,
   backgroundcolor=DefinitionFill,linecolor=ExerciseRule,linewidth=.8pt,
@@ -34,8 +36,16 @@
 \mdfdefinestyle{resultframe}{style=textbookbox,needspace=8\baselineskip,
   backgroundcolor=ResultFill,linecolor=ResultRule,linewidth=.8pt,
   topline=true,bottomline=true,leftline=true,rightline=true}
+% Examples may contain figures and span several pages.
+\mdfdefinestyle{exampleframe}{style=textbookbox,needspace=12\baselineskip,
+  backgroundcolor=ExampleFill,linecolor=ExampleRule,linewidth=.8pt,
+  topline=true,bottomline=true,leftline=true,rightline=true}
 \makeatletter
 \AtBeginDocument{%
+  \@ifundefined{example}{}{%
+    \surroundwithmdframed[style=exampleframe]{example}%
+    \AtBeginEnvironment{example}{\floatplacement{figure}{H}\floatplacement{table}{H}}%
+  }%
   \@ifundefined{definition}{}{%
     \surroundwithmdframed[style=definitionframe]{definition}%
     \AtBeginEnvironment{definition}{\floatplacement{figure}{H}}%

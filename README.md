@@ -91,7 +91,10 @@ environments are in `pdf-boxes.tex` (loaded by `preamble.tex`). Boxed material
 keeps the existing exercise labels and cross-references.
 
 Definitions and assumptions have pale blue-grey boxes; propositions and theorems
-have pale green boxes. Proofs remain outside these frames. These styles are shared
+have pale green boxes. Examples have pale sand boxes in both formats; PDF
+example frames can continue across pages and retain their figures and tables.
+HTML boxes have distinct headings and adapt to narrow screens and reader colour
+themes. Exercises retain transparent HTML interiors. Proofs remain outside these frames. These styles are shared
 by the HTML and PDF builds, and apply to the complete book.
 
 ### Publishing the pilot changes
