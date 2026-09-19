@@ -1,6 +1,6 @@
-# Student-only exercise renderer. Hints and answers live outside this repository.
-read_exercises <- function(topic) {
-  paths <- sort(list.files(file.path("exercises", topic), pattern="\\.md$", full.names=TRUE))
+# Shared exercise renderer. Private answers are loaded only for the instructor edition.
+read_exercises <- function(topic, root=".") {
+  paths <- sort(list.files(file.path(root, "exercises", topic), pattern="\\.md$", full.names=TRUE))
   if (!length(paths)) stop("No exercises found for topic: ", topic)
   entries <- lapply(paths, function(path) {
     meta <- rmarkdown::yaml_front_matter(path)
@@ -20,10 +20,18 @@ read_exercises <- function(topic) {
 
 render_exercises <- function(topic) {
   entries <- read_exercises(topic)
+  answers <- NULL
+  if (isTRUE(getOption("ecostat.show_solutions", FALSE))) {
+    answers <- instructor_records(getOption("ecostat.instructor_dir"))
+    ids <- vapply(entries, `[[`, character(1), "id")
+    if (any(!ids %in% names(answers))) stop("Missing private solutions: ", paste(setdiff(ids,names(answers)),collapse=", "))
+  }
   output <- vapply(entries, function(x) paste0(
     if (knitr::is_latex_output()) "\\Needspace{28\\baselineskip}\n\n" else "",
+    ":::: {.exercisebox data-latex=\"\"}\n\n",
     "::: {.exercise #", x$id, " name=\"", x$title, "\"}\n\n",
     "**", x$difficulty, " | ", x$type, "**  \n",
-    "Review Section \\@ref(", x$related, ").\n\n", x$statement, "\n\n:::\n"), character(1))
+    "Review Section \\@ref(", x$related, ").\n\n", x$statement, "\n\n:::\n\n::::\n",
+    if (!is.null(answers)) paste0("\n",paste(sub("^## (Hint|Solution)$", "**\\1**",answers[[x$id]]$content),collapse="\n"),"\n") else ""), character(1))
   knitr::asis_output(paste(output, collapse="\n"))
 }

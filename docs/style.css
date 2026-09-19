@@ -57,3 +57,68 @@ pre code {
 @media print {
   .course-table { overflow: visible; }
 }
+
+/* End-of-chapter exercises: make each title and question group easy to scan. */
+.book .book-body .page-wrapper .page-inner section.normal div.exercisebox {
+  margin: 1.8em 0;
+  padding: 1em 1.25em;
+  border: 1px solid #9aafb9;
+  border-left: 3px solid #6c94a7;
+  background: #fff;
+}
+.book .book-body .page-wrapper .page-inner section.normal span.exercise {
+  display: block;
+  margin-bottom: .6em;
+}
+
+/* Short practice prompts and recap boxes complement the exercise frames. */
+.book .book-body .page-wrapper .page-inner section.normal .practicebox,
+.book .book-body .page-wrapper .page-inner section.normal .recapbox {
+  margin: 1.4em 0;
+  padding: .85em 1.15em;
+}
+.book .book-body .page-wrapper .page-inner section.normal .practicebox {
+  background: #edf4f7;
+  border-left: 3px solid #6c94a7;
+}
+.book .book-body .page-wrapper .page-inner section.normal .recapbox {
+  background: #f3f5f6;
+}
+.book .book-body .page-wrapper .page-inner section.normal .practicebox > :first-child,
+.book .book-body .page-wrapper .page-inner section.normal .exercisebox > :first-child,
+.book .book-body .page-wrapper .page-inner section.normal .recapbox > :first-child {
+  margin-top: 0;
+}
+.book .book-body .page-wrapper .page-inner section.normal .practicebox > :last-child,
+.book .book-body .page-wrapper .page-inner section.normal .exercisebox > :last-child,
+.book .book-body .page-wrapper .page-inner section.normal .recapbox > :last-child {
+  margin-bottom: 0;
+}
+
+/* Formal definitions and assumptions; propositions/theorems use muted green. */
+.book .book-body .page-wrapper .page-inner section.normal div.definition,
+.book .book-body .page-wrapper .page-inner section.normal div.hypothesis,
+.book .book-body .page-wrapper .page-inner section.normal div.proposition,
+.book .book-body .page-wrapper .page-inner section.normal div.theorem {
+  margin: 1.4em 0;
+  padding: .9em 1.2em;
+  border: 1px solid #9aafb9;
+  background: #f2f6f8;
+}
+.book .book-body .page-wrapper .page-inner section.normal div.proposition,
+.book .book-body .page-wrapper .page-inner section.normal div.theorem {
+  border-color: #70917c;
+  background: #f0f5f1;
+}
+.book .book-body .page-wrapper .page-inner section.normal div.definition > :first-child,
+.book .book-body .page-wrapper .page-inner section.normal div.hypothesis > :first-child,
+.book .book-body .page-wrapper .page-inner section.normal div.proposition > :first-child,
+.book .book-body .page-wrapper .page-inner section.normal div.theorem > :first-child {
+  margin-top: 0;
+}
+.book .book-body .page-wrapper .page-inner section.normal div.definition > :last-child,
+.book .book-body .page-wrapper .page-inner section.normal div.hypothesis > :last-child,
+.book .book-body .page-wrapper .page-inner section.normal div.proposition > :last-child,
+.book .book-body .page-wrapper .page-inner section.normal div.theorem > :last-child {
+  margin-bottom: 0;
+}

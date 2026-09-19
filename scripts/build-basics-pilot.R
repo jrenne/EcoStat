@@ -8,9 +8,12 @@ if (!rmarkdown::pandoc_available() && Sys.info()[["sysname"]] == "Darwin") {
   rmarkdown::find_pandoc(cache=FALSE)
 }
 if (!rmarkdown::pandoc_available()) stop("Pandoc is required.")
-stage <- tempfile("basics-pilot-")
-dir.create(stage)
-for (path in c("R", "exercises", "images", "style.css", "preamble.tex", "pdf-modern.tex",
+source("R/exercises.R")
+source("R/instructor-build.R")
+show_solutions <- edition_setting()
+stage <- if (show_solutions) private_build_stage(root) else tempfile("basics-pilot-")
+if (!dir.exists(stage)) dir.create(stage)
+for (path in c("R", "exercises", "images", "style.css", "preamble.tex", "pdf-modern.tex", "pdf-boxes.tex",
                "01-Basics.Rmd")) {
   if (!file.copy(file.path(root,path), stage, recursive=TRUE)) stop("Cannot copy ", path)
 }
@@ -19,12 +22,14 @@ chapter <- readLines(file.path(stage,"01-Basics.Rmd"), warn=FALSE)
 chapter <- gsub("Appendix \\@ref(StochConvergences)", "The reference notes", chapter, fixed=TRUE)
 writeLines(chapter, file.path(stage,"01-Basics.Rmd"))
 writeLines(c('---', 'title: "Econometrics and Statistics"',
-             'subtitle: "Basic Statistical Results: student pilot"',
+             paste0('subtitle: "Basic Statistical Results: ', if (show_solutions) 'instructor pilot - private' else 'student pilot', '"'),
+             'params:', paste0('  show_solutions: ',tolower(show_solutions)),
              'author: "Jean-Paul Renne"', 'documentclass: book', 'fontsize: 11pt', 'classoption: oneside',
              '---', '', '```{r pilot-setup, include=FALSE}',
+             'source("R/instructor-build.R")', 'configure_edition(params$show_solutions)',
              'source("R/setup.R")', '```', '', '\\newcommand{\\bv}[1]{\\mathbf{#1}}', '',
              '# About this pilot {-}', '',
-             'This preview combines the opening textbook chapter with seven end-of-chapter exercises. Solutions and exercise-specific hints are reserved for teaching sessions.', '',
+             if (show_solutions) 'Private instructor edition: includes hints and solutions after each exercise.' else 'This preview combines the opening textbook chapter with seven end-of-chapter exercises. Solutions and exercise-specific hints are reserved for teaching sessions.', '',
              'The reference notes reproduce the definitions and theorem from elsewhere in the textbook that this chapter cites.'),
            file.path(stage,"index.Rmd"))
 # Reuse exact source blocks instead of maintaining duplicate mathematical definitions.
@@ -56,7 +61,7 @@ for (format in c("bookdown::gitbook", "bookdown::pdf_book")) {
   bookdown::render_book("index.Rmd", output_format=format, clean=TRUE)
 }
 setwd(root)
-destination <- file.path(root,"preview","basics")
+destination <- if (show_solutions) file.path(instructor_directory(root),"Textbook-pilot") else file.path(root,"preview","basics")
 dir.create(destination, recursive=TRUE, showWarnings=FALSE)
 # Remove the retired generated index page from earlier pilot builds.
 unlink(file.path(destination,"exercise-index.html"))
@@ -64,5 +69,5 @@ unlink(file.path(destination,"exercise-index.html"))
 for (path in list.files(file.path(stage,"output"), full.names=TRUE, all.files=TRUE, no..=TRUE)) {
   if (!file.copy(path,destination,recursive=TRUE,overwrite=TRUE)) stop("Cannot copy output: ", path)
 }
-cat("Student preview: ", file.path(destination,"index.html"), "\n", sep="")
+cat(if (show_solutions) "Private instructor preview: " else "Student preview: ", file.path(destination,"index.html"), "\n", sep="")
 cat("Staging directory: ", stage, "\n", sep="")

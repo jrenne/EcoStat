@@ -57,12 +57,9 @@ has a stable ID, descriptive title, level, type, and link to its prerequisite
 section. `R/exercises.R` produces the end-of-chapter exercise section
 from those files. Do not edit generated HTML or TeX to change an exercise.
 
-**Student edition: no solutions or exercise-specific hints.** These are not hidden
-in HTML: they are excluded from the textbook sources and builds. The instructor
-companion lives outside this Git repository, in the sibling course folder
-`../Instructor_materials/Basic_Statistical_Results/`. Keep it out of public hosting.
-Its build script reads student statements from this bank and instructor answers
-from that separate folder, then exports a private PDF and editable TeX.
+With `show_solutions: false`, answers and hints are absent from the generated
+HTML and PDF. Private answer sources stay outside this repository in
+`../Instructor_materials/Basic_Statistical_Results/`.
 
 Build an isolated student preview without rebuilding or replacing `docs/`:
 
@@ -82,8 +79,59 @@ The pilot corrects the joint-density integration order and aligns the Cauchy
 simulation with the location parameter stated in its text. The instructor
 companion records exercise-specific editorial corrections.
 
-The pilot PDF uses `pdf-modern.tex`: Arial text (with TeX Gyre Heros as a
+The textbook PDF uses `pdf-modern.tex`: Arial text (with TeX Gyre Heros as a
 fallback), 11-point type, restrained blue headings, and simple running headers.
 Mathematical fonts remain unchanged. This style is also used by the instructor
-companion; the full-book PDF style has not yet been switched. The exercise index
+edition and the complete-book PDF. The exercise index
 has been removed in favor of the end-of-chapter exercise section.
+
+Practice prompts, exercise statements, and the chapter recap use semantic boxes
+in both formats. Their HTML styles are in `style.css`; the page-breakable PDF
+environments are in `pdf-boxes.tex` (loaded by `preamble.tex`). Boxed material
+keeps the existing exercise labels and cross-references.
+
+Definitions and assumptions have pale blue-grey boxes; propositions and theorems
+have pale green boxes. Proofs remain outside these frames. These styles are shared
+by the HTML and PDF builds, and apply to the complete book.
+
+### Publishing the pilot changes
+
+`preview/` is intentionally ignored by Git. Pushing source changes alone will not
+replace the rendered book in `docs/`. Before publishing the complete book, restore
+the recorded R environment and run `Rscript --vanilla scripts/build.R all`, then
+review and commit the updated `docs/` output together with the source changes.
+Include the new `pdf-boxes.tex` file: `preamble.tex` depends on it. The modern Arial
+PDF style is selected in both the pilot and complete-book configurations.
+Never copy the sibling instructor materials into `docs/` or this repository.
+
+### Show or hide solutions
+
+At the top of `index.Rmd`, change the single switch:
+
+```yaml
+params:
+  show_solutions: false
+```
+
+- `false`: student book, exercises only (the default).
+- `true`: the same book with private hints and solutions following each exercise.
+
+Run the same build command shown above. The pilot reads this setting from
+`index.Rmd`. Student pilot outputs go to `preview/basics/`; instructor pilot
+outputs go to `../Instructor_materials/Basic_Statistical_Results/Textbook-pilot/`.
+For the complete book, `scripts/build.R` uses `docs/` for students and the private
+`Textbook/` folder for instructors. The complete build still requires the recorded
+R environment. With solutions enabled, use these scripts rather than Knit;
+direct rendering inside the repository stops before loading any answers.
+
+The switch controls both HTML and PDF. PDF typography is configured separately
+from HTML styling. Questions, ordering, and numbering are shared; private answers
+are matched by stable ID. No review-confirmation or separate companion build is
+needed. When revising a question, revise its private answer as needed. Keep
+`show_solutions: false` for public builds and keep the instructor folder private.
+Private Markdown is the editable source; generated TeX is an export.
+
+The switch currently covers the seven pilot exercises. A student build works
+without the private folder. An instructor build requires it. An optional
+`ECOSTAT_INSTRUCTOR_DIR` can point to another private folder outside the repository.
+Run `Rscript --vanilla scripts/check-instructor-sync.R` to test edition separation.

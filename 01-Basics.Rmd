@@ -28,7 +28,11 @@ $$
 $$
 Independence means $\mathbb{P}(X=x,Y=y)=\mathbb{P}(X=x)\mathbb{P}(Y=y)$ for every pair of possible values.
 
+::: {.practicebox data-latex=""}
+
 **Practice:** Exercise \@ref(exr:basics-covariance) develops two useful covariance identities.
+
+:::
 
 ### Bayes' rule {#basics-bayes}
 
@@ -44,7 +48,11 @@ $$
 $$
 The distinction between $\mathbb{P}(C\mid A)$ and $\mathbb{P}(A\mid C)$ is essential: the accuracy of a signal does not by itself tell us the probability of an underlying event after observing that signal.
 
+::: {.practicebox data-latex=""}
+
 **Practice:** Exercises \@ref(exr:basics-bayes) and \@ref(exr:basics-joint-probabilities) apply conditioning to a screening system and a joint probability table.
+
+:::
 
 
 ## Cumulative distribution and probability density functions {#basics-densities}
@@ -310,7 +318,11 @@ We have the following:
 
 It is important to note that the absence of correlation between two variables is not a sufficient condition to have independence. Consider for instance the case where $X=Y^2$, with $Y \sim\mathcal{N}(0,1)$. In this case, we have $\mathbb{C}ov(X,Y)=0$, but $X$ and $Y$ are not independent. Indeed, we have for instance $\mathbb{E}(Y^2 \times X)=3$, which is not equal to $\mathbb{E}(Y^2) \times \mathbb{E}(X)=1$. (If $X$ and $Y$ were independent, we should have $\mathbb{E}(Y^2 \times X)=\mathbb{E}(Y^2) \times \mathbb{E}(X)$ according to point 2 above.)
 
+::: {.practicebox data-latex=""}
+
 **Practice:** Exercise \@ref(exr:basics-quantiles) asks how a density changes after conditioning above a quantile.
+
+:::
 
 ## Law of iterated expectations {#basics-iterated-expectations}
 
@@ -463,7 +475,11 @@ $$
 
 
 
+::: {.practicebox data-latex=""}
+
 **Practice:** Exercise \@ref(exr:basics-random-bernoulli) distinguishes conditional and unconditional moments.
+
+:::
 
 ## Law of total variance {#basics-total-variance}
 
@@ -497,7 +513,11 @@ Consider the case of a mixture of Gaussian distributions (Example \@ref(exm:mixt
 
 <!-- \end{footnotesize} -->
 
+::: {.practicebox data-latex=""}
+
 **Practice:** Exercise \@ref(exr:basics-total-variance) separates within-group and between-group variation.
+
+:::
 
 ## Bias, accuracy, and consistency {#basics-estimators}
 
@@ -536,13 +556,21 @@ abline(h=1,lty=2,col="grey")
 ```
 :::
 
+```{r basics-recap-space, echo=FALSE, results='asis'}
+if (knitr::is_latex_output()) cat("\\Needspace{12\\baselineskip}\n")
+```
+
 ## Chapter recap {-}
+
+::: {.recapbox data-latex=""}
 
 - A conditional probability changes the information available; Bayes' rule reverses the direction of conditioning.
 - A density gives probabilities through integration, not through its value at a single point.
 - Iterated expectations recover a population mean by averaging conditional means.
 - Total variance adds average within-group variance and variance between group means.
 - Bias and variance describe finite-sample performance; consistency describes behavior as sample size increases.
+
+:::
 
 ```{r basics-exercise-pagebreak, echo=FALSE, results='asis'}
 if (knitr::is_latex_output()) cat("\\clearpage\n")

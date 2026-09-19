@@ -3,7 +3,7 @@
 \PassOptionsToPackage{hyphens}{url}
 %
 \documentclass[
-  12pt,
+  11pt,
 ]{book}
 \usepackage{amsmath,amssymb}
 \usepackage{iftex}
@@ -132,6 +132,66 @@
 
 % Avoid stretching vertical space around tables on sparsely filled pages.
 \raggedbottom
+
+% Keep enough room for a pilot exercise before starting its statement.
+\usepackage{needspace}
+
+% Practice prompts, exercise statements, and chapter recaps.
+\input{pdf-boxes.tex}
+% Modern PDF typography, initially used by the Basic Statistical Results pilot.
+% XeLaTeX: use Arial when installed, otherwise the portable Helvetica-like Heros.
+\usepackage{fontspec}
+\IfFontExistsTF{Arial}{
+  \setmainfont{Arial}
+  \setsansfont{Arial}
+}{
+  \setmainfont{TeX Gyre Heros}
+  \setsansfont{TeX Gyre Heros}
+}
+% Keep the established mathematical fonts and notation unchanged.
+\usepackage{xcolor}
+\definecolor{TextbookInk}{HTML}{233F50}
+\definecolor{TextbookMuted}{HTML}{60717B}
+% Use standard LaTeX heading hooks; no extra heading package is required.
+\makeatletter
+\@ifundefined{chapter}{}{
+  \def\@makechapterhead#1{%
+    \vspace*{12pt}{\parindent\z@\raggedright\normalfont
+    \ifnum\c@secnumdepth>\m@ne
+      \if@mainmatter
+        {\small\bfseries\color{TextbookMuted}\@chapapp\space\thechapter\par}
+        \vskip10pt
+      \fi
+    \fi
+    {\fontsize{27}{32}\selectfont\bfseries\color{TextbookInk}#1\par}
+    \nobreak\vskip28pt}}
+  \def\@makeschapterhead#1{%
+    \vspace*{12pt}{\parindent\z@\raggedright\normalfont
+    \fontsize{27}{32}\selectfont\bfseries\color{TextbookInk}#1\par
+    \nobreak\vskip28pt}}
+}
+\renewcommand\section{\@startsection{section}{1}{\z@}
+  {-3ex plus -1ex minus -.2ex}{1.3ex plus .2ex}
+  {\normalfont\Large\bfseries\color{TextbookInk}}}
+\renewcommand\subsection{\@startsection{subsection}{2}{\z@}
+  {-2.5ex plus -.8ex minus -.2ex}{1ex plus .2ex}
+  {\normalfont\large\bfseries\color{TextbookInk}}}
+\makeatother
+\usepackage{geometry}
+\geometry{reset,a4paper,left=25mm,right=25mm,top=25mm,bottom=25mm,headheight=14pt,headsep=8mm}
+\linespread{1.08}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 1pt minus 1pt}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\color{TextbookMuted}Econometrics and Statistics}
+\fancyhead[R]{\small\color{TextbookMuted}\thepage}
+\renewcommand{\headrulewidth}{0pt}
+\fancypagestyle{plain}{\fancyhf{}\fancyfoot[C]{\small\color{TextbookMuted}\thepage}\renewcommand{\headrulewidth}{0pt}}
+\usepackage{caption}
+\captionsetup{font={small,sf},labelfont=bf}
+\raggedbottom
 \usepackage[]{natbib}
 \bibliographystyle{apalike}
 \usepackage{bookmark}
@@ -145,7 +205,7 @@
 
 \title{Econometrics and Statistics}
 \author{Jean-Paul Renne}
-\date{2026-09-18}
+\date{2026-09-19}
 
 \usepackage{amsthm}
 \newtheorem{theorem}{Theorem}[chapter]
@@ -216,7 +276,66 @@ The R codes use various packages that can be obtained from \href{https://cran.r-
 
 \chapter{Basic statistical results}\label{Basics}
 
-\section{Cumulative and probability density funtions (c.d.f. and p.d.f.)}\label{cumulative-and-probability-density-funtions-c.d.f.-and-p.d.f.}
+How can we combine information about different groups, update a probability after observing a signal, or judge the quality of an estimator? These questions recur throughout econometrics. This chapter develops the probability tools needed to answer them.
+
+\textbf{Prerequisites.} Basic probability, differentiation, and integration. For a Bernoulli variable with success probability \(p\), recall that the mean is \(p\) and the variance is \(p(1-p)\).
+
+\textbf{After working through this chapter, you should be able to:}
+
+\begin{itemize}
+\tightlist
+\item
+  Move between joint, marginal, and conditional probabilities.
+\item
+  Use densities and distribution functions to calculate probabilities.
+\item
+  Apply iterated expectations and decompose variance into within-group and between-group components.
+\item
+  Distinguish bias, variance, mean squared error, and consistency.
+\end{itemize}
+
+The exercises in Section \ref{basics-exercises} develop these skills through calculations, proofs, and statements to assess. Each exercise links back to the relevant section.
+
+\section{Expectations, covariance, and conditional probabilities}\label{basics-moments}
+
+For random variables with finite second moments,
+\[
+\operatorname{Var}(X)=\mathbb{E}[(X-\mathbb{E}(X))^2],\qquad
+\operatorname{Cov}(X,Y)=\mathbb{E}[(X-\mathbb{E}(X))(Y-\mathbb{E}(Y))].
+\]
+Expectation is linear: \(\mathbb{E}(a+bX+cY)=a+b\mathbb{E}(X)+c\mathbb{E}(Y)\) for constants \(a,b,c\). Independence is not required. If \(X\) and \(Y\) are independent, their covariance is zero; the converse does not hold in general.
+
+For discrete random variables, marginal probabilities are obtained by summing joint probabilities. For example,
+\[
+\mathbb{P}(X=x)=\sum_y\mathbb{P}(X=x,Y=y).
+\]
+Independence means \(\mathbb{P}(X=x,Y=y)=\mathbb{P}(X=x)\mathbb{P}(Y=y)\) for every pair of possible values.
+
+\begin{practicebox}
+\textbf{Practice:} Exercise \ref{exr:basics-covariance} develops two useful covariance identities.
+
+\end{practicebox}
+
+\subsection{Bayes' rule}\label{basics-bayes}
+
+For events \(A\) and \(C\) with \(\mathbb{P}(C)>0\),
+\[
+\mathbb{P}(A\mid C)=\frac{\mathbb{P}(A\cap C)}{\mathbb{P}(C)}.
+\]
+If \(0<\mathbb{P}(A)<1\), splitting the population into \(A\) and its complement \(A^c\) yields
+\[
+\mathbb{P}(A\mid C)=
+\frac{\mathbb{P}(C\mid A)\mathbb{P}(A)}
+{\mathbb{P}(C\mid A)\mathbb{P}(A)+\mathbb{P}(C\mid A^c)\mathbb{P}(A^c)}.
+\]
+The distinction between \(\mathbb{P}(C\mid A)\) and \(\mathbb{P}(A\mid C)\) is essential: the accuracy of a signal does not by itself tell us the probability of an underlying event after observing that signal.
+
+\begin{practicebox}
+\textbf{Practice:} Exercises \ref{exr:basics-bayes} and \ref{exr:basics-joint-probabilities} apply conditioning to a screening system and a joint probability table.
+
+\end{practicebox}
+
+\section{Cumulative distribution and probability density functions}\label{basics-densities}
 
 \begin{definition}[Cumulative distribution function (c.d.f.)]
 \protect\hypertarget{def:cdf}{}\label{def:cdf}The random variable (r.v.) \(X\) admits the cumulative distribution function \(F\) if, for all \(a\):
@@ -225,7 +344,7 @@ F(a)=\mathbb{P}(X \le a).
 \]
 \end{definition}
 
-\begin{definition}[Probability distribution function (p.d.f.)]
+\begin{definition}[Probability density function (p.d.f.)]
 \protect\hypertarget{def:pdf}{}\label{def:pdf}A continuous random variable \(X\) admits the probability density function \(f\) if, for all \(a\) and \(b\) such that \(a<b\):
 \[
 \mathbb{P}(a < X \le b) = \int_{a}^{b}f(x)dx,
@@ -260,7 +379,7 @@ F_{XY}(a,b)=\mathbb{P}(X \le a,Y \le b).
 \begin{definition}[Joint probability density function (p.d.f.)]
 \protect\hypertarget{def:jointpdf}{}\label{def:jointpdf}The continuous random variables \(X\) and \(Y\) admit the joint p.d.f. \(f_{XY}\), where \(f_{XY}(x,y) \ge 0\) for all \(x\) and \(y\), if:
 \[
-\mathbb{P}(a < X \le b,c < Y \le d) = \int_{a}^{b}\int_{c}^{d}f_{XY}(x,y)dx dy, \quad \forall a \le b,\;c \le d.
+\mathbb{P}(a < X \le b,c < Y \le d) = \int_{a}^{b}\int_{c}^{d}f_{XY}(x,y)dy dx, \quad \forall a \le b,\;c \le d.
 \]
 \end{definition}
 
@@ -353,7 +472,12 @@ We have the following:
 
 It is important to note that the absence of correlation between two variables is not a sufficient condition to have independence. Consider for instance the case where \(X=Y^2\), with \(Y \sim\mathcal{N}(0,1)\). In this case, we have \(\mathbb{C}ov(X,Y)=0\), but \(X\) and \(Y\) are not independent. Indeed, we have for instance \(\mathbb{E}(Y^2 \times X)=3\), which is not equal to \(\mathbb{E}(Y^2) \times \mathbb{E}(X)=1\). (If \(X\) and \(Y\) were independent, we should have \(\mathbb{E}(Y^2 \times X)=\mathbb{E}(Y^2) \times \mathbb{E}(X)\) according to point 2 above.)
 
-\section{Law of iterated expectations}\label{law-of-iterated-expectations}
+\begin{practicebox}
+\textbf{Practice:} Exercise \ref{exr:basics-quantiles} asks how a density changes after conditioning above a quantile.
+
+\end{practicebox}
+
+\section{Law of iterated expectations}\label{basics-iterated-expectations}
 
 \begin{proposition}[Law of iterated expectations]
 \protect\hypertarget{prp:lawiteratedexpect}{}\label{prp:lawiteratedexpect}If \(X\) and \(Y\) are two random variables and if \(\mathbb{E}(|X|)<\infty\), we have:
@@ -432,7 +556,12 @@ It is reasonable to assume that \(\theta\) is uniformly distributed on \([-\pi/2
 {[}This \href{https://jrenne.shinyapps.io/StatEcoII/}{web-interface} allows to simulate the present experiment (select Worksheet ``Buffon's needles'').{]}
 \end{example}
 
-\section{Law of total variance}\label{law-of-total-variance}
+\begin{practicebox}
+\textbf{Practice:} Exercise \ref{exr:basics-random-bernoulli} distinguishes conditional and unconditional moments.
+
+\end{practicebox}
+
+\section{Law of total variance}\label{basics-total-variance}
 
 \begin{proposition}[Law of total variance]
 \protect\hypertarget{prp:lawtotalvariance}{}\label{prp:lawtotalvariance}If \(X\) and \(Y\) are two random variables and if the variance of \(X\) is finite, we have:
@@ -459,7 +588,19 @@ We have:
 \end{eqnarray*}
 \end{example}
 
-\section{About consistent estimators}\label{about-consistent-estimators}
+\begin{practicebox}
+\textbf{Practice:} Exercise \ref{exr:basics-total-variance} separates within-group and between-group variation.
+
+\end{practicebox}
+
+\section{Bias, accuracy, and consistency}\label{basics-estimators}
+
+Let \(\widehat\theta\) estimate a fixed parameter \(\theta\). Its \textbf{bias} is \(\mathbb{E}(\widehat\theta)-\theta\); an unbiased estimator has zero bias. When its second moment is finite, its \textbf{mean squared error} satisfies
+\[
+\operatorname{MSE}(\widehat\theta)=\mathbb{E}[(\widehat\theta-\theta)^2]
+=\operatorname{Var}(\widehat\theta)+\operatorname{Bias}(\widehat\theta)^2.
+\]
+A small variance means the estimator is concentrated around its own mean; it does not guarantee that this mean is close to the parameter. Exercise \ref{exr:basics-estimator-properties} derives this decomposition. Consistency concerns a different question: what happens as the sample grows?
 
 The objective of econometrics is to estimate parameters out of data observations (samples). Examples of parameters of interest include, among many others: causal effect of a variable on another, elasticities, parameters defining some distribution of interest, preference parameters (risk aversion)\ldots{}
 
@@ -480,14 +621,14 @@ Assume that \(X_i \sim i.i.d. \mbox{Cauchy}\) with a location parameter of 1 and
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{N }\OtherTok{\textless{}{-}} \DecValTok{5000}
-\NormalTok{X }\OtherTok{\textless{}{-}} \FunctionTok{rcauchy}\NormalTok{(N)}
+\NormalTok{X }\OtherTok{\textless{}{-}} \FunctionTok{rcauchy}\NormalTok{(N, }\AttributeTok{location=}\DecValTok{1}\NormalTok{)}
 \NormalTok{X.bar }\OtherTok{\textless{}{-}} \FunctionTok{cumsum}\NormalTok{(X)}\SpecialCharTok{/}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\NormalTok{N)}
 \FunctionTok{par}\NormalTok{(}\AttributeTok{plt=}\FunctionTok{c}\NormalTok{(.}\DecValTok{1}\NormalTok{,.}\DecValTok{95}\NormalTok{,.}\DecValTok{3}\NormalTok{,.}\DecValTok{85}\NormalTok{),}\AttributeTok{mfrow=}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{))}
 \FunctionTok{plot}\NormalTok{(X,}\AttributeTok{type=}\StringTok{"l"}\NormalTok{,}\AttributeTok{xlab=}\StringTok{"sample size (n)"}\NormalTok{,}
      \AttributeTok{ylab=}\StringTok{""}\NormalTok{,}\AttributeTok{main=}\FunctionTok{expression}\NormalTok{(X[n]),}\AttributeTok{lwd=}\DecValTok{2}\NormalTok{)}
 \FunctionTok{plot}\NormalTok{(X.bar,}\AttributeTok{type=}\StringTok{"l"}\NormalTok{,}\AttributeTok{xlab=}\StringTok{"sample size (n)"}\NormalTok{,}
      \AttributeTok{ylab=}\StringTok{""}\NormalTok{,}\AttributeTok{main=}\FunctionTok{expression}\NormalTok{(}\FunctionTok{bar}\NormalTok{(X)[n]),}\AttributeTok{lwd=}\DecValTok{2}\NormalTok{)}
-\FunctionTok{abline}\NormalTok{(}\AttributeTok{h=}\DecValTok{0}\NormalTok{,}\AttributeTok{lty=}\DecValTok{2}\NormalTok{,}\AttributeTok{col=}\StringTok{"grey"}\NormalTok{)}
+\FunctionTok{abline}\NormalTok{(}\AttributeTok{h=}\DecValTok{1}\NormalTok{,}\AttributeTok{lty=}\DecValTok{2}\NormalTok{,}\AttributeTok{col=}\StringTok{"grey"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -499,6 +640,265 @@ Assume that \(X_i \sim i.i.d. \mbox{Cauchy}\) with a location parameter of 1 and
 \end{figure}
 
 \end{example}
+
+\Needspace{12\baselineskip}
+
+\section*{Chapter recap}\label{chapter-recap}
+\addcontentsline{toc}{section}{Chapter recap}
+
+\begin{recapbox}
+
+\begin{itemize}
+\tightlist
+\item
+  A conditional probability changes the information available; Bayes' rule reverses the direction of conditioning.
+\item
+  A density gives probabilities through integration, not through its value at a single point.
+\item
+  Iterated expectations recover a population mean by averaging conditional means.
+\item
+  Total variance adds average within-group variance and variance between group means.
+\item
+  Bias and variance describe finite-sample performance; consistency describes behavior as sample size increases.
+\end{itemize}
+
+\end{recapbox}
+
+\clearpage
+
+\section{Exercises}\label{basics-exercises}
+
+Attempt each question before class and explain your reasoning, including for the true-or-false statements. \textbf{Foundation} exercises apply a result directly; \textbf{Standard} exercises require several steps or a short proof. Worked solutions and exercise-specific hints are reserved for teaching sessions and are not included in this student edition.
+
+\Needspace{28\baselineskip}
+
+\begin{exercisebox}
+
+\begin{exercise}[Covariance identities]
+\protect\hypertarget{exr:basics-covariance}{}\label{exr:basics-covariance}
+
+\textbf{Standard \textbar{} Analytical}\\
+Review Section \ref{basics-moments}.
+
+Let \(X,Y,V\) have finite second moments, and let \(a,b,c\) be constants. Write \(\mu_X=\mathbb{E}(X)\) and \(\sigma_{XY}=\operatorname{Cov}(X,Y)\).
+
+\begin{enumerate}
+\def\labelenumi{(\alph{enumi})}
+\tightlist
+\item
+  Show that \(\operatorname{Cov}(a+bX+cV,Y)=b\sigma_{XY}+c\sigma_{VY}\).
+\item
+  Show that \(\mathbb{E}(XY)=\operatorname{Cov}(X,Y)+\mathbb{E}(X)\mathbb{E}(Y)\).
+\end{enumerate}
+
+\end{exercise}
+
+\end{exercisebox}
+
+\Needspace{28\baselineskip}
+
+\begin{exercisebox}
+
+\begin{exercise}[Bayes rule and facial recognition]
+\protect\hypertarget{exr:basics-bayes}{}\label{exr:basics-bayes}
+
+\textbf{Foundation \textbar{} Applied calculation}\\
+Review Section \ref{basics-bayes}.
+
+A security system grants access to an authorized person with probability \(0.99\), and to an unauthorized person with probability \(0.02\). Of those attempting to enter, \(5\%\) are unauthorized.
+
+\begin{enumerate}
+\def\labelenumi{(\alph{enumi})}
+\tightlist
+\item
+  Given that a person is granted access, what is the probability that the person is authorized?
+\item
+  Given that a person is denied access, what is the probability that the person is unauthorized?
+\end{enumerate}
+
+\end{exercise}
+
+\end{exercisebox}
+
+\Needspace{28\baselineskip}
+
+\begin{exercisebox}
+
+\begin{exercise}[Within-group and between-group variation]
+\protect\hypertarget{exr:basics-total-variance}{}\label{exr:basics-total-variance}
+
+\textbf{Foundation \textbar{} Applied calculation}\\
+Review Section \ref{basics-total-variance}.
+
+Let \(X\) be daily time spent on social media (in hours), and let \(Y\) indicate age group. The population has the following characteristics:
+
+\begin{longtable}[]{@{}lrrr@{}}
+\toprule\noalign{}
+Age group & Share & Mean (h) & Variance (\(\mathrm{h}^2\)) \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Under 30 & 0.6 & 4 & 1.5 \\
+30 or above & 0.4 & 2 & 0.5 \\
+\end{longtable}
+
+\begin{enumerate}
+\def\labelenumi{(\alph{enumi})}
+\tightlist
+\item
+  Calculate \(\mathbb{E}[\operatorname{Var}(X\mid Y)]\).
+\item
+  Calculate \(\mathbb{E}[\mathbb{E}(X\mid Y)]\).
+\item
+  Calculate \(\operatorname{Var}[\mathbb{E}(X\mid Y)]\).
+\item
+  Use the law of total variance to obtain \(\operatorname{Var}(X)\).
+\end{enumerate}
+
+\end{exercise}
+
+\end{exercisebox}
+
+\Needspace{28\baselineskip}
+
+\begin{exercisebox}
+
+\begin{exercise}[Conditioning above a quantile]
+\protect\hypertarget{exr:basics-quantiles}{}\label{exr:basics-quantiles}
+
+\textbf{Standard \textbar{} Analytical}\\
+Review Section \ref{basics-densities}.
+
+Let \(X\) have a continuous density \(f\) and cumulative distribution function \(F\). For \(0<\alpha<1\), let \(q_\alpha\) satisfy \(F(q_\alpha)=\alpha\).
+
+\begin{enumerate}
+\def\labelenumi{(\alph{enumi})}
+\tightlist
+\item
+  How can \(f\) be obtained from \(F\)?
+\item
+  Derive the c.d.f. \(F_\alpha\) of \(X\) conditional on \(X>q_\alpha\). State its value both below and above \(q_\alpha\).
+\item
+  Derive the corresponding density \(f_\alpha\).
+\end{enumerate}
+
+\end{exercise}
+
+\end{exercisebox}
+
+\Needspace{28\baselineskip}
+
+\begin{exercisebox}
+
+\begin{exercise}[Bias, variance, and mean squared error]
+\protect\hypertarget{exr:basics-estimator-properties}{}\label{exr:basics-estimator-properties}
+
+\textbf{Standard \textbar{} Conceptual / analytical}\\
+Review Section \ref{basics-estimators}.
+
+Let \(\widehat\theta\) estimate a fixed parameter \(\theta\), and suppose \(\widehat\theta\) has a finite second moment.
+
+\begin{enumerate}
+\def\labelenumi{(\alph{enumi})}
+\tightlist
+\item
+  What property is expressed by \(\mathbb{E}(\widehat\theta)=\theta\)?
+\item
+  Express \(\mathbb{E}[(\widehat\theta-\theta)^2]\) in terms of the variance and bias of \(\widehat\theta\).
+\item
+  Does a small variance necessarily imply a small mean squared error? Explain.
+\end{enumerate}
+
+\end{exercise}
+
+\end{exercisebox}
+
+\Needspace{28\baselineskip}
+
+\begin{exercisebox}
+
+\begin{exercise}[Employment, residence, and independence]
+\protect\hypertarget{exr:basics-joint-probabilities}{}\label{exr:basics-joint-probabilities}
+
+\textbf{Standard \textbar{} Conceptual / calculation}\\
+Review Section \ref{basics-bayes}.
+
+Let \(X\) indicate employment status (\(0\): employed; \(1\): self-employed), and let \(Y\) indicate residence (\(0\): countryside; \(1\): city). Their joint probabilities are:
+
+\begin{longtable}[]{@{}lrr@{}}
+\toprule\noalign{}
+& \(Y=0\) & \(Y=1\) \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\(X=0\) & 0.10 & 0.30 \\
+\(X=1\) & 0.15 & 0.45 \\
+\end{longtable}
+
+For each statement, decide whether it is true or false and justify your answer.
+
+\begin{enumerate}
+\def\labelenumi{(\alph{enumi})}
+\tightlist
+\item
+  \(\mathbb{E}(X)=0.7\).
+\item
+  \(X\) and \(Y\) are not independent.
+\item
+  \(\operatorname{Var}(X)=\operatorname{Var}(X\mid Y=0)+\operatorname{Var}(X\mid Y=1)\).
+\item
+  \(\operatorname{Var}(X\mid Y=0)=0.24\).
+\item
+  Bayes' rule implies
+  \[
+  \begin{gathered}
+  \mathbb{P}(X=0\mid Y=0)\\
+  =\frac{\mathbb{P}(Y=0\mid X=0)\mathbb{P}(X=0)}
+  {\mathbb{P}(Y=0\mid X=0)\mathbb{P}(X=0)+\mathbb{P}(Y=0\mid X=1)\mathbb{P}(X=1)}.
+  \end{gathered}
+  \]
+\item
+  The correlation between \(X\) and \(Y\) is strictly positive.
+\end{enumerate}
+
+\end{exercise}
+
+\end{exercisebox}
+
+\Needspace{28\baselineskip}
+
+\begin{exercisebox}
+
+\begin{exercise}[A Bernoulli variable with a random success probability]
+\protect\hypertarget{exr:basics-random-bernoulli}{}\label{exr:basics-random-bernoulli}
+
+\textbf{Standard \textbar{} Conceptual / analytical}\\
+Review Section \ref{basics-iterated-expectations}.
+
+Let \(U\) be uniform on \([0,1]\), and suppose \(Y\mid U\sim\operatorname{Bernoulli}(U)\).
+
+For each statement, decide whether it is true or false and justify your answer.
+
+\begin{enumerate}
+\def\labelenumi{(\alph{enumi})}
+\tightlist
+\item
+  \(\mathbb{E}(Y\mid U)=U\).
+\item
+  \(\operatorname{Var}(Y\mid U)=U^2\).
+\item
+  \(\operatorname{Var}(Y)=1/4\).
+\item
+  \(\mathbb{E}(Y)=1/4\).
+\item
+  \(\mathbb{E}(Y+U)=2U\).
+\end{enumerate}
+
+\end{exercise}
+
+\end{exercisebox}
 
 \chapter{Central Limit Theorem}\label{TCL}
 
@@ -657,6 +1057,15 @@ The next lines of codes construct two samples of incomes; one for men (\texttt{i
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{library}\NormalTok{(AEC);}\FunctionTok{library}\NormalTok{(logKDE)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: package 'logKDE' was built under R version 4.5.2
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
 \NormalTok{dataset.m }\OtherTok{\textless{}{-}} \FunctionTok{subset}\NormalTok{(shp,(sex19}\SpecialCharTok{==}\DecValTok{1}\NormalTok{)}\SpecialCharTok{\&}\NormalTok{(age19}\SpecialCharTok{\textless{}=}\DecValTok{35}\NormalTok{))}
 \NormalTok{dataset.w }\OtherTok{\textless{}{-}} \FunctionTok{subset}\NormalTok{(shp,(sex19}\SpecialCharTok{==}\DecValTok{2}\NormalTok{)}\SpecialCharTok{\&}\NormalTok{(age19}\SpecialCharTok{\textless{}=}\DecValTok{35}\NormalTok{))}
 \NormalTok{income.m }\OtherTok{\textless{}{-}}\NormalTok{ dataset.m}\SpecialCharTok{$}\NormalTok{i19ptotg}
@@ -2189,7 +2598,7 @@ Diagnostic & df1 & df2 & statistic & p-value\\
 \midrule
 Weak instruments & 2 & 44 & 244.734 & <0.001\\
 Wu-Hausman & 1 & 44 & 3.068 & 0.0868\\
-Sargan & 1 &  & 0.333 & 0.5641\\
+Sargan & 1 & NA & 0.333 & 0.5641\\
 \bottomrule
 \end{tabular}}
 \endgroup{}

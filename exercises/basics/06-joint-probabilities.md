@@ -24,8 +24,10 @@ For each statement, decide whether it is true or false and justify your answer.
 (d) $\operatorname{Var}(X\mid Y=0)=0.24$.
 (e) Bayes' rule implies
 $$
-\mathbb{P}(X=0\mid Y=0)=
-\frac{\mathbb{P}(Y=0\mid X=0)\mathbb{P}(X=0)}
+\begin{gathered}
+\mathbb{P}(X=0\mid Y=0)\\
+=\frac{\mathbb{P}(Y=0\mid X=0)\mathbb{P}(X=0)}
 {\mathbb{P}(Y=0\mid X=0)\mathbb{P}(X=0)+\mathbb{P}(Y=0\mid X=1)\mathbb{P}(X=1)}.
+\end{gathered}
 $$
 (f) The correlation between $X$ and $Y$ is strictly positive.

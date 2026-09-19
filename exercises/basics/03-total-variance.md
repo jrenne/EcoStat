@@ -11,7 +11,7 @@ source_exercise: 3
 
 Let $X$ be daily time spent on social media (in hours), and let $Y$ indicate age group. The population has the following characteristics:
 
-| Age group | Population share | Mean (hours) | Variance (hours squared) |
+| Age group | Share | Mean (h) | Variance ($\mathrm{h}^2$) |
 |:--|--:|--:|--:|
 | Under 30 | 0.6 | 4 | 1.5 |
 | 30 or above | 0.4 | 2 | 0.5 |

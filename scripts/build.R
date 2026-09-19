@@ -2,6 +2,10 @@
 local_library <- file.path(getwd(), "renv", "library")
 if (dir.exists(local_library)) .libPaths(c(local_library, .libPaths()))
 if (!file.exists("renv.lock")) stop("Run from the book's root directory.")
+root <- normalizePath(getwd())
+source("R/exercises.R")
+source("R/instructor-build.R")
+show_solutions <- edition_setting()
 lock <- jsonlite::read_json("renv.lock")
 problems <- vapply(names(lock$Packages), function(p) {
   if (!requireNamespace(p, quietly=TRUE)) return(paste(p, "is missing"))
@@ -25,4 +29,18 @@ if (!length(mode)) mode <- "all"
 formats <- c(html="bookdown::gitbook",pdf="bookdown::pdf_book",epub="bookdown::epub_book")
 if (length(mode)!=1L || !mode %in% c("all",names(formats))) stop("Choose all, html, pdf, or epub.")
 if (mode == "all") formats <- formats[c("html", "pdf")] else formats <- formats[mode]
-for (format in formats) bookdown::render_book("index.Rmd", output_format=format)
+# Render instructor books entirely outside the repository, including intermediates.
+if (show_solutions) {
+  stage <- private_build_stage(root)
+  paths <- list.files(root,full.names=TRUE)
+  paths <- paths[!basename(paths) %in% c("docs","preview","renv","_bookdown_files")]
+  for (path in paths) if (!file.copy(path,stage,recursive=TRUE)) stop("Cannot stage: ",path)
+  setwd(stage)
+  destination <- file.path(instructor_directory(root),"Textbook")
+  for (format in formats) bookdown::render_book("index.Rmd",output_format=format,output_dir=destination,clean=TRUE)
+  setwd(root)
+  unlink(stage,recursive=TRUE)
+  cat("Private instructor edition: ",destination,"\n",sep="")
+} else {
+  for (format in formats) bookdown::render_book("index.Rmd",output_format=format)
+}
