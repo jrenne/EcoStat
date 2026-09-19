@@ -166,16 +166,22 @@ div.csl-indent {
 <li class="divider"></li>
 <li class="chapter" data-level="1" data-path="Basics.html"><a href="Basics.html"><i class="fa fa-check"></i><b>1</b> Basic statistical results</a>
 <ul>
-<li class="chapter" data-level="1.1" data-path="Basics.html"><a href="Basics.html#basics-moments"><i class="fa fa-check"></i><b>1.1</b> Expectations, covariance, and conditional probabilities</a>
+<li class="chapter" data-level="1.1" data-path="Basics.html"><a href="Basics.html#basics-moments"><i class="fa fa-check"></i><b>1.1</b> Random variables and moments</a></li>
+<li class="chapter" data-level="1.2" data-path="Basics.html"><a href="Basics.html#basics-discrete"><i class="fa fa-check"></i><b>1.2</b> Joint distributions: the discrete case</a>
 <ul>
-<li class="chapter" data-level="1.1.1" data-path="Basics.html"><a href="Basics.html#basics-bayes"><i class="fa fa-check"></i><b>1.1.1</b> Bayes’ rule</a></li>
+<li class="chapter" data-level="1.2.1" data-path="Basics.html"><a href="Basics.html#basics-conditional-expectation"><i class="fa fa-check"></i><b>1.2.1</b> Conditional expectation</a></li>
+<li class="chapter" data-level="1.2.2" data-path="Basics.html"><a href="Basics.html#basics-bayes"><i class="fa fa-check"></i><b>1.2.2</b> Bayes’ rule</a></li>
 </ul></li>
-<li class="chapter" data-level="1.2" data-path="Basics.html"><a href="Basics.html#basics-densities"><i class="fa fa-check"></i><b>1.2</b> Cumulative distribution and probability density functions</a></li>
-<li class="chapter" data-level="1.3" data-path="Basics.html"><a href="Basics.html#basics-iterated-expectations"><i class="fa fa-check"></i><b>1.3</b> Law of iterated expectations</a></li>
-<li class="chapter" data-level="1.4" data-path="Basics.html"><a href="Basics.html#basics-total-variance"><i class="fa fa-check"></i><b>1.4</b> Law of total variance</a></li>
-<li class="chapter" data-level="1.5" data-path="Basics.html"><a href="Basics.html#basics-estimators"><i class="fa fa-check"></i><b>1.5</b> Bias, accuracy, and consistency</a></li>
+<li class="chapter" data-level="1.3" data-path="Basics.html"><a href="Basics.html#basics-densities"><i class="fa fa-check"></i><b>1.3</b> Continuous distributions</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="Basics.html"><a href="Basics.html#distribution-and-density-functions"><i class="fa fa-check"></i><b>1.3.1</b> Distribution and density functions</a></li>
+<li class="chapter" data-level="1.3.2" data-path="Basics.html"><a href="Basics.html#joint-and-conditional-densities"><i class="fa fa-check"></i><b>1.3.2</b> Joint and conditional densities</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="Basics.html"><a href="Basics.html#basics-iterated-expectations"><i class="fa fa-check"></i><b>1.4</b> Law of iterated expectations</a></li>
+<li class="chapter" data-level="1.5" data-path="Basics.html"><a href="Basics.html#basics-total-variance"><i class="fa fa-check"></i><b>1.5</b> Law of total variance</a></li>
+<li class="chapter" data-level="1.6" data-path="Basics.html"><a href="Basics.html#basics-estimators"><i class="fa fa-check"></i><b>1.6</b> Bias, accuracy, and consistency</a></li>
 <li class="chapter" data-level="" data-path="Basics.html"><a href="Basics.html#chapter-recap"><i class="fa fa-check"></i>Chapter recap</a></li>
-<li class="chapter" data-level="1.6" data-path="Basics.html"><a href="Basics.html#basics-exercises"><i class="fa fa-check"></i><b>1.6</b> Exercises</a></li>
+<li class="chapter" data-level="1.7" data-path="Basics.html"><a href="Basics.html#basics-exercises"><i class="fa fa-check"></i><b>1.7</b> Exercises</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="TCL.html"><a href="TCL.html"><i class="fa fa-check"></i><b>2</b> Central Limit Theorem</a>
 <ul>
@@ -316,35 +322,125 @@ div.csl-indent {
             <section class="normal" id="section-">
 <div id="Basics" class="section level1 hasAnchor" number="1">
 <h1><span class="header-section-number">Chapter 1</span> Basic statistical results<a href="Basics.html#Basics" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>How can we combine information about different groups, update a probability after observing a signal, or judge the quality of an estimator? These questions recur throughout econometrics. This chapter develops the probability tools needed to answer them.</p>
-<p><strong>Prerequisites.</strong> Basic probability, differentiation, and integration. For a Bernoulli variable with success probability <span class="math inline">\(p\)</span>, recall that the mean is <span class="math inline">\(p\)</span> and the variance is <span class="math inline">\(p(1-p)\)</span>.</p>
+<p>Econometrics describes populations, compares groups, and learns about unknown quantities from samples. This chapter introduces the probability tools used for those tasks. We begin with discrete random variables, for which joint and conditional distributions can be read directly from a table. Continuous distributions are introduced afterwards as the corresponding integral-based formulation.</p>
+<p><strong>Prerequisites.</strong> Basic probability, differentiation, and integration.</p>
 <p><strong>After working through this chapter, you should be able to:</strong></p>
 <ul>
-<li>Move between joint, marginal, and conditional probabilities.</li>
+<li>Calculate moments of a random variable and interpret variance and covariance.</li>
+<li>Move between joint, marginal, and conditional distributions.</li>
 <li>Use densities and distribution functions to calculate probabilities.</li>
 <li>Apply iterated expectations and decompose variance into within-group and between-group components.</li>
 <li>Distinguish bias, variance, mean squared error, and consistency.</li>
 </ul>
-<p>The exercises in Section <a href="Basics.html#basics-exercises">1.6</a> develop these skills through calculations, proofs, and statements to assess. Each exercise links back to the relevant section.</p>
+<p>The exercises in Section <a href="Basics.html#basics-exercises">1.7</a> develop these skills through calculations, proofs, and statements to assess. Each exercise links back to the relevant section.</p>
 <div id="basics-moments" class="section level2 hasAnchor" number="1.1">
-<h2><span class="header-section-number">1.1</span> Expectations, covariance, and conditional probabilities<a href="Basics.html#basics-moments" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>For random variables with finite second moments,
+<h2><span class="header-section-number">1.1</span> Random variables and moments<a href="Basics.html#basics-moments" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>A <strong>random variable</strong> assigns a numerical value to each possible outcome of an experiment. Its distribution describes which values it can take and how likely they are. If a discrete random variable <span class="math inline">\(X\)</span> takes values <span class="math inline">\(x_1,\ldots,x_m\)</span>, write
 <span class="math display">\[
-\operatorname{Var}(X)=\mathbb{E}[(X-\mathbb{E}(X))^2],\qquad
-\operatorname{Cov}(X,Y)=\mathbb{E}[(X-\mathbb{E}(X))(Y-\mathbb{E}(Y))].
+p_X(x_j)=\mathbb{P}(X=x_j),\qquad \sum_{j=1}^m p_X(x_j)=1.
 \]</span>
-Expectation is linear: <span class="math inline">\(\mathbb{E}(a+bX+cY)=a+b\mathbb{E}(X)+c\mathbb{E}(Y)\)</span> for constants <span class="math inline">\(a,b,c\)</span>. Independence is not required. If <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are independent, their covariance is zero; the converse does not hold in general.</p>
-<p>For discrete random variables, marginal probabilities are obtained by summing joint probabilities. For example,
+Its expectation is the probability-weighted average
 <span class="math display">\[
-\mathbb{P}(X=x)=\sum_y\mathbb{P}(X=x,Y=y).
+\mathbb{E}(X)=\sum_{j=1}^m x_jp_X(x_j).
 \]</span>
-Independence means <span class="math inline">\(\mathbb{P}(X=x,Y=y)=\mathbb{P}(X=x)\mathbb{P}(Y=y)\)</span> for every pair of possible values.</p>
+The expectation describes the centre of the distribution. It is a population quantity: it need not be one of the possible realizations of <span class="math inline">\(X\)</span>.</p>
+<p>The variance measures dispersion around this centre. For random variables with finite second moments,
+<span class="math display">\[
+\mathbb{V}ar(X)=\mathbb{E}[(X-\mathbb{E}(X))^2],\qquad
+\mathbb{C}ov(X,Y)=\mathbb{E}[(X-\mathbb{E}(X))(Y-\mathbb{E}(Y))].
+\]</span>
+The covariance is positive when above-average values of <span class="math inline">\(X\)</span> tend to occur with above-average values of <span class="math inline">\(Y\)</span>, and negative when above-average values of one variable tend to occur with below-average values of the other. Its magnitude depends on the units in which the variables are measured.</p>
+<p>Expectation is linear:
+<span class="math display">\[
+\mathbb{E}(a+bX+cY)=a+b\mathbb{E}(X)+c\mathbb{E}(Y),
+\]</span>
+for constants <span class="math inline">\(a,b,c\)</span>. Independence is not required for this property. If <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are independent, their covariance is zero; the converse does not hold in general.</p>
+<div class="example">
+<p><span id="exm:bernoulli-moments" class="example"><strong>Example 1.1  (Bernoulli variable) </strong></span>Let <span class="math inline">\(D\)</span> equal one when an individual is employed and zero otherwise, and suppose that <span class="math inline">\(\mathbb{P}(D=1)=p\)</span>. Then
+<span class="math display">\[
+\mathbb{E}(D)=p,\qquad \mathbb{V}ar(D)=p(1-p).
+\]</span>
+Although each realization is either zero or one, the expectation <span class="math inline">\(p\)</span> is the population employment rate.</p>
+</div>
 <div class="practicebox">
 <p><strong>Practice:</strong> Exercise <a href="Basics.html#exr:basics-covariance">1.1</a> develops two useful covariance identities.</p>
 </div>
-<div id="basics-bayes" class="section level3 hasAnchor" number="1.1.1">
-<h3><span class="header-section-number">1.1.1</span> Bayes’ rule<a href="Basics.html#basics-bayes" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>For events <span class="math inline">\(A\)</span> and <span class="math inline">\(C\)</span> with <span class="math inline">\(\mathbb{P}(C)&gt;0\)</span>,
+</div>
+<div id="basics-discrete" class="section level2 hasAnchor" number="1.2">
+<h2><span class="header-section-number">1.2</span> Joint distributions: the discrete case<a href="Basics.html#basics-discrete" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>A <strong>joint distribution</strong> describes how two random variables vary together. For discrete variables, it can be displayed as a probability table. Each cell is a joint probability; row and column totals are marginal probabilities.</p>
+<div class="example">
+<p><span id="exm:commuting-table" class="example"><strong>Example 1.2  (A joint probability table) </strong></span>Let <span class="math inline">\(X\)</span> be daily commuting time, measured in hours, and let <span class="math inline">\(Y=1\)</span> indicate a remote worker (<span class="math inline">\(Y=0\)</span> indicates an on-site worker). Suppose the population distribution is:</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="right"><span class="math inline">\(X=0\)</span></th>
+<th align="right"><span class="math inline">\(X=1\)</span></th>
+<th align="right"><span class="math inline">\(X=2\)</span></th>
+<th align="right"><span class="math inline">\(\mathbb{P}(Y=y)\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><span class="math inline">\(Y=0\)</span></td>
+<td align="right">0.10</td>
+<td align="right">0.20</td>
+<td align="right">0.20</td>
+<td align="right">0.50</td>
+</tr>
+<tr class="even">
+<td align="left"><span class="math inline">\(Y=1\)</span></td>
+<td align="right">0.30</td>
+<td align="right">0.15</td>
+<td align="right">0.05</td>
+<td align="right">0.50</td>
+</tr>
+<tr class="odd">
+<td align="left"><span class="math inline">\(\mathbb{P}(X=x)\)</span></td>
+<td align="right">0.40</td>
+<td align="right">0.35</td>
+<td align="right">0.25</td>
+<td align="right">1.00</td>
+</tr>
+</tbody>
+</table>
+<p>For example, <span class="math inline">\(\mathbb{P}(X=2,Y=0)=0.20\)</span>. Summing the <span class="math inline">\(X=2\)</span> column gives <span class="math inline">\(\mathbb{P}(X=2)=0.25\)</span>.</p>
+</div>
+<p>In general, marginal probabilities are obtained by summing the joint probabilities over the other variable:
+<span class="math display">\[
+\mathbb{P}(X=x)=\sum_y\mathbb{P}(X=x,Y=y).
+\]</span>
+When <span class="math inline">\(\mathbb{P}(Y=y)&gt;0\)</span>, the conditional probability
+<span class="math display">\[
+\mathbb{P}(X=x\mid Y=y)
+=\frac{\mathbb{P}(X=x,Y=y)}{\mathbb{P}(Y=y)}
+\]</span>
+describes the distribution of <span class="math inline">\(X\)</span> within the subpopulation for which <span class="math inline">\(Y=y\)</span>. In Example <a href="Basics.html#exm:commuting-table">1.2</a>,
+<span class="math display">\[
+\mathbb{P}(X=2\mid Y=0)=\frac{0.20}{0.50}=0.40.
+\]</span></p>
+<p>The variables are independent when conditioning on one variable does not change the distribution of the other. Equivalently,
+<span class="math display">\[
+\mathbb{P}(X=x,Y=y)=\mathbb{P}(X=x)\mathbb{P}(Y=y)
+\]</span>
+for every pair <span class="math inline">\((x,y)\)</span>. The commuting variables in the example are not independent: <span class="math inline">\(\mathbb{P}(X=0\mid Y=1)=0.60\)</span>, whereas <span class="math inline">\(\mathbb{P}(X=0)=0.40\)</span>.</p>
+<div id="basics-conditional-expectation" class="section level3 hasAnchor" number="1.2.1">
+<h3><span class="header-section-number">1.2.1</span> Conditional expectation<a href="Basics.html#basics-conditional-expectation" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The <strong>conditional expectation</strong> <span class="math inline">\(\mathbb{E}(X\mid Y=y)\)</span> is the mean of <span class="math inline">\(X\)</span> within the subpopulation <span class="math inline">\(Y=y\)</span>:
+<span class="math display">\[
+\mathbb{E}(X\mid Y=y)=\sum_x x\,\mathbb{P}(X=x\mid Y=y).
+\]</span>
+In the commuting example,
+<span class="math display">\[
+\mathbb{E}(X\mid Y=0)=1.2,\qquad
+\mathbb{E}(X\mid Y=1)=0.5.
+\]</span>
+The notation <span class="math inline">\(\mathbb{E}(X\mid Y)\)</span>, without a specified value of <span class="math inline">\(Y\)</span>, denotes a random variable. It equals <span class="math inline">\(1.2\)</span> for an on-site worker and <span class="math inline">\(0.5\)</span> for a remote worker. This distinction is important: <span class="math inline">\(\mathbb{E}(X\mid Y=y)\)</span> is a number for a given <span class="math inline">\(y\)</span>, whereas <span class="math inline">\(\mathbb{E}(X\mid Y)\)</span> varies across groups.</p>
+</div>
+<div id="basics-bayes" class="section level3 hasAnchor" number="1.2.2">
+<h3><span class="header-section-number">1.2.2</span> Bayes’ rule<a href="Basics.html#basics-bayes" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Conditional probabilities depend on the direction of conditioning. For events <span class="math inline">\(A\)</span> and <span class="math inline">\(C\)</span> with <span class="math inline">\(\mathbb{P}(C)&gt;0\)</span>,
 <span class="math display">\[
 \mathbb{P}(A\mid C)=\frac{\mathbb{P}(A\cap C)}{\mathbb{P}(C)}.
 \]</span>
@@ -354,14 +450,17 @@ If <span class="math inline">\(0&lt;\mathbb{P}(A)&lt;1\)</span>, splitting the p
 \frac{\mathbb{P}(C\mid A)\mathbb{P}(A)}
 {\mathbb{P}(C\mid A)\mathbb{P}(A)+\mathbb{P}(C\mid A^c)\mathbb{P}(A^c)}.
 \]</span>
-The distinction between <span class="math inline">\(\mathbb{P}(C\mid A)\)</span> and <span class="math inline">\(\mathbb{P}(A\mid C)\)</span> is essential: the accuracy of a signal does not by itself tell us the probability of an underlying event after observing that signal.</p>
+Bayes’ rule reverses the direction of conditioning. The distinction between <span class="math inline">\(\mathbb{P}(C\mid A)\)</span> and <span class="math inline">\(\mathbb{P}(A\mid C)\)</span> is essential: the accuracy of a signal does not by itself tell us the probability of an underlying event after observing that signal.</p>
 <div class="practicebox">
 <p><strong>Practice:</strong> Exercises <a href="Basics.html#exr:basics-bayes">1.2</a> and <a href="Basics.html#exr:basics-joint-probabilities">1.6</a> apply conditioning to a screening system and a joint probability table.</p>
 </div>
 </div>
 </div>
-<div id="basics-densities" class="section level2 hasAnchor" number="1.2">
-<h2><span class="header-section-number">1.2</span> Cumulative distribution and probability density functions<a href="Basics.html#basics-densities" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="basics-densities" class="section level2 hasAnchor" number="1.3">
+<h2><span class="header-section-number">1.3</span> Continuous distributions<a href="Basics.html#basics-densities" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>For discrete variables, probabilities are attached to individual values and expectations are calculated using sums. A continuous variable instead assigns probability to intervals. Individual points typically have probability zero, so the distribution is described by a cumulative distribution function and, when it exists, a density.</p>
+<div id="distribution-and-density-functions" class="section level3 hasAnchor" number="1.3.1">
+<h3><span class="header-section-number">1.3.1</span> Distribution and density functions<a href="Basics.html#distribution-and-density-functions" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <div class="definition">
 <p><span id="def:cdf" class="definition"><strong>Definition 1.1  (Cumulative distribution function (c.d.f.)) </strong></span>The random variable (r.v.) <span class="math inline">\(X\)</span> admits the cumulative distribution function <span class="math inline">\(F\)</span> if, for all <span class="math inline">\(a\)</span>:
 <span class="math display">\[
@@ -375,7 +474,7 @@ F(a)=\mathbb{P}(X \le a).
 \]</span>
 where <span class="math inline">\(f(x) \ge 0\)</span> for all <span class="math inline">\(x\)</span>.</p>
 </div>
-<p>In particular, we have:
+<p>When <span class="math inline">\(F\)</span> is differentiable, the density is its derivative. In particular,
 <span class="math display" id="eq:flim">\[\begin{equation}
 f(x) = \lim_{\varepsilon \rightarrow 0} \frac{\mathbb{P}(x &lt; X \le x + \varepsilon)}{\varepsilon} = \lim_{\varepsilon \rightarrow 0} \frac{F(x + \varepsilon)-F(x)}{\varepsilon}.\tag{1.1}
 \end{equation}\]</span>
@@ -383,7 +482,17 @@ and
 <span class="math display">\[
 F(a) = \int_{-\infty}^{a}f(x)dx.
 \]</span>
-This <a href="https://jrenne.shinyapps.io/density/">web interface</a> illustrates the link between p.d.f. and c.d.f. Nonparametric estimates of p.d.f. are obtained by kernel-based methods (see this <a href="https://www.dropbox.com/s/lxkllp9yewh98d8/Additional_Kernel.pdf?dl=0">extra material</a>).</p>
+When the relevant integrals exist, moments are calculated by weighting values with the density:
+<span class="math display">\[
+\mathbb{E}(X)=\int_{-\infty}^{+infty}x f_X(x)dx,
+\qquad
+\mathbb{V}ar(X)=\int_{-\infty}^{+\infty}[x-\mathbb{E}(X)]^2f_X(x)dx.
+\]</span>
+Thus, probabilities are sums in the discrete case and areas under a density in the continuous case. This <a href="https://jrenne.shinyapps.io/density/">web interface</a> illustrates the link between p.d.f. and c.d.f. Nonparametric estimates of p.d.f. are obtained by kernel-based methods (see this <a href="https://www.dropbox.com/s/lxkllp9yewh98d8/Additional_Kernel.pdf?dl=0">extra material</a>).</p>
+</div>
+<div id="joint-and-conditional-densities" class="section level3 hasAnchor" number="1.3.2">
+<h3><span class="header-section-number">1.3.2</span> Joint and conditional densities<a href="Basics.html#joint-and-conditional-densities" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The logic of a discrete probability table carries over to continuous variables. The joint density replaces the table of cell probabilities, integration replaces summation, and a marginal density is obtained by integrating out the other variable.</p>
 <div class="definition">
 <p><span id="def:jointcdf" class="definition"><strong>Definition 1.3  (Joint cumulative distribution function (c.d.f.)) </strong></span>The random variables <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> admit the joint cumulative distribution function <span class="math inline">\(F_{XY}\)</span> if, for all <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span>:
 <span class="math display">\[
@@ -402,6 +511,12 @@ Figure 1.1: The volume between the horizontal plane (<span class="math inline">\
 \mathbb{P}(a &lt; X \le b,c &lt; Y \le d) = \int_{a}^{b}\int_{c}^{d}f_{XY}(x,y)dy dx, \quad \forall a \le b,\;c \le d.
 \]</span></p>
 </div>
+<p>The marginal density is the continuous counterpart of a column or row total:
+<span class="math display">\[
+f_X(x)=\int_{-\infty}^{+\infty}f_{XY}(x,y)dy,
+\qquad
+f_Y(y)=\int_{-\infty}^{+\infty}f_{XY}(x,y)dx.
+\]</span></p>
 <p>In particular, we have:
 <span class="math display">\[\begin{eqnarray*}
 &amp;&amp;f_{XY}(x,y)\\
@@ -436,24 +551,28 @@ Figure 1.3: Area <span class="math inline">\(B+C+D+E\)</span> encompasses the po
 </p>
 </div>
 <div class="definition">
-<p><span id="def:condcdf" class="definition"><strong>Definition 1.5  (Conditional probability distribution function) </strong></span>If <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are continuous r.v., then the distribution of <span class="math inline">\(X\)</span> conditional on <span class="math inline">\(Y=y\)</span>, which we denote by <span class="math inline">\(f_{X|Y}(x,y)\)</span>, satisfies:
+<p><span id="def:condcdf" class="definition"><strong>Definition 1.5  (Conditional probability density function) </strong></span>If <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are continuous random variables and <span class="math inline">\(f_Y(y)&gt;0\)</span>, the conditional density of <span class="math inline">\(X\)</span> given <span class="math inline">\(Y=y\)</span> is denoted by <span class="math inline">\(f_{X|Y}(x,y)\)</span>.</p>
+<p>It describes the distribution of <span class="math inline">\(X\)</span> within the subpopulation characterized by <span class="math inline">\(Y=y\)</span>. The associated conditional expectation is
 <span class="math display">\[
-f_{X|Y}(x,y)=\lim_{\varepsilon \rightarrow 0} \frac{\mathbb{P}(x &lt; X \le x + \varepsilon|Y=y)}{\varepsilon}.
+\mathbb{E}(X\mid Y=y)=\int_{-\infty}^{+\infty}x f_{X|Y}(x,y)dx.
 \]</span></p>
 </div>
 <div class="proposition">
-<p><span id="prp:condcdf" class="proposition"><strong>Proposition 1.1  (Conditional probability distribution function) </strong></span>We have
+<p><span id="prp:condcdf" class="proposition"><strong>Proposition 1.1  (Conditional density) </strong></span>We have
 <span class="math display">\[
 f_{X|Y}(x,y)=\frac{f_{XY}(x,y)}{f_Y(y)}.
 \]</span></p>
 </div>
 <div class="proof">
-<p><span id="unlabeled-div-1" class="proof"><em>Proof</em>. </span>We have:
+<p><span id="unlabeled-div-1" class="proof"><em>Proof</em>. </span>Condition on a shrinking interval around <span class="math inline">\(y\)</span>. Then
 <span class="math display">\[\begin{eqnarray*}
-f_{X|Y}(x,y)&amp;=&amp;\lim_{\varepsilon \rightarrow 0} \frac{\mathbb{P}(x &lt; X \le x + \varepsilon|Y=y)}{\varepsilon}\\
-&amp;=&amp;\lim_{\varepsilon \rightarrow 0} \frac{1}{\varepsilon}\mathbb{P}(x &lt; X \le x + \varepsilon|y&lt;Y\le y+\varepsilon)\\
-&amp;=&amp;\lim_{\varepsilon \rightarrow 0} \frac{1}{\varepsilon}\frac{\mathbb{P}(x &lt; X \le x + \varepsilon,y&lt;Y\le y+\varepsilon)}{\mathbb{P}(y&lt;Y\le y+\varepsilon)}\\
-&amp;=&amp;\lim_{\varepsilon \rightarrow 0} \frac{1}{\varepsilon} \frac{\varepsilon^2f_{XY}(x,y)}{\varepsilon f_{Y}(y)}.
+f_{X|Y}(x,y)
+&amp;=&amp;\lim_{\varepsilon,\delta \rightarrow 0}
+\frac{\mathbb{P}(x&lt;X\le x+\varepsilon\mid y&lt;Y\le y+\delta)}{\varepsilon}\\
+&amp;=&amp;\lim_{\varepsilon,\delta \rightarrow 0}
+\frac{\mathbb{P}(x&lt;X\le x+\varepsilon,y&lt;Y\le y+\delta)}
+{\varepsilon\,\mathbb{P}(y&lt;Y\le y+\delta)}\\
+&amp;=&amp;\frac{f_{XY}(x,y)}{f_Y(y)}.
 \end{eqnarray*}\]</span></p>
 </div>
 <div class="definition">
@@ -473,12 +592,51 @@ f_{XY}(x,y) = f_{X}(x) \times f_{Y}(y).
 <li>If <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are independent, then <span class="math inline">\(\mathbb{E}(g(X)h(Y))=\mathbb{E}(g(X))\mathbb{E}(h(Y))\)</span> and <span class="math inline">\(\mathbb{C}ov(g(X),h(Y))=0\)</span>, where <span class="math inline">\(g\)</span> and <span class="math inline">\(h\)</span> are any functions.</li>
 </ol>
 <p>It is important to note that the absence of correlation between two variables is not a sufficient condition to have independence. Consider for instance the case where <span class="math inline">\(X=Y^2\)</span>, with <span class="math inline">\(Y \sim\mathcal{N}(0,1)\)</span>. In this case, we have <span class="math inline">\(\mathbb{C}ov(X,Y)=0\)</span>, but <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are not independent. Indeed, we have for instance <span class="math inline">\(\mathbb{E}(Y^2 \times X)=3\)</span>, which is not equal to <span class="math inline">\(\mathbb{E}(Y^2) \times \mathbb{E}(X)=1\)</span>. (If <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> were independent, we should have <span class="math inline">\(\mathbb{E}(Y^2 \times X)=\mathbb{E}(Y^2) \times \mathbb{E}(X)\)</span> according to point 2 above.)</p>
+<p>The correspondence between the two settings can be summarized as follows:</p>
+<table>
+<colgroup>
+<col width="33%" />
+<col width="33%" />
+<col width="33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Concept</th>
+<th align="left">Discrete variables</th>
+<th align="left">Continuous variables</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Distribution</td>
+<td align="left">probabilities <span class="math inline">\(p_X(x)\)</span></td>
+<td align="left">density <span class="math inline">\(f_X(x)\)</span></td>
+</tr>
+<tr class="even">
+<td align="left">Marginalization</td>
+<td align="left">sum joint probabilities</td>
+<td align="left">integrate the joint density</td>
+</tr>
+<tr class="odd">
+<td align="left">Conditioning</td>
+<td align="left">divide by a marginal probability</td>
+<td align="left">divide by a marginal density</td>
+</tr>
+<tr class="even">
+<td align="left">Expectation</td>
+<td align="left">probability-weighted sum</td>
+<td align="left">density-weighted integral</td>
+</tr>
+</tbody>
+</table>
 <div class="practicebox">
 <p><strong>Practice:</strong> Exercise <a href="Basics.html#exr:basics-quantiles">1.4</a> asks how a density changes after conditioning above a quantile.</p>
 </div>
 </div>
-<div id="basics-iterated-expectations" class="section level2 hasAnchor" number="1.3">
-<h2><span class="header-section-number">1.3</span> Law of iterated expectations<a href="Basics.html#basics-iterated-expectations" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+</div>
+<div id="basics-iterated-expectations" class="section level2 hasAnchor" number="1.4">
+<h2><span class="header-section-number">1.4</span> Law of iterated expectations<a href="Basics.html#basics-iterated-expectations" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The conditional means describe different subpopulations. To recover the population mean, we average those conditional means using the population shares of the groups.</p>
 <div class="proposition">
 <p><span id="prp:lawiteratedexpect" class="proposition"><strong>Proposition 1.2  (Law of iterated expectations) </strong></span>If <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are two random variables and if <span class="math inline">\(\mathbb{E}(|X|)&lt;\infty\)</span>, we have:
 <span class="math display">\[
@@ -486,22 +644,30 @@ f_{XY}(x,y) = f_{X}(x) \times f_{Y}(y).
 \]</span></p>
 </div>
 <div class="proof">
-<p><span id="unlabeled-div-2" class="proof"><em>Proof</em>. </span>(in the case where the p.d.f. of <span class="math inline">\((X,Y)\)</span> exists) Let us denote by <span class="math inline">\(f_X\)</span>, <span class="math inline">\(f_Y\)</span> and <span class="math inline">\(f_{XY}\)</span> the probability distribution functions (p.d.f.) of <span class="math inline">\(X\)</span>, <span class="math inline">\(Y\)</span> and <span class="math inline">\((X,Y)\)</span>, respectively. We have:
-<span class="math display">\[
-f_{X}(x) = \int f_{XY}(x,y) dy.
-\]</span>
-Besides, we have (Bayes equality, Prop. <a href="Basics.html#prp:condcdf">1.1</a>):
-<span class="math display">\[
-f_{XY}(x,y) = f_{X|Y}(x,y)f_{Y}(y).
-\]</span>
-Therefore:
+<p><span id="unlabeled-div-2" class="proof"><em>Proof</em>. </span>Suppose first that both <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are discrete. Partitioning the population according to the possible values of <span class="math inline">\(Y\)</span> gives
 <span class="math display">\[\begin{eqnarray*}
-\mathbb{E}(X) &amp;=&amp; \int x f_X(x)dx = \int x  \underbrace{ \int  f_{XY}(x,y) dy}_{=f_X(x)} dx =\int  \int x f_{X|Y}(x,y)f_{Y}(y) dydx \\
-&amp; = &amp; \int \underbrace{\left(\int x f_{X|Y}(x,y)dx\right)}_{\mathbb{E}[X|Y=y]}f_{Y}(y) dy = \mathbb{E} \left( \mathbb{E}[X|Y] \right).
-\end{eqnarray*}\]</span></p>
+\mathbb{E}(X)
+&amp;=&amp;\sum_x x\mathbb{P}(X=x)\\
+&amp;=&amp;\sum_x x\sum_y\mathbb{P}(X=x\mid Y=y)\mathbb{P}(Y=y)\\
+&amp;=&amp;\sum_y\left[\sum_x x\mathbb{P}(X=x\mid Y=y)\right]\mathbb{P}(Y=y)\\
+&amp;=&amp;\sum_y\mathbb{E}(X\mid Y=y)\mathbb{P}(Y=y)
+=\mathbb{E}[\mathbb{E}(X\mid Y)].
+\end{eqnarray*}\]</span>
+For continuous <span class="math inline">\(Y\)</span>, the same argument applies with integrals replacing sums.</p>
 </div>
+<p>In Example <a href="Basics.html#exm:commuting-table">1.2</a>, the population mean commuting time is therefore
+<span class="math display">\[
+\mathbb{E}(X)
+=1.2\times 0.5+0.5\times 0.5
+=0.85.
+\]</span>
+We obtain the same value directly from the marginal distribution of <span class="math inline">\(X\)</span>:
+<span class="math display">\[
+\mathbb{E}(X)=0\times0.40+1\times0.35+2\times0.25=0.85.
+\]</span></p>
+<p>The first calculation averages across groups; the second averages across commuting-time outcomes. The law of iterated expectations states that these two routes must agree.</p>
 <div class="example">
-<p><span id="exm:mixture" class="example"><strong>Example 1.1  (Mixture of Gaussian distributions) </strong></span>By definition, <span class="math inline">\(X\)</span> is drawn from a mixture of Gaussian distributions if:
+<p><span id="exm:mixture" class="example"><strong>Example 1.3  (Mixture of Gaussian distributions) </strong></span>By definition, <span class="math inline">\(X\)</span> is drawn from a mixture of Gaussian distributions if:
 <span class="math display">\[
 X = \color{blue}{B \times Y_1} + \color{red}{(1-B) \times Y_2},
 \]</span>
@@ -522,7 +688,7 @@ Figure 1.4: Example of pdfs of mixtures of Gaussian distribututions.
 \]</span></p>
 </div>
 <div class="example">
-<p><span id="exm:Buffon" class="example"><strong>Example 1.2  (Buffon (1733)'s needles) </strong></span>Suppose we have a floor made of parallel strips of wood, each the same width [<span class="math inline">\(w=1\)</span>]. We drop a needle, of length <span class="math inline">\(1/2\)</span>, onto the floor. What is the probability that the needle crosses the grooves of the floor?</p>
+<p><span id="exm:Buffon" class="example"><strong>Example 1.4  (Buffon (1733)'s needles) </strong></span>Suppose we have a floor made of parallel strips of wood, each the same width [<span class="math inline">\(w=1\)</span>]. We drop a needle, of length <span class="math inline">\(1/2\)</span>, onto the floor. What is the probability that the needle crosses the grooves of the floor?</p>
 <p>Let’s define the random variable <span class="math inline">\(X\)</span> by
 <span class="math display">\[
 X = \left\{
@@ -564,8 +730,9 @@ Figure 1.5: Schematic representation of the problem.
 <p><strong>Practice:</strong> Exercise <a href="Basics.html#exr:basics-random-bernoulli">1.7</a> distinguishes conditional and unconditional moments.</p>
 </div>
 </div>
-<div id="basics-total-variance" class="section level2 hasAnchor" number="1.4">
-<h2><span class="header-section-number">1.4</span> Law of total variance<a href="Basics.html#basics-total-variance" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="basics-total-variance" class="section level2 hasAnchor" number="1.5">
+<h2><span class="header-section-number">1.5</span> Law of total variance<a href="Basics.html#basics-total-variance" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The population variance also has a useful group interpretation. It combines average dispersion <strong>within</strong> groups and dispersion <strong>between</strong> group means.</p>
 <div class="proposition">
 <p><span id="prp:lawtotalvariance" class="proposition"><strong>Proposition 1.3  (Law of total variance) </strong></span>If <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are two random variables and if the variance of <span class="math inline">\(X\)</span> is finite, we have:
 <span class="math display">\[
@@ -581,8 +748,22 @@ Figure 1.5: Schematic representation of the problem.
 &amp;=&amp; \mathbb{E}(\underbrace{\mathbb{E}(X^2|Y) - \mathbb{E}(X|Y)^2}_{\mathbb{V}ar(X|Y)}) + \underbrace{\mathbb{E}(\mathbb{E}(X|Y)^2) - \color{red}{\mathbb{E}(\mathbb{E}(X|Y))^2}}_{\mathbb{V}ar(\mathbb{E}(X|Y))}.
 \end{eqnarray*}\]</span></p>
 </div>
+<p>Returning to Example <a href="Basics.html#exm:commuting-table">1.2</a>, one obtains
+<span class="math display">\[
+\mathbb{V}ar(X\mid Y=0)=0.56,\qquad
+\mathbb{V}ar(X\mid Y=1)=0.45.
+\]</span>
+Consequently,
+<span class="math display">\[
+\underbrace{\mathbb{E}[\mathbb{V}ar(X\mid Y)]}_{\text{within-group variation}}
+=0.505,
+\qquad
+\underbrace{\mathbb{V}ar[\mathbb{E}(X\mid Y)]}_{\text{between-group variation}}
+=0.1225.
+\]</span>
+The total variance is <span class="math inline">\(0.505+0.1225=0.6275\)</span>. This decomposition is often useful in economics because it separates heterogeneity within observable groups from differences in their average outcomes.</p>
 <div class="example">
-<p><span id="exm:mixture2" class="example"><strong>Example 1.3  (Mixture of Gaussian distributions (cont'd)) </strong></span>Consider the case of a mixture of Gaussian distributions (Example <a href="Basics.html#exm:mixture">1.1</a>). We have:
+<p><span id="exm:mixture2" class="example"><strong>Example 1.5  (Mixture of Gaussian distributions (cont'd)) </strong></span>Consider the case of a mixture of Gaussian distributions (Example <a href="Basics.html#exm:mixture">1.3</a>). We have:
 <span class="math display">\[\begin{eqnarray*}
 \mathbb{V}ar(X) &amp;=&amp; \color{blue}{\mathbb{E}(\mathbb{V}ar(X|B))} + \color{red}{\mathbb{V}ar(\mathbb{E}(X|B))}\\
 &amp;=&amp;  \color{blue}{p\sigma_1^2+(1-p)\sigma_2^2} + \color{red}{p(1-p)(\mu_1 - \mu_2)^2}.
@@ -593,23 +774,35 @@ Figure 1.5: Schematic representation of the problem.
 <p><strong>Practice:</strong> Exercise <a href="Basics.html#exr:basics-total-variance">1.3</a> separates within-group and between-group variation.</p>
 </div>
 </div>
-<div id="basics-estimators" class="section level2 hasAnchor" number="1.5">
-<h2><span class="header-section-number">1.5</span> Bias, accuracy, and consistency<a href="Basics.html#basics-estimators" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Let <span class="math inline">\(\widehat\theta\)</span> estimate a fixed parameter <span class="math inline">\(\theta\)</span>. Its <strong>bias</strong> is <span class="math inline">\(\mathbb{E}(\widehat\theta)-\theta\)</span>; an unbiased estimator has zero bias. When its second moment is finite, its <strong>mean squared error</strong> satisfies
+<div id="basics-estimators" class="section level2 hasAnchor" number="1.6">
+<h2><span class="header-section-number">1.6</span> Bias, accuracy, and consistency<a href="Basics.html#basics-estimators" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The quantities introduced so far—means, variances, and probabilities—describe a population. In applications, these quantities are usually unknown and must be estimated from a sample.</p>
+<p>Let <span class="math inline">\(X_1,\ldots,X_n\)</span> be an independent and identically distributed sample from a population with mean <span class="math inline">\(\mu\)</span> and finite variance <span class="math inline">\(\sigma^2\)</span>. The sample mean
+<span class="math display">\[
+\overline X_n=\frac{1}{n}\sum_{i=1}^n X_i
+\]</span>
+is an estimator of <span class="math inline">\(\mu\)</span>. It satisfies
+<span class="math display">\[
+\mathbb{E}(\overline X_n)=\mu,
+\qquad
+\mathbb{V}ar(\overline X_n)=\frac{\sigma^2}{n}.
+\]</span>
+Thus its distribution is centred on the population mean and becomes increasingly concentrated as the sample grows. This example anticipates three properties used to evaluate estimators: bias, precision, and consistency.</p>
+<p>More generally, let <span class="math inline">\(\widehat\theta\)</span> estimate a fixed parameter <span class="math inline">\(\theta\)</span>. Its <strong>bias</strong> is <span class="math inline">\(\mathbb{E}(\widehat\theta)-\theta\)</span>; an unbiased estimator has zero bias. When its second moment is finite, its <strong>mean squared error</strong> satisfies
 <span class="math display">\[
 \operatorname{MSE}(\widehat\theta)=\mathbb{E}[(\widehat\theta-\theta)^2]
-=\operatorname{Var}(\widehat\theta)+\operatorname{Bias}(\widehat\theta)^2.
+=\mathbb{V}ar(\widehat\theta)+\operatorname{Bias}(\widehat\theta)^2.
 \]</span>
 A small variance means the estimator is concentrated around its own mean; it does not guarantee that this mean is close to the parameter. Exercise <a href="Basics.html#exr:basics-estimator-properties">1.5</a> derives this decomposition. Consistency concerns a different question: what happens as the sample grows?</p>
 <p>The objective of econometrics is to estimate parameters out of data observations (samples). Examples of parameters of interest include, among many others: causal effect of a variable on another, elasticities, parameters defining some distribution of interest, preference parameters (risk aversion)…</p>
-<p>Except in degenerate cases, the estimates are different from the “true” (or <em>population</em>) value. A good estimator is expected to converge to the true value when the sample size increases. That is, we are interested in the <em>consistency</em> of the estimator.</p>
-<p>Denote by <span class="math inline">\(\hat\theta_n\)</span> the estimate of <span class="math inline">\(\theta\)</span> based on a sample of length <span class="math inline">\(n\)</span>. We say that <span class="math inline">\(\hat\theta\)</span> is a consistent estimator of <span class="math inline">\(\theta\)</span> if, for any <span class="math inline">\(\varepsilon&gt;0\)</span> (even if very small), the probability that <span class="math inline">\(\hat\theta_n\)</span> is in <span class="math inline">\([\theta - \varepsilon,\theta + \varepsilon]\)</span> goes to 1 when <span class="math inline">\(n\)</span> goes to <span class="math inline">\(\infty\)</span>. Formally:
+<p>Except in degenerate cases, an estimate differs from the “true” (or <em>population</em>) value. A good estimator is expected to approach the true value as the sample size increases. This property is called <em>consistency</em>.</p>
+<p>Denote by <span class="math inline">\(\hat\theta_n\)</span> the estimate of <span class="math inline">\(\theta\)</span> based on a sample of size <span class="math inline">\(n\)</span>. We say that <span class="math inline">\(\hat\theta\)</span> is a consistent estimator of <span class="math inline">\(\theta\)</span> if, for any <span class="math inline">\(\varepsilon&gt;0\)</span> (even if very small), the probability that <span class="math inline">\(\hat\theta_n\)</span> is in <span class="math inline">\([\theta - \varepsilon,\theta + \varepsilon]\)</span> goes to 1 when <span class="math inline">\(n\)</span> goes to <span class="math inline">\(\infty\)</span>. Formally:
 <span class="math display">\[
 \lim_{n \rightarrow + \infty} \mathbb{P}\left(\hat\theta_n \in [\theta - \varepsilon,\theta + \varepsilon]\right) = 1.
 \]</span></p>
-<p>That is, <span class="math inline">\(\hat\theta\)</span> is a consistent estimator if <span class="math inline">\(\hat\theta_n\)</span> <em>converges in probability</em> (Def. <a href="append.html#def:convergenceproba">9.16</a>) to <span class="math inline">\(\theta\)</span>. Note that there exist different types of stochastic convergence.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></p>
+<p>That is, <span class="math inline">\(\hat\theta\)</span> is a consistent estimator if <span class="math inline">\(\hat\theta_n\)</span> <em>converges in probability</em> (Def. <a href="append.html#def:convergenceproba">9.16</a>) to <span class="math inline">\(\theta\)</span>. The sample mean above is consistent when the observations have a finite variance, because <span class="math inline">\(\mathbb{V}ar(\overline X_n)=\sigma^2/n\)</span> converges to zero. There are also other types of stochastic convergence.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></p>
 <div class="example">
-<p><span id="exm:NonConsist" class="example"><strong>Example 1.4  (Example of non-convergent estimator) </strong></span>Assume that <span class="math inline">\(X_i \sim i.i.d. \mbox{Cauchy}\)</span> with a location parameter of 1 and a scale parameter of 1 (Def. <a href="append.html#def:Cauchy">9.14</a>). The sample mean <span class="math inline">\(\bar{X}_n = \frac{1}{n}\sum_{i=1}^{n} X_i\)</span> does not converge in probability. This is because a Cauchy distribution has no mean; hence the law of large numbers (Theorem <a href="TCL.html#thm:LLN">2.1</a>) does not apply.</p>
+<p><span id="exm:NonConsist" class="example"><strong>Example 1.6  (Example of non-convergent estimator) </strong></span>Assume that <span class="math inline">\(X_i \sim i.i.d. \mbox{Cauchy}\)</span> with a location parameter of 1 and a scale parameter of 1 (Def. <a href="append.html#def:Cauchy">9.14</a>). The sample mean <span class="math inline">\(\bar{X}_n = \frac{1}{n}\sum_{i=1}^{n} X_i\)</span> does not converge in probability. This is because a Cauchy distribution has no mean; hence the law of large numbers (Theorem <a href="TCL.html#thm:LLN">2.1</a>) does not apply.</p>
 <details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="Basics.html#cb2-1" tabindex="-1"></a>N <span class="ot">&lt;-</span> <span class="dv">5000</span></span>
 <span id="cb2-2"><a href="Basics.html#cb2-2" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">rcauchy</span>(N, <span class="at">location=</span><span class="dv">1</span>)</span>
@@ -633,32 +826,34 @@ Figure 1.6: Simulation of <span class="math inline">\(\bar{X}_n\)</span> when <s
 <h2>Chapter recap<a href="Basics.html#chapter-recap" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <div class="recapbox">
 <ul>
+<li>For discrete variables, joint probabilities can be arranged in a table; marginal probabilities are row or column totals.</li>
 <li>A conditional probability changes the information available; Bayes’ rule reverses the direction of conditioning.</li>
-<li>A density gives probabilities through integration, not through its value at a single point.</li>
+<li>A conditional expectation is a subpopulation mean; <span class="math inline">\(\mathbb{E}(X\mid Y)\)</span> varies with the group identified by <span class="math inline">\(Y\)</span>.</li>
+<li>Continuous distributions use densities and integrals in place of probabilities attached to points and sums.</li>
 <li>Iterated expectations recover a population mean by averaging conditional means.</li>
 <li>Total variance adds average within-group variance and variance between group means.</li>
 <li>Bias and variance describe finite-sample performance; consistency describes behavior as sample size increases.</li>
 </ul>
 </div>
 </div>
-<div id="basics-exercises" class="section level2 hasAnchor" number="1.6">
-<h2><span class="header-section-number">1.6</span> Exercises<a href="Basics.html#basics-exercises" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="basics-exercises" class="section level2 hasAnchor" number="1.7">
+<h2><span class="header-section-number">1.7</span> Exercises<a href="Basics.html#basics-exercises" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Attempt each question before class and explain your reasoning, including for the true-or-false statements. <strong>Foundation</strong> exercises apply a result directly; <strong>Standard</strong> exercises require several steps or a short proof. Worked solutions and exercise-specific hints are reserved for teaching sessions and are not included in this student edition.</p>
 <div class="exercisebox">
 <div class="exercise">
 <p><span id="exr:basics-covariance" class="exercise"><strong>Exercise 1.1  (Covariance identities) </strong></span><strong>Standard | Analytical</strong><br />
 Review Section <a href="Basics.html#basics-moments">1.1</a>.</p>
-<p>Let <span class="math inline">\(X,Y,V\)</span> have finite second moments, and let <span class="math inline">\(a,b,c\)</span> be constants. Write <span class="math inline">\(\mu_X=\mathbb{E}(X)\)</span> and <span class="math inline">\(\sigma_{XY}=\operatorname{Cov}(X,Y)\)</span>.</p>
+<p>Let <span class="math inline">\(X,Y,V\)</span> have finite second moments, and let <span class="math inline">\(a,b,c\)</span> be constants. Write <span class="math inline">\(\mu_X=\mathbb{E}(X)\)</span> and <span class="math inline">\(\sigma_{XY}=\mathbb{C}ov(X,Y)\)</span>.</p>
 <ol style="list-style-type: lower-alpha">
-<li>Show that <span class="math inline">\(\operatorname{Cov}(a+bX+cV,Y)=b\sigma_{XY}+c\sigma_{VY}\)</span>.</li>
-<li>Show that <span class="math inline">\(\mathbb{E}(XY)=\operatorname{Cov}(X,Y)+\mathbb{E}(X)\mathbb{E}(Y)\)</span>.</li>
+<li>Show that <span class="math inline">\(\mathbb{C}ov(a+bX+cV,Y)=b\sigma_{XY}+c\sigma_{VY}\)</span>.</li>
+<li>Show that <span class="math inline">\(\mathbb{E}(XY)=\mathbb{C}ov(X,Y)+\mathbb{E}(X)\mathbb{E}(Y)\)</span>.</li>
 </ol>
 </div>
 </div>
 <div class="exercisebox">
 <div class="exercise">
 <p><span id="exr:basics-bayes" class="exercise"><strong>Exercise 1.2  (Bayes rule and facial recognition) </strong></span><strong>Foundation | Applied calculation</strong><br />
-Review Section <a href="Basics.html#basics-bayes">1.1.1</a>.</p>
+Review Section <a href="Basics.html#basics-bayes">1.2.2</a>.</p>
 <p>A security system grants access to an authorized person with probability <span class="math inline">\(0.99\)</span>, and to an unauthorized person with probability <span class="math inline">\(0.02\)</span>. Of those attempting to enter, <span class="math inline">\(5\%\)</span> are unauthorized.</p>
 <ol style="list-style-type: lower-alpha">
 <li>Given that a person is granted access, what is the probability that the person is authorized?</li>
@@ -669,7 +864,7 @@ Review Section <a href="Basics.html#basics-bayes">1.1.1</a>.</p>
 <div class="exercisebox">
 <div class="exercise">
 <p><span id="exr:basics-total-variance" class="exercise"><strong>Exercise 1.3  (Within-group and between-group variation) </strong></span><strong>Foundation | Applied calculation</strong><br />
-Review Section <a href="Basics.html#basics-total-variance">1.4</a>.</p>
+Review Section <a href="Basics.html#basics-total-variance">1.5</a>.</p>
 <p>Let <span class="math inline">\(X\)</span> be daily time spent on social media (in hours), and let <span class="math inline">\(Y\)</span> indicate age group. The population has the following characteristics:</p>
 <table>
 <thead>
@@ -696,17 +891,17 @@ Review Section <a href="Basics.html#basics-total-variance">1.4</a>.</p>
 </tbody>
 </table>
 <ol style="list-style-type: lower-alpha">
-<li>Calculate <span class="math inline">\(\mathbb{E}[\operatorname{Var}(X\mid Y)]\)</span>.</li>
+<li>Calculate <span class="math inline">\(\mathbb{E}[\mathbb{V}ar(X\mid Y)]\)</span>.</li>
 <li>Calculate <span class="math inline">\(\mathbb{E}[\mathbb{E}(X\mid Y)]\)</span>.</li>
-<li>Calculate <span class="math inline">\(\operatorname{Var}[\mathbb{E}(X\mid Y)]\)</span>.</li>
-<li>Use the law of total variance to obtain <span class="math inline">\(\operatorname{Var}(X)\)</span>.</li>
+<li>Calculate <span class="math inline">\(\mathbb{V}ar[\mathbb{E}(X\mid Y)]\)</span>.</li>
+<li>Use the law of total variance to obtain <span class="math inline">\(\mathbb{V}ar(X)\)</span>.</li>
 </ol>
 </div>
 </div>
 <div class="exercisebox">
 <div class="exercise">
 <p><span id="exr:basics-quantiles" class="exercise"><strong>Exercise 1.4  (Conditioning above a quantile) </strong></span><strong>Standard | Analytical</strong><br />
-Review Section <a href="Basics.html#basics-densities">1.2</a>.</p>
+Review Section <a href="Basics.html#basics-densities">1.3</a>.</p>
 <p>Let <span class="math inline">\(X\)</span> have a continuous density <span class="math inline">\(f\)</span> and cumulative distribution function <span class="math inline">\(F\)</span>. For <span class="math inline">\(0&lt;\alpha&lt;1\)</span>, let <span class="math inline">\(q_\alpha\)</span> satisfy <span class="math inline">\(F(q_\alpha)=\alpha\)</span>.</p>
 <ol style="list-style-type: lower-alpha">
 <li>How can <span class="math inline">\(f\)</span> be obtained from <span class="math inline">\(F\)</span>?</li>
@@ -718,7 +913,7 @@ Review Section <a href="Basics.html#basics-densities">1.2</a>.</p>
 <div class="exercisebox">
 <div class="exercise">
 <p><span id="exr:basics-estimator-properties" class="exercise"><strong>Exercise 1.5  (Bias, variance, and mean squared error) </strong></span><strong>Standard | Conceptual / analytical</strong><br />
-Review Section <a href="Basics.html#basics-estimators">1.5</a>.</p>
+Review Section <a href="Basics.html#basics-estimators">1.6</a>.</p>
 <p>Let <span class="math inline">\(\widehat\theta\)</span> estimate a fixed parameter <span class="math inline">\(\theta\)</span>, and suppose <span class="math inline">\(\widehat\theta\)</span> has a finite second moment.</p>
 <ol style="list-style-type: lower-alpha">
 <li>What property is expressed by <span class="math inline">\(\mathbb{E}(\widehat\theta)=\theta\)</span>?</li>
@@ -730,7 +925,7 @@ Review Section <a href="Basics.html#basics-estimators">1.5</a>.</p>
 <div class="exercisebox">
 <div class="exercise">
 <p><span id="exr:basics-joint-probabilities" class="exercise"><strong>Exercise 1.6  (Employment, residence, and independence) </strong></span><strong>Standard | Conceptual / calculation</strong><br />
-Review Section <a href="Basics.html#basics-bayes">1.1.1</a>.</p>
+Review Section <a href="Basics.html#basics-discrete">1.2</a>.</p>
 <p>Let <span class="math inline">\(X\)</span> indicate employment status (<span class="math inline">\(0\)</span>: employed; <span class="math inline">\(1\)</span>: self-employed), and let <span class="math inline">\(Y\)</span> indicate residence (<span class="math inline">\(0\)</span>: countryside; <span class="math inline">\(1\)</span>: city). Their joint probabilities are:</p>
 <table>
 <thead>
@@ -757,8 +952,8 @@ Review Section <a href="Basics.html#basics-bayes">1.1.1</a>.</p>
 <ol style="list-style-type: lower-alpha">
 <li><span class="math inline">\(\mathbb{E}(X)=0.7\)</span>.</li>
 <li><span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are not independent.</li>
-<li><span class="math inline">\(\operatorname{Var}(X)=\operatorname{Var}(X\mid Y=0)+\operatorname{Var}(X\mid Y=1)\)</span>.</li>
-<li><span class="math inline">\(\operatorname{Var}(X\mid Y=0)=0.24\)</span>.</li>
+<li><span class="math inline">\(\mathbb{V}ar(X)=\mathbb{V}ar(X\mid Y=0)+\mathbb{V}ar(X\mid Y=1)\)</span>.</li>
+<li><span class="math inline">\(\mathbb{V}ar(X\mid Y=0)=0.24\)</span>.</li>
 <li>Bayes’ rule implies
 <span class="math display">\[
 \begin{gathered}
@@ -774,13 +969,13 @@ Review Section <a href="Basics.html#basics-bayes">1.1.1</a>.</p>
 <div class="exercisebox">
 <div class="exercise">
 <p><span id="exr:basics-random-bernoulli" class="exercise"><strong>Exercise 1.7  (A Bernoulli variable with a random success probability) </strong></span><strong>Standard | Conceptual / analytical</strong><br />
-Review Section <a href="Basics.html#basics-iterated-expectations">1.3</a>.</p>
+Review Section <a href="Basics.html#basics-iterated-expectations">1.4</a>.</p>
 <p>Let <span class="math inline">\(U\)</span> be uniform on <span class="math inline">\([0,1]\)</span>, and suppose <span class="math inline">\(Y\mid U\sim\operatorname{Bernoulli}(U)\)</span>.</p>
 <p>For each statement, decide whether it is true or false and justify your answer.</p>
 <ol style="list-style-type: lower-alpha">
 <li><span class="math inline">\(\mathbb{E}(Y\mid U)=U\)</span>.</li>
-<li><span class="math inline">\(\operatorname{Var}(Y\mid U)=U^2\)</span>.</li>
-<li><span class="math inline">\(\operatorname{Var}(Y)=1/4\)</span>.</li>
+<li><span class="math inline">\(\mathbb{V}ar(Y\mid U)=U^2\)</span>.</li>
+<li><span class="math inline">\(\mathbb{V}ar(Y)=1/4\)</span>.</li>
 <li><span class="math inline">\(\mathbb{E}(Y)=1/4\)</span>.</li>
 <li><span class="math inline">\(\mathbb{E}(Y+U)=2U\)</span>.</li>
 </ol>
@@ -792,7 +987,7 @@ Review Section <a href="Basics.html#basics-iterated-expectations">1.3</a>.</p>
 <div class="footnotes">
 <hr />
 <ol start="1">
-<li id="fn1"><p>Appendix <a href="append.html#StochConvergences">9.3.3</a> notably provides the definitions of the convergence in distribution (Def. <a href="append.html#def:cvgceDistri">9.19</a>) and the mean-square convergence (Def. <a href="append.html#def:convergenceLr">9.17</a>).<a href="Basics.html#fnref1" class="footnote-back">↩︎</a></p></li>
+<li id="fn1"><p>Appendix <a href="append.html#StochConvergences">9.3.3</a> notably provides the definitions of convergence in distribution (Def. <a href="append.html#def:cvgceDistri">9.19</a>) and mean-square convergence (Def. <a href="append.html#def:convergenceLr">9.17</a>).<a href="Basics.html#fnref1" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
             </section>

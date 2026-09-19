@@ -166,16 +166,22 @@ div.csl-indent {
 <li class="divider"></li>
 <li class="chapter" data-level="1" data-path="Basics.html"><a href="Basics.html"><i class="fa fa-check"></i><b>1</b> Basic statistical results</a>
 <ul>
-<li class="chapter" data-level="1.1" data-path="Basics.html"><a href="Basics.html#basics-moments"><i class="fa fa-check"></i><b>1.1</b> Expectations, covariance, and conditional probabilities</a>
+<li class="chapter" data-level="1.1" data-path="Basics.html"><a href="Basics.html#basics-moments"><i class="fa fa-check"></i><b>1.1</b> Random variables and moments</a></li>
+<li class="chapter" data-level="1.2" data-path="Basics.html"><a href="Basics.html#basics-discrete"><i class="fa fa-check"></i><b>1.2</b> Joint distributions: the discrete case</a>
 <ul>
-<li class="chapter" data-level="1.1.1" data-path="Basics.html"><a href="Basics.html#basics-bayes"><i class="fa fa-check"></i><b>1.1.1</b> Bayes’ rule</a></li>
+<li class="chapter" data-level="1.2.1" data-path="Basics.html"><a href="Basics.html#basics-conditional-expectation"><i class="fa fa-check"></i><b>1.2.1</b> Conditional expectation</a></li>
+<li class="chapter" data-level="1.2.2" data-path="Basics.html"><a href="Basics.html#basics-bayes"><i class="fa fa-check"></i><b>1.2.2</b> Bayes’ rule</a></li>
 </ul></li>
-<li class="chapter" data-level="1.2" data-path="Basics.html"><a href="Basics.html#basics-densities"><i class="fa fa-check"></i><b>1.2</b> Cumulative distribution and probability density functions</a></li>
-<li class="chapter" data-level="1.3" data-path="Basics.html"><a href="Basics.html#basics-iterated-expectations"><i class="fa fa-check"></i><b>1.3</b> Law of iterated expectations</a></li>
-<li class="chapter" data-level="1.4" data-path="Basics.html"><a href="Basics.html#basics-total-variance"><i class="fa fa-check"></i><b>1.4</b> Law of total variance</a></li>
-<li class="chapter" data-level="1.5" data-path="Basics.html"><a href="Basics.html#basics-estimators"><i class="fa fa-check"></i><b>1.5</b> Bias, accuracy, and consistency</a></li>
+<li class="chapter" data-level="1.3" data-path="Basics.html"><a href="Basics.html#basics-densities"><i class="fa fa-check"></i><b>1.3</b> Continuous distributions</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="Basics.html"><a href="Basics.html#distribution-and-density-functions"><i class="fa fa-check"></i><b>1.3.1</b> Distribution and density functions</a></li>
+<li class="chapter" data-level="1.3.2" data-path="Basics.html"><a href="Basics.html#joint-and-conditional-densities"><i class="fa fa-check"></i><b>1.3.2</b> Joint and conditional densities</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="Basics.html"><a href="Basics.html#basics-iterated-expectations"><i class="fa fa-check"></i><b>1.4</b> Law of iterated expectations</a></li>
+<li class="chapter" data-level="1.5" data-path="Basics.html"><a href="Basics.html#basics-total-variance"><i class="fa fa-check"></i><b>1.5</b> Law of total variance</a></li>
+<li class="chapter" data-level="1.6" data-path="Basics.html"><a href="Basics.html#basics-estimators"><i class="fa fa-check"></i><b>1.6</b> Bias, accuracy, and consistency</a></li>
 <li class="chapter" data-level="" data-path="Basics.html"><a href="Basics.html#chapter-recap"><i class="fa fa-check"></i>Chapter recap</a></li>
-<li class="chapter" data-level="1.6" data-path="Basics.html"><a href="Basics.html#basics-exercises"><i class="fa fa-check"></i><b>1.6</b> Exercises</a></li>
+<li class="chapter" data-level="1.7" data-path="Basics.html"><a href="Basics.html#basics-exercises"><i class="fa fa-check"></i><b>1.7</b> Exercises</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="TCL.html"><a href="TCL.html"><i class="fa fa-check"></i><b>2</b> Central Limit Theorem</a>
 <ul>
@@ -415,7 +421,7 @@ Consider for instance the estimation of the average number of doctor visits (Exa
 <p>This <a href="https://jrenne.shinyapps.io/StatEcoII/">web interface</a> illustrates the CLT with simulations (select the “CLT” block).</p>
 <p>The CL theorem was first postulated by the mathematician Abraham de Moivre. In an article published in 1733, he used the normal distribution to approximate the distribution of the number of heads resulting from many tosses of a fair coin. This finding was nearly forgotten until Pierre-Simon Laplace recalled it in his <a href="https://archive.org/details/thorieanalytiqu01laplgoog">Théorie analytique des probabilités</a>, published in 1812. Laplace expanded De Moivre’s finding by approximating the binomial distribution with the normal distribution.</p>
 <div class="exercise">
-<p><span id="exr:ExoBuffon" class="exercise"><strong>Exercise 2.1  </strong></span>Consider Buffon’s experiment (Example <a href="Basics.html#exm:Buffon">1.2</a>). We have seen that <span class="math inline">\(\pi\)</span> can be estimated by counting the fraction of times the needles cross the grooves of the floor.<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a> Using the CLT, determine the (approximate) minimal number <span class="math inline">\(n\)</span> of needles that one has to throw to get an estimate <span class="math inline">\(\hat\pi\)</span> (<span class="math inline">\(= 1/\bar{X}_n\)</span>) of <span class="math inline">\(\pi\)</span> that is such that there is a 95% chance that <span class="math inline">\(\pi \in [\hat\pi-0.01,\hat\pi+0.01]\)</span>?</p>
+<p><span id="exr:ExoBuffon" class="exercise"><strong>Exercise 2.1  </strong></span>Consider Buffon’s experiment (Example <a href="Basics.html#exm:Buffon">1.4</a>). We have seen that <span class="math inline">\(\pi\)</span> can be estimated by counting the fraction of times the needles cross the grooves of the floor.<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a> Using the CLT, determine the (approximate) minimal number <span class="math inline">\(n\)</span> of needles that one has to throw to get an estimate <span class="math inline">\(\hat\pi\)</span> (<span class="math inline">\(= 1/\bar{X}_n\)</span>) of <span class="math inline">\(\pi\)</span> that is such that there is a 95% chance that <span class="math inline">\(\pi \in [\hat\pi-0.01,\hat\pi+0.01]\)</span>?</p>
 </div>
 <div class="exercise">
 <p><span id="exr:ExoPileFace" class="exercise"><strong>Exercise 2.2  </strong></span>Assume you have a lot of time and a coin. How would you approximate the 100 percentiles of the <span class="math inline">\(\mathcal{N}(0,1)\)</span> distribution?</p>

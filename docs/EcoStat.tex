@@ -276,16 +276,18 @@ The R codes use various packages that can be obtained from \href{https://cran.r-
 
 \chapter{Basic statistical results}\label{Basics}
 
-How can we combine information about different groups, update a probability after observing a signal, or judge the quality of an estimator? These questions recur throughout econometrics. This chapter develops the probability tools needed to answer them.
+Econometrics describes populations, compares groups, and learns about unknown quantities from samples. This chapter introduces the probability tools used for those tasks. We begin with discrete random variables, for which joint and conditional distributions can be read directly from a table. Continuous distributions are introduced afterwards as the corresponding integral-based formulation.
 
-\textbf{Prerequisites.} Basic probability, differentiation, and integration. For a Bernoulli variable with success probability \(p\), recall that the mean is \(p\) and the variance is \(p(1-p)\).
+\textbf{Prerequisites.} Basic probability, differentiation, and integration.
 
 \textbf{After working through this chapter, you should be able to:}
 
 \begin{itemize}
 \tightlist
 \item
-  Move between joint, marginal, and conditional probabilities.
+  Calculate moments of a random variable and interpret variance and covariance.
+\item
+  Move between joint, marginal, and conditional distributions.
 \item
   Use densities and distribution functions to calculate probabilities.
 \item
@@ -296,29 +298,102 @@ How can we combine information about different groups, update a probability afte
 
 The exercises in Section \ref{basics-exercises} develop these skills through calculations, proofs, and statements to assess. Each exercise links back to the relevant section.
 
-\section{Expectations, covariance, and conditional probabilities}\label{basics-moments}
+\section{Random variables and moments}\label{basics-moments}
 
-For random variables with finite second moments,
+A \textbf{random variable} assigns a numerical value to each possible outcome of an experiment. Its distribution describes which values it can take and how likely they are. If a discrete random variable \(X\) takes values \(x_1,\ldots,x_m\), write
 \[
-\operatorname{Var}(X)=\mathbb{E}[(X-\mathbb{E}(X))^2],\qquad
-\operatorname{Cov}(X,Y)=\mathbb{E}[(X-\mathbb{E}(X))(Y-\mathbb{E}(Y))].
+p_X(x_j)=\mathbb{P}(X=x_j),\qquad \sum_{j=1}^m p_X(x_j)=1.
 \]
-Expectation is linear: \(\mathbb{E}(a+bX+cY)=a+b\mathbb{E}(X)+c\mathbb{E}(Y)\) for constants \(a,b,c\). Independence is not required. If \(X\) and \(Y\) are independent, their covariance is zero; the converse does not hold in general.
+Its expectation is the probability-weighted average
+\[
+\mathbb{E}(X)=\sum_{j=1}^m x_jp_X(x_j).
+\]
+The expectation describes the centre of the distribution. It is a population quantity: it need not be one of the possible realizations of \(X\).
 
-For discrete random variables, marginal probabilities are obtained by summing joint probabilities. For example,
+The variance measures dispersion around this centre. For random variables with finite second moments,
 \[
-\mathbb{P}(X=x)=\sum_y\mathbb{P}(X=x,Y=y).
+\mathbb{V}ar(X)=\mathbb{E}[(X-\mathbb{E}(X))^2],\qquad
+\mathbb{C}ov(X,Y)=\mathbb{E}[(X-\mathbb{E}(X))(Y-\mathbb{E}(Y))].
 \]
-Independence means \(\mathbb{P}(X=x,Y=y)=\mathbb{P}(X=x)\mathbb{P}(Y=y)\) for every pair of possible values.
+The covariance is positive when above-average values of \(X\) tend to occur with above-average values of \(Y\), and negative when above-average values of one variable tend to occur with below-average values of the other. Its magnitude depends on the units in which the variables are measured.
+
+Expectation is linear:
+\[
+\mathbb{E}(a+bX+cY)=a+b\mathbb{E}(X)+c\mathbb{E}(Y),
+\]
+for constants \(a,b,c\). Independence is not required for this property. If \(X\) and \(Y\) are independent, their covariance is zero; the converse does not hold in general.
+
+\begin{example}[Bernoulli variable]
+\protect\hypertarget{exm:bernoulli-moments}{}\label{exm:bernoulli-moments}Let \(D\) equal one when an individual is employed and zero otherwise, and suppose that \(\mathbb{P}(D=1)=p\). Then
+\[
+\mathbb{E}(D)=p,\qquad \mathbb{V}ar(D)=p(1-p).
+\]
+Although each realization is either zero or one, the expectation \(p\) is the population employment rate.
+\end{example}
 
 \begin{practicebox}
 \textbf{Practice:} Exercise \ref{exr:basics-covariance} develops two useful covariance identities.
 
 \end{practicebox}
 
+\section{Joint distributions: the discrete case}\label{basics-discrete}
+
+A \textbf{joint distribution} describes how two random variables vary together. For discrete variables, it can be displayed as a probability table. Each cell is a joint probability; row and column totals are marginal probabilities.
+
+\begin{example}[A joint probability table]
+\protect\hypertarget{exm:commuting-table}{}\label{exm:commuting-table}Let \(X\) be daily commuting time, measured in hours, and let \(Y=1\) indicate a remote worker (\(Y=0\) indicates an on-site worker). Suppose the population distribution is:
+
+\begin{longtable}[]{@{}lrrrr@{}}
+\toprule\noalign{}
+& \(X=0\) & \(X=1\) & \(X=2\) & \(\mathbb{P}(Y=y)\) \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\(Y=0\) & 0.10 & 0.20 & 0.20 & 0.50 \\
+\(Y=1\) & 0.30 & 0.15 & 0.05 & 0.50 \\
+\(\mathbb{P}(X=x)\) & 0.40 & 0.35 & 0.25 & 1.00 \\
+\end{longtable}
+
+For example, \(\mathbb{P}(X=2,Y=0)=0.20\). Summing the \(X=2\) column gives \(\mathbb{P}(X=2)=0.25\).
+\end{example}
+
+In general, marginal probabilities are obtained by summing the joint probabilities over the other variable:
+\[
+\mathbb{P}(X=x)=\sum_y\mathbb{P}(X=x,Y=y).
+\]
+When \(\mathbb{P}(Y=y)>0\), the conditional probability
+\[
+\mathbb{P}(X=x\mid Y=y)
+=\frac{\mathbb{P}(X=x,Y=y)}{\mathbb{P}(Y=y)}
+\]
+describes the distribution of \(X\) within the subpopulation for which \(Y=y\). In Example \ref{exm:commuting-table},
+\[
+\mathbb{P}(X=2\mid Y=0)=\frac{0.20}{0.50}=0.40.
+\]
+
+The variables are independent when conditioning on one variable does not change the distribution of the other. Equivalently,
+\[
+\mathbb{P}(X=x,Y=y)=\mathbb{P}(X=x)\mathbb{P}(Y=y)
+\]
+for every pair \((x,y)\). The commuting variables in the example are not independent: \(\mathbb{P}(X=0\mid Y=1)=0.60\), whereas \(\mathbb{P}(X=0)=0.40\).
+
+\subsection{Conditional expectation}\label{basics-conditional-expectation}
+
+The \textbf{conditional expectation} \(\mathbb{E}(X\mid Y=y)\) is the mean of \(X\) within the subpopulation \(Y=y\):
+\[
+\mathbb{E}(X\mid Y=y)=\sum_x x\,\mathbb{P}(X=x\mid Y=y).
+\]
+In the commuting example,
+\[
+\mathbb{E}(X\mid Y=0)=1.2,\qquad
+\mathbb{E}(X\mid Y=1)=0.5.
+\]
+The notation \(\mathbb{E}(X\mid Y)\), without a specified value of \(Y\), denotes a random variable. It equals \(1.2\) for an on-site worker and \(0.5\) for a remote worker. This distinction is important: \(\mathbb{E}(X\mid Y=y)\) is a number for a given \(y\), whereas \(\mathbb{E}(X\mid Y)\) varies across groups.
+
 \subsection{Bayes' rule}\label{basics-bayes}
 
-For events \(A\) and \(C\) with \(\mathbb{P}(C)>0\),
+Conditional probabilities depend on the direction of conditioning. For events \(A\) and \(C\) with \(\mathbb{P}(C)>0\),
 \[
 \mathbb{P}(A\mid C)=\frac{\mathbb{P}(A\cap C)}{\mathbb{P}(C)}.
 \]
@@ -328,14 +403,18 @@ If \(0<\mathbb{P}(A)<1\), splitting the population into \(A\) and its complement
 \frac{\mathbb{P}(C\mid A)\mathbb{P}(A)}
 {\mathbb{P}(C\mid A)\mathbb{P}(A)+\mathbb{P}(C\mid A^c)\mathbb{P}(A^c)}.
 \]
-The distinction between \(\mathbb{P}(C\mid A)\) and \(\mathbb{P}(A\mid C)\) is essential: the accuracy of a signal does not by itself tell us the probability of an underlying event after observing that signal.
+Bayes' rule reverses the direction of conditioning. The distinction between \(\mathbb{P}(C\mid A)\) and \(\mathbb{P}(A\mid C)\) is essential: the accuracy of a signal does not by itself tell us the probability of an underlying event after observing that signal.
 
 \begin{practicebox}
 \textbf{Practice:} Exercises \ref{exr:basics-bayes} and \ref{exr:basics-joint-probabilities} apply conditioning to a screening system and a joint probability table.
 
 \end{practicebox}
 
-\section{Cumulative distribution and probability density functions}\label{basics-densities}
+\section{Continuous distributions}\label{basics-densities}
+
+For discrete variables, probabilities are attached to individual values and expectations are calculated using sums. A continuous variable instead assigns probability to intervals. Individual points typically have probability zero, so the distribution is described by a cumulative distribution function and, when it exists, a density.
+
+\subsection{Distribution and density functions}\label{distribution-and-density-functions}
 
 \begin{definition}[Cumulative distribution function (c.d.f.)]
 \protect\hypertarget{def:cdf}{}\label{def:cdf}The random variable (r.v.) \(X\) admits the cumulative distribution function \(F\) if, for all \(a\):
@@ -352,7 +431,7 @@ F(a)=\mathbb{P}(X \le a).
 where \(f(x) \ge 0\) for all \(x\).
 \end{definition}
 
-In particular, we have:
+When \(F\) is differentiable, the density is its derivative. In particular,
 \begin{equation}
 f(x) = \lim_{\varepsilon \rightarrow 0} \frac{\mathbb{P}(x < X \le x + \varepsilon)}{\varepsilon} = \lim_{\varepsilon \rightarrow 0} \frac{F(x + \varepsilon)-F(x)}{\varepsilon}.\label{eq:flim}
 \end{equation}
@@ -360,7 +439,17 @@ and
 \[
 F(a) = \int_{-\infty}^{a}f(x)dx.
 \]
-This \href{https://jrenne.shinyapps.io/density/}{web interface} illustrates the link between p.d.f. and c.d.f. Nonparametric estimates of p.d.f. are obtained by kernel-based methods (see this \href{https://www.dropbox.com/s/lxkllp9yewh98d8/Additional_Kernel.pdf?dl=0}{extra material}).
+When the relevant integrals exist, moments are calculated by weighting values with the density:
+\[
+\mathbb{E}(X)=\int_{-\infty}^{+infty}x f_X(x)dx,
+\qquad
+\mathbb{V}ar(X)=\int_{-\infty}^{+\infty}[x-\mathbb{E}(X)]^2f_X(x)dx.
+\]
+Thus, probabilities are sums in the discrete case and areas under a density in the continuous case. This \href{https://jrenne.shinyapps.io/density/}{web interface} illustrates the link between p.d.f. and c.d.f. Nonparametric estimates of p.d.f. are obtained by kernel-based methods (see this \href{https://www.dropbox.com/s/lxkllp9yewh98d8/Additional_Kernel.pdf?dl=0}{extra material}).
+
+\subsection{Joint and conditional densities}\label{joint-and-conditional-densities}
+
+The logic of a discrete probability table carries over to continuous variables. The joint density replaces the table of cell probabilities, integration replaces summation, and a marginal density is obtained by integrating out the other variable.
 
 \begin{definition}[Joint cumulative distribution function (c.d.f.)]
 \protect\hypertarget{def:jointcdf}{}\label{def:jointcdf}The random variables \(X\) and \(Y\) admit the joint cumulative distribution function \(F_{XY}\) if, for all \(a\) and \(b\):
@@ -382,6 +471,13 @@ F_{XY}(a,b)=\mathbb{P}(X \le a,Y \le b).
 \mathbb{P}(a < X \le b,c < Y \le d) = \int_{a}^{b}\int_{c}^{d}f_{XY}(x,y)dy dx, \quad \forall a \le b,\;c \le d.
 \]
 \end{definition}
+
+The marginal density is the continuous counterpart of a column or row total:
+\[
+f_X(x)=\int_{-\infty}^{+\infty}f_{XY}(x,y)dy,
+\qquad
+f_Y(y)=\int_{-\infty}^{+\infty}f_{XY}(x,y)dx.
+\]
 
 In particular, we have:
 \begin{eqnarray*}
@@ -422,14 +518,16 @@ which implies that
 \caption{Area $B+C+D+E$ encompasses the points with coordinates $(X,Y)$ such that $X\le x+\varepsilon$ and $Y \le y + \varepsilon$. Area $D+E$ encompasses the points with coordinates $(X,Y)$ such that $X\le x+\varepsilon$ and $Y \le y$. Area $C+E$ encompasses the points with coordinates $(X,Y)$ such that $X\le x$ and $Y \le y + \varepsilon$.}\label{fig:figFXYdecompo}
 \end{figure}
 
-\begin{definition}[Conditional probability distribution function]
-\protect\hypertarget{def:condcdf}{}\label{def:condcdf}If \(X\) and \(Y\) are continuous r.v., then the distribution of \(X\) conditional on \(Y=y\), which we denote by \(f_{X|Y}(x,y)\), satisfies:
+\begin{definition}[Conditional probability density function]
+\protect\hypertarget{def:condcdf}{}\label{def:condcdf}If \(X\) and \(Y\) are continuous random variables and \(f_Y(y)>0\), the conditional density of \(X\) given \(Y=y\) is denoted by \(f_{X|Y}(x,y)\).
+
+It describes the distribution of \(X\) within the subpopulation characterized by \(Y=y\). The associated conditional expectation is
 \[
-f_{X|Y}(x,y)=\lim_{\varepsilon \rightarrow 0} \frac{\mathbb{P}(x < X \le x + \varepsilon|Y=y)}{\varepsilon}.
+\mathbb{E}(X\mid Y=y)=\int_{-\infty}^{+\infty}x f_{X|Y}(x,y)dx.
 \]
 \end{definition}
 
-\begin{proposition}[Conditional probability distribution function]
+\begin{proposition}[Conditional density]
 \protect\hypertarget{prp:condcdf}{}\label{prp:condcdf}We have
 \[
 f_{X|Y}(x,y)=\frac{f_{XY}(x,y)}{f_Y(y)}.
@@ -437,12 +535,15 @@ f_{X|Y}(x,y)=\frac{f_{XY}(x,y)}{f_Y(y)}.
 \end{proposition}
 
 \begin{proof}
-We have:
+Condition on a shrinking interval around \(y\). Then
 \begin{eqnarray*}
-f_{X|Y}(x,y)&=&\lim_{\varepsilon \rightarrow 0} \frac{\mathbb{P}(x < X \le x + \varepsilon|Y=y)}{\varepsilon}\\
-&=&\lim_{\varepsilon \rightarrow 0} \frac{1}{\varepsilon}\mathbb{P}(x < X \le x + \varepsilon|y<Y\le y+\varepsilon)\\
-&=&\lim_{\varepsilon \rightarrow 0} \frac{1}{\varepsilon}\frac{\mathbb{P}(x < X \le x + \varepsilon,y<Y\le y+\varepsilon)}{\mathbb{P}(y<Y\le y+\varepsilon)}\\
-&=&\lim_{\varepsilon \rightarrow 0} \frac{1}{\varepsilon} \frac{\varepsilon^2f_{XY}(x,y)}{\varepsilon f_{Y}(y)}.
+f_{X|Y}(x,y)
+&=&\lim_{\varepsilon,\delta \rightarrow 0}
+\frac{\mathbb{P}(x<X\le x+\varepsilon\mid y<Y\le y+\delta)}{\varepsilon}\\
+&=&\lim_{\varepsilon,\delta \rightarrow 0}
+\frac{\mathbb{P}(x<X\le x+\varepsilon,y<Y\le y+\delta)}
+{\varepsilon\,\mathbb{P}(y<Y\le y+\delta)}\\
+&=&\frac{f_{XY}(x,y)}{f_Y(y)}.
 \end{eqnarray*}
 \end{proof}
 
@@ -472,12 +573,40 @@ We have the following:
 
 It is important to note that the absence of correlation between two variables is not a sufficient condition to have independence. Consider for instance the case where \(X=Y^2\), with \(Y \sim\mathcal{N}(0,1)\). In this case, we have \(\mathbb{C}ov(X,Y)=0\), but \(X\) and \(Y\) are not independent. Indeed, we have for instance \(\mathbb{E}(Y^2 \times X)=3\), which is not equal to \(\mathbb{E}(Y^2) \times \mathbb{E}(X)=1\). (If \(X\) and \(Y\) were independent, we should have \(\mathbb{E}(Y^2 \times X)=\mathbb{E}(Y^2) \times \mathbb{E}(X)\) according to point 2 above.)
 
+\Needspace{10\baselineskip}
+
+The correspondence between the two settings can be summarized as follows:
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3333}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Concept
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Discrete variables
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Continuous variables
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Distribution & probabilities \(p_X(x)\) & density \(f_X(x)\) \\
+Marginalization & sum joint probabilities & integrate the joint density \\
+Conditioning & divide by a marginal probability & divide by a marginal density \\
+Expectation & probability-weighted sum & density-weighted integral \\
+\end{longtable}
+
 \begin{practicebox}
 \textbf{Practice:} Exercise \ref{exr:basics-quantiles} asks how a density changes after conditioning above a quantile.
 
 \end{practicebox}
 
 \section{Law of iterated expectations}\label{basics-iterated-expectations}
+
+The conditional means describe different subpopulations. To recover the population mean, we average those conditional means using the population shares of the groups.
 
 \begin{proposition}[Law of iterated expectations]
 \protect\hypertarget{prp:lawiteratedexpect}{}\label{prp:lawiteratedexpect}If \(X\) and \(Y\) are two random variables and if \(\mathbb{E}(|X|)<\infty\), we have:
@@ -487,20 +616,30 @@ It is important to note that the absence of correlation between two variables is
 \end{proposition}
 
 \begin{proof}
-(in the case where the p.d.f. of \((X,Y)\) exists) Let us denote by \(f_X\), \(f_Y\) and \(f_{XY}\) the probability distribution functions (p.d.f.) of \(X\), \(Y\) and \((X,Y)\), respectively. We have:
-\[
-f_{X}(x) = \int f_{XY}(x,y) dy.
-\]
-Besides, we have (Bayes equality, Prop. \ref{prp:condcdf}):
-\[
-f_{XY}(x,y) = f_{X|Y}(x,y)f_{Y}(y).
-\]
-Therefore:
+Suppose first that both \(X\) and \(Y\) are discrete. Partitioning the population according to the possible values of \(Y\) gives
 \begin{eqnarray*}
-\mathbb{E}(X) &=& \int x f_X(x)dx = \int x  \underbrace{ \int  f_{XY}(x,y) dy}_{=f_X(x)} dx =\int  \int x f_{X|Y}(x,y)f_{Y}(y) dydx \\
-& = & \int \underbrace{\left(\int x f_{X|Y}(x,y)dx\right)}_{\mathbb{E}[X|Y=y]}f_{Y}(y) dy = \mathbb{E} \left( \mathbb{E}[X|Y] \right).
+\mathbb{E}(X)
+&=&\sum_x x\mathbb{P}(X=x)\\
+&=&\sum_x x\sum_y\mathbb{P}(X=x\mid Y=y)\mathbb{P}(Y=y)\\
+&=&\sum_y\left[\sum_x x\mathbb{P}(X=x\mid Y=y)\right]\mathbb{P}(Y=y)\\
+&=&\sum_y\mathbb{E}(X\mid Y=y)\mathbb{P}(Y=y)
+=\mathbb{E}[\mathbb{E}(X\mid Y)].
 \end{eqnarray*}
+For continuous \(Y\), the same argument applies with integrals replacing sums.
 \end{proof}
+
+In Example \ref{exm:commuting-table}, the population mean commuting time is therefore
+\[
+\mathbb{E}(X)
+=1.2\times 0.5+0.5\times 0.5
+=0.85.
+\]
+We obtain the same value directly from the marginal distribution of \(X\):
+\[
+\mathbb{E}(X)=0\times0.40+1\times0.35+2\times0.25=0.85.
+\]
+
+The first calculation averages across groups; the second averages across commuting-time outcomes. The law of iterated expectations states that these two routes must agree.
 
 \begin{example}[Mixture of Gaussian distributions]
 \protect\hypertarget{exm:mixture}{}\label{exm:mixture}By definition, \(X\) is drawn from a mixture of Gaussian distributions if:
@@ -563,6 +702,8 @@ It is reasonable to assume that \(\theta\) is uniformly distributed on \([-\pi/2
 
 \section{Law of total variance}\label{basics-total-variance}
 
+The population variance also has a useful group interpretation. It combines average dispersion \textbf{within} groups and dispersion \textbf{between} group means.
+
 \begin{proposition}[Law of total variance]
 \protect\hypertarget{prp:lawtotalvariance}{}\label{prp:lawtotalvariance}If \(X\) and \(Y\) are two random variables and if the variance of \(X\) is finite, we have:
 \[
@@ -580,6 +721,21 @@ We have:
 \end{eqnarray*}
 \end{proof}
 
+Returning to Example \ref{exm:commuting-table}, one obtains
+\[
+\mathbb{V}ar(X\mid Y=0)=0.56,\qquad
+\mathbb{V}ar(X\mid Y=1)=0.45.
+\]
+Consequently,
+\[
+\underbrace{\mathbb{E}[\mathbb{V}ar(X\mid Y)]}_{\text{within-group variation}}
+=0.505,
+\qquad
+\underbrace{\mathbb{V}ar[\mathbb{E}(X\mid Y)]}_{\text{between-group variation}}
+=0.1225.
+\]
+The total variance is \(0.505+0.1225=0.6275\). This decomposition is often useful in economics because it separates heterogeneity within observable groups from differences in their average outcomes.
+
 \begin{example}[Mixture of Gaussian distributions (cont'd)]
 \protect\hypertarget{exm:mixture2}{}\label{exm:mixture2}Consider the case of a mixture of Gaussian distributions (Example \ref{exm:mixture}). We have:
 \begin{eqnarray*}
@@ -595,23 +751,37 @@ We have:
 
 \section{Bias, accuracy, and consistency}\label{basics-estimators}
 
-Let \(\widehat\theta\) estimate a fixed parameter \(\theta\). Its \textbf{bias} is \(\mathbb{E}(\widehat\theta)-\theta\); an unbiased estimator has zero bias. When its second moment is finite, its \textbf{mean squared error} satisfies
+The quantities introduced so far---means, variances, and probabilities---describe a population. In applications, these quantities are usually unknown and must be estimated from a sample.
+
+Let \(X_1,\ldots,X_n\) be an independent and identically distributed sample from a population with mean \(\mu\) and finite variance \(\sigma^2\). The sample mean
+\[
+\overline X_n=\frac{1}{n}\sum_{i=1}^n X_i
+\]
+is an estimator of \(\mu\). It satisfies
+\[
+\mathbb{E}(\overline X_n)=\mu,
+\qquad
+\mathbb{V}ar(\overline X_n)=\frac{\sigma^2}{n}.
+\]
+Thus its distribution is centred on the population mean and becomes increasingly concentrated as the sample grows. This example anticipates three properties used to evaluate estimators: bias, precision, and consistency.
+
+More generally, let \(\widehat\theta\) estimate a fixed parameter \(\theta\). Its \textbf{bias} is \(\mathbb{E}(\widehat\theta)-\theta\); an unbiased estimator has zero bias. When its second moment is finite, its \textbf{mean squared error} satisfies
 \[
 \operatorname{MSE}(\widehat\theta)=\mathbb{E}[(\widehat\theta-\theta)^2]
-=\operatorname{Var}(\widehat\theta)+\operatorname{Bias}(\widehat\theta)^2.
+=\mathbb{V}ar(\widehat\theta)+\operatorname{Bias}(\widehat\theta)^2.
 \]
 A small variance means the estimator is concentrated around its own mean; it does not guarantee that this mean is close to the parameter. Exercise \ref{exr:basics-estimator-properties} derives this decomposition. Consistency concerns a different question: what happens as the sample grows?
 
 The objective of econometrics is to estimate parameters out of data observations (samples). Examples of parameters of interest include, among many others: causal effect of a variable on another, elasticities, parameters defining some distribution of interest, preference parameters (risk aversion)\ldots{}
 
-Except in degenerate cases, the estimates are different from the ``true'' (or \emph{population}) value. A good estimator is expected to converge to the true value when the sample size increases. That is, we are interested in the \emph{consistency} of the estimator.
+Except in degenerate cases, an estimate differs from the ``true'' (or \emph{population}) value. A good estimator is expected to approach the true value as the sample size increases. This property is called \emph{consistency}.
 
-Denote by \(\hat\theta_n\) the estimate of \(\theta\) based on a sample of length \(n\). We say that \(\hat\theta\) is a consistent estimator of \(\theta\) if, for any \(\varepsilon>0\) (even if very small), the probability that \(\hat\theta_n\) is in \([\theta - \varepsilon,\theta + \varepsilon]\) goes to 1 when \(n\) goes to \(\infty\). Formally:
+Denote by \(\hat\theta_n\) the estimate of \(\theta\) based on a sample of size \(n\). We say that \(\hat\theta\) is a consistent estimator of \(\theta\) if, for any \(\varepsilon>0\) (even if very small), the probability that \(\hat\theta_n\) is in \([\theta - \varepsilon,\theta + \varepsilon]\) goes to 1 when \(n\) goes to \(\infty\). Formally:
 \[
 \lim_{n \rightarrow + \infty} \mathbb{P}\left(\hat\theta_n \in [\theta - \varepsilon,\theta + \varepsilon]\right) = 1.
 \]
 
-That is, \(\hat\theta\) is a consistent estimator if \(\hat\theta_n\) \emph{converges in probability} (Def. \ref{def:convergenceproba}) to \(\theta\). Note that there exist different types of stochastic convergence.\footnote{Appendix \ref{StochConvergences} notably provides the definitions of the convergence in distribution (Def. \ref{def:cvgceDistri}) and the mean-square convergence (Def. \ref{def:convergenceLr}).}
+That is, \(\hat\theta\) is a consistent estimator if \(\hat\theta_n\) \emph{converges in probability} (Def. \ref{def:convergenceproba}) to \(\theta\). The sample mean above is consistent when the observations have a finite variance, because \(\mathbb{V}ar(\overline X_n)=\sigma^2/n\) converges to zero. There are also other types of stochastic convergence.\footnote{Appendix \ref{StochConvergences} notably provides the definitions of convergence in distribution (Def. \ref{def:cvgceDistri}) and mean-square convergence (Def. \ref{def:convergenceLr}).}
 
 \begin{example}[Example of non-convergent estimator]
 \protect\hypertarget{exm:NonConsist}{}\label{exm:NonConsist}
@@ -651,9 +821,13 @@ Assume that \(X_i \sim i.i.d. \mbox{Cauchy}\) with a location parameter of 1 and
 \begin{itemize}
 \tightlist
 \item
+  For discrete variables, joint probabilities can be arranged in a table; marginal probabilities are row or column totals.
+\item
   A conditional probability changes the information available; Bayes' rule reverses the direction of conditioning.
 \item
-  A density gives probabilities through integration, not through its value at a single point.
+  A conditional expectation is a subpopulation mean; \(\mathbb{E}(X\mid Y)\) varies with the group identified by \(Y\).
+\item
+  Continuous distributions use densities and integrals in place of probabilities attached to points and sums.
 \item
   Iterated expectations recover a population mean by averaging conditional means.
 \item
@@ -680,15 +854,15 @@ Attempt each question before class and explain your reasoning, including for the
 \textbf{Standard \textbar{} Analytical}\\
 Review Section \ref{basics-moments}.
 
-Let \(X,Y,V\) have finite second moments, and let \(a,b,c\) be constants. Write \(\mu_X=\mathbb{E}(X)\) and \(\sigma_{XY}=\operatorname{Cov}(X,Y)\).
+Let \(X,Y,V\) have finite second moments, and let \(a,b,c\) be constants. Write \(\mu_X=\mathbb{E}(X)\) and \(\sigma_{XY}=\mathbb{C}ov(X,Y)\).
 
 \begin{enumerate}
 \def\labelenumi{(\alph{enumi})}
 \tightlist
 \item
-  Show that \(\operatorname{Cov}(a+bX+cV,Y)=b\sigma_{XY}+c\sigma_{VY}\).
+  Show that \(\mathbb{C}ov(a+bX+cV,Y)=b\sigma_{XY}+c\sigma_{VY}\).
 \item
-  Show that \(\mathbb{E}(XY)=\operatorname{Cov}(X,Y)+\mathbb{E}(X)\mathbb{E}(Y)\).
+  Show that \(\mathbb{E}(XY)=\mathbb{C}ov(X,Y)+\mathbb{E}(X)\mathbb{E}(Y)\).
 \end{enumerate}
 
 \end{exercise}
@@ -747,13 +921,13 @@ Under 30 & 0.6 & 4 & 1.5 \\
 \def\labelenumi{(\alph{enumi})}
 \tightlist
 \item
-  Calculate \(\mathbb{E}[\operatorname{Var}(X\mid Y)]\).
+  Calculate \(\mathbb{E}[\mathbb{V}ar(X\mid Y)]\).
 \item
   Calculate \(\mathbb{E}[\mathbb{E}(X\mid Y)]\).
 \item
-  Calculate \(\operatorname{Var}[\mathbb{E}(X\mid Y)]\).
+  Calculate \(\mathbb{V}ar[\mathbb{E}(X\mid Y)]\).
 \item
-  Use the law of total variance to obtain \(\operatorname{Var}(X)\).
+  Use the law of total variance to obtain \(\mathbb{V}ar(X)\).
 \end{enumerate}
 
 \end{exercise}
@@ -822,7 +996,7 @@ Let \(\widehat\theta\) estimate a fixed parameter \(\theta\), and suppose \(\wid
 \protect\hypertarget{exr:basics-joint-probabilities}{}\label{exr:basics-joint-probabilities}
 
 \textbf{Standard \textbar{} Conceptual / calculation}\\
-Review Section \ref{basics-bayes}.
+Review Section \ref{basics-discrete}.
 
 Let \(X\) indicate employment status (\(0\): employed; \(1\): self-employed), and let \(Y\) indicate residence (\(0\): countryside; \(1\): city). Their joint probabilities are:
 
@@ -847,9 +1021,9 @@ For each statement, decide whether it is true or false and justify your answer.
 \item
   \(X\) and \(Y\) are not independent.
 \item
-  \(\operatorname{Var}(X)=\operatorname{Var}(X\mid Y=0)+\operatorname{Var}(X\mid Y=1)\).
+  \(\mathbb{V}ar(X)=\mathbb{V}ar(X\mid Y=0)+\mathbb{V}ar(X\mid Y=1)\).
 \item
-  \(\operatorname{Var}(X\mid Y=0)=0.24\).
+  \(\mathbb{V}ar(X\mid Y=0)=0.24\).
 \item
   Bayes' rule implies
   \[
@@ -887,9 +1061,9 @@ For each statement, decide whether it is true or false and justify your answer.
 \item
   \(\mathbb{E}(Y\mid U)=U\).
 \item
-  \(\operatorname{Var}(Y\mid U)=U^2\).
+  \(\mathbb{V}ar(Y\mid U)=U^2\).
 \item
-  \(\operatorname{Var}(Y)=1/4\).
+  \(\mathbb{V}ar(Y)=1/4\).
 \item
   \(\mathbb{E}(Y)=1/4\).
 \item
@@ -1057,15 +1231,6 @@ The next lines of codes construct two samples of incomes; one for men (\texttt{i
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{library}\NormalTok{(AEC);}\FunctionTok{library}\NormalTok{(logKDE)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## Warning: package 'logKDE' was built under R version 4.5.2
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
 \NormalTok{dataset.m }\OtherTok{\textless{}{-}} \FunctionTok{subset}\NormalTok{(shp,(sex19}\SpecialCharTok{==}\DecValTok{1}\NormalTok{)}\SpecialCharTok{\&}\NormalTok{(age19}\SpecialCharTok{\textless{}=}\DecValTok{35}\NormalTok{))}
 \NormalTok{dataset.w }\OtherTok{\textless{}{-}} \FunctionTok{subset}\NormalTok{(shp,(sex19}\SpecialCharTok{==}\DecValTok{2}\NormalTok{)}\SpecialCharTok{\&}\NormalTok{(age19}\SpecialCharTok{\textless{}=}\DecValTok{35}\NormalTok{))}
 \NormalTok{income.m }\OtherTok{\textless{}{-}}\NormalTok{ dataset.m}\SpecialCharTok{$}\NormalTok{i19ptotg}
@@ -2598,7 +2763,7 @@ Diagnostic & df1 & df2 & statistic & p-value\\
 \midrule
 Weak instruments & 2 & 44 & 244.734 & <0.001\\
 Wu-Hausman & 1 & 44 & 3.068 & 0.0868\\
-Sargan & 1 & NA & 0.333 & 0.5641\\
+Sargan & 1 &  & 0.333 & 0.5641\\
 \bottomrule
 \end{tabular}}
 \endgroup{}

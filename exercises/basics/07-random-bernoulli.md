@@ -14,7 +14,7 @@ Let $U$ be uniform on $[0,1]$, and suppose $Y\mid U\sim\operatorname{Bernoulli}(
 For each statement, decide whether it is true or false and justify your answer.
 
 (a) $\mathbb{E}(Y\mid U)=U$.
-(b) $\operatorname{Var}(Y\mid U)=U^2$.
-(c) $\operatorname{Var}(Y)=1/4$.
+(b) $\mathbb{V}ar(Y\mid U)=U^2$.
+(c) $\mathbb{V}ar(Y)=1/4$.
 (d) $\mathbb{E}(Y)=1/4$.
 (e) $\mathbb{E}(Y+U)=2U$.

@@ -16,7 +16,7 @@ Let $X$ be daily time spent on social media (in hours), and let $Y$ indicate age
 | Under 30 | 0.6 | 4 | 1.5 |
 | 30 or above | 0.4 | 2 | 0.5 |
 
-(a) Calculate $\mathbb{E}[\operatorname{Var}(X\mid Y)]$.
+(a) Calculate $\mathbb{E}[\mathbb{V}ar(X\mid Y)]$.
 (b) Calculate $\mathbb{E}[\mathbb{E}(X\mid Y)]$.
-(c) Calculate $\operatorname{Var}[\mathbb{E}(X\mid Y)]$.
-(d) Use the law of total variance to obtain $\operatorname{Var}(X)$.
+(c) Calculate $\mathbb{V}ar[\mathbb{E}(X\mid Y)]$.
+(d) Use the law of total variance to obtain $\mathbb{V}ar(X)$.

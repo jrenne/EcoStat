@@ -3,7 +3,7 @@ id: "basics-joint-probabilities"
 title: "Employment, residence, and independence"
 difficulty: "Standard"
 type: "Conceptual / calculation"
-related: "basics-bayes"
+related: "basics-discrete"
 source_exercise: 6
 ---
 
@@ -20,8 +20,8 @@ For each statement, decide whether it is true or false and justify your answer.
 
 (a) $\mathbb{E}(X)=0.7$.
 (b) $X$ and $Y$ are not independent.
-(c) $\operatorname{Var}(X)=\operatorname{Var}(X\mid Y=0)+\operatorname{Var}(X\mid Y=1)$.
-(d) $\operatorname{Var}(X\mid Y=0)=0.24$.
+(c) $\mathbb{V}ar(X)=\mathbb{V}ar(X\mid Y=0)+\mathbb{V}ar(X\mid Y=1)$.
+(d) $\mathbb{V}ar(X\mid Y=0)=0.24$.
 (e) Bayes' rule implies
 $$
 \begin{gathered}
