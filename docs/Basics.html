@@ -1,96 +1,317 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="" xml:lang="">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Chapter 1 Basic statistical results | Econometrics and Statistics</title>
-<meta name="author" content="Jean-Paul Renne">
-<meta name="description" content="1.1 Cumulative and probability density funtions (c.d.f. and p.d.f.)  Definition 1.1 (Cumulative distribution function (c.d.f.)) The random variable (r.v.) \(X\) admits the cumulative distribution...">
-<meta name="generator" content="bookdown 0.34 with bs4_book()">
-<meta property="og:title" content="Chapter 1 Basic statistical results | Econometrics and Statistics">
-<meta property="og:type" content="book">
-<meta property="og:description" content="1.1 Cumulative and probability density funtions (c.d.f. and p.d.f.)  Definition 1.1 (Cumulative distribution function (c.d.f.)) The random variable (r.v.) \(X\) admits the cumulative distribution...">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Chapter 1 Basic statistical results | Econometrics and Statistics">
-<meta name="twitter:description" content="1.1 Cumulative and probability density funtions (c.d.f. and p.d.f.)  Definition 1.1 (Cumulative distribution function (c.d.f.)) The random variable (r.v.) \(X\) admits the cumulative distribution...">
-<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.5.0/transition.js"></script><script src="libs/bs3compat-0.5.0/tabs.js"></script><script src="libs/bs3compat-0.5.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
-<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
-    
-    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-  </style>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 1 Basic statistical results | Econometrics and Statistics</title>
+  <meta name="description" content="This course covers various topics in econometrics. Simulations and real-data-based examples are provided." />
+  <meta name="generator" content="bookdown 0.43 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 1 Basic statistical results | Econometrics and Statistics" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="This course covers various topics in econometrics. Simulations and real-data-based examples are provided." />
+  <meta name="github-repo" content="jrenne/EcoStat" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 1 Basic statistical results | Econometrics and Statistics" />
+  
+  <meta name="twitter:description" content="This course covers various topics in econometrics. Simulations and real-data-based examples are provided." />
+  
+
+<meta name="author" content="Jean-Paul Renne" />
+
+
+<meta name="date" content="2026-09-18" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="index.html"/>
+<link rel="next" href="TCL.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/codefolding-lua-1.1/codefolding-lua.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
 <style type="text/css">
-    /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
-    div.csl-bib-body { }
-    div.csl-entry {
-      clear: both;
-        }
-    .hanging div.csl-entry {
-      margin-left:2em;
-      text-indent:-2em;
-    }
-    div.csl-left-margin {
-      min-width:2em;
-      float:left;
-    }
-    div.csl-right-inline {
-      margin-left:2em;
-      padding-left:1em;
-    }
-    div.csl-indent {
-      margin-left: 2em;
-    }
-  </style>
-<link rel="stylesheet" href="my-style.css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
 </head>
-<body data-spy="scroll" data-target="#toc">
 
-<div class="container-fluid">
-<div class="row">
-  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+<body>
 
-    <div class="d-flex align-items-start justify-content-between">
-      <h1>
-        <a href="index.html" title="">Econometrics and Statistics</a>
-      </h1>
-      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
-    </div>
 
-    <div id="main-nav" class="collapse-lg">
-      <form role="search">
-        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
-</form>
 
-      <nav aria-label="Table of contents"><h2>Table of contents</h2>
-        <ul class="book-toc list-unstyled">
-<li><a class="" href="index.html">Econometrics and statistics</a></li>
-<li><a class="active" href="Basics.html"><span class="header-section-number">1</span> Basic statistical results</a></li>
-<li><a class="" href="TCL.html"><span class="header-section-number">2</span> Central Limit Theorem</a></li>
-<li><a class="" href="Tests.html"><span class="header-section-number">3</span> Statistical tests</a></li>
-<li><a class="" href="ChapterLS.html"><span class="header-section-number">4</span> Linear Regressions</a></li>
-<li><a class="" href="Panel.html"><span class="header-section-number">5</span> Panel regressions</a></li>
-<li><a class="" href="estimation-methods.html"><span class="header-section-number">6</span> Estimation Methods</a></li>
-<li><a class="" href="binary-choice-models.html"><span class="header-section-number">7</span> Binary-choice models</a></li>
-<li><a class="" href="TS.html"><span class="header-section-number">8</span> Time Series</a></li>
-<li><a class="" href="append.html"><span class="header-section-number">9</span> Appendix</a></li>
-<li><a class="" href="references.html">References</a></li>
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Econometrics and Statistics</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="Basics.html"><a href="Basics.html"><i class="fa fa-check"></i><b>1</b> Basic statistical results</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="Basics.html"><a href="Basics.html#cumulative-and-probability-density-funtions-c.d.f.-and-p.d.f."><i class="fa fa-check"></i><b>1.1</b> Cumulative and probability density funtions (c.d.f. and p.d.f.)</a></li>
+<li class="chapter" data-level="1.2" data-path="Basics.html"><a href="Basics.html#law-of-iterated-expectations"><i class="fa fa-check"></i><b>1.2</b> Law of iterated expectations</a></li>
+<li class="chapter" data-level="1.3" data-path="Basics.html"><a href="Basics.html#law-of-total-variance"><i class="fa fa-check"></i><b>1.3</b> Law of total variance</a></li>
+<li class="chapter" data-level="1.4" data-path="Basics.html"><a href="Basics.html#about-consistent-estimators"><i class="fa fa-check"></i><b>1.4</b> About consistent estimators</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="TCL.html"><a href="TCL.html"><i class="fa fa-check"></i><b>2</b> Central Limit Theorem</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="TCL.html"><a href="TCL.html#law-of-large-numbers"><i class="fa fa-check"></i><b>2.1</b> Law of large numbers</a></li>
+<li class="chapter" data-level="2.2" data-path="TCL.html"><a href="TCL.html#central-limit-theorem-clt"><i class="fa fa-check"></i><b>2.2</b> Central Limit Theorem (CLT)</a></li>
+<li class="chapter" data-level="2.3" data-path="TCL.html"><a href="TCL.html#comparison-of-sample-means"><i class="fa fa-check"></i><b>2.3</b> Comparison of sample means</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="Tests.html"><a href="Tests.html"><i class="fa fa-check"></i><b>3</b> Statistical tests</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="Tests.html"><a href="Tests.html#size-and-power-of-a-test"><i class="fa fa-check"></i><b>3.1</b> Size and power of a test</a></li>
+<li class="chapter" data-level="3.2" data-path="Tests.html"><a href="Tests.html#the-different-types-of-statistical-tests"><i class="fa fa-check"></i><b>3.2</b> The different types of statistical tests</a></li>
+<li class="chapter" data-level="3.3" data-path="Tests.html"><a href="Tests.html#asymptotic-properties-of-statistical-tests"><i class="fa fa-check"></i><b>3.3</b> Asymptotic properties of statistical tests</a></li>
+<li class="chapter" data-level="3.4" data-path="Tests.html"><a href="Tests.html#example-normality-tests"><i class="fa fa-check"></i><b>3.4</b> Example: Normality tests</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="ChapterLS.html"><a href="ChapterLS.html"><i class="fa fa-check"></i><b>4</b> Linear Regressions</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="ChapterLS.html"><a href="ChapterLS.html#linearHyp"><i class="fa fa-check"></i><b>4.1</b> Hypotheses</a></li>
+<li class="chapter" data-level="4.2" data-path="ChapterLS.html"><a href="ChapterLS.html#LSquares"><i class="fa fa-check"></i><b>4.2</b> Least square estimation</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="ChapterLS.html"><a href="ChapterLS.html#derivation-of-the-ols-formula"><i class="fa fa-check"></i><b>4.2.1</b> Derivation of the OLS formula</a></li>
+<li class="chapter" data-level="4.2.2" data-path="ChapterLS.html"><a href="ChapterLS.html#properties-of-the-ols-estimate-small-sample"><i class="fa fa-check"></i><b>4.2.2</b> Properties of the OLS estimate (small sample)</a></li>
+<li class="chapter" data-level="4.2.3" data-path="ChapterLS.html"><a href="ChapterLS.html#goodness-of-fit"><i class="fa fa-check"></i><b>4.2.3</b> Goodness of fit</a></li>
+<li class="chapter" data-level="4.2.4" data-path="ChapterLS.html"><a href="ChapterLS.html#inference-and-confidence-intervals-in-small-sample"><i class="fa fa-check"></i><b>4.2.4</b> Inference and confidence intervals (in small sample)</a></li>
+<li class="chapter" data-level="4.2.5" data-path="ChapterLS.html"><a href="ChapterLS.html#Ftest"><i class="fa fa-check"></i><b>4.2.5</b> Testing a set of linear restrictions</a></li>
+<li class="chapter" data-level="4.2.6" data-path="ChapterLS.html"><a href="ChapterLS.html#largeSample"><i class="fa fa-check"></i><b>4.2.6</b> Large Sample Properties</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="ChapterLS.html"><a href="ChapterLS.html#CommonPitfalls"><i class="fa fa-check"></i><b>4.3</b> Common pitfalls in linear regressions</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="ChapterLS.html"><a href="ChapterLS.html#multicollinearity"><i class="fa fa-check"></i><b>4.3.1</b> Multicollinearity</a></li>
+<li class="chapter" data-level="4.3.2" data-path="ChapterLS.html"><a href="ChapterLS.html#Omitted"><i class="fa fa-check"></i><b>4.3.2</b> Omitted variables</a></li>
+<li class="chapter" data-level="4.3.3" data-path="ChapterLS.html"><a href="ChapterLS.html#irrelevant"><i class="fa fa-check"></i><b>4.3.3</b> Irrelevant variable</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="ChapterLS.html"><a href="ChapterLS.html#IV"><i class="fa fa-check"></i><b>4.4</b> Instrumental Variables</a></li>
+<li class="chapter" data-level="4.5" data-path="ChapterLS.html"><a href="ChapterLS.html#general-regression-model-grm-and-robust-covariance-matrices"><i class="fa fa-check"></i><b>4.5</b> General Regression Model (GRM) and robust covariance matrices</a>
+<ul>
+<li class="chapter" data-level="4.5.1" data-path="ChapterLS.html"><a href="ChapterLS.html#presentation-of-the-general-regression-model-grm"><i class="fa fa-check"></i><b>4.5.1</b> Presentation of the General Regression Model (GRM)</a></li>
+<li class="chapter" data-level="4.5.2" data-path="ChapterLS.html"><a href="ChapterLS.html#GLS"><i class="fa fa-check"></i><b>4.5.2</b> Generalized Least Squares</a></li>
+<li class="chapter" data-level="4.5.3" data-path="ChapterLS.html"><a href="ChapterLS.html#asymptotic-properties-of-the-ols-estimator-in-the-grm-framework"><i class="fa fa-check"></i><b>4.5.3</b> Asymptotic properties of the OLS estimator in the GRM framework</a></li>
+<li class="chapter" data-level="4.5.4" data-path="ChapterLS.html"><a href="ChapterLS.html#HAC"><i class="fa fa-check"></i><b>4.5.4</b> HAC-robust covariance matrices</a></li>
+<li class="chapter" data-level="4.5.5" data-path="ChapterLS.html"><a href="ChapterLS.html#Clusters"><i class="fa fa-check"></i><b>4.5.5</b> Cluster-robust covariance matrices</a></li>
+</ul></li>
+<li class="chapter" data-level="4.6" data-path="ChapterLS.html"><a href="ChapterLS.html#shrinkage-methods"><i class="fa fa-check"></i><b>4.6</b> Shrinkage methods</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="Panel.html"><a href="Panel.html"><i class="fa fa-check"></i><b>5</b> Panel regressions</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="Panel.html"><a href="Panel.html#specification-and-notations"><i class="fa fa-check"></i><b>5.1</b> Specification and notations</a></li>
+<li class="chapter" data-level="5.2" data-path="Panel.html"><a href="Panel.html#three-standard-cases"><i class="fa fa-check"></i><b>5.2</b> Three standard cases</a></li>
+<li class="chapter" data-level="5.3" data-path="Panel.html"><a href="Panel.html#FixedEffect"><i class="fa fa-check"></i><b>5.3</b> Estimation of Fixed-Effects Models</a></li>
+<li class="chapter" data-level="5.4" data-path="Panel.html"><a href="Panel.html#RandomEffect"><i class="fa fa-check"></i><b>5.4</b> Estimation of random effects models</a></li>
+<li class="chapter" data-level="5.5" data-path="Panel.html"><a href="Panel.html#DynPanel"><i class="fa fa-check"></i><b>5.5</b> Dynamic Panel Regressions</a></li>
+<li class="chapter" data-level="5.6" data-path="Panel.html"><a href="Panel.html#introduction-to-program-evaluation"><i class="fa fa-check"></i><b>5.6</b> Introduction to program evaluation</a>
+<ul>
+<li class="chapter" data-level="5.6.1" data-path="Panel.html"><a href="Panel.html#presentation-of-the-problem"><i class="fa fa-check"></i><b>5.6.1</b> Presentation of the problem</a></li>
+<li class="chapter" data-level="5.6.2" data-path="Panel.html"><a href="Panel.html#randomized-controlled-trials-rcts"><i class="fa fa-check"></i><b>5.6.2</b> Randomized controlled trials (RCTs)</a></li>
+<li class="chapter" data-level="5.6.3" data-path="Panel.html"><a href="Panel.html#difference-in-difference-did-approach"><i class="fa fa-check"></i><b>5.6.3</b> Difference-in-Difference (DiD) approach</a></li>
+<li class="chapter" data-level="5.6.4" data-path="Panel.html"><a href="Panel.html#application-of-the-did-approach"><i class="fa fa-check"></i><b>5.6.4</b> Application of the DiD approach</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="estimation-methods.html"><a href="estimation-methods.html"><i class="fa fa-check"></i><b>6</b> Estimation Methods</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="estimation-methods.html"><a href="estimation-methods.html#secGMM"><i class="fa fa-check"></i><b>6.1</b> Generalized Method of Moments (GMM)</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="estimation-methods.html"><a href="estimation-methods.html#definition-of-the-gmm-estimator"><i class="fa fa-check"></i><b>6.1.1</b> Definition of the GMM estimator</a></li>
+<li class="chapter" data-level="6.1.2" data-path="estimation-methods.html"><a href="estimation-methods.html#asymptotic-distribution-of-the-gmm-estimator"><i class="fa fa-check"></i><b>6.1.2</b> Asymptotic distribution of the GMM estimator</a></li>
+<li class="chapter" data-level="6.1.3" data-path="estimation-methods.html"><a href="estimation-methods.html#overidentif"><i class="fa fa-check"></i><b>6.1.3</b> Testing hypotheses in the GMM framework</a></li>
+<li class="chapter" data-level="6.1.4" data-path="estimation-methods.html"><a href="estimation-methods.html#example-estimation-of-the-stochastic-discount-factor-s.d.f."><i class="fa fa-check"></i><b>6.1.4</b> Example: Estimation of the Stochastic Discount Factor (s.d.f.)</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="estimation-methods.html"><a href="estimation-methods.html#secMLE"><i class="fa fa-check"></i><b>6.2</b> Maximum Likelihood Estimation</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="estimation-methods.html"><a href="estimation-methods.html#intuition"><i class="fa fa-check"></i><b>6.2.1</b> Intuition</a></li>
+<li class="chapter" data-level="6.2.2" data-path="estimation-methods.html"><a href="estimation-methods.html#definition-and-properties"><i class="fa fa-check"></i><b>6.2.2</b> Definition and properties</a></li>
+<li class="chapter" data-level="6.2.3" data-path="estimation-methods.html"><a href="estimation-methods.html#to-sum-up-mle-in-practice"><i class="fa fa-check"></i><b>6.2.3</b> To sum up – MLE in practice</a></li>
+<li class="chapter" data-level="6.2.4" data-path="estimation-methods.html"><a href="estimation-methods.html#example-mle-estimation-of-a-mixture-of-gaussian-distribution"><i class="fa fa-check"></i><b>6.2.4</b> Example: MLE estimation of a mixture of Gaussian distribution</a></li>
+<li class="chapter" data-level="6.2.5" data-path="estimation-methods.html"><a href="estimation-methods.html#TestMLE"><i class="fa fa-check"></i><b>6.2.5</b> Test procedures</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="estimation-methods.html"><a href="estimation-methods.html#bayesian-approach"><i class="fa fa-check"></i><b>6.3</b> Bayesian approach</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="estimation-methods.html"><a href="estimation-methods.html#introduction"><i class="fa fa-check"></i><b>6.3.1</b> Introduction</a></li>
+<li class="chapter" data-level="6.3.2" data-path="estimation-methods.html"><a href="estimation-methods.html#monte-carlo-markov-chains"><i class="fa fa-check"></i><b>6.3.2</b> Monte-Carlo Markov Chains</a></li>
+<li class="chapter" data-level="6.3.3" data-path="estimation-methods.html"><a href="estimation-methods.html#example-ar1-specification"><i class="fa fa-check"></i><b>6.3.3</b> Example: AR(1) specification</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="binary-choice-models.html"><a href="binary-choice-models.html"><i class="fa fa-check"></i><b>7</b> Binary-choice models</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="binary-choice-models.html"><a href="binary-choice-models.html#latent"><i class="fa fa-check"></i><b>7.1</b> Interpretation in terms of latent variable, and utility-based models</a></li>
+<li class="chapter" data-level="7.2" data-path="binary-choice-models.html"><a href="binary-choice-models.html#Avregressors"><i class="fa fa-check"></i><b>7.2</b> Alternative-Varying Regressors</a></li>
+<li class="chapter" data-level="7.3" data-path="binary-choice-models.html"><a href="binary-choice-models.html#estimation"><i class="fa fa-check"></i><b>7.3</b> Estimation</a></li>
+<li class="chapter" data-level="7.4" data-path="binary-choice-models.html"><a href="binary-choice-models.html#marginalFX"><i class="fa fa-check"></i><b>7.4</b> Marginal effects</a></li>
+<li class="chapter" data-level="7.5" data-path="binary-choice-models.html"><a href="binary-choice-models.html#goodness-of-fit-1"><i class="fa fa-check"></i><b>7.5</b> Goodness of fit</a></li>
+<li class="chapter" data-level="7.6" data-path="binary-choice-models.html"><a href="binary-choice-models.html#predictions-and-roc-curves"><i class="fa fa-check"></i><b>7.6</b> Predictions and ROC curves</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="TS.html"><a href="TS.html"><i class="fa fa-check"></i><b>8</b> Time Series</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="TS.html"><a href="TS.html#introduction-to-time-series"><i class="fa fa-check"></i><b>8.1</b> Introduction to time series</a></li>
+<li class="chapter" data-level="8.2" data-path="TS.html"><a href="TS.html#univariate-processes"><i class="fa fa-check"></i><b>8.2</b> Univariate processes</a>
+<ul>
+<li class="chapter" data-level="8.2.1" data-path="TS.html"><a href="TS.html#moving-average-ma-processes"><i class="fa fa-check"></i><b>8.2.1</b> Moving Average (MA) processes</a></li>
+<li class="chapter" data-level="8.2.2" data-path="TS.html"><a href="TS.html#ARsection"><i class="fa fa-check"></i><b>8.2.2</b> Auto-Regressive (AR) processes</a></li>
+<li class="chapter" data-level="8.2.3" data-path="TS.html"><a href="TS.html#PACFapproach"><i class="fa fa-check"></i><b>8.2.3</b> PACF approach to identify AR/MA processes</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="TS.html"><a href="TS.html#forecasting"><i class="fa fa-check"></i><b>8.3</b> Forecasting</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="append.html"><a href="append.html"><i class="fa fa-check"></i><b>9</b> Appendix</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="append.html"><a href="append.html#PCAapp"><i class="fa fa-check"></i><b>9.1</b> Principal component analysis (PCA)</a></li>
+<li class="chapter" data-level="9.2" data-path="append.html"><a href="append.html#LinAlgebra"><i class="fa fa-check"></i><b>9.2</b> Linear algebra: definitions and results</a></li>
+<li class="chapter" data-level="9.3" data-path="append.html"><a href="append.html#variousResults"><i class="fa fa-check"></i><b>9.3</b> Statistical analysis: definitions and results</a>
+<ul>
+<li class="chapter" data-level="9.3.1" data-path="append.html"><a href="append.html#moments-and-statistics"><i class="fa fa-check"></i><b>9.3.1</b> Moments and statistics</a></li>
+<li class="chapter" data-level="9.3.2" data-path="append.html"><a href="append.html#standard-distributions"><i class="fa fa-check"></i><b>9.3.2</b> Standard distributions</a></li>
+<li class="chapter" data-level="9.3.3" data-path="append.html"><a href="append.html#StochConvergences"><i class="fa fa-check"></i><b>9.3.3</b> Stochastic convergences</a></li>
+<li class="chapter" data-level="9.3.4" data-path="append.html"><a href="append.html#CLTappend"><i class="fa fa-check"></i><b>9.3.4</b> Central limit theorem</a></li>
+</ul></li>
+<li class="chapter" data-level="9.4" data-path="append.html"><a href="append.html#GaussianVar"><i class="fa fa-check"></i><b>9.4</b> Some properties of Gaussian variables</a></li>
+<li class="chapter" data-level="9.5" data-path="append.html"><a href="append.html#AppendixProof"><i class="fa fa-check"></i><b>9.5</b> Proofs</a></li>
+<li class="chapter" data-level="9.6" data-path="append.html"><a href="append.html#statistical-tables"><i class="fa fa-check"></i><b>9.6</b> Statistical Tables</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
 </ul>
 
-        <div class="book-extra">
-          
-        </div>
       </nav>
-</div>
-  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="Basics" class="section level1" number="1">
-<h1>
-<span class="header-section-number">1</span> Basic statistical results<a class="anchor" aria-label="anchor" href="#Basics"><i class="fas fa-link"></i></a>
-</h1>
-<div id="cumulative-and-probability-density-funtions-c.d.f.-and-p.d.f." class="section level2" number="1.1">
-<h2>
-<span class="header-section-number">1.1</span> Cumulative and probability density funtions (c.d.f. and p.d.f.)<a class="anchor" aria-label="anchor" href="#cumulative-and-probability-density-funtions-c.d.f.-and-p.d.f."><i class="fas fa-link"></i></a>
-</h2>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Econometrics and Statistics</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="Basics" class="section level1 hasAnchor" number="1">
+<h1><span class="header-section-number">Chapter 1</span> Basic statistical results<a href="Basics.html#Basics" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="cumulative-and-probability-density-funtions-c.d.f.-and-p.d.f." class="section level2 hasAnchor" number="1.1">
+<h2><span class="header-section-number">1.1</span> Cumulative and probability density funtions (c.d.f. and p.d.f.)<a href="Basics.html#cumulative-and-probability-density-funtions-c.d.f.-and-p.d.f." class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <div class="definition">
 <p><span id="def:cdf" class="definition"><strong>Definition 1.1  (Cumulative distribution function (c.d.f.)) </strong></span>The random variable (r.v.) <span class="math inline">\(X\)</span> admits the cumulative distribution function <span class="math inline">\(F\)</span> if, for all <span class="math inline">\(a\)</span>:
 <span class="math display">\[
@@ -119,9 +340,9 @@ This <a href="https://jrenne.shinyapps.io/density/">web interface</a> illustrate
 F_{XY}(a,b)=\mathbb{P}(X \le a,Y \le b).
 \]</span></p>
 </div>
-<div class="figure" style="text-align: left-aligned">
-<span style="display:block;" id="fig:essai3d2"></span>
-<img src="EcoStat_files/figure-html/essai3d2-1.png" alt="The volume between the horizontal plane ($z=0$) and the surface is equal to $F_{XY}(0.5,1)=\mathbb{P}(X&lt;0.5,Y&lt;1)$." width="95%"><p class="caption">
+<div class="figure" style="text-align: left"><span style="display:block;" id="fig:essai3d2"></span>
+<img src="EcoStat_files/figure-html/essai3d2-1.png" alt="The volume between the horizontal plane ($z=0$) and the surface is equal to $F_{XY}(0.5,1)=\mathbb{P}(X&lt;0.5,Y&lt;1)$." width="95%" />
+<p class="caption">
 Figure 1.1: The volume between the horizontal plane (<span class="math inline">\(z=0\)</span>) and the surface is equal to <span class="math inline">\(F_{XY}(0.5,1)=\mathbb{P}(X&lt;0.5,Y&lt;1)\)</span>.
 </p>
 </div>
@@ -137,9 +358,9 @@ Figure 1.1: The volume between the horizontal plane (<span class="math inline">\
 &amp;=&amp; \lim_{\varepsilon \rightarrow 0} \frac{\mathbb{P}(x &lt; X \le x + \varepsilon,y &lt; Y \le y + \varepsilon)}{\varepsilon^2} \\
 &amp;=&amp; \lim_{\varepsilon \rightarrow 0} \frac{F_{XY}(x + \varepsilon,y + \varepsilon)-F_{XY}(x,y + \varepsilon)-F_{XY}(x + \varepsilon,y)+F_{XY}(x,y)}{\varepsilon^2}.
 \end{eqnarray*}\]</span></p>
-<div class="figure" style="text-align: left-aligned">
-<span style="display:block;" id="fig:essai3d"></span>
-<img src="EcoStat_files/figure-html/essai3d-1.png" alt="Assume that the basis of the black column is defined by those points whose $x$-coordinates are between $x$ and $x+\varepsilon$ and $y$-coordinates are between $y$ and $y+\varepsilon$. Then the volume of the black column is equal to $\mathbb{P}(x &lt; X \le x+\varepsilon,y &lt; Y \le y+\varepsilon)$, which is approximately equal to $f_{XY}(x,y)\varepsilon^2$ if $\varepsilon$ is small." width="95%"><p class="caption">
+<div class="figure" style="text-align: left"><span style="display:block;" id="fig:essai3d"></span>
+<img src="EcoStat_files/figure-html/essai3d-1.png" alt="Assume that the basis of the black column is defined by those points whose $x$-coordinates are between $x$ and $x+\varepsilon$ and $y$-coordinates are between $y$ and $y+\varepsilon$. Then the volume of the black column is equal to $\mathbb{P}(x &lt; X \le x+\varepsilon,y &lt; Y \le y+\varepsilon)$, which is approximately equal to $f_{XY}(x,y)\varepsilon^2$ if $\varepsilon$ is small." width="95%" />
+<p class="caption">
 Figure 1.2: Assume that the basis of the black column is defined by those points whose <span class="math inline">\(x\)</span>-coordinates are between <span class="math inline">\(x\)</span> and <span class="math inline">\(x+\varepsilon\)</span> and <span class="math inline">\(y\)</span>-coordinates are between <span class="math inline">\(y\)</span> and <span class="math inline">\(y+\varepsilon\)</span>. Then the volume of the black column is equal to <span class="math inline">\(\mathbb{P}(x &lt; X \le x+\varepsilon,y &lt; Y \le y+\varepsilon)\)</span>, which is approximately equal to <span class="math inline">\(f_{XY}(x,y)\varepsilon^2\)</span> if <span class="math inline">\(\varepsilon\)</span> is small.
 </p>
 </div>
@@ -158,9 +379,9 @@ which implies that
 &amp;=&amp; \mathbb{P}(X\le x+ \varepsilon,Y\le y+ \varepsilon)  - \mathbb{P}(X\le x+ \varepsilon,Y\le y)  - \mathbb{P}(X\le x,Y\le y+ \varepsilon)\\
 &amp;&amp;+ \mathbb{P}(X\le x,Y\le y).
 \end{eqnarray*}\]</span></p>
-<div class="figure" style="text-align: center">
-<span style="display:block;" id="fig:figFXYdecompo"></span>
-<img src="images/tikzplot.png" alt="Area $B+C+D+E$ encompasses the points with coordinates $(X,Y)$ such that $X\le x+\varepsilon$ and $Y \le y + \varepsilon$. Area $D+E$ encompasses the points with coordinates $(X,Y)$ such that $X\le x+\varepsilon$ and $Y \le y$. Area $C+E$ encompasses the points with coordinates $(X,Y)$ such that $X\le x$ and $Y \le y + \varepsilon$." width="80%"><p class="caption">
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:figFXYdecompo"></span>
+<img src="images/tikzplot.png" alt="Area $B+C+D+E$ encompasses the points with coordinates $(X,Y)$ such that $X\le x+\varepsilon$ and $Y \le y + \varepsilon$. Area $D+E$ encompasses the points with coordinates $(X,Y)$ such that $X\le x+\varepsilon$ and $Y \le y$. Area $C+E$ encompasses the points with coordinates $(X,Y)$ such that $X\le x$ and $Y \le y + \varepsilon$." width="80%" />
+<p class="caption">
 Figure 1.3: Area <span class="math inline">\(B+C+D+E\)</span> encompasses the points with coordinates <span class="math inline">\((X,Y)\)</span> such that <span class="math inline">\(X\le x+\varepsilon\)</span> and <span class="math inline">\(Y \le y + \varepsilon\)</span>. Area <span class="math inline">\(D+E\)</span> encompasses the points with coordinates <span class="math inline">\((X,Y)\)</span> such that <span class="math inline">\(X\le x+\varepsilon\)</span> and <span class="math inline">\(Y \le y\)</span>. Area <span class="math inline">\(C+E\)</span> encompasses the points with coordinates <span class="math inline">\((X,Y)\)</span> such that <span class="math inline">\(X\le x\)</span> and <span class="math inline">\(Y \le y + \varepsilon\)</span>.
 </p>
 </div>
@@ -203,10 +424,8 @@ f_{XY}(x,y) = f_{X}(x) \times f_{Y}(y).
 </ol>
 <p>It is important to note that the absence of correlation between two variables is not a sufficient condition to have independence. Consider for instance the case where <span class="math inline">\(X=Y^2\)</span>, with <span class="math inline">\(Y \sim\mathcal{N}(0,1)\)</span>. In this case, we have <span class="math inline">\(\mathbb{C}ov(X,Y)=0\)</span>, but <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are not independent. Indeed, we have for instance <span class="math inline">\(\mathbb{E}(Y^2 \times X)=3\)</span>, which is not equal to <span class="math inline">\(\mathbb{E}(Y^2) \times \mathbb{E}(X)=1\)</span>. (If <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> were independent, we should have <span class="math inline">\(\mathbb{E}(Y^2 \times X)=\mathbb{E}(Y^2) \times \mathbb{E}(X)\)</span> according to point 2 above.)</p>
 </div>
-<div id="law-of-iterated-expectations" class="section level2" number="1.2">
-<h2>
-<span class="header-section-number">1.2</span> Law of iterated expectations<a class="anchor" aria-label="anchor" href="#law-of-iterated-expectations"><i class="fas fa-link"></i></a>
-</h2>
+<div id="law-of-iterated-expectations" class="section level2 hasAnchor" number="1.2">
+<h2><span class="header-section-number">1.2</span> Law of iterated expectations<a href="Basics.html#law-of-iterated-expectations" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <div class="proposition">
 <p><span id="prp:lawiteratedexpect" class="proposition"><strong>Proposition 1.2  (Law of iterated expectations) </strong></span>If <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are two random variables and if <span class="math inline">\(\mathbb{E}(|X|)&lt;\infty\)</span>, we have:
 <span class="math display">\[
@@ -238,9 +457,9 @@ where <span class="math inline">\(B\)</span>, <span class="math inline">\(Y_1\)<
 B \sim \mbox{Bernoulli}(p),\quad Y_1 \sim \mathcal{N}(\mu_1,\sigma_1^2), \quad \mbox{and}\quad Y_2 \sim \mathcal{N}(\mu_2,\sigma_2^2).
 \]</span></p>
 <p>Figure <a href="Basics.html#fig:mixtureG">1.4</a> displays the pdfs associated with three different mixtures of Gaussian distributions. (This <a href="https://jrenne.shinyapps.io/density/">web-interface</a> allows to produce the pdf associated for any other parameterization.)</p>
-<div class="figure" style="text-align: left-aligned">
-<span style="display:block;" id="fig:mixtureG"></span>
-<img src="EcoStat_files/figure-html/mixtureG-1.png" alt="Example of pdfs of mixtures of Gaussian distribututions." width="95%"><p class="caption">
+<div class="figure" style="text-align: left"><span style="display:block;" id="fig:mixtureG"></span>
+<img src="EcoStat_files/figure-html/mixtureG-1.png" alt="Example of pdfs of mixtures of Gaussian distribututions." width="95%" />
+<p class="caption">
 Figure 1.4: Example of pdfs of mixtures of Gaussian distribututions.
 </p>
 </div>
@@ -261,9 +480,9 @@ X = \left\{
 \right.
 \]</span>
 Conditionally on <span class="math inline">\(\theta\)</span>, it can be seen that we have <span class="math inline">\(\mathbb{E}(X|\theta)=\cos(\theta)/2\)</span> (see Figure <a href="Basics.html#fig:Buffon">1.5</a>).</p>
-<div class="figure" style="text-align: left-aligned">
-<span style="display:block;" id="fig:Buffon"></span>
-<img src="EcoStat_files/figure-html/Buffon-1.png" alt="Schematic representation of the problem." width="95%"><p class="caption">
+<div class="figure" style="text-align: left"><span style="display:block;" id="fig:Buffon"></span>
+<img src="EcoStat_files/figure-html/Buffon-1.png" alt="Schematic representation of the problem." width="95%" />
+<p class="caption">
 Figure 1.5: Schematic representation of the problem.
 </p>
 </div>
@@ -289,10 +508,8 @@ Figure 1.5: Schematic representation of the problem.
 <!-- In order to determine the distribution of the number of infected entities, it is convenient to first reason conditionally on the number of autonomous infections $r$ defined by $r=\sum_i X_i $. \href{https://jrenne.shinyapps.io/StatEcoII/}{\beamergotobutton{Web-interface illustration}} -->
 <!-- \end{exmpl} -->
 </div>
-<div id="law-of-total-variance" class="section level2" number="1.3">
-<h2>
-<span class="header-section-number">1.3</span> Law of total variance<a class="anchor" aria-label="anchor" href="#law-of-total-variance"><i class="fas fa-link"></i></a>
-</h2>
+<div id="law-of-total-variance" class="section level2 hasAnchor" number="1.3">
+<h2><span class="header-section-number">1.3</span> Law of total variance<a href="Basics.html#law-of-total-variance" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <div class="proposition">
 <p><span id="prp:lawtotalvariance" class="proposition"><strong>Proposition 1.3  (Law of total variance) </strong></span>If <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are two random variables and if the variance of <span class="math inline">\(X\)</span> is finite, we have:
 <span class="math display">\[
@@ -317,32 +534,31 @@ Figure 1.5: Schematic representation of the problem.
 </div>
 <!-- \end{footnotesize} -->
 </div>
-<div id="about-consistent-estimators" class="section level2" number="1.4">
-<h2>
-<span class="header-section-number">1.4</span> About consistent estimators<a class="anchor" aria-label="anchor" href="#about-consistent-estimators"><i class="fas fa-link"></i></a>
-</h2>
+<div id="about-consistent-estimators" class="section level2 hasAnchor" number="1.4">
+<h2><span class="header-section-number">1.4</span> About consistent estimators<a href="Basics.html#about-consistent-estimators" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>The objective of econometrics is to estimate parameters out of data observations (samples). Examples of parameters of interest include, among many others: causal effect of a variable on another, elasticities, parameters defining some distribution of interest, preference parameters (risk aversion)…</p>
 <p>Except in degenerate cases, the estimates are different from the “true” (or <em>population</em>) value. A good estimator is expected to converge to the true value when the sample size increases. That is, we are interested in the <em>consistency</em> of the estimator.</p>
 <p>Denote by <span class="math inline">\(\hat\theta_n\)</span> the estimate of <span class="math inline">\(\theta\)</span> based on a sample of length <span class="math inline">\(n\)</span>. We say that <span class="math inline">\(\hat\theta\)</span> is a consistent estimator of <span class="math inline">\(\theta\)</span> if, for any <span class="math inline">\(\varepsilon&gt;0\)</span> (even if very small), the probability that <span class="math inline">\(\hat\theta_n\)</span> is in <span class="math inline">\([\theta - \varepsilon,\theta + \varepsilon]\)</span> goes to 1 when <span class="math inline">\(n\)</span> goes to <span class="math inline">\(\infty\)</span>. Formally:
 <span class="math display">\[
 \lim_{n \rightarrow + \infty} \mathbb{P}\left(\hat\theta_n \in [\theta - \varepsilon,\theta + \varepsilon]\right) = 1.
 \]</span></p>
-<p>That is, <span class="math inline">\(\hat\theta\)</span> is a consistent estimator if <span class="math inline">\(\hat\theta_n\)</span> <em>converges in probability</em> (Def. <a href="append.html#def:convergenceproba">9.14</a>) to <span class="math inline">\(\theta\)</span>. Note that there exist different types of stochastic convergence.<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;Appendix &lt;a href="append.html#StochConvergences"&gt;9.3.3&lt;/a&gt; notably provides the definitions of the convergence in distribution (Def. &lt;a href="append.html#def:cvgceDistri"&gt;9.17&lt;/a&gt;) and the mean-square convergence (Def. &lt;a href="append.html#def:convergenceLr"&gt;9.15&lt;/a&gt;).&lt;/p&gt;'><sup>1</sup></a></p>
+<p>That is, <span class="math inline">\(\hat\theta\)</span> is a consistent estimator if <span class="math inline">\(\hat\theta_n\)</span> <em>converges in probability</em> (Def. <a href="append.html#def:convergenceproba">9.16</a>) to <span class="math inline">\(\theta\)</span>. Note that there exist different types of stochastic convergence.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></p>
 <div class="example">
-<p><span id="exm:NonConsist" class="example"><strong>Example 1.4  (Example of non-convergent estimator) </strong></span>Assume that <span class="math inline">\(X_i \sim i.i.d. \mbox{Cauchy}\)</span> with a location parameter of 1 and a scale parameter of 1 (Def. <a href="append.html#def:Cauchy">9.12</a>). The sample mean <span class="math inline">\(\bar{X}_n = \frac{1}{n}\sum_{i=1}^{n} X_i\)</span> does not converge in probability. This is because a Cauchy distribution has no mean; hence the law of large numbers (Theorem <a href="TCL.html#thm:LLN">2.1</a>) does not apply.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">N</span> <span class="op">&lt;-</span> <span class="fl">5000</span></span>
-<span><span class="va">X</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Cauchy.html">rcauchy</a></span><span class="op">(</span><span class="va">N</span><span class="op">)</span></span>
-<span><span class="va">X.bar</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cumsum.html">cumsum</a></span><span class="op">(</span><span class="va">X</span><span class="op">)</span><span class="op">/</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="va">N</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>plt<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">.1</span>,<span class="fl">.95</span>,<span class="fl">.3</span>,<span class="fl">.85</span><span class="op">)</span>,mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">X</span>,type<span class="op">=</span><span class="st">"l"</span>,xlab<span class="op">=</span><span class="st">"sample size (n)"</span>,</span>
-<span>     ylab<span class="op">=</span><span class="st">""</span>,main<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/expression.html">expression</a></span><span class="op">(</span><span class="va">X</span><span class="op">[</span><span class="va">n</span><span class="op">]</span><span class="op">)</span>,lwd<span class="op">=</span><span class="fl">2</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">X.bar</span>,type<span class="op">=</span><span class="st">"l"</span>,xlab<span class="op">=</span><span class="st">"sample size (n)"</span>,</span>
-<span>     ylab<span class="op">=</span><span class="st">""</span>,main<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/expression.html">expression</a></span><span class="op">(</span><span class="fu">bar</span><span class="op">(</span><span class="va">X</span><span class="op">)</span><span class="op">[</span><span class="va">n</span><span class="op">]</span><span class="op">)</span>,lwd<span class="op">=</span><span class="fl">2</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html">abline</a></span><span class="op">(</span>h<span class="op">=</span><span class="fl">0</span>,lty<span class="op">=</span><span class="fl">2</span>,col<span class="op">=</span><span class="st">"grey"</span><span class="op">)</span></span></code></pre></div>
-<div class="figure" style="text-align: left-aligned">
-<span style="display:block;" id="fig:figCauchy"></span>
-<img src="EcoStat_files/figure-html/figCauchy-1.png" alt="Simulation of $\bar{X}_n$ when $X_i \sim i.i.d. \mbox{Cauchy}$." width="95%"><p class="caption">
+<p><span id="exm:NonConsist" class="example"><strong>Example 1.4  (Example of non-convergent estimator) </strong></span>Assume that <span class="math inline">\(X_i \sim i.i.d. \mbox{Cauchy}\)</span> with a location parameter of 1 and a scale parameter of 1 (Def. <a href="append.html#def:Cauchy">9.14</a>). The sample mean <span class="math inline">\(\bar{X}_n = \frac{1}{n}\sum_{i=1}^{n} X_i\)</span> does not converge in probability. This is because a Cauchy distribution has no mean; hence the law of large numbers (Theorem <a href="TCL.html#thm:LLN">2.1</a>) does not apply.</p>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="Basics.html#cb2-1" tabindex="-1"></a>N <span class="ot">&lt;-</span> <span class="dv">5000</span></span>
+<span id="cb2-2"><a href="Basics.html#cb2-2" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">rcauchy</span>(N)</span>
+<span id="cb2-3"><a href="Basics.html#cb2-3" tabindex="-1"></a>X.bar <span class="ot">&lt;-</span> <span class="fu">cumsum</span>(X)<span class="sc">/</span>(<span class="dv">1</span><span class="sc">:</span>N)</span>
+<span id="cb2-4"><a href="Basics.html#cb2-4" tabindex="-1"></a><span class="fu">par</span>(<span class="at">plt=</span><span class="fu">c</span>(.<span class="dv">1</span>,.<span class="dv">95</span>,.<span class="dv">3</span>,.<span class="dv">85</span>),<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span>
+<span id="cb2-5"><a href="Basics.html#cb2-5" tabindex="-1"></a><span class="fu">plot</span>(X,<span class="at">type=</span><span class="st">&quot;l&quot;</span>,<span class="at">xlab=</span><span class="st">&quot;sample size (n)&quot;</span>,</span>
+<span id="cb2-6"><a href="Basics.html#cb2-6" tabindex="-1"></a>     <span class="at">ylab=</span><span class="st">&quot;&quot;</span>,<span class="at">main=</span><span class="fu">expression</span>(X[n]),<span class="at">lwd=</span><span class="dv">2</span>)</span>
+<span id="cb2-7"><a href="Basics.html#cb2-7" tabindex="-1"></a><span class="fu">plot</span>(X.bar,<span class="at">type=</span><span class="st">&quot;l&quot;</span>,<span class="at">xlab=</span><span class="st">&quot;sample size (n)&quot;</span>,</span>
+<span id="cb2-8"><a href="Basics.html#cb2-8" tabindex="-1"></a>     <span class="at">ylab=</span><span class="st">&quot;&quot;</span>,<span class="at">main=</span><span class="fu">expression</span>(<span class="fu">bar</span>(X)[n]),<span class="at">lwd=</span><span class="dv">2</span>)</span>
+<span id="cb2-9"><a href="Basics.html#cb2-9" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h=</span><span class="dv">0</span>,<span class="at">lty=</span><span class="dv">2</span>,<span class="at">col=</span><span class="st">&quot;grey&quot;</span>)</span></code></pre></div>
+</details>
+<div class="figure" style="text-align: left"><span style="display:block;" id="fig:figCauchy"></span>
+<img src="EcoStat_files/figure-html/figCauchy-1.png" alt="Simulation of $\bar{X}_n$ when $X_i \sim i.i.d. \mbox{Cauchy}$." width="95%" />
+<p class="caption">
 Figure 1.6: Simulation of <span class="math inline">\(\bar{X}_n\)</span> when <span class="math inline">\(X_i \sim i.i.d. \mbox{Cauchy}\)</span>.
 </p>
 </div>
@@ -350,43 +566,74 @@ Figure 1.6: Simulation of <span class="math inline">\(\bar{X}_n\)</span> when <s
 
 </div>
 </div>
-
-  <div class="chapter-nav">
-<div class="prev"><a href="index.html">Econometrics and statistics</a></div>
-<div class="next"><a href="TCL.html"><span class="header-section-number">2</span> Central Limit Theorem</a></div>
-</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
-    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
-      <ul class="nav navbar-nav">
-<li><a class="nav-link" href="#Basics"><span class="header-section-number">1</span> Basic statistical results</a></li>
-<li><a class="nav-link" href="#cumulative-and-probability-density-funtions-c.d.f.-and-p.d.f."><span class="header-section-number">1.1</span> Cumulative and probability density funtions (c.d.f. and p.d.f.)</a></li>
-<li><a class="nav-link" href="#law-of-iterated-expectations"><span class="header-section-number">1.2</span> Law of iterated expectations</a></li>
-<li><a class="nav-link" href="#law-of-total-variance"><span class="header-section-number">1.3</span> Law of total variance</a></li>
-<li><a class="nav-link" href="#about-consistent-estimators"><span class="header-section-number">1.4</span> About consistent estimators</a></li>
-</ul>
-
-      <div class="book-extra">
-        <ul class="list-unstyled">
-          
-        </ul>
+<div class="footnotes">
+<hr />
+<ol start="1">
+<li id="fn1"><p>Appendix <a href="append.html#StochConvergences">9.3.3</a> notably provides the definitions of the convergence in distribution (Def. <a href="append.html#def:cvgceDistri">9.19</a>) and the mean-square convergence (Def. <a href="append.html#def:convergenceLr">9.17</a>).<a href="Basics.html#fnref1" class="footnote-back">↩︎</a></p></li>
+</ol>
 </div>
-    </nav>
-</div>
+            </section>
 
-</div>
-</div> <!-- .container -->
-
-<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
-
-  <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Econometrics and Statistics</strong>" was written by Jean-Paul Renne. It was last built on 2025-02-24.</p>
+          </div>
+        </div>
+      </div>
+<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="TCL.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
   </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+  "sharing": {
+    "github": false,
+    "facebook": true,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": "https://github.com/jrenne/EcoStat/edit/main/01-Basics.Rmd",
+    "text": "Edit"
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": ["EcoStat.pdf"],
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "subsection"
+  }
+});
+});
+</script>
 
-  <div class="col-12 col-md-6 mt-3">
-    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
-  </div>
-
-</div></div>
-</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
@@ -398,22 +645,7 @@ Figure 1.6: Simulation of <span class="math inline">\(\bar{X}_n\)</span> when <s
     script.src = src;
     document.getElementsByTagName("head")[0].appendChild(script);
   })();
-</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
-for (let popover of popovers) {
-  const div = document.createElement('div');
-  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
-  div.innerHTML = popover.getAttribute('data-content');
-
-  var has_math = div.querySelector("span.math");
-  if (has_math) {
-    document.body.appendChild(div);
-    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
-    MathJax.Hub.Queue(function() {
-      popover.setAttribute('data-content', div.innerHTML);
-      document.body.removeChild(div);
-    })
-  }
-}
 </script>
 </body>
+
 </html>

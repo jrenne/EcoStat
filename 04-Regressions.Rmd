@@ -28,7 +28,7 @@ In this section, we introduce different assumptions regarding the covariates and
 There is no exact linear relationship among the independent variables (the $x_{i,k}$'s, for a given $i \in \{1,\dots,n\}$).
 :::
 
-Intuitively, when Hypothesis \@ref(hyp:fullrank) is satisfied, then the estimation of the model parameters is unfeasible since, for any value of $\boldsymbol\beta$, some changes in the explanatory variables will be exactly compensated by other changes in another set of explanatory variables, preventing the identification of these effects.
+Intuitively, when Hypothesis \@ref(hyp:fullrank) is violated, then the estimation of the model parameters is unfeasible since, for any value of $\boldsymbol\beta$, some changes in the explanatory variables will be exactly compensated by other changes in another set of explanatory variables, preventing the identification of these effects.
 
 
 Let us denote by $\bv{X}$ the matrix containing all explanatory variables, of dimension $n \times K$. (That is, row $i$ of $\bv{X}$ is $\bv{x}_i'$.) The following hypothesis concerns the relationship between the errors (gathered in $\boldsymbol\varepsilon$, a $n$-dimensional vector) and the explanatory variables $\bv{X}$:
@@ -73,7 +73,7 @@ In Panel (b) (heteroskedasticity):
 $$
 Y_i = 2 + 2X_i + \left(2\mathbb{I}_{\{X_i<0\}}+0.2\mathbb{I}_{\{X_i\ge0\}}\right)\varepsilon^*_i$$.
 
-```{r heteroskedasticity, fig.cap="Homoskedasticity vs heteroskedasticity. See text for the exact specifications.", fig.asp = .6, out.width = "90%", fig.align = 'left-aligned'}
+```{r heteroskedasticity, fig.cap="Homoskedasticity vs heteroskedasticity. See text for the exact specifications.", fig.asp = .6, out.width = "90%", fig.align = 'left'}
 N <- 200
 X <- rnorm(N);eps <- rnorm(N)
 par(mfrow=c(1,2),plt=c(.2,.95,.2,.8))
@@ -88,8 +88,9 @@ plot(X,Y,pch=19,main="(b) Heteroskedasticity",
 
 Figure \@ref(fig:exmpSalarayPhDSHP) shows a real-data situation of heteroskedasticity, based on data taken from the [Swiss Household Panel](https://forscenter.ch/projects/swiss-household-panel/). The sample is restricted to persons (i) that are younger than 35 year in 2019, and (ii) that have completed at least 19 years of study. The figure shows that the dispersion of yearly income increases with age.
 
-```{r exmpSalarayPhDSHP, fig.cap="Income versus age. Data are from the Swiss Household Panel. The sample is restricted to persons that have completed at least 19 years of study. The figure shows that the dispersion of yearly income increases with age.", fig.asp = .6, out.width = "95%", fig.align = "left-aligned"}
+```{r exmpSalarayPhDSHP, fig.cap="Income versus age. Data are from the Swiss Household Panel. The sample is restricted to persons that have completed at least 19 years of study. The figure shows that the dispersion of yearly income increases with age.", fig.asp = .6, out.width = "95%", fig.align = "left"}
 library(AEC)
+shp <- haven::zap_labels(AEC::shp) # retain values, remove import-only labels
 table(shp$edyear19)
 shp_higherEd <- subset(shp,(edyear19>18)&age19<35)
 plot(i19wyg/1000~age19,data=shp_higherEd,pch=19,las=1,
@@ -97,7 +98,7 @@ plot(i19wyg/1000~age19,data=shp_higherEd,pch=19,las=1,
 abline(lm(i19wyg/1000~age19,data=shp_higherEd),col="red",lwd=2)
 ```
 <!-- x -->
-<!-- ```{r exmpSalarayPhD, fig.cap="Salary versus years after PhD", fig.asp = .6, out.width = "90%", fig.align = 'left-aligned'} -->
+<!-- ```{r exmpSalarayPhD, fig.cap="Salary versus years after PhD", fig.asp = .6, out.width = "90%", fig.align = 'left'} -->
 <!-- # load data into R -->
 <!-- data(Salaries, package = "carData") -->
 <!-- # first six rows of the data -->
@@ -340,8 +341,7 @@ eq_all <- lm(parapluie~dummies+precip,data=parapluie)
 deseas_parapluie <- lm(parapluie~dummies,data=parapluie)$residuals
 deseas_precip    <- lm(precip~dummies,data=parapluie)$residuals
 eq_frac <- lm(deseas_parapluie~deseas_precip-1)
-stargazer::stargazer(eq_all,eq_frac,omit=c(1:11,"Constant"),type="text",
-                     omit.stat = c("f","ser"),digits=5,
+model_table(eq_all,eq_frac,omit=c(1:11,"Constant"),omit.stat = c("f","ser"),digits=5,
                      add.lines=list(c('Monthly dummy','Yes','No')))
 ```
 
@@ -434,7 +434,7 @@ Figure \@ref(fig:R2issue), below, illustrates the fact that one can obtain an $R
 set.seed(1)
 ```
 
-```{r R2issue, echo=TRUE, fig.cap="This figure illustrates the monotonous increase in the $R^2$ as a function of the number of explanatory variables. In the true model, there is no explanatory variables, i.e., $y_i = \\varepsilon_i$. We then take (independent) regressors and regress $y$ on the latter, progressively increasing the set of regressors.", fig.asp = .6, out.width = "90%", fig.align = 'left-aligned'}
+```{r R2issue, echo=TRUE, fig.cap="This figure illustrates the monotonous increase in the $R^2$ as a function of the number of explanatory variables. In the true model, there is no explanatory variables, i.e., $y_i = \\varepsilon_i$. We then take (independent) regressors and regress $y$ on the latter, progressively increasing the set of regressors.", fig.asp = .6, out.width = "90%", fig.align = 'left'}
 n <- 30;Y <- rnorm(n);X <- matrix(rnorm(n^2),n,n)
 all_R2 <- NULL;all_adjR2 <- NULL
 for(j in 0:(n-1)){
@@ -575,7 +575,7 @@ library(sandwich)
 shp$income <- shp$i19ptotn/1000
 shp$female <- 1*(shp$sex19==2)
 eq <- lm(income ~ edyear19 + age19 + I(age19^2) + female,data=shp)
-lmtest::coeftest(eq)
+data_table(unclass(lmtest::coeftest(eq)), digits=3, row_label="Term")
 ```
 :::
 
@@ -607,7 +607,8 @@ Using the results presented in Example \@ref(exm:SHP0001), we can compute lower 
 n <- length(eq$residuals); K <- length(eq$coefficients)
 lower.b <- eq$coefficients + qt(.025,df=n-K)*sqrt(diag(vcov(eq)))
 upper.b <- eq$coefficients + qt(.975,df=n-K)*sqrt(diag(vcov(eq)))
-cbind(lower.b,upper.b)
+data_table(cbind("Lower 95%"=lower.b, "Upper 95%"=upper.b),
+           digits=3, row_label="Term")
 ```
 
 
@@ -740,7 +741,17 @@ The inverse of the upper-left parameter of $(\bv{X}'\bv{X})^{-1}$ is:
 \end{equation}
 where $correl_{1,2}$ is the sample correlation between $\bv{x}_{1}$ and $\bv{x}_{2}$.
 
-Hence, the closer to one $correl_{1,2}$, the higher the variance of $b_1$ (recall that the variance of $b_1$ is the upper-left component of $\sigma^2(\bv{X}'\bv{X})^{-1}$). That is, if some of our regressors are close to a linear conbination of the other ones, then the confidence intervals will tend to be wide, which typically reduces the power of the t-test (we tend to fail to reject the null hypothesis that the coefficients are different from zero).
+
+Considering the whole matrix, we have:
+\begin{eqnarray*}
+(\bv{X}'\bv{X})^{-1} &=& \frac{1}{1 - correl_{1,2}^2}\left[ \begin{array}{cc}
+\frac{1}{\sum_i x_{i,1}^2}& - \frac{\sum_i x_{i,1} x_{i,2}}{\sum_i x_{i,1}^2\sum_i x_{i,2}^2}\\
+- \frac{\sum_i x_{i,1} x_{i,2}}{\sum_i x_{i,1}^2\sum_i x_{i,2}^2} & \frac{1}{\sum_i x_{i,2}^2}
+\end{array}\right].
+\end{eqnarray*}
+
+
+Hence, the closer to one $correl_{1,2}$, the higher the variance of $b_1$ (recall that the variance of $b_1$ is the upper-left component of $\sigma^2(\bv{X}'\bv{X})^{-1}$). That is, if some of our regressors are close to a linear combination of the other ones, then the confidence intervals will tend to be wide, which typically reduces the power of the t-test (we tend to fail to reject the null hypothesis that the coefficients are different from zero).
 
 ### Omitted variables {#Omitted}
 
@@ -789,8 +800,7 @@ CASchools$testscr <- .5 * (CASchools$math + CASchools$read)
 eq1 <- lm(testscr~str,data=CASchools)
 eq2 <- lm(testscr~str+lunch,data=CASchools)
 eq3 <- lm(testscr~str+lunch+english,data=CASchools)
-stargazer::stargazer(eq1,eq2,eq3,type="text",
-                     no.space = TRUE,omit.stat=c("f","ser"))
+model_table(eq1,eq2,eq3,no.space = TRUE,omit.stat=c("f","ser"))
 ```
 :::
 
@@ -972,9 +982,10 @@ eq.IV2 <- ivreg(log(packs) ~ log(rprice) | tdiff,
                 data = CigarettesSW, subset = year == "1995")
 eq.no.IV <- lm(log(packs) ~ log(rprice) + log(rincome),
                data = CigarettesSW, subset = year == "1995")
-stargazer::stargazer(eq.no.IV,eq.IV1,eq.IV2,type="text",no.space = TRUE,
+model_table(eq.no.IV,eq.IV1,eq.IV2,no.space = TRUE,
                      omit.stat=c("f","ser"))
-summary(eq.IV1,diagnostics = TRUE)$diagnostics
+data_table(summary(eq.IV1,diagnostics = TRUE)$diagnostics,
+           digits=3, row_label="Diagnostic")
 ```
 
 The last three tests are interpreted as follows:
@@ -1005,8 +1016,8 @@ eqOLS <- lm(wage ~ urban + gender + ethnicity + unemp + education,
 eq2SLS <- ivreg(wage ~ urban + gender + ethnicity + unemp + education|
                   urban + gender + ethnicity + unemp + distance,
                 data=CollegeDistance)
-stargazer::stargazer(eq.1st.stage,eq.2nd.stage,eq2SLS,eqOLS,
-                     type="text",no.space = TRUE,omit.stat = c("f","ser"))
+model_table(eq.1st.stage,eq.2nd.stage,eq2SLS,eqOLS,
+                     no.space = TRUE,omit.stat = c("f","ser"))
 ```
 :::
 
@@ -1204,7 +1215,7 @@ where the $x_i$'s are i.i.d. $t(6)$.
 
 Here is a simulated sample ($n=200$) of this model:
 
-```{r simulHeterosk, echo=TRUE, fig.cap="Situation of heteroskedasticity. The model is $y_i = x_i + \\varepsilon_i, \\quad \\varepsilon_i \\sim \\mathcal{N}(0,x_i^2)$, where the $x_i$'s are i.i.d. $t(6)$.", fig.asp = .6, out.width = "90%", fig.align = "left-aligned"}
+```{r simulHeterosk, echo=TRUE, fig.cap="Situation of heteroskedasticity. The model is $y_i = x_i + \\varepsilon_i, \\quad \\varepsilon_i \\sim \\mathcal{N}(0,x_i^2)$, where the $x_i$'s are i.i.d. $t(6)$.", fig.asp = .6, out.width = "90%", fig.align = "left"}
 n <- 200
 x <- rt(n,df=6)
 y <- x + x*rnorm(n)
@@ -1215,7 +1226,7 @@ plot(x,y,pch=19)
 
 We simulate 1000 samples of the same model with $n=200$. For each sample, we compute the OLS estimate of $\beta$ ($=1$). For each of the 1000 OLS estimations, we employ (a) the standard OLS variance formula ($s^2 (\bv{X}'\bv{X})^{-1}$) and (b) the White formula to estimate the variance of $b$. For each formula, we compute the average of the 1000 resulting standard deviations and compare these with the standard deviation of the 1000 OLS estimate of $\beta$. 
 
-```{r simulHeterosk2, echo=TRUE, fig.cap="The model is $y_i = x_i + \\varepsilon_i, \\quad \\varepsilon_i \\sim \\mathcal{N}(0,x_i^2)$, where the $x_i$'s are i.i.d. $t(6)$. Comparison between the true distribution (in red) of the OLS estimate of $\\boldsymbol\\beta$ ($=1$) and the one obtained when using the standard formula for the standard deviation of $\\bv{b}$ (in blue).", fig.asp = .6, out.width = "90%", fig.align = "left-aligned"}
+```{r simulHeterosk2, echo=TRUE, fig.cap="The model is $y_i = x_i + \\varepsilon_i, \\quad \\varepsilon_i \\sim \\mathcal{N}(0,x_i^2)$, where the $x_i$'s are i.i.d. $t(6)$. Comparison between the true distribution (in red) of the OLS estimate of $\\boldsymbol\\beta$ ($=1$) and the one obtained when using the standard formula for the standard deviation of $\\bv{b}$ (in blue).", fig.asp = .6, out.width = "90%", fig.align = "left"}
 library(sandwich)
 n <- 200 # sample size
 N <- 500 # number of simulated samples
@@ -1257,8 +1268,7 @@ JST.red$year <- as.factor(JST.red$year)
 eq <- lm(growth~crisisJST+iso+year,data=JST.red)
 vcovHC0 <- vcovHC(eq, type = "HC0")
 vcovHC1 <- vcovHC(eq, type = "HC1")
-stargazer::stargazer(eq, eq, eq,type = "text",
-                     column.labels = c("No HC", "HC0","HC1"),
+model_table(eq, eq, eq,column.labels = c("No HC", "HC0","HC1"),
                      omit = c("iso","year"),no.space = TRUE,keep.stat = "n",
                      se = list(NULL,sqrt(diag(vcovHC0)),sqrt(diag(vcovHC1))))
 ```
@@ -1272,7 +1282,7 @@ stargazer::stargazer(eq, eq, eq,type = "text",
 \frac{1}{n}\sum_{\ell=1}^{L}\sum_{t=\ell+1}^{n}w_\ell e_{t}e_{t-\ell}(\bv{x}_t\bv{x}'_{t-\ell} + \bv{x}_{t-\ell}\bv{x}'_{t})
 \right), \nonumber (\#eq:NW)
 \end{eqnarray}
-where $w_\ell = 1 - \ell/(L+1)$ (with $L$ large).
+where $w_\ell = 1 - \ell/(L+1)$.
 
 Let us illustrate the influence of autocorrelation using simulations. We consider the following model:
 \begin{equation}
@@ -1284,7 +1294,7 @@ x_i = 0.8 x_{i-1} + u_i \quad and \quad \varepsilon_i = 0.8 \varepsilon_{i-1} + 
 \end{equation}
 where the $u_i$'s and the $v_i$'s are i.i.d. $\mathcal{N}(0,1)$.
 
-We simulate 500 samples of the same model with $n=200$. For each sample, we compute the OLS estimate of $\beta$ (=1). For each of the 1000 OLS estimations, we employ (a) the standard OLS variance formula ($s^2 (\bv{X}'\bv{X})^{-1}$), (b) the White formula, and (c) the Newey-West formula to estimate the variance of $b$. For each formula, we compute the average of the 500 resulting standard  deviations and compare these with the standard deviation of the 500 OLS estimate of $\beta$. 
+We simulate 500 samples of the same model with $n=200$. For each sample, we compute the OLS estimate of $\beta$ (=1). For each of the 500 OLS estimations, we employ (a) the standard OLS variance formula ($s^2 (\bv{X}'\bv{X})^{-1}$), (b) the White formula, and (c) the Newey-West formula to estimate the variance of $b$. For each formula, we compute the average of the 500 resulting standard  deviations and compare these with the standard deviation of the 500 OLS estimate of $\beta$. 
 
 ```{r regressNW}
 library(AEC);library(sandwich)
@@ -1307,8 +1317,9 @@ for(i in 1:nb.sim){
   all.Whi.stdv.b <- c(all.Whi.stdv.b,sqrt(White.V[2,2]))
   all.NW.stdv.b  <- c(all.NW.stdv.b, sqrt(NWest.V[2,2]))
 }
-cbind(sd(all.b),mean(all.OLS.stdv.b),
-      mean(all.Whi.stdv.b),mean(all.NW.stdv.b))
+data_table(data.frame("Simulation SD"=sd(all.b),
+  "Mean OLS SE"=mean(all.OLS.stdv.b), "Mean HC1 SE"=mean(all.Whi.stdv.b),
+  "Mean HAC SE"=mean(all.NW.stdv.b), check.names=FALSE), digits=3)
 ```
 
 The results show that the Newey-West formula yields, on average, an estimated standard deviation that is closer to the "true" value than the standard OLS formula. The latter underestimate the standard deviation of $b$.
@@ -1497,9 +1508,8 @@ eq <- lm(growth~crisisJST+iso+year,data=JST.red)
 vcov1 <- vcovHC(eq, type = "HC1")
 vcov2 <- vcovCL(eq, cluster = JST.red[, c("iso")])
 vcov3 <- vcovCL(eq, cluster = JST.red[, c("iso","year")])
-stargazer::stargazer(eq, eq, eq, eq,type = "text",
-                     column.labels = c("No HAC", "Heterosk.",
-                                       "1-way Clust.","1-way Clust."),
+model_table(eq, eq, eq, eq,column.labels = c("No HAC", "Heterosk.",
+                                       "1-way Clust.","2-way Clust."),
                      omit = c("iso","year"),no.space = TRUE,keep.stat = "n",
                      se = list(NULL,sqrt(diag(vcov1)),
                                sqrt(diag(vcov2)),sqrt(diag(vcov3))))
@@ -1543,26 +1553,27 @@ To begin with, let us define the variables we want to consider:
 ```{r lasso1, warning=FALSE, message=FALSE}
 library(AEC)
 library(glmnet)
-credit <- credit[complete.cases(credit),]
-credit$owner <- 1*(credit$home_ownership=="OWN")
-credit$renter <- 1*(credit$home_ownership=="MORTGAGE")
-credit$verification_status <- 1*(credit$verification_status=="Not Verified")
-credit$emp_length_10 <- 1*(credit$emp_length_10)
-credit$log_annual_inc <- log(credit$annual_inc)
-credit$log_funded_amnt <- log(credit$funded_amnt)
-credit$annual_inc2 <- (credit$annual_inc)^2
-credit$funded_amnt2 <- (credit$funded_amnt)^2
-x <- subset(credit,
+credit_lasso <- AEC::credit
+credit_lasso <- credit_lasso[complete.cases(credit_lasso),]
+credit_lasso$owner <- 1*(credit_lasso$home_ownership=="OWN")
+credit_lasso$mortgage <- 1*(credit_lasso$home_ownership=="MORTGAGE")
+credit_lasso$verification_status <- 1*(credit_lasso$verification_status=="Not Verified")
+credit_lasso$emp_length_10 <- 1*(credit_lasso$emp_length_10)
+credit_lasso$log_annual_inc <- log(credit_lasso$annual_inc)
+credit_lasso$log_funded_amnt <- log(credit_lasso$funded_amnt)
+credit_lasso$annual_inc2 <- (credit_lasso$annual_inc)^2
+credit_lasso$funded_amnt2 <- (credit_lasso$funded_amnt)^2
+x <- subset(credit_lasso,
             select = c(delinq_2yrs,annual_inc,annual_inc2,log_annual_inc,
                        dti,installment,funded_amnt,
                        funded_amnt2,log_funded_amnt,pub_rec,emp_length_10,
-                       owner,renter,pub_rec_bankruptcies,revol_util,revol_bal))
+                       owner,mortgage,pub_rec_bankruptcies,revol_util,revol_bal))
 ```
 
 Let us standardize the data:
 
 ```{r lasso2}
-y <- scale(credit$int_rate)
+y <- scale(credit_lasso$int_rate)
 x <- scale(x)
 indic_complete_cases <- complete.cases(x)
 y <- y[indic_complete_cases]  # to remove observations with NaN's
@@ -1592,8 +1603,10 @@ Let us take two values of $\lambda$ and see the associated estimated parameters 
 
 ```{r lasso5}
 i <- 20; j <- 40
-cbind(result.lasso$lambda[i],result.lasso$lambda[j])
-cbind(coef(result.lasso)[,i],coef(result.lasso)[,j])
+data_table(cbind("Lambda i"=result.lasso$lambda[i],
+                 "Lambda j"=result.lasso$lambda[j]), digits=3)
+data_table(cbind("Lambda i"=coef(result.lasso)[,i],
+                 "Lambda j"=coef(result.lasso)[,j]), digits=4, row_label="Term")
 # Compute values of y predicted by the model, for all lambdas:
 pred1 <- predict(result.lasso,as.matrix(x))
 # Compute values of y predicted by the model, for a specific value:

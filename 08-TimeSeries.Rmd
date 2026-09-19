@@ -90,7 +90,7 @@ $$
 
 Figure \@ref(fig:nonstat1) displays the simulation of a process that is not covariance stationary. This process follows $y_t = 0.1t + \varepsilon_t$, where $\varepsilon_t \sim\,i.i.d.\,\mathcal{N}(0,1)$. Indeed, for such a process, we have: $\mathbb{E}(y_t)=0.1t$, which depends on $t$.
 
-```{r nonstat1, echo=FALSE, fig.cap="Example of a process that is not covariance stationary ($y_t = 0.1t + \\varepsilon_t$, where $\\varepsilon_t \\sim \\mathcal{N}(0,1)$).", fig.asp = .6, out.width = "95%", fig.align = 'left-aligned'}
+```{r nonstat1, echo=FALSE, fig.cap="Example of a process that is not covariance stationary ($y_t = 0.1t + \\varepsilon_t$, where $\\varepsilon_t \\sim \\mathcal{N}(0,1)$).", fig.asp = .6, out.width = "95%", fig.align = 'left'}
 T <- 200
 y <- 0.1*(1:T) + rnorm(T)
 par(plt=c(.1,.95,.1,.95))
@@ -108,7 +108,7 @@ y_t = \mathbb{I}_{\{t<1000\}}\varepsilon_{1,t}+\mathbb{I}_{\{t\ge1000\}}\varepsi
 $$
 where $\varepsilon_{1,t} \sim \mathcal{N}(0,1)$ and $\varepsilon_{2,t} \sim \sqrt{\frac{\nu - 2}{\nu}} t(\nu)$ and $\nu = 4$.
 
-```{r nonstat2, echo=FALSE, fig.cap="Example of a process that is covariance stationary but not strictly stationary. The red lines delineate the 99\\% confidence interval of the standard normal distribution ($\\pm 2.58$).", fig.asp = .6, out.width = "95%", fig.align = 'left-aligned'}
+```{r nonstat2, echo=FALSE, fig.cap="Example of a process that is covariance stationary but not strictly stationary. The red lines delineate the 99\\% confidence interval of the standard normal distribution ($\\pm 2.58$).", fig.asp = .6, out.width = "95%", fig.align = 'left'}
 T <- 2000
 y <- rnorm(T)
 y[(T/2):T] <- rt(n = T/2 + 1,df=4)
@@ -140,7 +140,7 @@ Consider a long historical time series of the Swiss GDP growth, taken from the @
 
 [^FootnoteJST]: Version 6 of the dataset, available on [this website](https://www.macrohistory.net).
 
-```{r autocov, echo=FALSE, fig.cap="Annual growth rate of Swiss GDP, based on the Jorda-Schularick-Taylor Macrohistory Database.", fig.asp = .6, out.width = "95%", fig.align = 'left-aligned'}
+```{r autocov, echo=FALSE, fig.cap="Annual growth rate of Swiss GDP, based on the Jorda-Schularick-Taylor Macrohistory Database.", fig.asp = .6, out.width = "95%", fig.align = 'left'}
 library(AEC)
 data(JST)
 data <- subset(JST,iso=="CHE")
@@ -154,7 +154,7 @@ abline(h=mean(data$growth,na.rm = TRUE),col="blue",lty=2,xlab="",ylab="")
 
 
 
-```{r autocov2, echo=FALSE, fig.cap="For order $j$, the slope of the blue line is, approximately, $\\hat{\\gamma}_j/\\widehat{\\mathbb{V}ar}(y_t)$, where hats indicate sample moments.", fig.asp = .6, out.width = "95%", fig.align = 'left-aligned'}
+```{r autocov2, echo=FALSE, fig.cap="For order $j$, the slope of the blue line is, approximately, $\\hat{\\gamma}_j/\\widehat{\\mathbb{V}ar}(y_t)$, where hats indicate sample moments.", fig.asp = .6, out.width = "95%", fig.align = 'left'}
 y <- data$growth
 j <- 1;y_1 <- c(rep(NaN,j),y[1:(T-j)])
 j <- 2;y_2 <- c(rep(NaN,j),y[1:(T-j)])
@@ -225,7 +225,7 @@ Loosely speaking, Theorem \@ref(thm:CLTcovstat) says that, for a given sample si
 
 The same type of simulations can be performed using [this ShinyApp](https://jrenne.shinyapps.io/MacroEc/) (use panel "AR(1) Simulation").
 
-```{r TVTCL, echo=FALSE, fig.cap="The three samples have been simulated using the following data generating process: $x_t = \\mu + \\rho (x_{t-1}-\\mu) + \\sqrt{1-\\rho^2}\\varepsilon_t$, where $\\varepsilon_t \\sim \\mathcal{N}(0,1)$. Case A: $\\rho = 0$;  Case B: $\\rho = 0.7$;  Case C: $\\rho = 0.999$. In the three cases, $\\mathbb{E}(x_t)=\\mu=2$ and $\\mathbb{V}ar(x_t)=1$.", fig.asp = .6, out.width = "100%", fig.align = 'left-aligned'}
+```{r TVTCL, echo=FALSE, fig.cap="The three samples have been simulated using the following data generating process: $x_t = \\mu + \\rho (x_{t-1}-\\mu) + \\sqrt{1-\\rho^2}\\varepsilon_t$, where $\\varepsilon_t \\sim \\mathcal{N}(0,1)$. Case A: $\\rho = 0$;  Case B: $\\rho = 0.7$;  Case C: $\\rho = 0.999$. In the three cases, $\\mathbb{E}(x_t)=\\mu=2$ and $\\mathbb{V}ar(x_t)=1$.", fig.asp = .6, out.width = "100%", fig.align = 'left'}
 all.rho <- c(0,.7,.999)
 par(plt=c(0.1,0.95,0.2,0.75))
 par(mfrow=c(3,1))
@@ -325,7 +325,7 @@ Then use the fact that $\mathbb{E}(\varepsilon_t\varepsilon_s)=0$ if $t \ne s$ (
 Figure \@ref(fig:simMA) displays simulated paths of two MA processes (an MA(1) and an MA(4)). Such simulations can be produced by using panel "ARMA(p,q)" of [this web interface](https://jrenne.shinyapps.io/MacroEc/).
 
 
-```{r simMA, echo=TRUE, fig.cap="Simulation of MA processes.", fig.asp = .6, out.width = "95%", fig.align = 'left-aligned'}
+```{r simMA, echo=TRUE, fig.cap="Simulation of MA processes.", fig.asp = .6, out.width = "95%", fig.align = 'left'}
 library(AEC)
 T <- 100;nb.sim <- 1
 y.0 <- c(0)
@@ -613,7 +613,8 @@ F[1,] <- c(1.4,-.7)
 lambda_w <- eigen(F)$values
 F[1,] <- c(.9,.2)
 lambda_z <- eigen(F)$values
-rbind(lambda_x,lambda_y,lambda_w,lambda_z)
+data_table(rbind(x=lambda_x, y=lambda_y, w=lambda_w, z=lambda_z),
+           col.names=c("Process", "Eigenvalue 1", "Eigenvalue 2"), digits=3, row_label="Process")
 ```
 The absolute values of the eigenvalues associated with process $w_t$ are both equal to `r round(abs(lambda_w),3)[1]`. Therefore, according to Proposition \@ref(prp:stability), processes $x_t$, $y_t$, and $w_t$ are covariance-stationary, but not $z_t$ (because the absolute value of one of the eigenvalues of the $F$ matrix associated with this process is larger than 1).
 
@@ -661,7 +662,7 @@ Besides, it can be shown that $\phi_{p,p}=\phi_p$. Hence  $\phi_{p,p}=\phi_p$ bu
 
 As illustrated below, functions `acf` and `pacf` can be conveniently used to employ the (P)ACF approach. (Note also the use of function `sim.arma` to simulate ARMA processes.)
 
-```{r pacf, echo=TRUE, fig.cap="ACF/PACF analysis of two processes (MA process on the left, AR on the right).", fig.asp = .6, out.width = "100%", fig.align = 'left-aligned'}
+```{r pacf, echo=TRUE, fig.cap="ACF/PACF analysis of two processes (MA process on the left, AR on the right).", fig.asp = .6, out.width = "100%", fig.align = 'left'}
 library(AEC)
 par(mfrow=c(3,2))
 par(plt=c(.2,.9,.2,.95))
@@ -691,7 +692,7 @@ Forecasts produced by professional forecasters are available on these web pages:
 
 * [Philly Fed Survey of Professional Forecasters](https://www.philadelphiafed.org/research-and-data/real-time-center/survey-of-professional-forecasters/).
 * [ECB Survey of Professional Forecasters](http://www.ecb.europa.eu/stats/prices/indic/forecast/html/index.en.html).
-* [IMF World Economic Outlook](https://www.imf.org/external/pubs/ft/weo/2016/update/01/).
+* [IMF World Economic Outlook](https://www.imf.org/en/Publications/WEO).
 * [OECD Global Economic Outlook](http://www.oecd.org/eco/economicoutlook.htm).
 * [European Commission Economic Forecasts](http://ec.europa.eu/economy_finance/eu/forecasts/index_en.htm).
 
@@ -868,7 +869,7 @@ We use a long historical time series of the Swiss GDP growth taken from the @JST
 
 We want to forecast this GDP growth. We envision two specifications : an AR(1) specification (the one advocated by the AIC criteria), and an ARMA(2,2) specification. We are interested in 2-year-ahead forecasts (i.e., $h=2$ since the data are yearly).
 
-```{r fcstARMA, warning=FALSE, fig.cap="XXX.", fig.asp = .6, out.width = "95%", fig.align = 'left-aligned'}
+```{r fcstARMA, warning=FALSE, fig.cap="Comparison of expanding-window forecasts of Swiss GDP growth.", fig.asp = .6, out.width = "95%", fig.align = 'left'}
 library(AEC)
 library(forecast)
 data <- subset(JST,iso=="CHE")
@@ -889,7 +890,7 @@ With `alternative = "greater"` The alternative hypothesis is that method 2 is mo
 
 Assume now that we want to compare the AR(1) process to a multivariate (VAR) model. We consider a bivariate VAR, where GDP growth is complemented with CPI-based inflation rate.
 
-```{r fcstVAR, warning=FALSE,message=FALSE,fig.cap="XXX.", fig.asp = .6, out.width = "95%", fig.align = 'left-aligned'}
+```{r fcstVAR, warning=FALSE,message=FALSE,fig.cap="Comparison of expanding-window forecasts of Swiss GDP growth.", fig.asp = .6, out.width = "95%", fig.align = 'left'}
 library(vars)
 infl <- c(NaN,log(data$cpi[2:T]/data$cpi[1:(T-1)]))
 y_var <- cbind(y,infl)
@@ -898,7 +899,7 @@ for(T.star in first.date:(T-h)){
   estim.model.3 <- VAR(y_var[2:T.star,],p=1)
   e3 <- c(e3,y[T.star+h] - predict(estim.model.3,n.ahead=h)$fcst$y[h,1])
 }
-res.DM <- dm.test(e1,e2,h = h,alternative = "greater")
+res.DM <- dm.test(e1,e3,h = h,alternative = "greater")
 res.DM
 ```
 Again, we do not find that the alternative model (here the VAR(1) model) is better than the AR(1) model to forecast GDP growth.

@@ -2,3 +2,11 @@
 .Rhistory
 .RData
 .Ruserdata
+
+.Renviron
+data-local/
+renv/library/
+renv/staging/
+
+# Local pilot builds (not the published full book).
+preview/

@@ -12,3 +12,48 @@ pre {
 pre code {
   white-space: inherit;
 }
+
+/* Real tables stay visible when the accompanying code is collapsed. */
+.course-table {
+  overflow-x: auto;
+  margin: 1.25em 0 1.75em;
+}
+.course-table:focus-visible { outline: 2px solid #48718a; outline-offset: 3px; }
+.book .book-body .page-wrapper .page-inner section.normal table {
+  display: table;
+  width: auto;
+  max-width: 100%;
+  margin: 1em auto;
+  border-collapse: collapse;
+  font-size: .92em;
+  line-height: 1.4;
+  font-variant-numeric: tabular-nums;
+}
+.book .book-body .page-wrapper .page-inner section.normal table th,
+.book .book-body .page-wrapper .page-inner section.normal table td {
+  padding: .4em .7em;
+  border: 0;
+}
+.book .book-body .page-wrapper .page-inner section.normal table th {
+  border-top: 1.5px solid #56616b;
+  border-bottom: 1px solid #aeb8c0;
+  background: #f0f3f5;
+}
+.book .book-body .page-wrapper .page-inner section.normal table tr {
+  background: transparent;
+  border: 0;
+}
+.book .book-body .page-wrapper .page-inner section.normal table tbody tr:nth-child(even) {
+  background: #f7f8fa;
+}
+.book .book-body .page-wrapper .page-inner section.normal table tr:last-child {
+  border-bottom: 1.5px solid #56616b;
+}
+.book .book-body .page-wrapper .page-inner section.normal table caption {
+  text-align: left;
+  color: #444;
+  margin-bottom: .6em;
+}
+@media print {
+  .course-table { overflow: visible; }
+}

@@ -33,7 +33,7 @@ Notwithstanding the fact that this specification does not exclude negative proba
 
 Figure \@ref(fig:LPM) illustrates the fit resulting from an application of the LPM model to binary (dependent) variables.
 
-```{r LPM, echo=FALSE, fig.cap="Fitting a binary variable with a linear model (Linear Probability Model, LPM). The model is $\\mathbb{P}(y_i=1|x_i)=\\Phi(0.5+2x_i)$, where $\\Phi$ is the c.d.f. of the normal distribution and where $x_i \\sim \\,i.i.d.\\,\\mathcal{N}(0,1)$.", fig.asp = .6, out.width = "95%", fig.align = 'left-aligned'}
+```{r LPM, echo=FALSE, fig.cap="Fitting a binary variable with a linear model (Linear Probability Model, LPM). The model is $\\mathbb{P}(y_i=1|x_i)=\\Phi(0.5+2x_i)$, where $\\Phi$ is the c.d.f. of the normal distribution and where $x_i \\sim \\,i.i.d.\\,\\mathcal{N}(0,1)$.", fig.asp = .6, out.width = "95%", fig.align = 'left'}
 beta0 <- 0.5;beta1 <- 2
 nb.sim <- 100
 xx <- rnorm(nb.sim)
@@ -67,7 +67,7 @@ Table: (\#tab:foo) This table provides examples of function $g$, s.t. $\mathbb{P
 
 Figure \@ref(fig:ProbLogit) displays the first three $g$ functions appearing in Table \@ref(tab:foo).
 
-```{r ProbLogit, echo=FALSE, fig.cap="Probit, Logit, and Log-log functions.", fig.asp = .6, out.width = "95%", fig.align = 'left-aligned'}
+```{r ProbLogit, echo=FALSE, fig.cap="Probit, Logit, and Log-log functions.", fig.asp = .6, out.width = "95%", fig.align = 'left'}
 x <- seq(-5,5,by=.01)
 par(plt=c(.1,.95,.25,.95))
 plot(x,pnorm(x),type="l",lwd=2,col="black",xlab="x",ylab="")
@@ -93,7 +93,7 @@ g(z) = \frac{1}{1+\exp(-z)}.(\#eq:logit)
 
 Figure \@ref(fig:LPM2) shows the conditional probabilities associated with the (probit) model that had been used to generate the data of Figure \@ref(fig:LPM).
 
-```{r LPM2, echo=FALSE, fig.cap="The model is $\\mathbb{P}(y_i=1|x_i)=\\Phi(0.5+2x_i)$, where $\\Phi$ is the c.d.f. of the normal distribution and where $x_i \\sim \\,i.i.d.\\,\\mathcal{N}(0,1)$. Crosses give the model-implied probabilities of having $y_i=1$ (conditional on $x_i$).", fig.asp = .6, out.width = "95%", fig.align = 'left-aligned'}
+```{r LPM2, echo=FALSE, fig.cap="The model is $\\mathbb{P}(y_i=1|x_i)=\\Phi(0.5+2x_i)$, where $\\Phi$ is the c.d.f. of the normal distribution and where $x_i \\sim \\,i.i.d.\\,\\mathcal{N}(0,1)$. Crosses give the model-implied probabilities of having $y_i=1$ (conditional on $x_i$).", fig.asp = .6, out.width = "95%", fig.align = 'left'}
 P.vec <- pnorm(beta0 + beta1*xx)
 par(plt=c(.1,.95,.25,.95))
 plot(xx,yy,pch=19,xlab="x",ylab="y",xlim=c(-5,3))
@@ -125,7 +125,7 @@ where $y_i^* = \boldsymbol\theta'\bv{x}_i + \varepsilon_i$, with $\varepsilon_{i
 
 Figure \@ref(fig:Latent) illustrates this situation.
 
-```{r Latent, echo=FALSE, fig.cap="Distribution of $y_i^*$ conditional on $\\bv{x}_i$.", fig.asp = .6, out.width = "95%", fig.align = 'left-aligned'}
+```{r Latent, echo=FALSE, fig.cap="Distribution of $y_i^*$ conditional on $\\bv{x}_i$.", fig.asp = .6, out.width = "95%", fig.align = 'left'}
 par(plt=c(.12,.95,.25,.95))
 mu <- 1
 x <- seq(-4,4,by=.01)
@@ -203,7 +203,7 @@ The fishing-mode dataset used in @Cameron_Trivedi_2005 (Chapters 14 and 15) cont
 ```{r fishing1, warning=FALSE, message=FALSE}
 library(mlogit)
 data("Fishing",package="mlogit")
-stargazer::stargazer(Fishing,type="text")
+model_table(as.data.frame(Fishing))
 ```
 :::
 
@@ -291,12 +291,13 @@ Let us first represent the relationship between the fraction of households that 
 
 ```{r Probitlending}
 library(AEC)
-credit$Default <- 0
-credit$Default[credit$loan_status == "Charged Off"] <- 1
-credit$Default[credit$loan_status ==
+credit_binary <- AEC::credit
+credit_binary$Default <- 0
+credit_binary$Default[credit_binary$loan_status == "Charged Off"] <- 1
+credit_binary$Default[credit_binary$loan_status ==
                  "Does not meet the credit policy. Status:Charged Off"] <- 1
-credit$amt2income <- credit$loan_amnt/credit$annual_inc
-plot(as.factor(credit$Default)~log(credit$annual_inc),
+credit_binary$amt2income <- credit_binary$loan_amnt/credit_binary$annual_inc
+plot(as.factor(credit_binary$Default)~log(credit_binary$annual_inc),
      ylevels=2:1,ylab="Default status",xlab="log(annual income)")
 ```
 
@@ -305,14 +306,14 @@ The previous figure suggests that the effect of annual income on the probability
 We consider three specifications. The first one (`eq0`), with no explanatory variables, is trivial. It will just be used to compute the pseudo-$R^2$. In the second (`eq1`), we consider a few covariates (loan amount, the ratio between the amount and annual income, The number of more-than-30 days past-due incidences of delinquency in the borrower's credit file for the past 2 years, and a quadratic function of annual income). In the third model (`eq2`), we add a credit rating.
 
 ```{r Probitlending2,warning=FALSE}
-eq0 <- glm(Default ~ 1,data=credit,family=binomial(link="probit"))
+eq0 <- glm(Default ~ 1,data=credit_binary,family=binomial(link="probit"))
 eq1 <- glm(Default ~ log(loan_amnt) + amt2income + delinq_2yrs + 
              log(annual_inc)+ I(log(annual_inc)^2),
-           data=credit,family=binomial(link="probit"))
+           data=credit_binary,family=binomial(link="probit"))
 eq2 <- glm(Default ~ grade + log(loan_amnt) + amt2income + delinq_2yrs + 
              log(annual_inc)+ I(log(annual_inc)^2),
-           data=credit,family=binomial(link="probit"))
-stargazer::stargazer(eq0,eq1,eq2,type="text",no.space = TRUE)
+           data=credit_binary,family=binomial(link="probit"))
+model_table(eq0,eq1,eq2,no.space = TRUE)
 ```
 
 Let us compute the pseudo R2 for the last two models:
@@ -324,27 +325,28 @@ pseudoR2_eq2 <- 1 - logL2/logL0 # pseudo R2
 c(pseudoR2_eq1,pseudoR2_eq2)
 ```
 
-Let us now compute the (average) marginal effects, using method ii of Section \@ref(marginalFX):
+For a continuous regressor entering linearly, the average marginal effect is the average normal density times its coefficient. For example, treating `delinq_2yrs` as continuous gives (method ii of Section \@ref(marginalFX)):
 
 ```{r Probitlending3}
-mean(dnorm(predict(eq2)),na.rm=TRUE)*eq2$coefficients
+mean(dnorm(predict(eq2)), na.rm=TRUE) * coef(eq2)["delinq_2yrs"]
 ```
 
-There is an issue for the `annual_inc` variable. Indeed, the previous computation does not realize that this variable appears twice among the explanatory variables (through `log(annual_inc)` and `I(log(annual_inc)^2)`). To address this, one can proceed as follows: (1) we construct a new counterfactual dataset where annual incomes are increased by 1\%, (2) we use the model to compute model-implied probabilities of default on this new dataset and (3), we subtract the probabilities resulting from the original dataset from these counterfactual probabilities:
+This shortcut does not apply directly to `annual_inc`: income enters through its logarithm, the square of its logarithm, and the loan-to-income ratio `amt2income`. It also does not describe discrete changes in categorical variables. To address this, one can proceed as follows: (1) we construct a new counterfactual dataset where annual incomes are increased by 1\% and the loan-to-income ratio is recomputed with loan amounts held fixed, (2) we use the model to compute model-implied probabilities of default on this new dataset and (3), we subtract the probabilities resulting from the original dataset from these counterfactual probabilities:
 
 ```{r Probitlending4}
-new_credit <- credit
+new_credit <- credit_binary
 new_credit$annual_inc <- 1.01 * new_credit$annual_inc
-bas_predict_eq2  <- predict(eq2, newdata = credit, type = "response")
-# This is equivalent to pnorm(predict(eq2, newdata = credit))
+new_credit$amt2income <- new_credit$loan_amnt / new_credit$annual_inc
+bas_predict_eq2  <- predict(eq2, newdata = credit_binary, type = "response")
+# This is equivalent to pnorm(predict(eq2, newdata = credit_binary))
 new_predict_eq2  <- predict(eq2, newdata = new_credit, type = "response")
 mean(new_predict_eq2 - bas_predict_eq2)
 ```
-The negative sign means that, on average across the entities considered in the analysis, a 1\% increase in annual income results in a decrease in the default probability. This average effect is however pretty low. To get an economic sense of the size of this effect, let us compute the average effect associated with a unit increase in the number of delinquencies:
+The negative sign means that, on average across the entities considered in the analysis, a 1\% increase in annual income, holding loan amounts fixed, is associated with a lower model-predicted default probability. This average effect is however pretty low. To get an economic sense of the size of this effect, let us compute the average effect associated with a unit increase in the number of delinquencies:
 
 ```{r Probitlending5}
-new_credit <- credit
-new_credit$delinq_2yrs <- credit$delinq_2yrs + 1
+new_credit <- credit_binary
+new_credit$delinq_2yrs <- credit_binary$delinq_2yrs + 1
 new_predict_eq2  <- predict(eq2, newdata = new_credit, type = "response")
 mean(new_predict_eq2 - bas_predict_eq2)
 ```
@@ -352,7 +354,7 @@ mean(new_predict_eq2 - bas_predict_eq2)
 We can employ a likelihood ratio test (see Def. \@ref(def:LR)) to see if the two variables associated with annual income are jointly statistically significant (in the context of `eq1`):
 ```{r Probitlending6}
 eq1restr <- glm(Default ~ log(loan_amnt) + amt2income + delinq_2yrs,
-                data=credit,family=binomial(link="probit"))
+                data=credit_binary,family=binomial(link="probit"))
 LRstat <- 2*(logL1 - logLik(eq1restr))
 pvalue <- 1 - c(pchisq(LRstat,df=2))
 ```
@@ -387,8 +389,7 @@ reg.logit <- glm(y ~ lnrelp,
 reg.OLS <- lm(y ~ lnrelp,
               data=data.reduced)
 # Replicates Table 14.2 of Cameron and Trivedi:
-stargazer::stargazer(reg.logit, reg.probit, reg.OLS,no.space = TRUE,
-                     type="text")
+model_table(reg.logit, reg.probit, reg.OLS,no.space = TRUE)
 ```
 :::
 
@@ -409,7 +410,7 @@ In the case of no predictive ability (worst situation), the ROC curve is a strai
 :::{.example #FishingROC name="ROC with the fishing-mode dataset"}
 Figure \@ref(fig:fishing3) shows the ROC curve associated with the probit model estimated in Example \@ref(exm:Fisch142).
 
-```{r fishing3, message=FALSE, warning=FALSE,results='hide',fig.keep='all', fig.cap="Application of the ROC methodology on the fishing-mode dataset.", fig.asp = .6, out.width = "95%", fig.align = 'left-aligned'}
+```{r fishing3, message=FALSE, warning=FALSE,results='hide',fig.keep='all', fig.cap="Application of the ROC methodology on the fishing-mode dataset.", fig.asp = .6, out.width = "95%", fig.align = 'left'}
 library(pROC)
 predict_model <- predict.glm(reg.probit,type = "response")
 roc(data.reduced$y, predict_model, percent=T,

@@ -29,8 +29,9 @@ Suppose one is interested in the average number of doctor consultations over 12 
 
 Figure \@ref(fig:incomeDistri) shows the empirical distribution of the number of doctor visits.
 
-```{r incomeDistri, fig.cap="Distribution of the number of doctor visits. Source: Swiss Household Panel.", fig.align = 'left-aligned'}
+```{r incomeDistri, fig.cap="Distribution of the number of doctor visits. Source: Swiss Household Panel.", fig.align = 'left'}
 library(AEC) # to load the shp data-frame.
+shp <- haven::zap_labels(AEC::shp) # retain values, remove import-only labels
 Nb.doct.visits <- shp$p19c15
 Nb.doct.visits <- Nb.doct.visits[Nb.doct.visits>=0] # remove irrelevant observations
 par(plt=c(.15,.95,.2,.95))
@@ -39,7 +40,8 @@ barplot(table(Nb.doct.visits),xlim=c(0,25))
 Let us compute the sample mean, variance, and standard deviation:
 
 ```{r incomeDistri2}
-cbind(mean(Nb.doct.visits),var(Nb.doct.visits),sd(Nb.doct.visits))
+data_table(data.frame(Mean=mean(Nb.doct.visits),
+                      Variance=var(Nb.doct.visits), SD=sd(Nb.doct.visits)), digits=3)
 ```
 
 :::
@@ -63,7 +65,7 @@ However, this only gives bounds for such probabilities. The central limit theore
 
 :::{.theorem #LindbergLevyCLT name="Lindberg-Levy Central limit theorem, CLT"}
 
-If $x_n$ is an i.i.d. sequence of random variables with mean $\mu$ and (finite) variance, then:
+If $x_n$ is an i.i.d. sequence of random variables with mean $\mu$ and (finite) variance $\sigma^2$, then:
 $$
 \boxed{\sqrt{n} (\bar{x}_n - \mu) \overset{d}{\rightarrow} \mathcal{N}(0,\sigma^2), \quad \mbox{where} \quad \bar{x}_n = \frac{1}{n} \sum_{i=1}^{n} x_i.}
 $$
@@ -138,7 +140,7 @@ income.w <- income.w[income.w>=0] # remove irrelevant data
 
 Figure \@ref(fig:RcompMeans) displays the empirical densities of incomes for men and women. Vertical dashed lines indicate sample means:
 
-```{r RcompMeans, fig.cap="Distribution of yearly gross incomes for Swiss residents under the age of 35. Source: SHP. Vertical dashed lines indicates the sample mean.", fig.align = 'left-aligned'}
+```{r RcompMeans, fig.cap="Distribution of yearly gross incomes for Swiss residents under the age of 35. Source: SHP. Vertical dashed lines indicates the sample mean.", fig.align = 'left'}
 par(plt=c(.1,.95,.2,.95)) # adjust margins
 plot(logdensity(income.w),lwd=2,xlim=c(0,200000),main="",
      xlab="Yearly gross income (in CHF)",ylab="") # x and y labels

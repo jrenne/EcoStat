@@ -72,7 +72,7 @@ Consider the case where, under $H_0$, the distribution of the test statistic is 
 Figure \@ref(fig:Illusttest2) also illustrates the notion of *p-value* (in the case of a two-sided test). The p-value can be defined as the value of the size of the test $\alpha$ that is such that the computed test statistic, $S$, is at the "frontier" of the critical region. Given this definition, if the p-value is smaller (respectively larger) than the size of the test, we reject (resp. cannot rejet) the null hypothesis at the $\alpha$ significance level.
 
 
-```{r Illusttest1, echo=FALSE, fig.cap="Two-sided test. Under $H_0$, $S \\sim t(5)$. $\\alpha$ is the size of the test.", fig.align = 'left-aligned'}
+```{r Illusttest1, echo=FALSE, fig.cap="Two-sided test. Under $H_0$, $S \\sim t(5)$. $\\alpha$ is the size of the test.", fig.align = 'left'}
 f <- function(x,df){
   return(dt(x = x,df))
 }
@@ -118,7 +118,7 @@ text(x = min.x + .5*(max.x-min.x),y=1.24*max.f,labels =
 
 
 
-```{r Illusttest2, echo=FALSE, fig.cap="Two-sided test. Under $H_0$, $S \\sim t(5)$. $\\alpha$ is the size of the test.", fig.align = 'left-aligned'}
+```{r Illusttest2, echo=FALSE, fig.cap="Two-sided test. Under $H_0$, $S \\sim t(5)$. $\\alpha$ is the size of the test.", fig.align = 'left'}
 f <- function(x,df){
   return(dt(x = x,df))
 }
@@ -178,7 +178,7 @@ text(x = min.x + .8*(max.x-min.x),y=1.35*max.f,
 
 Figures \@ref(fig:IllusTestOneSided1) and \@ref(fig:IllusTestOneSided2) illustrate the **one-tailed**, or **one-sided** situation. These tests are typically employed when the distribution of the test statistic under the null hypothesis has a support on $\mathbb{R}^+$ (e.g., the chi-square distribution $\chi^2$, see Def. \@ref(def:chi2)). Figure \@ref(fig:IllusTestOneSided2) also illustrates the notion of p-value associated with a one-sided statistical test.
 
-```{r IllusTestOneSided1, echo=FALSE, fig.cap="One-sided test. Under $H_0$, $S \\sim \\chi^2(5)$. $\\alpha$ is the size of the test.", fig.align = 'left-aligned'}
+```{r IllusTestOneSided1, echo=FALSE, fig.cap="One-sided test. Under $H_0$, $S \\sim \\chi^2(5)$. $\\alpha$ is the size of the test.", fig.align = 'left'}
 
 f <- function(x,df){
   return(dchisq(x = x,df))
@@ -200,7 +200,7 @@ threshold <- qchisq(p = 1-alpha,df)
 arrows(x0 = threshold,y0 = .6*max.f,
        x1 = threshold,y1 = 0,
        angle = 10,lwd = 1,col="black",length = .1,lty=1)
-text(x = threshold,y=.63*max.f,expression({Phi[X]^{-1}}(1-alpha)))
+text(x = threshold,y=.63*max.f,expression({Phi[S]^{-1}}(1-alpha)))
 
 text(x = min.x + .25*(max.x-min.x),y=1.45*max.f,
      expression(paste(alpha," is the level (or size) of the test.",sep="")))
@@ -218,7 +218,7 @@ text(x = min.x + .8*(max.x-min.x),y=1.24*max.f,labels =
 
 
 
-```{r IllusTestOneSided2, echo=FALSE, fig.cap="One-sided test. Under $H_0$, $S \\sim \\chi^2(5)$. $\\alpha$ is the size of the test.", fig.align = 'left-aligned'}
+```{r IllusTestOneSided2, echo=FALSE, fig.cap="One-sided test. Under $H_0$, $S \\sim \\chi^2(5)$. $\\alpha$ is the size of the test.", fig.align = 'left'}
 
 f <- function(x,df){
   return(dchisq(x = x,df))
@@ -240,7 +240,7 @@ threshold <- qchisq(p = 1-alpha,df)
 arrows(x0 = threshold,y0 = .6*max.f,
        x1 = threshold,y1 = 0,
        angle = 10,lwd = 1,col="black",length = .1,lty=1)
-text(x = threshold,y=.63*max.f,expression({Phi[X]^{-1}}(1-alpha)))
+text(x = threshold,y=.63*max.f,expression({Phi[S]^{-1}}(1-alpha)))
 
 text(x = min.x + .25*(max.x-min.x),y=1.45*max.f,
      expression(paste(alpha," is the level (or size) of the test.",sep="")))
@@ -298,7 +298,7 @@ In this simple example, the size and the power of the test can be computed analy
 
 When $\theta<0.1$, the previous expression gives the size of the test, while it gives the power of the test when $\theta>0.1$. Figure \@ref(fig:FactoryR) shows how this probability depends on $\theta$ for two sample sizes: $n=100$ (upper plot) and $n=500$ (lower plot).
 
-```{r FactoryR, echo=FALSE, fig.cap="Factory example.", fig.align = 'left-aligned'}
+```{r FactoryR, echo=FALSE, fig.cap="Factory example.", fig.align = 'left'}
 size <- function(theta,N,critical){
   aux <- rep(theta,N+1)^(0:N) * rep(1-theta,N+1)^(seq(N,0,by=-1)) * choose(N,0:N)
   return(sum(aux[(0:N)>(critical*N)]))
@@ -439,7 +439,7 @@ where $\mathbb{E}(Y)=\mu$ and
 $$
 \mu_k = \mathbb{E}[(Y-\mu)^k]= \int_{-\infty}^{\infty} (y-\mu)^k f(y) dy
 $$
-is the $k^{th}$ **central moment** of $Y$. In particular, $\mu_2 = \mathbb{V}ar(Y)$. Therefore:
+is the $k^{th}$ **central moment** of $Y$. In particular, $\mu_2 = \mathbb{V}ar(Y)$. Using these notations, $\psi_k$ rewrites:
 $$
 \psi_k = \frac{\mu_k}{\left(\mu_2^{1/2}\right)^k},
 $$
@@ -491,7 +491,7 @@ If $y_i\sim\,i.i.d.\,\mathcal{N}(\mu,\sigma^2)$, then $\sqrt{n}(g_4-3) \overset{
 
 :::{.proposition #Asymptg3g4Normal name="Joint asymptotic distribution of 3rd and 4th-order sample central moments of a normal distribution"}
 
-If $y_i\sim\,i.i.d.\,\mathcal{N}(\mu,\sigma^2)$, then the vector $(\sqrt{n}g_3,\sqrt{n}(g_4-3))$ is asymptotically bivariate Gaussian. Further its elements are uncorrelated and therefore independent.
+If $y_i\sim\,i.i.d.\,\mathcal{N}(\mu,\sigma^2)$, then the vector $(\sqrt{n}g_3,\sqrt{n}(g_4-3))$ is asymptotically bivariate Gaussian. Further its elements are uncorrelated (and therefore independent, because Gaussian).
 :::
 
 The Jarque-Bera statistic is defined by:
@@ -530,9 +530,9 @@ JB <- function(x){
 ```
 
 
-Let us first consider the case where $H_0$ is satisfied. Figure \@ref(fig:JBTest2) displays, for different sample sizes $n$, the distribution of the JB statistics when the $y_i$'s are normal, consistently with $H_0$. It appears that when $n$ grows, the distribution indeed converges to the $\chi^2(2)$ distribution (as stated by Proposition \@ref(prp:JB)).
+Let us first consider the case where $H_0$ is satisfied. Figure \@ref(fig:JBTest2) displays, for different sample sizes $n$, the distribution of the JB statistics when the $y_i$'s are normal, consistently with $H_0$. It appears that when $n$ grows, the distribution indeed converges to the $\chi^2(2)$ distribution (as stated by Proposition \@ref(prp:JB)). The $\chi^2(2)$ distribution is represented in red on each plot.
 
-```{r JBTest2, fig.cap="Distribution of the JB test statistic under $H_0$ (normality).", fig.align = 'left-aligned'}
+```{r JBTest2, fig.cap="Distribution of the JB test statistic under $H_0$ (normality).", fig.align = 'left'}
 all.n <- c(5,10,20,100)
 nb.sim <- 10000
 y <- matrix(rnorm(nb.sim*max(all.n)),nb.sim,max(all.n))
@@ -549,7 +549,7 @@ for(i in 1:length(all.n)){
 
 Now, replace `rnorm` with `runif`. The $y_i$'s are then drawn from a uniform distribution. $H_0$ is not satisfied. Figure \@ref(fig:JBTest3) then shows that, when $n$ grows, the distributions of the JB statistic shift to the right. This results in the consistency of the JB test (see Def. \@ref(def:asmyptconsisttest)).
 
-```{r JBTest3, fig.cap="Distribution of the JB test statistic when the $y_i$'s are drawn from a uniform distribution (hence $H_0$ is not satisfied).", fig.align = 'left-aligned',echo=FALSE}
+```{r JBTest3, fig.cap="Distribution of the JB test statistic when the $y_i$'s are drawn from a uniform distribution (hence $H_0$ is not satisfied).", fig.align = 'left',echo=FALSE}
 y <- matrix(runif(nb.sim*max(all.n)),nb.sim,max(all.n))
 par(mfrow=c(2,2));par(plt=c(.1,.95,.15,.8))
 for(i in 1:length(all.n)){

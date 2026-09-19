@@ -15,7 +15,7 @@ When running panel regressions, the usual objective is to estimate $\boldsymbol\
 
 Figure \@ref(fig:simulPanel) illustrates a panel-data situation. The model is $y_i = \alpha_i + \beta x_{i,t} + \varepsilon_{i,t}$, $t \in \{1,2\}$. On Panel (b), blue dots are for $t=1$, red dots are for $t=2$. The lines relate the dots associated with the same entity $i$. What is remarkable in the simulated model is that, while the unconditional correlation between $y$ and $x$ is negative, the conditional correlation (conditional on $\alpha_i$) is positive. Indeed, the sign of this conditional correlation is the sign of $\beta$, which is positive in th simulated example ($\beta=5$). In other words, if one did not know the panel nature of the data, that would be tempting to say that $\beta<0$, but this is not the case, due to **fixed effects** (the $\alpha_i$'s) that are negatively correlated to the $x_i$'s.
 
-```{r simulPanel, fig.cap="The data are the same for both panels. On Panel (b), blue dots are for $t=1$, red dots are for $t=2$. The lines relate the dots associated to the same entity $i$.", fig.asp = .6, out.width = "95%", fig.align = 'left-aligned'}
+```{r simulPanel, fig.cap="The data are the same for both panels. On Panel (b), blue dots are for $t=1$, red dots are for $t=2$. The lines relate the dots associated to the same entity $i$.", fig.asp = .6, out.width = "95%", fig.align = 'left'}
 T <- 2; n <- 12 # 2 periods and 12 entities
 alpha <- 5*rnorm(n) # draw fixed effects
 x.1 <- rnorm(n) - .5*alpha # note: x_i's correlate to alpha_i's
@@ -33,7 +33,7 @@ for(i in 1:n){lines(c(x.1[i],x.2[i]),c(y.1[i],y.2[i]))}
 
 Figure \@ref(fig:cigarettes) presents the same type of plot based on the Cigarette Consumption Panel dataset (`CigarettesSW` dataset, used in @Stock_Watson_2003). This dataset documents the average consumption of cigarettes in 48 continental US states for two dates (1985 and 1995).
 
-```{r cigarettes, fig.align = 'left-aligned', out.width = "95%", fig.cap = "Cigarette consumption versus real price in the CigarettesSW panel dataset.", echo=FALSE}
+```{r cigarettes, fig.align = 'left', out.width = "95%", fig.cap = "Cigarette consumption versus real price in the CigarettesSW panel dataset.", echo=FALSE}
 data("CigarettesSW", package = "AER")
 CigarettesSW$rprice  <- with(CigarettesSW, price/cpi) # compute real price
 par(plt=c(.15,.95,.2,.95))
@@ -208,20 +208,20 @@ The asymptotical distribution of $[\bv{b}',\bv{a}']'$ derives from the standard 
 
 We have:
 \begin{equation}
-\boxed{\left[
+\boxed{\sqrt{nT}\left(\left[
 \begin{array}{c}
 \bv{b}\\
 \bv{a}
 \end{array}
-\right] \overset{d}{\rightarrow}
-\mathcal{N}\left(
-\left[
+\right]-\left[
 \begin{array}{c}
 \boldsymbol\beta\\
 \boldsymbol\alpha
 \end{array}
-\right],
-\sigma^2 \frac{Q^{-1}}{nT}
+\right]\right) \overset{d}{\rightarrow}
+\mathcal{N}\left(
+\bv{0},
+\sigma^2 Q^{-1}
 \right),}
 \end{equation}
 where
@@ -334,7 +334,7 @@ eq.LSDV <- lm(log(packs)~log(rprice)+log(rincome)+state,
 CigarettesSW$year <- as.factor(CigarettesSW$year)
 eq.LSDV2 <- lm(log(packs)~log(rprice)+log(rincome)+state+year,
                data=CigarettesSW)
-stargazer::stargazer(eq.pooled,eq.LSDV,eq.LSDV2,type="text",no.space = TRUE,
+model_table(eq.pooled,eq.LSDV,eq.LSDV2,no.space = TRUE,
                      omit=c("state","year"),
                      add.lines=list(c('State FE','No','Yes','Yes'),
                                     c('Year FE','No','No','Yes')),
@@ -360,8 +360,7 @@ eq1_noFE <- lm(dhpreal ~ stir + ltrate,data=JST)
 eq1_FE   <- lm(dhpreal ~ stir + ltrate + iso + YEAR,data=JST)
 eq2_noFE <- lm(dhpreal ~ I(ltrate-stir),data=JST)
 eq2_FE <- lm(dhpreal ~ I(ltrate-stir) + iso + YEAR,data=JST)
-stargazer::stargazer(eq1_noFE, eq1_FE, eq2_noFE, eq2_FE, type = "text",
-                     column.labels = c("no FE", "with FE", "no FE","with FE"),
+model_table(eq1_noFE, eq1_FE, eq2_noFE, eq2_FE, column.labels = c("no FE", "with FE", "no FE","with FE"),
                      omit = c("iso","YEAR","Constant"),keep.stat = "n",
                      add.lines=list(c('Country FE','No','Yes','No','Yes'),
                                     c('Year FE','No','Yes','No','Yes')))
@@ -378,8 +377,7 @@ robust_se_FE1_noFE <- sqrt(diag(vcov_cluster1_noFE))
 robust_se_FE1_FE   <- sqrt(diag(vcov_cluster1_FE))
 robust_se_FE2_noFE <- sqrt(diag(vcov_cluster2_noFE))
 robust_se_FE2_FE   <- sqrt(diag(vcov_cluster2_FE))
-stargazer::stargazer(eq1_noFE, eq1_FE, eq2_noFE, eq2_FE, type = "text",
-                     column.labels = c("no FE", "with FE", "no FE","with FE"),
+model_table(eq1_noFE, eq1_FE, eq2_noFE, eq2_FE, column.labels = c("no FE", "with FE", "no FE","with FE"),
                      omit = c("iso","YEAR","Constant"),keep.stat = "n",
                      add.lines=list(c('Country FE','No','Yes','No','Yes'),
                                     c('Year FE','No','Yes','No','Yes')),
@@ -484,7 +482,7 @@ eq.FE <- plm(dhpreal ~ stir + ltrate,data=JST,index=c("iso","YEAR"),
              model="within",effect="twoways")
 eq0   <- plm(dhpreal ~ stir + ltrate,data=JST,index=c("iso","YEAR"),
              model="pooling") 
-stargazer(eq0, eq.RE, eq.FE, type = "text",no.space = TRUE,
+model_table(eq0, eq.RE, eq.FE, no.space = TRUE,
                      column.labels=c("Pooled","Random Effect","Fixed Effects"),
                      add.lines=list(c('State FE','No','Yes','Yes'),
                                     c('Year FE','No','Yes','Yes')),
@@ -500,70 +498,107 @@ The p-value being high, we do not reject the null hypothesis according to which 
 
 
 
-:::{.example #airbnb name="Spatial data"}
+:::{.example #airbnb name="Airbnb prices: district effects and clustered uncertainty"}
 
-This example makes use of Airbnb prices (Zürich, 22 June 2017), collected from [Tom Slee's website](http://tomslee.net/airbnb-data-collection-get-the-data). The covariates are the number of bedrooms and the number of people that can be accommodated. We consider the use of district fixed effects. Figure \@ref(fig:airbnb) shows the price to explain (the size of the circles is proportional to the prices). The white lines delineate the 12 districts of the city.
+Why do Airbnb prices differ across Zurich? We use the historical snapshot of 22 June 2017 collected from [Tom Slee's website](http://tomslee.net/airbnb-data-collection-get-the-data) and distributed with `AEC`. This is a cross-section of listings, not a panel tracking the same listings over time. Districts provide the groups for our fixed effects. The supplied sample contains entire-home/apartment listings; it should not be interpreted as a representative sample of all accommodation or of today's market. We retain prices in the units recorded in the dataset.
 
-```{r airbnb, warning=FALSE, message=FALSE, fig.align = 'left-aligned', out.width = "95%", fig.cap = "Airbnb prices for the Zurich area, 22 June 2017. The size of the circles is proportional to the prices. White lines delineate the 12 districts of the city.", echo=FALSE}
-library(rgdal)
+We compare listings with different numbers of bedrooms and accommodation capacities, first across the city and then within districts. Location, quality, and other unobserved attributes can affect both prices and these covariates, so the coefficients describe conditional associations rather than causal effects.
+
+```{r airbnb-data, message=FALSE}
 library(AEC)
-library(sandwich)
-library(RColorBrewer)
-par(mar=c(0,0,0,0))
-plot(zurich_districts,col="gray",border="white")
-for(i in 1:dim(airbnb)[1]){
-  points(airbnb$longitude[i],airbnb$latitude[i],pch=1,cex=(airbnb$price[i]/200))
+library(sp) # plotting methods for the supplied district polygons
+
+# Keep a separate analysis dataset and use the same sample in both models.
+airbnb_data <- AEC::airbnb
+analysis_vars <- c("price", "bedrooms", "accommodates", "neighborhood")
+airbnb_data <- airbnb_data[complete.cases(airbnb_data[analysis_vars]), ]
+airbnb_data$neighborhood <- factor(airbnb_data$neighborhood)
+n_districts <- nlevels(airbnb_data$neighborhood)
+
+# Use one area scale for all maps (magnitude is price or absolute residual).
+airbnb_map <- function(magnitude, colour, title="") {
+  plot(AEC::zurich_districts, col="grey90", border="white", main=title)
+  points(airbnb_data$longitude, airbnb_data$latitude, pch=21,
+         cex=1.5*sqrt(magnitude/100),
+         col=adjustcolor(colour, alpha.f=.55),
+         bg=adjustcolor(colour, alpha.f=.2))
 }
 ```
 
-Let us regress prices on the covariates as well as on district dummies:
+Our analysis uses `r nrow(airbnb_data)` listings in `r n_districts` districts. Figure \@ref(fig:airbnb) shows their locations and prices. Circle area is proportional to price; the white boundaries delineate districts.
 
-```{r airbnb2, warning=FALSE, message=FALSE}
-eq_noFE <- lm(price~bedrooms+accommodates,data=airbnb)
-eq_FE   <- lm(price~bedrooms+accommodates+neighborhood,data=airbnb)
-# Adjust standard errors:
-cov_FE          <- vcovHC(eq_FE, cluster = airbnb[, c("neighborhood")])
-robust_se_FE    <- sqrt(diag(cov_FE))
-cov_noFE        <- vcovHC(eq_noFE, cluster = airbnb[, c("neighborhood")])
-robust_se_noFE  <- sqrt(diag(cov_noFE))
-stargazer::stargazer(eq_FE, eq_noFE, eq_FE, eq_noFE, type = "text",
-                     column.labels = c("FE (no HAC)", "No FE (no HAC)",
-                                       "FE (with HAC)", "No FE (with HAC)"),
-                     omit = c("neighborhood"),no.space = TRUE,
-                     omit.labels = c("District FE"),keep.stat = "n",
-                     se = list(NULL, NULL, robust_se_FE, robust_se_noFE))
+```{r airbnb, message=FALSE, fig.align='center', fig.width=7, fig.height=5, out.width="95%", fig.cap="Airbnb prices in Zurich, 22 June 2017. Circle area is proportional to the recorded price; white lines delineate districts.", echo=knitr::is_html_output()}
+local({
+  old_par <- par(mar=c(0, 0, 1, 0))
+  on.exit(par(old_par))
+  airbnb_map(airbnb_data$price, "#245A81")
+  legend("bottomleft", legend=c("50", "100", "200"), title="Price",
+         pch=21, pt.cex=1.5*sqrt(c(50, 100, 200)/100),
+         col="#245A81", pt.bg="#245A8120", bty="n", cex=.85)
+})
 ```
 
+**District effects and standard errors answer different questions.** District dummies allow the conditional mean price to differ across districts. Clustering allows disturbances to be correlated across listings in the same district. Adding fixed effects does not, by itself, remove all within-district dependence.
 
-Figure \@ref(fig:airbnb3) compares the residuals with and without fixed effects. The sizes of the circles are proportional to the absolute values of the residuals, the color indicates the sign (blue for positive).
+We estimate $price_{ig} = \alpha_g + \beta_1 bedrooms_{ig} + \beta_2 accommodates_{ig} + \varepsilon_{ig}$, where $g$ denotes the district. Without district effects, we replace $\alpha_g$ by a common intercept.
 
-```{r airbnb3, echo=FALSE, warning=FALSE, message=FALSE, fig.align = 'left-aligned', out.width = "95%", fig.cap = "Regression residuals. The sizes of the circles are proportional to the absolute values of the residuals, the color indicates the sign (blue for negative)."}
-par(mfrow=c(1,2))
-for(j in 1:2){# with/without FE
-  par(plt=c(0,1,0,.8))
-  if(j==1){
-    residuals <- eq_FE$residuals
-    titl <- "(a) With FE"
-  }else{
-    residuals <- eq_noFE$residuals
-    titl <- "(b) Without FE"
-  }
-  plot(zurich_districts,col="gray",border="white",main=titl)
-  # create categories based on residuals:
-  nb_categ <- 11
-  categ <- round((nb_categ-1)*(residuals-min(residuals))/(max(residuals)-min(residuals)))+1
-  colour <- paste(brewer.pal(n = nb_categ, name = "RdBu"),"77",sep="")
-  for(i in 1:dim(airbnb)[1]){
-    points(airbnb$longitude[i],airbnb$latitude[i],pch=19,
-           cex=(abs(residuals[i])/100),col=colour[categ[i]])
-  }
+```{r airbnb2}
+airbnb_noFE <- lm(price ~ bedrooms + accommodates, data=airbnb_data)
+airbnb_FE <- lm(price ~ bedrooms + accommodates + neighborhood,
+                data=airbnb_data)
+
+# Compare three covariance estimators, using explicit corrections.
+airbnb_se_table <- function(model, label) {
+  terms <- c("bedrooms", "accommodates")
+  V <- list(
+    Conventional=vcov(model),
+    HC1=sandwich::vcovHC(model, type="HC1"),
+    District=sandwich::vcovCL(model, cluster=~neighborhood,
+                             type="HC1", cadjust=TRUE))
+  se <- sapply(V, function(v) sqrt(diag(v))[terms])
+  data.frame(Model=label, Variable=terms,
+             Estimate=unname(coef(model)[terms]), se, row.names=NULL)
 }
-library(plotfunctions)
-gradientLegend(c(-200,200),col=colour,
-               pos=c(.85,0.1,.9,.3))
+airbnb_results <- rbind(
+  airbnb_se_table(airbnb_noFE, "No district FE"),
+  airbnb_se_table(airbnb_FE, "District FE"))
+data_table(airbnb_results, digits=2, row.names=FALSE,
+             col.names=c("Model", "Variable", "Estimate",
+                         "SE: conventional", "SE: HC1", "SE: district"))
 ```
 
-With fixed effects, the colors are better balanced within each district.
+Within each model, the coefficient estimates are identical whichever covariance estimator we use; only the reported uncertainty changes. Conventional standard errors assume homoskedastic, uncorrelated disturbances. HC1 allows heteroskedasticity. The district-clustered estimator additionally allows arbitrary dependence within districts, while requiring independence across districts. It need not produce larger standard errors. Here `type="HC1"` specifies the observation/parameter-count adjustment and `cadjust=TRUE` applies the $G/(G-1)$ cluster adjustment, with $G$ districts. See the [sandwich documentation](https://sandwich.r-forge.r-project.org/reference/vcovCL.html).
+
+**Only `r n_districts` clusters.** These corrections do not guarantee reliable inference with so few districts. We therefore report standard errors without automatic significance stars. For hypothesis tests, investigate a small-sample procedure such as CR2 with Satterthwaite degrees of freedom (see the [clubSandwich worked example](https://jepusto.github.io/clubSandwich/articles/panel-data-CRVE.html)). Also consider whether district boundaries plausibly separate independent disturbances: nearby listings across a boundary, or listings sharing a host, may remain dependent.
+
+**What do the fixed effects absorb?** Figure \@ref(fig:airbnb3) compares residuals using identical symbol scales in both panels. Blue indicates a positive residual (a price above the model's fitted value), and orange a negative residual. Circle area is proportional to the absolute residual.
+
+```{r airbnb3, echo=knitr::is_html_output(), message=FALSE, fig.align='center', fig.width=10, fig.height=5.5, out.width="100%", fig.cap="Airbnb price residuals without and with district effects. Blue: observed price above fitted price; orange: below. Both panels use the same area scale for absolute residuals."}
+local({
+  old_par <- par(mfrow=c(1, 2), mar=c(0, 0, 3, 0), oma=c(3, 0, 0, 0))
+  on.exit(par(old_par))
+  residual_sets <- list(residuals(airbnb_noFE), residuals(airbnb_FE))
+  titles <- c("(a) No district effects", "(b) District effects")
+  for (j in seq_along(residual_sets)) {
+    e <- residual_sets[[j]]
+    airbnb_map(abs(e), ifelse(e >= 0, "#2166AC", "#B35806"), titles[j])
+    legend("bottomleft", legend=c("25", "100", "200"),
+           title="Absolute residual", pch=21,
+           pt.cex=1.5*sqrt(c(25, 100, 200)/100), bty="n", cex=.8)
+  }
+  mtext("Blue: above fitted price     Orange: below fitted price",
+        side=1, outer=TRUE, line=1, cex=.9)
+})
+```
+
+OLS with district dummies forces the residuals to sum to zero within each district. This is an algebraic property of the fitted model, not evidence that omitted variables or spatial dependence have disappeared. We can check the property directly:
+
+```{r airbnb-residual-check}
+airbnb_district_means <- tapply(residuals(airbnb_FE),
+                                 airbnb_data$neighborhood, mean)
+max(abs(airbnb_district_means)) # zero up to numerical precision
+```
+
 
 :::
 
@@ -689,7 +724,7 @@ The following simulation illustrate this bias. The $x$-coordinates  of the dots 
 set.seed(1)
 ```
 
-```{r dynpanel1, fig.align = 'left-aligned', out.width = "95%", fig.cap = "illustration of the bias pertianing to the LSDV estimation approach in the presence of auto-correlation of the depend variable."}
+```{r dynpanel1, fig.align = 'left', out.width = "95%", fig.cap = "illustration of the bias pertianing to the LSDV estimation approach in the presence of auto-correlation of the depend variable."}
 n <- 400;T <- 10
 rho <- 0.8;sigma <- .5
 alpha <- rnorm(n)
@@ -810,7 +845,7 @@ m1 <- pdynmc(dat = dat, # name of the dataset
              estimation = "onestep", # One of the character strings c('"onestep"', '"twostep"', '"iterative"'). Denotes the number of iterations of the parameter procedure (defaults to '"twostep"').
              opt.meth = "none" # numerical optimization procedure. When no nonlinear moment conditions are employed in estimation, closed form estimates can be computed by setting the argument to '"none"
 )
-summary(m1,digits=3)
+panel_table(m1)
 ```
 
 We generate novel results (`m2`) by replacing "`onestep`" with "`twostep`" (in the `estimation` field). The resulting  estimated coefficients are:
@@ -839,7 +874,7 @@ m2 <- pdynmc(dat = dat, # name of the dataset
              estimation = "twostep", # One of the character strings c('"onestep"', '"twostep"', '"iterative"'). Denotes the number of iterations of the parameter procedure (defaults to '"twostep"').
              opt.meth = "none" # numerical optimization procedure. When no nonlinear moment conditions are employed in estimation, closed form estimates can be computed by setting the argument to '"none"
 )
-coef(m2)
+data_table(data.frame(Term=names(coef(m2)), Estimate=unname(coef(m2))), digits=3)
 ```
 
 
@@ -982,8 +1017,7 @@ eq2 <- lm(log(durat) ~ afchnge + highearn + afchnge*highearn +
 eq3 <- lm(log(durat) ~ afchnge + highearn + afchnge*highearn +
             lprewage*highearn + male + married + lage + indust +
             injtype,data=injury)
-stargazer::stargazer(eq1,eq2,eq3,type="text",
-                     omit=c("indust","injtype","Constant"),no.space = TRUE,
+model_table(eq1,eq2,eq3,omit=c("indust","injtype","Constant"),no.space = TRUE,
                      add.lines = list(c("industry dummy","no","yes","yes"),
                                       c("injury dummy","no","yes","yes")),
                      order = c(1,2,18,3:17,19,20),omit.stat = c("f","ser"))

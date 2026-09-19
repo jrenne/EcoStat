@@ -9,10 +9,15 @@ fontsize: 12pt
 bibliography: [book.bib, packages.bib]
 biblio-style: apalike
 link-citations: yes
-github-repo: rstudio/bookdown-demo
+github-repo: jrenne/EcoStat
 description: "This course covers various topics in econometrics. Simulations and real-data-based examples are provided."
 css: "my-style.css"
 ---
+
+```{r table-setup, include=FALSE}
+source("R/setup.R")
+```
+
 
 <!-- Declare new latex code: -->
 \newcommand{\bv}[1]{\mathbf{#1}} 
@@ -23,12 +28,11 @@ css: "my-style.css"
 
 This course covers various econometric topics, including linear regression models, discrete-choice models, and an introduction to time series analysis. It provides examples or simulations based on R codes. This course has been developed by [Jean-Paul Renne](https://www.jprenne.com).
 
-The R codes use various packages that can be obtained from [CRAN](https://cran.r-project.org). Several pieces of code also involve procedures and data from a companion package (`AEC`). This `AEC` package is available on GitHub. To install it, one need to employ the `devtools` library:
+The R codes use various packages that can be obtained from [CRAN](https://cran.r-project.org). Several pieces of code also involve procedures and data from a companion package (`AEC`). This `AEC` package is available on GitHub. To install it, use the recorded package environment described in the repository README. For a standalone installation, use `remotes`:
 
 ```{r installAEC, eval=FALSE}
-install.packages("devtools") # This library allows to use "install_github".
-library(devtools)
-install_github("jrenne/AEC")
+install.packages("remotes")
+remotes::install_github("jrenne/AEC@3245789138e77c2d7b591b40e8b6a3405e93cbf1")
 library(AEC)
 ```
 

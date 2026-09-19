@@ -155,22 +155,22 @@ Equipped with $\textbf{b}_F$, we rely on the following moment restrictions to es
 $$
 \mathbb{E}(z_{i,t} [\textbf{b}_M'\{F_{t+1} - \textbf{b}_F \textbf{z}_t\}R_{t+1}-R_{t+1}+1])=0.
 $$
-Specifically, the number of restrictions is $n_R \times n_z$. Let us implement this approach in the U.S. context, using data extracted from the [FRED database](https://fred.stlouisfed.org). In factor $F_t$, we use the changes in the VIX and in the personal consumption expenditures. The returns ($R_t$) are based on the Wilshire 5000 Price Index (a stock price index) and on the ICE BofA BBB US Corporate Index Total Return Index (a bond return index).
+Specifically, the number of restrictions is $n_R \times n_z$. Let us implement this approach in the U.S. context, using data extracted from the [FRED database](https://fred.stlouisfed.org). In factor $F_t$, we use the changes in the VIX and in the personal consumption expenditures. The returns ($R_t$) are based on the OECD share-price index for the United States (`SPASTT01USM661N`) and on the ICE BofA BBB US Corporate Index Total Return Index (a bond return index).
 
 
-```{r gmm1}
-library(fredr)
-fredr_set_key("df65e14c054697a52b4511e77fcfa1f3")
-start_date <- as.Date("1990-01-01"); end_date <- as.Date("2022-01-01")
-f <- function(ticker){
-  fredr(series_id = ticker,
-        observation_start = start_date,observation_end = end_date,
-        frequency = "m",aggregation_method = "avg")
-}
-vix <- f("VIXCLS") # VIX
-pce <- f("PCE") # Personal consumption expenditures
-sto <- f("SPASTT01USM661N") # Stock price index
-bdr <- f("BAMLCC0A4BBBTRIV") # ICE BofA BBB US Corp. Index Tot. Return
+```{r gmm-data-status, echo=FALSE, results='asis'}
+source("R/gmm-data.R")
+gmm_path <- Sys.getenv("GMM_DATA_FILE", "data-local/gmm-fred.csv")
+has_gmm_data <- file.exists(gmm_path)
+if (!has_gmm_data) cat("**Historical data required.** The numerical results below require the archived monthly 1990–2022 snapshot. FRED now limits the ICE bond series to three years of history. The estimation code is retained for replication, but is not executed without the historical data. See the repository README for the snapshot format.\n\n")
+```
+
+```{r gmm1, eval=has_gmm_data}
+gmm_data <- read_gmm_data(gmm_path)
+vix <- data.frame(value=gmm_data$VIXCLS)
+pce <- data.frame(value=gmm_data$PCE)
+sto <- data.frame(value=gmm_data$SPASTT01USM661N)
+bdr <- data.frame(value=gmm_data$BAMLCC0A4BBBTRIV)
 T <- dim(vix)[1]
 dvix <- c(vix$value[3:T]/vix$value[2:(T-1)]) # change in VIX t+1
 dpce <- c(pce$value[3:T]/pce$value[2:(T-1)]) # change in PCE t+1
@@ -184,7 +184,7 @@ dbdr_1 <- c(bdr$value[2:(T-1)]/bdr$value[1:(T-2)]) # return t
 
 Define the matrices containing the $F_{t+1}$, $\textbf{z}_t$, and $R_{t+1}$ vectors: 
 
-```{r gmm2}
+```{r gmm2, eval=has_gmm_data}
 F_tp1 <- cbind(dvix,dpce)
 Z     <- cbind(1,dvix_1,dpce_1,dsto_1,dbdr_1)
 b_F <- t(solve(t(Z) %*% Z) %*% t(Z) %*% F_tp1)
@@ -195,7 +195,7 @@ n_F <- dim(F_tp1)[2]; n_R <- dim(R_tp1)[2]; n_z <- dim(Z)[2]
 
 Function `f_aux` compute the $h(x_t;{\boldsymbol\theta})$ and the $g(\underline{y_T};{\boldsymbol\theta})$; function `f2beMin` is the function to be minimized.
 
-```{r gmm3}
+```{r gmm3, eval=has_gmm_data}
 f_aux <- function(theta){
   b_M <- matrix(theta[1:n_F],ncol=1)
   R_aux <- matrix(F_innov %*% b_M,T-2,n_R) * R_tp1 - R_tp1 + 1
@@ -209,9 +209,9 @@ f2beMin <- function(theta,W){# function to be minimized
 }
 ```
 
-Now, let's minimize this function, using use the BFGS numerical algorithm (part of the `optim` wrapper). We run 5 iterations (where $W$ is updated).
+Now, let's minimize this function, using use the BFGS numerical algorithm (part of the `optim` wrapper). We run 10 iterations (where $W$ is updated).
 
-```{r gmm4}
+```{r gmm4, eval=has_gmm_data}
 library(AEC)
 theta <- c(rep(0,n_F)) # inital value
 for(i in 1:10){# recursion on W
@@ -226,7 +226,7 @@ for(i in 1:10){# recursion on W
 
 Finally, let's compute the standard deviation of the parameter estimates, using Eq. \@ref(eq:VGMM):
 
-```{r gmm5}
+```{r gmm5, eval=has_gmm_data}
 eps <- .0001
 g0 <- f_aux(theta)$g
 D <- NULL
@@ -236,9 +236,10 @@ for(i in 1:length(theta)){
   gi <- f_aux(theta.i)$g
   D <- cbind(D,(gi-g0)/eps)
 }
-V <- 1/T * solve(t(D) %*% W %*% D)
+n_gmm <- nrow(F_tp1) # two initial months are used to construct lagged ratios
+V <- 1/n_gmm * solve(t(D) %*% W %*% D)
 std.dev <- sqrt(diag(V));t.stud <- theta/std.dev
-cbind(theta,std.dev,t.stud)
+data_table(cbind(Estimate=theta, SE=std.dev, "t statistic"=t.stud), digits=4)
 ```
 
 The Hansen statistic can be used to test the model (see Eq. \@ref(eq:HansenSargan)). If the model is correct, we have:
@@ -247,10 +248,10 @@ T g(\underline{y_T};{\boldsymbol\theta})'\, S^{-1} \, g(\underline{y_T};{\boldsy
 $$
 where $J$ is the number of moment constraints ($n_z \times n_r$ here) and $K$ is the number of estimated parameters ($=n_F$ here).
 
-```{r gmm6}
+```{r gmm6, eval=has_gmm_data}
 g <- f_aux(theta)$g
-Hansen_stat <- T * t(g) %*% W %*% g
-pvalue <- pchisq(q = Hansen_stat,df = n_R*n_z - n_F)
+Hansen_stat <- n_gmm * t(g) %*% W %*% g
+pvalue <- pchisq(q = Hansen_stat,df = n_R*n_z - n_F, lower.tail=FALSE)
 pvalue
 ```
 
@@ -268,7 +269,7 @@ The density of $Y$ (one observation) is $f(y;\lambda) = \dfrac{1}{\lambda}\exp(-
 
 Your 200 observations are reported at the bottom of Fig. \@ref(fig:MLE1) (red bars). You build the histogram and display it on the same chart.
 
-```{r MLE1, echo=FALSE, warning=FALSE, fig.cap="The red ticks, at the bottom, indicate observations (there are 200 of them). The historgram is based on these 200 observations", fig.asp = .6, out.width = "95%", fig.align = 'left-aligned'}
+```{r MLE1, echo=FALSE, warning=FALSE, fig.cap="The red ticks, at the bottom, indicate observations (there are 200 of them). The historgram is based on these 200 observations", fig.asp = .6, out.width = "95%", fig.align = 'left'}
 y <- rexp(200,rate = 1/3)
 y.save <- y
 par(plt=c(.15,.95,.2,.95))
@@ -312,7 +313,7 @@ Let us be more formal. Assume that you have only four observations: $y_1=1.1$, $
 Because the $y_i$'s are i.i.d., this probability is $\prod_{i=1}^4(2\varepsilon f(y_i,\lambda))$.
 The next plot shows the probability (divided by $16\varepsilon^4$, which does not depend on $\lambda$) as a function of $\lambda$.
 
-```{r MLE2, echo=FALSE, warning=FALSE, fig.cap="Proba. that $y_i-\\varepsilon \\le Y_i < y_i+\\varepsilon$, $i \\in \\{1,2,3,4\\}$. The vertical red line indicates the maximum of the function.", fig.asp = .6, out.width = "95%", fig.align = 'left-aligned'}
+```{r MLE2, echo=FALSE, warning=FALSE, fig.cap="Proba. that $y_i-\\varepsilon \\le Y_i < y_i+\\varepsilon$, $i \\in \\{1,2,3,4\\}$. The vertical red line indicates the maximum of the function.", fig.asp = .6, out.width = "95%", fig.align = 'left'}
 log.f <- function(y,lambda){
   return(sum(log(1/lambda*exp(-y/lambda))))
 }
@@ -336,7 +337,7 @@ The value of $\lambda$ that maximizes the probability is `r lambda.MLE`.
 
 Let us come back to the example with 200 observations:
 
-```{r MLE3, echo=FALSE, warning=FALSE, fig.cap="Log-likelihood function associated with the 200 i.i.d. observations. The vertical red line indicates the maximum of the function.", fig.asp = .6, out.width = "95%", fig.align = 'left-aligned'}
+```{r MLE3, echo=FALSE, warning=FALSE, fig.cap="Log-likelihood function associated with the 200 i.i.d. observations. The vertical red line indicates the maximum of the function.", fig.asp = .6, out.width = "95%", fig.align = 'left'}
 y <- y.save
 all.log.f <- NULL
 all.lambda <- seq(.1,10,by=.02)
@@ -385,7 +386,7 @@ The score $S(y;\boldsymbol\theta)$ is given by $\frac{\partial \log f(y;\boldsym
 :::
 
 
-If $y_i \sim \mathcal{N}(\mu,\sigma^2)$ (Example \@ref(exm:normal)), then
+If $y_i \sim \mathcal{N}(\mu,\sigma^2)$, and using $\boldsymbol\theta=[\mu,\sigma^2]'$ (Example \@ref(exm:normal)), then
 $$
 \frac{\partial \log f(y;\boldsymbol\theta)}{\partial \boldsymbol\theta} =
 \left[\begin{array}{c}
@@ -464,7 +465,7 @@ $$
 $$
 :::
 :::{.proof}
-Directly deduced from the definition of the information matrix (Def. \@ref(def:Fisher)), using that the epxectation of a product of independent variables is the product of the expectations.
+Directly deduced from the definition of the information matrix (Def. \@ref(def:Fisher)), using that the expectation of a product of independent variables is the product of the expectations.
 :::
 
 
@@ -521,7 +522,7 @@ b. **Asymptotically normal**:
 \begin{equation}
 \boxed{\sqrt{n}(\boldsymbol\theta_{MLE} - \boldsymbol\theta_{0}) \overset{d}{\rightarrow} \mathcal{N}(0,\mathcal{I}_Y(\boldsymbol\theta_0)^{-1}).} (\#eq:normMLE)
 \end{equation}
-c. **Asymptotically efficient**: $\boldsymbol\theta_{MLE}$ is asymptotically efficient and achieves the Freechet-Darmois-Cramer-Rao lower bound for consistent estimators.
+c. **Asymptotically efficient**: $\boldsymbol\theta_{MLE}$ is asymptotically efficient and achieves the Frechet-Darmois-Cramer-Rao lower bound for consistent estimators.
 d. **Invariant**: The MLE of $g(\boldsymbol\theta_0)$ is $g(\boldsymbol\theta_{MLE})$ if $g$ is a continuous and continuously differentiable function.
 :::
 :::{.proof}
@@ -566,7 +567,7 @@ To implement MLE, we need:
 
 ### Example: MLE estimation of a mixture of Gaussian distribution
 
-Consider the returns of the Swiss Market Index (SMI). Assume that these returns are independently drawn from a mixture of Gaussian distributions. The p.d.f. $f(x;\boldsymbol\theta)$, with $\boldsymbol\theta = [\mu_1,\sigma_1,\mu_2,\sigma_2,p]'$, is given by:
+Consider the returns of the Swiss Market Index (SMI). Assume that these returns are independently drawn from a mixture of Gaussian distributions. The p.d.f. $f(x;\boldsymbol\theta)$, with $\boldsymbol\theta = [\mu_1,\mu_2,\sigma_1,\sigma_2,p]'$, is given by:
 $$
 p \frac{1}{\sqrt{2\pi\sigma_1^2}}\exp\left(-\frac{(x - \mu_1)^2}{2\sigma_1^2}\right) + (1-p)\frac{1}{\sqrt{2\pi\sigma_2^2}}\exp\left(-\frac{(x - \mu_2)^2}{2\sigma_2^2}\right).
 $$
@@ -583,7 +584,7 @@ $$
 
 
 
-```{r smiData, fig.align="left-aligned", fig.asp=.6, fig.cap="Time series of SMI weekly returns (source: Yahoo Finance).", warning=FALSE, out.width="95%"}
+```{r smiData, fig.align="left", fig.asp=.6, fig.cap="Time series of SMI weekly returns (source: Yahoo Finance).", warning=FALSE, out.width="95%"}
 library(AEC);data(smi)
 T <- dim(smi)[1]
 h <- 5 # holding period (one week)
@@ -641,7 +642,8 @@ for(i in 1:length(theta)){
 I.2 <- solve(t(d.log.f) %*% d.log.f)
 # Misspecification-robust approach (sandwich formula):
 I.3 <- I.1 %*% solve(I.2) %*% I.1
-cbind(diag(I.1),diag(I.2),diag(I.3))
+data_table(cbind(Hessian=diag(I.1), OPG=diag(I.2),
+                 Sandwich=diag(I.3)), digits=6)
 ```
 According to the first (respectively third) type of estimate for the covariance matrix, a 95\% confidence interval for $\mu_1$ is [`r c(round(theta[1]+qnorm(.025)*sqrt(I.1[1,1]),3),round(theta[1]+qnorm(.975)*sqrt(I.1[1,1]),3))`] (resp. [`r c(round(theta[1]+qnorm(.025)*sqrt(I.3[1,1]),3),round(theta[1]+qnorm(.975)*sqrt(I.3[1,1]),3))`]).
 
@@ -669,14 +671,16 @@ for(i in 1:5){
 Var <- g.gradient %*% I.3 %*% t(g.gradient)
 stdv.g.theta <- sqrt(diag(Var))
 stdv.theta <- sqrt(diag(I.3))
-cbind(theta,stdv.theta,g.theta,stdv.g.theta)
+data_table(cbind(Estimate=theta, SE=stdv.theta,
+                 "Transformed estimate"=g.theta, "Delta-method SE"=stdv.g.theta),
+           digits=4)
 ```
 
 The previous results show that the MLE estimate of $p$ is `r g.theta[5]`, and its standard deviation is approximately equal to `r stdv.g.theta[5]`.
 
 To finish with, let us draw the estimated parametric p.d.f. (the mixture of Gaussian distribution), and compare it to a non-parametric (kernel-based) estimate of this p.d.f. (using function `density`):
 
-```{r smidistri, echo=TRUE, warning=FALSE, fig.cap="Comparison of different estimates of the distribution of returns.", fig.asp = .6, out.width = "95%", fig.align = 'left-aligned'}
+```{r smidistri, echo=TRUE, warning=FALSE, fig.cap="Comparison of different estimates of the distribution of returns.", fig.asp = .6, out.width = "95%", fig.align = 'left'}
 x <- seq(-5,5,by=.01)
 par(plt=c(.1,.95,.1,.95))
 plot(x,f(theta,x),type="l",lwd=2,xlab="returns, in percent",ylab="",

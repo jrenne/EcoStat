@@ -292,6 +292,8 @@ def:partialcorrel
 eq:pc
 def:skewnesskurtosis
 thm:CauchySchwarz
+def:asmyptlevelAppendix
+def:asmyptconsisttestAppendix
 def:Kullback
 prp:Kullback
 def:characteristic
@@ -316,6 +318,7 @@ exm:plimButNotLr
 thm:cauchycritstatic
 thm:cauchycritstochastic
 thm:LLNappendix
+thm:LindbergLevyCLTAppendix
 prp:bandsindependent
 prp:update
 prp:truncated

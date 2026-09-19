@@ -1,103 +1,326 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="" xml:lang="">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Chapter 3 Statistical tests | Econometrics and Statistics</title>
-<meta name="author" content="Jean-Paul Renne">
-<meta name="description" content="We run a statistical test when we want to know whether some hypothesis about a vector of parameters \(\theta\) —that is imperfectly observed— is consistent with data that are seen as random, and...">
-<meta name="generator" content="bookdown 0.34 with bs4_book()">
-<meta property="og:title" content="Chapter 3 Statistical tests | Econometrics and Statistics">
-<meta property="og:type" content="book">
-<meta property="og:description" content="We run a statistical test when we want to know whether some hypothesis about a vector of parameters \(\theta\) —that is imperfectly observed— is consistent with data that are seen as random, and...">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Chapter 3 Statistical tests | Econometrics and Statistics">
-<meta name="twitter:description" content="We run a statistical test when we want to know whether some hypothesis about a vector of parameters \(\theta\) —that is imperfectly observed— is consistent with data that are seen as random, and...">
-<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.5.0/transition.js"></script><script src="libs/bs3compat-0.5.0/tabs.js"></script><script src="libs/bs3compat-0.5.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
-<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
-    
-    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-  </style>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 3 Statistical tests | Econometrics and Statistics</title>
+  <meta name="description" content="This course covers various topics in econometrics. Simulations and real-data-based examples are provided." />
+  <meta name="generator" content="bookdown 0.43 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 3 Statistical tests | Econometrics and Statistics" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="This course covers various topics in econometrics. Simulations and real-data-based examples are provided." />
+  <meta name="github-repo" content="jrenne/EcoStat" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 3 Statistical tests | Econometrics and Statistics" />
+  
+  <meta name="twitter:description" content="This course covers various topics in econometrics. Simulations and real-data-based examples are provided." />
+  
+
+<meta name="author" content="Jean-Paul Renne" />
+
+
+<meta name="date" content="2026-09-18" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="TCL.html"/>
+<link rel="next" href="ChapterLS.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/codefolding-lua-1.1/codefolding-lua.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
 <style type="text/css">
-    /* Used with Pandoc 2.11+ new --citeproc when CSL is used */
-    div.csl-bib-body { }
-    div.csl-entry {
-      clear: both;
-        }
-    .hanging div.csl-entry {
-      margin-left:2em;
-      text-indent:-2em;
-    }
-    div.csl-left-margin {
-      min-width:2em;
-      float:left;
-    }
-    div.csl-right-inline {
-      margin-left:2em;
-      padding-left:1em;
-    }
-    div.csl-indent {
-      margin-left: 2em;
-    }
-  </style>
-<link rel="stylesheet" href="my-style.css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
 </head>
-<body data-spy="scroll" data-target="#toc">
 
-<div class="container-fluid">
-<div class="row">
-  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+<body>
 
-    <div class="d-flex align-items-start justify-content-between">
-      <h1>
-        <a href="index.html" title="">Econometrics and Statistics</a>
-      </h1>
-      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
-    </div>
 
-    <div id="main-nav" class="collapse-lg">
-      <form role="search">
-        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
-</form>
 
-      <nav aria-label="Table of contents"><h2>Table of contents</h2>
-        <ul class="book-toc list-unstyled">
-<li><a class="" href="index.html">Econometrics and statistics</a></li>
-<li><a class="" href="Basics.html"><span class="header-section-number">1</span> Basic statistical results</a></li>
-<li><a class="" href="TCL.html"><span class="header-section-number">2</span> Central Limit Theorem</a></li>
-<li><a class="active" href="Tests.html"><span class="header-section-number">3</span> Statistical tests</a></li>
-<li><a class="" href="ChapterLS.html"><span class="header-section-number">4</span> Linear Regressions</a></li>
-<li><a class="" href="Panel.html"><span class="header-section-number">5</span> Panel regressions</a></li>
-<li><a class="" href="estimation-methods.html"><span class="header-section-number">6</span> Estimation Methods</a></li>
-<li><a class="" href="binary-choice-models.html"><span class="header-section-number">7</span> Binary-choice models</a></li>
-<li><a class="" href="TS.html"><span class="header-section-number">8</span> Time Series</a></li>
-<li><a class="" href="append.html"><span class="header-section-number">9</span> Appendix</a></li>
-<li><a class="" href="references.html">References</a></li>
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Econometrics and Statistics</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="Basics.html"><a href="Basics.html"><i class="fa fa-check"></i><b>1</b> Basic statistical results</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="Basics.html"><a href="Basics.html#cumulative-and-probability-density-funtions-c.d.f.-and-p.d.f."><i class="fa fa-check"></i><b>1.1</b> Cumulative and probability density funtions (c.d.f. and p.d.f.)</a></li>
+<li class="chapter" data-level="1.2" data-path="Basics.html"><a href="Basics.html#law-of-iterated-expectations"><i class="fa fa-check"></i><b>1.2</b> Law of iterated expectations</a></li>
+<li class="chapter" data-level="1.3" data-path="Basics.html"><a href="Basics.html#law-of-total-variance"><i class="fa fa-check"></i><b>1.3</b> Law of total variance</a></li>
+<li class="chapter" data-level="1.4" data-path="Basics.html"><a href="Basics.html#about-consistent-estimators"><i class="fa fa-check"></i><b>1.4</b> About consistent estimators</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="TCL.html"><a href="TCL.html"><i class="fa fa-check"></i><b>2</b> Central Limit Theorem</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="TCL.html"><a href="TCL.html#law-of-large-numbers"><i class="fa fa-check"></i><b>2.1</b> Law of large numbers</a></li>
+<li class="chapter" data-level="2.2" data-path="TCL.html"><a href="TCL.html#central-limit-theorem-clt"><i class="fa fa-check"></i><b>2.2</b> Central Limit Theorem (CLT)</a></li>
+<li class="chapter" data-level="2.3" data-path="TCL.html"><a href="TCL.html#comparison-of-sample-means"><i class="fa fa-check"></i><b>2.3</b> Comparison of sample means</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="Tests.html"><a href="Tests.html"><i class="fa fa-check"></i><b>3</b> Statistical tests</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="Tests.html"><a href="Tests.html#size-and-power-of-a-test"><i class="fa fa-check"></i><b>3.1</b> Size and power of a test</a></li>
+<li class="chapter" data-level="3.2" data-path="Tests.html"><a href="Tests.html#the-different-types-of-statistical-tests"><i class="fa fa-check"></i><b>3.2</b> The different types of statistical tests</a></li>
+<li class="chapter" data-level="3.3" data-path="Tests.html"><a href="Tests.html#asymptotic-properties-of-statistical-tests"><i class="fa fa-check"></i><b>3.3</b> Asymptotic properties of statistical tests</a></li>
+<li class="chapter" data-level="3.4" data-path="Tests.html"><a href="Tests.html#example-normality-tests"><i class="fa fa-check"></i><b>3.4</b> Example: Normality tests</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="ChapterLS.html"><a href="ChapterLS.html"><i class="fa fa-check"></i><b>4</b> Linear Regressions</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="ChapterLS.html"><a href="ChapterLS.html#linearHyp"><i class="fa fa-check"></i><b>4.1</b> Hypotheses</a></li>
+<li class="chapter" data-level="4.2" data-path="ChapterLS.html"><a href="ChapterLS.html#LSquares"><i class="fa fa-check"></i><b>4.2</b> Least square estimation</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="ChapterLS.html"><a href="ChapterLS.html#derivation-of-the-ols-formula"><i class="fa fa-check"></i><b>4.2.1</b> Derivation of the OLS formula</a></li>
+<li class="chapter" data-level="4.2.2" data-path="ChapterLS.html"><a href="ChapterLS.html#properties-of-the-ols-estimate-small-sample"><i class="fa fa-check"></i><b>4.2.2</b> Properties of the OLS estimate (small sample)</a></li>
+<li class="chapter" data-level="4.2.3" data-path="ChapterLS.html"><a href="ChapterLS.html#goodness-of-fit"><i class="fa fa-check"></i><b>4.2.3</b> Goodness of fit</a></li>
+<li class="chapter" data-level="4.2.4" data-path="ChapterLS.html"><a href="ChapterLS.html#inference-and-confidence-intervals-in-small-sample"><i class="fa fa-check"></i><b>4.2.4</b> Inference and confidence intervals (in small sample)</a></li>
+<li class="chapter" data-level="4.2.5" data-path="ChapterLS.html"><a href="ChapterLS.html#Ftest"><i class="fa fa-check"></i><b>4.2.5</b> Testing a set of linear restrictions</a></li>
+<li class="chapter" data-level="4.2.6" data-path="ChapterLS.html"><a href="ChapterLS.html#largeSample"><i class="fa fa-check"></i><b>4.2.6</b> Large Sample Properties</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="ChapterLS.html"><a href="ChapterLS.html#CommonPitfalls"><i class="fa fa-check"></i><b>4.3</b> Common pitfalls in linear regressions</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="ChapterLS.html"><a href="ChapterLS.html#multicollinearity"><i class="fa fa-check"></i><b>4.3.1</b> Multicollinearity</a></li>
+<li class="chapter" data-level="4.3.2" data-path="ChapterLS.html"><a href="ChapterLS.html#Omitted"><i class="fa fa-check"></i><b>4.3.2</b> Omitted variables</a></li>
+<li class="chapter" data-level="4.3.3" data-path="ChapterLS.html"><a href="ChapterLS.html#irrelevant"><i class="fa fa-check"></i><b>4.3.3</b> Irrelevant variable</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="ChapterLS.html"><a href="ChapterLS.html#IV"><i class="fa fa-check"></i><b>4.4</b> Instrumental Variables</a></li>
+<li class="chapter" data-level="4.5" data-path="ChapterLS.html"><a href="ChapterLS.html#general-regression-model-grm-and-robust-covariance-matrices"><i class="fa fa-check"></i><b>4.5</b> General Regression Model (GRM) and robust covariance matrices</a>
+<ul>
+<li class="chapter" data-level="4.5.1" data-path="ChapterLS.html"><a href="ChapterLS.html#presentation-of-the-general-regression-model-grm"><i class="fa fa-check"></i><b>4.5.1</b> Presentation of the General Regression Model (GRM)</a></li>
+<li class="chapter" data-level="4.5.2" data-path="ChapterLS.html"><a href="ChapterLS.html#GLS"><i class="fa fa-check"></i><b>4.5.2</b> Generalized Least Squares</a></li>
+<li class="chapter" data-level="4.5.3" data-path="ChapterLS.html"><a href="ChapterLS.html#asymptotic-properties-of-the-ols-estimator-in-the-grm-framework"><i class="fa fa-check"></i><b>4.5.3</b> Asymptotic properties of the OLS estimator in the GRM framework</a></li>
+<li class="chapter" data-level="4.5.4" data-path="ChapterLS.html"><a href="ChapterLS.html#HAC"><i class="fa fa-check"></i><b>4.5.4</b> HAC-robust covariance matrices</a></li>
+<li class="chapter" data-level="4.5.5" data-path="ChapterLS.html"><a href="ChapterLS.html#Clusters"><i class="fa fa-check"></i><b>4.5.5</b> Cluster-robust covariance matrices</a></li>
+</ul></li>
+<li class="chapter" data-level="4.6" data-path="ChapterLS.html"><a href="ChapterLS.html#shrinkage-methods"><i class="fa fa-check"></i><b>4.6</b> Shrinkage methods</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="Panel.html"><a href="Panel.html"><i class="fa fa-check"></i><b>5</b> Panel regressions</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="Panel.html"><a href="Panel.html#specification-and-notations"><i class="fa fa-check"></i><b>5.1</b> Specification and notations</a></li>
+<li class="chapter" data-level="5.2" data-path="Panel.html"><a href="Panel.html#three-standard-cases"><i class="fa fa-check"></i><b>5.2</b> Three standard cases</a></li>
+<li class="chapter" data-level="5.3" data-path="Panel.html"><a href="Panel.html#FixedEffect"><i class="fa fa-check"></i><b>5.3</b> Estimation of Fixed-Effects Models</a></li>
+<li class="chapter" data-level="5.4" data-path="Panel.html"><a href="Panel.html#RandomEffect"><i class="fa fa-check"></i><b>5.4</b> Estimation of random effects models</a></li>
+<li class="chapter" data-level="5.5" data-path="Panel.html"><a href="Panel.html#DynPanel"><i class="fa fa-check"></i><b>5.5</b> Dynamic Panel Regressions</a></li>
+<li class="chapter" data-level="5.6" data-path="Panel.html"><a href="Panel.html#introduction-to-program-evaluation"><i class="fa fa-check"></i><b>5.6</b> Introduction to program evaluation</a>
+<ul>
+<li class="chapter" data-level="5.6.1" data-path="Panel.html"><a href="Panel.html#presentation-of-the-problem"><i class="fa fa-check"></i><b>5.6.1</b> Presentation of the problem</a></li>
+<li class="chapter" data-level="5.6.2" data-path="Panel.html"><a href="Panel.html#randomized-controlled-trials-rcts"><i class="fa fa-check"></i><b>5.6.2</b> Randomized controlled trials (RCTs)</a></li>
+<li class="chapter" data-level="5.6.3" data-path="Panel.html"><a href="Panel.html#difference-in-difference-did-approach"><i class="fa fa-check"></i><b>5.6.3</b> Difference-in-Difference (DiD) approach</a></li>
+<li class="chapter" data-level="5.6.4" data-path="Panel.html"><a href="Panel.html#application-of-the-did-approach"><i class="fa fa-check"></i><b>5.6.4</b> Application of the DiD approach</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="estimation-methods.html"><a href="estimation-methods.html"><i class="fa fa-check"></i><b>6</b> Estimation Methods</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="estimation-methods.html"><a href="estimation-methods.html#secGMM"><i class="fa fa-check"></i><b>6.1</b> Generalized Method of Moments (GMM)</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="estimation-methods.html"><a href="estimation-methods.html#definition-of-the-gmm-estimator"><i class="fa fa-check"></i><b>6.1.1</b> Definition of the GMM estimator</a></li>
+<li class="chapter" data-level="6.1.2" data-path="estimation-methods.html"><a href="estimation-methods.html#asymptotic-distribution-of-the-gmm-estimator"><i class="fa fa-check"></i><b>6.1.2</b> Asymptotic distribution of the GMM estimator</a></li>
+<li class="chapter" data-level="6.1.3" data-path="estimation-methods.html"><a href="estimation-methods.html#overidentif"><i class="fa fa-check"></i><b>6.1.3</b> Testing hypotheses in the GMM framework</a></li>
+<li class="chapter" data-level="6.1.4" data-path="estimation-methods.html"><a href="estimation-methods.html#example-estimation-of-the-stochastic-discount-factor-s.d.f."><i class="fa fa-check"></i><b>6.1.4</b> Example: Estimation of the Stochastic Discount Factor (s.d.f.)</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="estimation-methods.html"><a href="estimation-methods.html#secMLE"><i class="fa fa-check"></i><b>6.2</b> Maximum Likelihood Estimation</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="estimation-methods.html"><a href="estimation-methods.html#intuition"><i class="fa fa-check"></i><b>6.2.1</b> Intuition</a></li>
+<li class="chapter" data-level="6.2.2" data-path="estimation-methods.html"><a href="estimation-methods.html#definition-and-properties"><i class="fa fa-check"></i><b>6.2.2</b> Definition and properties</a></li>
+<li class="chapter" data-level="6.2.3" data-path="estimation-methods.html"><a href="estimation-methods.html#to-sum-up-mle-in-practice"><i class="fa fa-check"></i><b>6.2.3</b> To sum up – MLE in practice</a></li>
+<li class="chapter" data-level="6.2.4" data-path="estimation-methods.html"><a href="estimation-methods.html#example-mle-estimation-of-a-mixture-of-gaussian-distribution"><i class="fa fa-check"></i><b>6.2.4</b> Example: MLE estimation of a mixture of Gaussian distribution</a></li>
+<li class="chapter" data-level="6.2.5" data-path="estimation-methods.html"><a href="estimation-methods.html#TestMLE"><i class="fa fa-check"></i><b>6.2.5</b> Test procedures</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="estimation-methods.html"><a href="estimation-methods.html#bayesian-approach"><i class="fa fa-check"></i><b>6.3</b> Bayesian approach</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="estimation-methods.html"><a href="estimation-methods.html#introduction"><i class="fa fa-check"></i><b>6.3.1</b> Introduction</a></li>
+<li class="chapter" data-level="6.3.2" data-path="estimation-methods.html"><a href="estimation-methods.html#monte-carlo-markov-chains"><i class="fa fa-check"></i><b>6.3.2</b> Monte-Carlo Markov Chains</a></li>
+<li class="chapter" data-level="6.3.3" data-path="estimation-methods.html"><a href="estimation-methods.html#example-ar1-specification"><i class="fa fa-check"></i><b>6.3.3</b> Example: AR(1) specification</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="binary-choice-models.html"><a href="binary-choice-models.html"><i class="fa fa-check"></i><b>7</b> Binary-choice models</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="binary-choice-models.html"><a href="binary-choice-models.html#latent"><i class="fa fa-check"></i><b>7.1</b> Interpretation in terms of latent variable, and utility-based models</a></li>
+<li class="chapter" data-level="7.2" data-path="binary-choice-models.html"><a href="binary-choice-models.html#Avregressors"><i class="fa fa-check"></i><b>7.2</b> Alternative-Varying Regressors</a></li>
+<li class="chapter" data-level="7.3" data-path="binary-choice-models.html"><a href="binary-choice-models.html#estimation"><i class="fa fa-check"></i><b>7.3</b> Estimation</a></li>
+<li class="chapter" data-level="7.4" data-path="binary-choice-models.html"><a href="binary-choice-models.html#marginalFX"><i class="fa fa-check"></i><b>7.4</b> Marginal effects</a></li>
+<li class="chapter" data-level="7.5" data-path="binary-choice-models.html"><a href="binary-choice-models.html#goodness-of-fit-1"><i class="fa fa-check"></i><b>7.5</b> Goodness of fit</a></li>
+<li class="chapter" data-level="7.6" data-path="binary-choice-models.html"><a href="binary-choice-models.html#predictions-and-roc-curves"><i class="fa fa-check"></i><b>7.6</b> Predictions and ROC curves</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="TS.html"><a href="TS.html"><i class="fa fa-check"></i><b>8</b> Time Series</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="TS.html"><a href="TS.html#introduction-to-time-series"><i class="fa fa-check"></i><b>8.1</b> Introduction to time series</a></li>
+<li class="chapter" data-level="8.2" data-path="TS.html"><a href="TS.html#univariate-processes"><i class="fa fa-check"></i><b>8.2</b> Univariate processes</a>
+<ul>
+<li class="chapter" data-level="8.2.1" data-path="TS.html"><a href="TS.html#moving-average-ma-processes"><i class="fa fa-check"></i><b>8.2.1</b> Moving Average (MA) processes</a></li>
+<li class="chapter" data-level="8.2.2" data-path="TS.html"><a href="TS.html#ARsection"><i class="fa fa-check"></i><b>8.2.2</b> Auto-Regressive (AR) processes</a></li>
+<li class="chapter" data-level="8.2.3" data-path="TS.html"><a href="TS.html#PACFapproach"><i class="fa fa-check"></i><b>8.2.3</b> PACF approach to identify AR/MA processes</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="TS.html"><a href="TS.html#forecasting"><i class="fa fa-check"></i><b>8.3</b> Forecasting</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="append.html"><a href="append.html"><i class="fa fa-check"></i><b>9</b> Appendix</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="append.html"><a href="append.html#PCAapp"><i class="fa fa-check"></i><b>9.1</b> Principal component analysis (PCA)</a></li>
+<li class="chapter" data-level="9.2" data-path="append.html"><a href="append.html#LinAlgebra"><i class="fa fa-check"></i><b>9.2</b> Linear algebra: definitions and results</a></li>
+<li class="chapter" data-level="9.3" data-path="append.html"><a href="append.html#variousResults"><i class="fa fa-check"></i><b>9.3</b> Statistical analysis: definitions and results</a>
+<ul>
+<li class="chapter" data-level="9.3.1" data-path="append.html"><a href="append.html#moments-and-statistics"><i class="fa fa-check"></i><b>9.3.1</b> Moments and statistics</a></li>
+<li class="chapter" data-level="9.3.2" data-path="append.html"><a href="append.html#standard-distributions"><i class="fa fa-check"></i><b>9.3.2</b> Standard distributions</a></li>
+<li class="chapter" data-level="9.3.3" data-path="append.html"><a href="append.html#StochConvergences"><i class="fa fa-check"></i><b>9.3.3</b> Stochastic convergences</a></li>
+<li class="chapter" data-level="9.3.4" data-path="append.html"><a href="append.html#CLTappend"><i class="fa fa-check"></i><b>9.3.4</b> Central limit theorem</a></li>
+</ul></li>
+<li class="chapter" data-level="9.4" data-path="append.html"><a href="append.html#GaussianVar"><i class="fa fa-check"></i><b>9.4</b> Some properties of Gaussian variables</a></li>
+<li class="chapter" data-level="9.5" data-path="append.html"><a href="append.html#AppendixProof"><i class="fa fa-check"></i><b>9.5</b> Proofs</a></li>
+<li class="chapter" data-level="9.6" data-path="append.html"><a href="append.html#statistical-tables"><i class="fa fa-check"></i><b>9.6</b> Statistical Tables</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
 </ul>
 
-        <div class="book-extra">
-          
-        </div>
       </nav>
-</div>
-  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="Tests" class="section level1" number="3">
-<h1>
-<span class="header-section-number">3</span> Statistical tests<a class="anchor" aria-label="anchor" href="#Tests"><i class="fas fa-link"></i></a>
-</h1>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Econometrics and Statistics</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="Tests" class="section level1 hasAnchor" number="3">
+<h1><span class="header-section-number">Chapter 3</span> Statistical tests<a href="Tests.html#Tests" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>We run a statistical test when we want to know whether some hypothesis about a vector of parameters <span class="math inline">\(\theta\)</span> —that is imperfectly observed— is consistent with data that are seen as random, and whose randomness depend on <span class="math inline">\(\theta\)</span>.</p>
 <p>Typically, assume you observe a sample <span class="math inline">\(\mathbf{x}=\{x_1,\dots,x_n\}\)</span> where the <span class="math inline">\(x_i\)</span>’s are i.i.d., of mean <span class="math inline">\(\mu\)</span> and variance <span class="math inline">\(\sigma^2\)</span> (these two parameters being unobseved). One may want to know whether <span class="math inline">\(\mu=0\)</span> or, maybe, whether <span class="math inline">\(\sigma = 1\)</span>.</p>
 <p>The hypothesis the researcher wants to test is called the <em>null hypothesis</em>. It is often denoted by <span class="math inline">\(H_0\)</span>. It is a conjecture about a given property of a population. Without loss of generality, it can be stated as:
 <span class="math display">\[
 H_0:\;\{\theta \in \Theta\}.
 \]</span>
-It can also be defined through a function <span class="math inline">\(h\)</span> (say):<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;We can relate the previous and the next equation through &lt;span class="math inline"&gt;\(\Theta = \{\theta, \,s.t.\,h(\theta)=0\}\)&lt;/span&gt;.&lt;/p&gt;'><sup>3</sup></a>
+It can also be defined through a function <span class="math inline">\(h\)</span> (say):<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a>
 <span class="math display">\[
 H_0:\;h(\theta)=0.
 \]</span></p>
-<p>The <em>alternative hypothesis</em>, often denoted <span class="math inline">\(H_1\)</span> is then defined by <span class="math inline">\(H_1:\;\{\theta \in \Theta^c\}\)</span>.<a class="footnote-ref" tabindex="0" data-toggle="popover" data-content='&lt;p&gt;Note that researchers may want to find support for the null hypothesis &lt;span class="math inline"&gt;\(H_0\)&lt;/span&gt; as well as for the alternative hypothesis &lt;span class="math inline"&gt;\(H_1\)&lt;/span&gt;.&lt;/p&gt;'><sup>4</sup></a></p>
+<p>The <em>alternative hypothesis</em>, often denoted <span class="math inline">\(H_1\)</span> is then defined by <span class="math inline">\(H_1:\;\{\theta \in \Theta^c\}\)</span>.<a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a></p>
 <p>The ingredients of a statistical test are:</p>
 <ul>
 <li>a vector of (unknown) parameters (<span class="math inline">\(\theta\)</span>),</li>
@@ -107,10 +330,8 @@ H_0:\;h(\theta)=0.
 <p>To implement a test statistic, we need to know the distribution of <span class="math inline">\(S\)</span> under the null hypothesis <span class="math inline">\(H_0\)</span>. Equipped, with such a distribution, we compute <span class="math inline">\(S(\mathbf{x})\)</span> and we look at its location; more specifically, we look whether it lies within the critical region <span class="math inline">\(\Omega\)</span>. The latter corresponds to “implausible” regions of this distribution (typically the tails). If <span class="math inline">\(S \in \Omega\)</span>, then we reject the null hypothesis. Looselly speaking; it amounts to saying: <em>if <span class="math inline">\(H_0\)</span> were true, it would have been unlikely to get such a large (or small) draw for <span class="math inline">\(S\)</span></em>.</p>
 <p>Hence, there are two possible outcomes for a statisitcal test:</p>
 <ul>
-<li>
-<span class="math inline">\(H_0\)</span> is rejected if <span class="math inline">\(S \in \Omega\)</span>;</li>
-<li>
-<span class="math inline">\(H_0\)</span> is not rejected if <span class="math inline">\(S \not\in \Omega\)</span>.</li>
+<li><span class="math inline">\(H_0\)</span> is rejected if <span class="math inline">\(S \in \Omega\)</span>;</li>
+<li><span class="math inline">\(H_0\)</span> is not rejected if <span class="math inline">\(S \not\in \Omega\)</span>.</li>
 </ul>
 <p>Except in extreme cases, there is always a non-zero probability to reject <span class="math inline">\(H_0\)</span> while it is true (<strong>Type I error</strong>, or <strong>false positive</strong>), or to fail to reject it while it is false (<strong>Type II error</strong>, or <strong>false negative</strong>).</p>
 <p>This vocabulary is widely used. For instance, the notions of false positive and false negative are used in the context of Early Warning Signals (see Example <a href="Tests.html#exm:FPFN">3.1</a>).</p>
@@ -118,10 +339,8 @@ H_0:\;h(\theta)=0.
 <p><span id="exm:FPFN" class="example"><strong>Example 3.1  (Early Warning Signals) </strong></span>These are approaches that aim to detect the occurrence of crises in advance. See, e.g., <a href="http://www.ecb.europa.eu/events/pdf/conferences/140623/Vasicek-et-al_Comparing-Different-Early-Warning-Systems.pdf?F96bbb525a26071ecf97f9154fb3cc73">ECB (2014)</a>, for applications to financial crises.</p>
 <p>To implement such approaches, researchers look for signals/indices forecasting crises. Suppose one index (<span class="math inline">\(W\)</span>, say) tends to be large before financial crises; one may define an EWS by predicting a crisis when <span class="math inline">\(W&gt;a\)</span>, where <span class="math inline">\(a\)</span> is a given threshold. It is easliy seen that the lower (respectively higeher) <span class="math inline">\(a\)</span>, the larger the fraction of FP (resp. of FN).</p>
 </div>
-<div id="size-and-power-of-a-test" class="section level2" number="3.1">
-<h2>
-<span class="header-section-number">3.1</span> Size and power of a test<a class="anchor" aria-label="anchor" href="#size-and-power-of-a-test"><i class="fas fa-link"></i></a>
-</h2>
+<div id="size-and-power-of-a-test" class="section level2 hasAnchor" number="3.1">
+<h2><span class="header-section-number">3.1</span> Size and power of a test<a href="Tests.html#size-and-power-of-a-test" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <div class="definition">
 <p><span id="def:sizepower" class="definition"><strong>Definition 3.1  (Size and Power of a test) </strong></span>For a given test,</p>
 <ul>
@@ -137,35 +356,33 @@ H_0:\;h(\theta)=0.
 <p>The power is the probability that the test will lead to the rejection of the null hypothesis if the latter is false. Therefore, for a given size, we prefer tests with high power.</p>
 <p>In most cases, there is a trade-off between size and power, whch is easily understood in the EWS context (Example <a href="Tests.html#exm:FPFN">3.1</a>): increasing the threshold <span class="math inline">\(a\)</span> reduces the fraction of FP (thereby reducing the size of the test), but it increases the fraction of FN (thereby reducing the power of the test).</p>
 </div>
-<div id="the-different-types-of-statistical-tests" class="section level2" number="3.2">
-<h2>
-<span class="header-section-number">3.2</span> The different types of statistical tests<a class="anchor" aria-label="anchor" href="#the-different-types-of-statistical-tests"><i class="fas fa-link"></i></a>
-</h2>
+<div id="the-different-types-of-statistical-tests" class="section level2 hasAnchor" number="3.2">
+<h2><span class="header-section-number">3.2</span> The different types of statistical tests<a href="Tests.html#the-different-types-of-statistical-tests" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>How to determine the critical region? Loosely speaking, we want the critical region to be a set of “implausible” values of the test statistic <span class="math inline">\(S\)</span> under the null hypothesis <span class="math inline">\(H_0\)</span>. The lower the size of the test (<span class="math inline">\(\alpha\)</span>), the more implausible these values. Recall that, by definition of the size of the test, <span class="math inline">\(\alpha = \mathbb{P}(S \in \Omega|H_0)\)</span>. That is, if <span class="math inline">\(\alpha\)</span> is small, there is only a small probability that <span class="math inline">\(S\)</span> lies in <span class="math inline">\(\Omega\)</span> under <span class="math inline">\(H_0\)</span>.</p>
 <p>Consider the case where, under <span class="math inline">\(H_0\)</span>, the distribution of the test statistic is symmetrical (e.g., normal distribution or Student-t distribution). In this case, the critical region is usually defined by the union of the two tails of the distribution. The test is then said to be a <strong>two-tailed test</strong> or a <strong>two-sided test</strong>. This situation is illustrated by Figures <a href="Tests.html#fig:Illusttest1">3.1</a> and <a href="Tests.html#fig:Illusttest2">3.2</a>. (Use this <a href="https://jrenne.shinyapps.io/tests/">web interface</a> to explore alternative situations.)</p>
 <p>Figure <a href="Tests.html#fig:Illusttest2">3.2</a> also illustrates the notion of <em>p-value</em> (in the case of a two-sided test). The p-value can be defined as the value of the size of the test <span class="math inline">\(\alpha\)</span> that is such that the computed test statistic, <span class="math inline">\(S\)</span>, is at the “frontier” of the critical region. Given this definition, if the p-value is smaller (respectively larger) than the size of the test, we reject (resp. cannot rejet) the null hypothesis at the <span class="math inline">\(\alpha\)</span> significance level.</p>
-<div class="figure" style="text-align: left-aligned">
-<span style="display:block;" id="fig:Illusttest1"></span>
-<img src="EcoStat_files/figure-html/Illusttest1-1.png" alt="Two-sided test. Under $H_0$, $S \sim t(5)$. $\alpha$ is the size of the test." width="672"><p class="caption">
+<div class="figure" style="text-align: left"><span style="display:block;" id="fig:Illusttest1"></span>
+<img src="EcoStat_files/figure-html/Illusttest1-1.png" alt="Two-sided test. Under $H_0$, $S \sim t(5)$. $\alpha$ is the size of the test." width="672" />
+<p class="caption">
 Figure 3.1: Two-sided test. Under <span class="math inline">\(H_0\)</span>, <span class="math inline">\(S \sim t(5)\)</span>. <span class="math inline">\(\alpha\)</span> is the size of the test.
 </p>
 </div>
-<div class="figure" style="text-align: left-aligned">
-<span style="display:block;" id="fig:Illusttest2"></span>
-<img src="EcoStat_files/figure-html/Illusttest2-1.png" alt="Two-sided test. Under $H_0$, $S \sim t(5)$. $\alpha$ is the size of the test." width="672"><p class="caption">
+<div class="figure" style="text-align: left"><span style="display:block;" id="fig:Illusttest2"></span>
+<img src="EcoStat_files/figure-html/Illusttest2-1.png" alt="Two-sided test. Under $H_0$, $S \sim t(5)$. $\alpha$ is the size of the test." width="672" />
+<p class="caption">
 Figure 3.2: Two-sided test. Under <span class="math inline">\(H_0\)</span>, <span class="math inline">\(S \sim t(5)\)</span>. <span class="math inline">\(\alpha\)</span> is the size of the test.
 </p>
 </div>
-<p>Figures <a href="Tests.html#fig:IllusTestOneSided1">3.3</a> and <a href="Tests.html#fig:IllusTestOneSided2">3.4</a> illustrate the <strong>one-tailed</strong>, or <strong>one-sided</strong> situation. These tests are typically employed when the distribution of the test statistic under the null hypothesis has a support on <span class="math inline">\(\mathbb{R}^+\)</span> (e.g., the chi-square distribution <span class="math inline">\(\chi^2\)</span>, see Def. <a href="append.html#def:chi2">9.11</a>). Figure <a href="Tests.html#fig:IllusTestOneSided2">3.4</a> also illustrates the notion of p-value associated with a one-sided statistical test.</p>
-<div class="figure" style="text-align: left-aligned">
-<span style="display:block;" id="fig:IllusTestOneSided1"></span>
-<img src="EcoStat_files/figure-html/IllusTestOneSided1-1.png" alt="One-sided test. Under $H_0$, $S \sim \chi^2(5)$. $\alpha$ is the size of the test." width="672"><p class="caption">
+<p>Figures <a href="Tests.html#fig:IllusTestOneSided1">3.3</a> and <a href="Tests.html#fig:IllusTestOneSided2">3.4</a> illustrate the <strong>one-tailed</strong>, or <strong>one-sided</strong> situation. These tests are typically employed when the distribution of the test statistic under the null hypothesis has a support on <span class="math inline">\(\mathbb{R}^+\)</span> (e.g., the chi-square distribution <span class="math inline">\(\chi^2\)</span>, see Def. <a href="append.html#def:chi2">9.13</a>). Figure <a href="Tests.html#fig:IllusTestOneSided2">3.4</a> also illustrates the notion of p-value associated with a one-sided statistical test.</p>
+<div class="figure" style="text-align: left"><span style="display:block;" id="fig:IllusTestOneSided1"></span>
+<img src="EcoStat_files/figure-html/IllusTestOneSided1-1.png" alt="One-sided test. Under $H_0$, $S \sim \chi^2(5)$. $\alpha$ is the size of the test." width="672" />
+<p class="caption">
 Figure 3.3: One-sided test. Under <span class="math inline">\(H_0\)</span>, <span class="math inline">\(S \sim \chi^2(5)\)</span>. <span class="math inline">\(\alpha\)</span> is the size of the test.
 </p>
 </div>
-<div class="figure" style="text-align: left-aligned">
-<span style="display:block;" id="fig:IllusTestOneSided2"></span>
-<img src="EcoStat_files/figure-html/IllusTestOneSided2-1.png" alt="One-sided test. Under $H_0$, $S \sim \chi^2(5)$. $\alpha$ is the size of the test." width="672"><p class="caption">
+<div class="figure" style="text-align: left"><span style="display:block;" id="fig:IllusTestOneSided2"></span>
+<img src="EcoStat_files/figure-html/IllusTestOneSided2-1.png" alt="One-sided test. Under $H_0$, $S \sim \chi^2(5)$. $\alpha$ is the size of the test." width="672" />
+<p class="caption">
 Figure 3.4: One-sided test. Under <span class="math inline">\(H_0\)</span>, <span class="math inline">\(S \sim \chi^2(5)\)</span>. <span class="math inline">\(\alpha\)</span> is the size of the test.
 </p>
 </div>
@@ -188,19 +405,17 @@ d_i = \left\{
 \mathbb{P}_\theta(S_n \in \Omega) = \sum_{i=b \times n+1}^{n}C_{n}^i\theta^i(1-\theta)^{n-i}.
 \end{eqnarray*}\]</span></p>
 <p>When <span class="math inline">\(\theta&lt;0.1\)</span>, the previous expression gives the size of the test, while it gives the power of the test when <span class="math inline">\(\theta&gt;0.1\)</span>. Figure <a href="Tests.html#fig:FactoryR">3.5</a> shows how this probability depends on <span class="math inline">\(\theta\)</span> for two sample sizes: <span class="math inline">\(n=100\)</span> (upper plot) and <span class="math inline">\(n=500\)</span> (lower plot).</p>
-<div class="figure" style="text-align: left-aligned">
-<span style="display:block;" id="fig:FactoryR"></span>
-<img src="EcoStat_files/figure-html/FactoryR-1.png" alt="Factory example." width="672"><p class="caption">
+<div class="figure" style="text-align: left"><span style="display:block;" id="fig:FactoryR"></span>
+<img src="EcoStat_files/figure-html/FactoryR-1.png" alt="Factory example." width="672" />
+<p class="caption">
 Figure 3.5: Factory example.
 </p>
 </div>
 <p>(Alternative situations can be explored by using this <a href="https://jrenne.shinyapps.io/Factory/">web interface</a>.)</p>
 </div>
 </div>
-<div id="asymptotic-properties-of-statistical-tests" class="section level2" number="3.3">
-<h2>
-<span class="header-section-number">3.3</span> Asymptotic properties of statistical tests<a class="anchor" aria-label="anchor" href="#asymptotic-properties-of-statistical-tests"><i class="fas fa-link"></i></a>
-</h2>
+<div id="asymptotic-properties-of-statistical-tests" class="section level2 hasAnchor" number="3.3">
+<h2><span class="header-section-number">3.3</span> Asymptotic properties of statistical tests<a href="Tests.html#asymptotic-properties-of-statistical-tests" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>In some cases, the distribution of the test statistic is known only asymptotically. For instance, it may be the case that the distribution of a given test statistic becomes normal only in large samples (e.g., related to the CLT, see Section <a href="TCL.html#TCL">2</a>). The level of the test is then not know for small sample sizes, but only asymptotically, i.e., when <span class="math inline">\(n\)</span> becomes infinitely large. That defines the asymptotic level of the test:</p>
 <div class="definition">
 <p><span id="def:asmyptlevel" class="definition"><strong>Definition 3.2  (Asymptotic level) </strong></span>An asymptotic test with critical region <span class="math inline">\(\Omega_n\)</span> has an asymptotic level equal to <span class="math inline">\(\alpha\)</span> if:
@@ -240,10 +455,8 @@ Hence, if we set <span class="math inline">\(b_n = 0.1 + 0.3\Phi^{-1}(1-\alpha)/
 Therefore, with <span class="math inline">\(b_n=b=0.1\)</span>, the test is consistent.</p>
 </div>
 </div>
-<div id="example-normality-tests" class="section level2" number="3.4">
-<h2>
-<span class="header-section-number">3.4</span> Example: Normality tests<a class="anchor" aria-label="anchor" href="#example-normality-tests"><i class="fas fa-link"></i></a>
-</h2>
+<div id="example-normality-tests" class="section level2 hasAnchor" number="3.4">
+<h2><span class="header-section-number">3.4</span> Example: Normality tests<a href="Tests.html#example-normality-tests" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Because many statistical results are valid only if the underlying data is normally distributed, researchers often have tu conduct normality tests. Under the null hypothesis, the data at hand (<span class="math inline">\(\mathbf{y}=\{y_1,\dots,y_n\}\)</span>, say) are drawn from a Gaussian distribution. A popular normality test is the Jarque-Bera test. It consists in verifying that the sample skewness and kurtosis of the <span class="math inline">\(y_i\)</span>’s are consistent with those of the normal distribution. Let us first define the skewness and kurtosis of a random variable.</p>
 <p>Let <span class="math inline">\(f\)</span> be the p.d.f. of <span class="math inline">\(Y\)</span>. The <span class="math inline">\(k^{th}\)</span> <strong>standardized moment</strong> of <span class="math inline">\(Y\)</span> is defined as:
 <span class="math display">\[
@@ -253,7 +466,7 @@ where <span class="math inline">\(\mathbb{E}(Y)=\mu\)</span> and
 <span class="math display">\[
 \mu_k = \mathbb{E}[(Y-\mu)^k]= \int_{-\infty}^{\infty} (y-\mu)^k f(y) dy
 \]</span>
-is the <span class="math inline">\(k^{th}\)</span> <strong>central moment</strong> of <span class="math inline">\(Y\)</span>. In particular, <span class="math inline">\(\mu_2 = \mathbb{V}ar(Y)\)</span>. Therefore:
+is the <span class="math inline">\(k^{th}\)</span> <strong>central moment</strong> of <span class="math inline">\(Y\)</span>. In particular, <span class="math inline">\(\mu_2 = \mathbb{V}ar(Y)\)</span>. Using these notations, <span class="math inline">\(\psi_k\)</span> rewrites:
 <span class="math display">\[
 \psi_k = \frac{\mu_k}{\left(\mu_2^{1/2}\right)^k},
 \]</span></p>
@@ -291,7 +504,7 @@ g_k = \frac{m_k}{m_2^{k/2}}.
 <p><span id="prp:Asymptg4Normal" class="proposition"><strong>Proposition 3.4  (Asymptotic distribution of 4th-order sample central moment of a normal distribution) </strong></span>If <span class="math inline">\(y_i\sim\,i.i.d.\,\mathcal{N}(\mu,\sigma^2)\)</span>, then <span class="math inline">\(\sqrt{n}(g_4-3) \overset{d}{\rightarrow} \mathcal{N}(0,24)\)</span>.</p>
 </div>
 <div class="proposition">
-<p><span id="prp:Asymptg3g4Normal" class="proposition"><strong>Proposition 3.5  (Joint asymptotic distribution of 3rd and 4th-order sample central moments of a normal distribution) </strong></span>If <span class="math inline">\(y_i\sim\,i.i.d.\,\mathcal{N}(\mu,\sigma^2)\)</span>, then the vector <span class="math inline">\((\sqrt{n}g_3,\sqrt{n}(g_4-3))\)</span> is asymptotically bivariate Gaussian. Further its elements are uncorrelated and therefore independent.</p>
+<p><span id="prp:Asymptg3g4Normal" class="proposition"><strong>Proposition 3.5  (Joint asymptotic distribution of 3rd and 4th-order sample central moments of a normal distribution) </strong></span>If <span class="math inline">\(y_i\sim\,i.i.d.\,\mathcal{N}(\mu,\sigma^2)\)</span>, then the vector <span class="math inline">\((\sqrt{n}g_3,\sqrt{n}(g_4-3))\)</span> is asymptotically bivariate Gaussian. Further its elements are uncorrelated (and therefore independent, because Gaussian).</p>
 </div>
 <p>The Jarque-Bera statistic is defined by:
 <span class="math display">\[
@@ -306,43 +519,45 @@ JB = n \left( \frac{g_3^2}{6}+\frac{(g_4-3)^2}{24} \right) = \frac{n}{6}\left(g_
 <div class="example">
 <p><span id="exm:JB" class="example"><strong>Example 3.5  (Consistency of the Jarque-Bera normality test) </strong></span>This example illustrates the consistency of the JB test (see Def. <a href="Tests.html#def:asmyptconsisttest">3.3</a>).</p>
 <p>For each row of matrix <code>x</code>, the function <code>JB</code> (defined below) computes the Jarque-Bera test statistic. (That is, each row is considered as a given sample.)</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">JB</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">{</span></span>
-<span>  <span class="va">N</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> <span class="co"># number of samples</span></span>
-<span>  <span class="va">n</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span> <span class="co"># sample size</span></span>
-<span>  <span class="va">x.bar</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html">apply</a></span><span class="op">(</span><span class="va">x</span>,<span class="fl">1</span>,<span class="va">mean</span><span class="op">)</span></span>
-<span>  <span class="va">x.x.bar</span> <span class="op">&lt;-</span> <span class="va">x</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="va">x.bar</span>,<span class="va">N</span>,<span class="va">n</span><span class="op">)</span></span>
-<span>  <span class="va">m.2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html">apply</a></span><span class="op">(</span><span class="va">x.x.bar</span>,<span class="fl">1</span>,<span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">{</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">x</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span><span class="op">}</span><span class="op">)</span></span>
-<span>  <span class="va">m.3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html">apply</a></span><span class="op">(</span><span class="va">x.x.bar</span>,<span class="fl">1</span>,<span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">{</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">x</span><span class="op">^</span><span class="fl">3</span><span class="op">)</span><span class="op">}</span><span class="op">)</span></span>
-<span>  <span class="va">m.4</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html">apply</a></span><span class="op">(</span><span class="va">x.x.bar</span>,<span class="fl">1</span>,<span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">{</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">x</span><span class="op">^</span><span class="fl">4</span><span class="op">)</span><span class="op">}</span><span class="op">)</span></span>
-<span>  <span class="va">g.3</span> <span class="op">&lt;-</span> <span class="va">m.3</span><span class="op">/</span><span class="va">m.2</span><span class="op">^</span><span class="op">(</span><span class="fl">3</span><span class="op">/</span><span class="fl">2</span><span class="op">)</span></span>
-<span>  <span class="va">g.4</span> <span class="op">&lt;-</span> <span class="va">m.4</span><span class="op">/</span><span class="va">m.2</span><span class="op">^</span><span class="op">(</span><span class="fl">4</span><span class="op">/</span><span class="fl">2</span><span class="op">)</span></span>
-<span>  <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="va">n</span><span class="op">*</span><span class="op">(</span><span class="va">g.3</span><span class="op">^</span><span class="fl">2</span><span class="op">/</span><span class="fl">6</span> <span class="op">+</span> <span class="op">(</span><span class="va">g.4</span><span class="op">-</span><span class="fl">3</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span><span class="op">/</span><span class="fl">24</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="op">}</span></span></code></pre></div>
-<p>Let us first consider the case where <span class="math inline">\(H_0\)</span> is satisfied. Figure <a href="Tests.html#fig:JBTest2">3.6</a> displays, for different sample sizes <span class="math inline">\(n\)</span>, the distribution of the JB statistics when the <span class="math inline">\(y_i\)</span>’s are normal, consistently with <span class="math inline">\(H_0\)</span>. It appears that when <span class="math inline">\(n\)</span> grows, the distribution indeed converges to the <span class="math inline">\(\chi^2(2)\)</span> distribution (as stated by Proposition <a href="Tests.html#prp:JB">3.6</a>).</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">all.n</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">5</span>,<span class="fl">10</span>,<span class="fl">20</span>,<span class="fl">100</span><span class="op">)</span></span>
-<span><span class="va">nb.sim</span> <span class="op">&lt;-</span> <span class="fl">10000</span></span>
-<span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="va">nb.sim</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">all.n</span><span class="op">)</span><span class="op">)</span>,<span class="va">nb.sim</span>,<span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">all.n</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span>;<span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>plt<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">.1</span>,<span class="fl">.95</span>,<span class="fl">.15</span>,<span class="fl">.8</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="kw">for</span><span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">all.n</span><span class="op">)</span><span class="op">)</span><span class="op">{</span></span>
-<span>  <span class="va">n</span> <span class="op">&lt;-</span> <span class="va">all.n</span><span class="op">[</span><span class="va">i</span><span class="op">]</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/graphics/hist.html">hist</a></span><span class="op">(</span><span class="fu">JB</span><span class="op">(</span><span class="va">y</span><span class="op">[</span>,<span class="fl">1</span><span class="op">:</span><span class="va">n</span><span class="op">]</span><span class="op">)</span>,nclass <span class="op">=</span> <span class="fl">200</span>,freq <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>       main<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="st">"n = "</span>,<span class="fu"><a href="https://rdrr.io/r/base/toString.html">toString</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span>,sep<span class="op">=</span><span class="st">""</span><span class="op">)</span>,xlim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">10</span><span class="op">)</span><span class="op">)</span></span>
-<span>  <span class="va">xx</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">10</span>,by<span class="op">=</span><span class="fl">.01</span><span class="op">)</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/graphics/lines.html">lines</a></span><span class="op">(</span><span class="va">xx</span>,<span class="fu"><a href="https://rdrr.io/r/stats/Chisquare.html">dchisq</a></span><span class="op">(</span><span class="va">xx</span>,df <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>,col<span class="op">=</span><span class="st">"red"</span><span class="op">)</span></span>
-<span><span class="op">}</span></span></code></pre></div>
-<div class="figure" style="text-align: left-aligned">
-<span style="display:block;" id="fig:JBTest2"></span>
-<img src="EcoStat_files/figure-html/JBTest2-1.png" alt="Distribution of the JB test statistic under $H_0$ (normality)." width="672"><p class="caption">
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="Tests.html#cb11-1" tabindex="-1"></a>JB <span class="ot">&lt;-</span> <span class="cf">function</span>(x){</span>
+<span id="cb11-2"><a href="Tests.html#cb11-2" tabindex="-1"></a>  N <span class="ot">&lt;-</span> <span class="fu">dim</span>(x)[<span class="dv">1</span>] <span class="co"># number of samples</span></span>
+<span id="cb11-3"><a href="Tests.html#cb11-3" tabindex="-1"></a>  n <span class="ot">&lt;-</span> <span class="fu">dim</span>(x)[<span class="dv">2</span>] <span class="co"># sample size</span></span>
+<span id="cb11-4"><a href="Tests.html#cb11-4" tabindex="-1"></a>  x.bar <span class="ot">&lt;-</span> <span class="fu">apply</span>(x,<span class="dv">1</span>,mean)</span>
+<span id="cb11-5"><a href="Tests.html#cb11-5" tabindex="-1"></a>  x.x.bar <span class="ot">&lt;-</span> x <span class="sc">-</span> <span class="fu">matrix</span>(x.bar,N,n)</span>
+<span id="cb11-6"><a href="Tests.html#cb11-6" tabindex="-1"></a>  m<span class="fl">.2</span> <span class="ot">&lt;-</span> <span class="fu">apply</span>(x.x.bar,<span class="dv">1</span>,<span class="cf">function</span>(x){<span class="fu">mean</span>(x<span class="sc">^</span><span class="dv">2</span>)})</span>
+<span id="cb11-7"><a href="Tests.html#cb11-7" tabindex="-1"></a>  m<span class="fl">.3</span> <span class="ot">&lt;-</span> <span class="fu">apply</span>(x.x.bar,<span class="dv">1</span>,<span class="cf">function</span>(x){<span class="fu">mean</span>(x<span class="sc">^</span><span class="dv">3</span>)})</span>
+<span id="cb11-8"><a href="Tests.html#cb11-8" tabindex="-1"></a>  m<span class="fl">.4</span> <span class="ot">&lt;-</span> <span class="fu">apply</span>(x.x.bar,<span class="dv">1</span>,<span class="cf">function</span>(x){<span class="fu">mean</span>(x<span class="sc">^</span><span class="dv">4</span>)})</span>
+<span id="cb11-9"><a href="Tests.html#cb11-9" tabindex="-1"></a>  g<span class="fl">.3</span> <span class="ot">&lt;-</span> m<span class="fl">.3</span><span class="sc">/</span>m<span class="fl">.2</span><span class="sc">^</span>(<span class="dv">3</span><span class="sc">/</span><span class="dv">2</span>)</span>
+<span id="cb11-10"><a href="Tests.html#cb11-10" tabindex="-1"></a>  g<span class="fl">.4</span> <span class="ot">&lt;-</span> m<span class="fl">.4</span><span class="sc">/</span>m<span class="fl">.2</span><span class="sc">^</span>(<span class="dv">4</span><span class="sc">/</span><span class="dv">2</span>)</span>
+<span id="cb11-11"><a href="Tests.html#cb11-11" tabindex="-1"></a>  <span class="fu">return</span>(n<span class="sc">*</span>(g<span class="fl">.3</span><span class="sc">^</span><span class="dv">2</span><span class="sc">/</span><span class="dv">6</span> <span class="sc">+</span> (g<span class="fl">.4</span><span class="dv">-3</span>)<span class="sc">^</span><span class="dv">2</span><span class="sc">/</span><span class="dv">24</span>))</span>
+<span id="cb11-12"><a href="Tests.html#cb11-12" tabindex="-1"></a>}</span></code></pre></div>
+</details>
+<p>Let us first consider the case where <span class="math inline">\(H_0\)</span> is satisfied. Figure <a href="Tests.html#fig:JBTest2">3.6</a> displays, for different sample sizes <span class="math inline">\(n\)</span>, the distribution of the JB statistics when the <span class="math inline">\(y_i\)</span>’s are normal, consistently with <span class="math inline">\(H_0\)</span>. It appears that when <span class="math inline">\(n\)</span> grows, the distribution indeed converges to the <span class="math inline">\(\chi^2(2)\)</span> distribution (as stated by Proposition <a href="Tests.html#prp:JB">3.6</a>). The <span class="math inline">\(\chi^2(2)\)</span> distribution is represented in red on each plot.</p>
+<details class=chunk-details><summary class=chunk-summary><span class=chunk-summary-text>Code</span></summary>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="Tests.html#cb12-1" tabindex="-1"></a>all.n <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">5</span>,<span class="dv">10</span>,<span class="dv">20</span>,<span class="dv">100</span>)</span>
+<span id="cb12-2"><a href="Tests.html#cb12-2" tabindex="-1"></a>nb.sim <span class="ot">&lt;-</span> <span class="dv">10000</span></span>
+<span id="cb12-3"><a href="Tests.html#cb12-3" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">rnorm</span>(nb.sim<span class="sc">*</span><span class="fu">max</span>(all.n)),nb.sim,<span class="fu">max</span>(all.n))</span>
+<span id="cb12-4"><a href="Tests.html#cb12-4" tabindex="-1"></a></span>
+<span id="cb12-5"><a href="Tests.html#cb12-5" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">2</span>));<span class="fu">par</span>(<span class="at">plt=</span><span class="fu">c</span>(.<span class="dv">1</span>,.<span class="dv">95</span>,.<span class="dv">15</span>,.<span class="dv">8</span>))</span>
+<span id="cb12-6"><a href="Tests.html#cb12-6" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(all.n)){</span>
+<span id="cb12-7"><a href="Tests.html#cb12-7" tabindex="-1"></a>  n <span class="ot">&lt;-</span> all.n[i]</span>
+<span id="cb12-8"><a href="Tests.html#cb12-8" tabindex="-1"></a>  <span class="fu">hist</span>(<span class="fu">JB</span>(y[,<span class="dv">1</span><span class="sc">:</span>n]),<span class="at">nclass =</span> <span class="dv">200</span>,<span class="at">freq =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb12-9"><a href="Tests.html#cb12-9" tabindex="-1"></a>       <span class="at">main=</span><span class="fu">paste</span>(<span class="st">&quot;n = &quot;</span>,<span class="fu">toString</span>(n),<span class="at">sep=</span><span class="st">&quot;&quot;</span>),<span class="at">xlim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">10</span>))</span>
+<span id="cb12-10"><a href="Tests.html#cb12-10" tabindex="-1"></a>  xx <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">10</span>,<span class="at">by=</span>.<span class="dv">01</span>)</span>
+<span id="cb12-11"><a href="Tests.html#cb12-11" tabindex="-1"></a>  <span class="fu">lines</span>(xx,<span class="fu">dchisq</span>(xx,<span class="at">df =</span> <span class="dv">2</span>),<span class="at">col=</span><span class="st">&quot;red&quot;</span>)</span>
+<span id="cb12-12"><a href="Tests.html#cb12-12" tabindex="-1"></a>}</span></code></pre></div>
+</details>
+<div class="figure" style="text-align: left"><span style="display:block;" id="fig:JBTest2"></span>
+<img src="EcoStat_files/figure-html/JBTest2-1.png" alt="Distribution of the JB test statistic under $H_0$ (normality)." width="672" />
+<p class="caption">
 Figure 3.6: Distribution of the JB test statistic under <span class="math inline">\(H_0\)</span> (normality).
 </p>
 </div>
 <p>Now, replace <code>rnorm</code> with <code>runif</code>. The <span class="math inline">\(y_i\)</span>’s are then drawn from a uniform distribution. <span class="math inline">\(H_0\)</span> is not satisfied. Figure <a href="Tests.html#fig:JBTest3">3.7</a> then shows that, when <span class="math inline">\(n\)</span> grows, the distributions of the JB statistic shift to the right. This results in the consistency of the JB test (see Def. <a href="Tests.html#def:asmyptconsisttest">3.3</a>).</p>
-<div class="figure" style="text-align: left-aligned">
-<span style="display:block;" id="fig:JBTest3"></span>
-<img src="EcoStat_files/figure-html/JBTest3-1.png" alt="Distribution of the JB test statistic when the $y_i$'s are drawn from a uniform distribution (hence $H_0$ is not satisfied)." width="672"><p class="caption">
+<div class="figure" style="text-align: left"><span style="display:block;" id="fig:JBTest3"></span>
+<img src="EcoStat_files/figure-html/JBTest3-1.png" alt="Distribution of the JB test statistic when the $y_i$'s are drawn from a uniform distribution (hence $H_0$ is not satisfied)." width="672" />
+<p class="caption">
 Figure 3.7: Distribution of the JB test statistic when the <span class="math inline">\(y_i\)</span>’s are drawn from a uniform distribution (hence <span class="math inline">\(H_0\)</span> is not satisfied).
 </p>
 </div>
@@ -350,43 +565,75 @@ Figure 3.7: Distribution of the JB test statistic when the <span class="math inl
 
 </div>
 </div>
-
-  <div class="chapter-nav">
-<div class="prev"><a href="TCL.html"><span class="header-section-number">2</span> Central Limit Theorem</a></div>
-<div class="next"><a href="ChapterLS.html"><span class="header-section-number">4</span> Linear Regressions</a></div>
-</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
-    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
-      <ul class="nav navbar-nav">
-<li><a class="nav-link" href="#Tests"><span class="header-section-number">3</span> Statistical tests</a></li>
-<li><a class="nav-link" href="#size-and-power-of-a-test"><span class="header-section-number">3.1</span> Size and power of a test</a></li>
-<li><a class="nav-link" href="#the-different-types-of-statistical-tests"><span class="header-section-number">3.2</span> The different types of statistical tests</a></li>
-<li><a class="nav-link" href="#asymptotic-properties-of-statistical-tests"><span class="header-section-number">3.3</span> Asymptotic properties of statistical tests</a></li>
-<li><a class="nav-link" href="#example-normality-tests"><span class="header-section-number">3.4</span> Example: Normality tests</a></li>
-</ul>
-
-      <div class="book-extra">
-        <ul class="list-unstyled">
-          
-        </ul>
+<div class="footnotes">
+<hr />
+<ol start="3">
+<li id="fn3"><p>We can relate the previous and the next equation through <span class="math inline">\(\Theta = \{\theta, \,s.t.\,h(\theta)=0\}\)</span>.<a href="Tests.html#fnref3" class="footnote-back">↩︎</a></p></li>
+<li id="fn4"><p>Note that researchers may want to find support for the null hypothesis <span class="math inline">\(H_0\)</span> as well as for the alternative hypothesis <span class="math inline">\(H_1\)</span>.<a href="Tests.html#fnref4" class="footnote-back">↩︎</a></p></li>
+</ol>
 </div>
-    </nav>
-</div>
+            </section>
 
-</div>
-</div> <!-- .container -->
-
-<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
-
-  <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>Econometrics and Statistics</strong>" was written by Jean-Paul Renne. It was last built on 2025-02-24.</p>
+          </div>
+        </div>
+      </div>
+<a href="TCL.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="ChapterLS.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
   </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+  "sharing": {
+    "github": false,
+    "facebook": true,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": "https://github.com/jrenne/EcoStat/edit/main/03-Tests.Rmd",
+    "text": "Edit"
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": ["EcoStat.pdf"],
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "subsection"
+  }
+});
+});
+</script>
 
-  <div class="col-12 col-md-6 mt-3">
-    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
-  </div>
-
-</div></div>
-</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
@@ -398,22 +645,7 @@ Figure 3.7: Distribution of the JB test statistic when the <span class="math inl
     script.src = src;
     document.getElementsByTagName("head")[0].appendChild(script);
   })();
-</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
-for (let popover of popovers) {
-  const div = document.createElement('div');
-  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
-  div.innerHTML = popover.getAttribute('data-content');
-
-  var has_math = div.querySelector("span.math");
-  if (has_math) {
-    document.body.appendChild(div);
-    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
-    MathJax.Hub.Queue(function() {
-      popover.setAttribute('data-content', div.innerHTML);
-      document.body.removeChild(div);
-    })
-  }
-}
 </script>
 </body>
+
 </html>

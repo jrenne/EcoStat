@@ -80,7 +80,7 @@ PCA.yds <- prcomp(yds,center=TRUE,scale. = TRUE)
 
 Let us know visualize some results. The first plot of Figure \@ref(fig:USydsPCA1) shows the share of total variance explained by the different principal components (PCs). The second plot shows the facotr loadings. The two bottom plots show how yields (in black) are fitted by linear combinations of the first two PCs only.
 
-```{r USydsPCA1, warning=FALSE,message=FALSE, fig.cap="Some PCA results. The dataset contains 8 time series of U.S. interest rates of different maturities.", fig.align = 'left-aligned'}
+```{r USydsPCA1, warning=FALSE,message=FALSE, fig.cap="Some PCA results. The dataset contains 8 time series of U.S. interest rates of different maturities.", fig.align = 'left'}
 par(mfrow=c(2,2))
 par(plt=c(.1,.95,.2,.8))
 barplot(PCA.yds$sdev^2/sum(PCA.yds$sdev^2),
@@ -290,7 +290,7 @@ The equality holds iff $\mathbb{V}ar(Z)=0$, i.e. iff $Y = \frac{\mathbb{C}ov(X,Y
 
 
 
-:::{.definition #asmyptlevel name="Asymptotic level"}
+:::{.definition #asmyptlevelAppendix name="Asymptotic level"}
 An asymptotic test with critical region $\Omega_n$ has an asymptotic level equal to $\alpha$ if:
 $$
 \underset{\theta \in \Theta}{\mbox{sup}} \quad \underset{n \rightarrow \infty}{\mbox{lim}} \mathbb{P}_\theta (S_n \in \Omega_n) = \alpha,
@@ -298,7 +298,7 @@ $$
 where $S_n$ is the test statistic and $\Theta$ is such that the null hypothesis $H_0$ is equivalent to $\theta \in \Theta$.
 :::
 
-:::{.definition #asmyptconsisttest name="Asymptotically consistent test"}
+:::{.definition #asmyptconsisttestAppendix name="Asymptotically consistent test"}
 An asymptotic test with critical region $\Omega_n$ is consistent if:
 $$
 \forall \theta \in \Theta^c, \quad \mathbb{P}_\theta (S_n \in \Omega_n) \rightarrow 1,
@@ -366,7 +366,7 @@ $$
 f(x) = \frac{1}{\pi \gamma \left(1 + \left[\frac{x-\mu}{\gamma}\right]^2\right)}.
 $$
 The mean and variance of this distribution are undefined.
-```{r Cauchy, fig.cap="Pdf of the Cauchy distribution ($\\mu=0$, $\\gamma=1$).", fig.asp = .6, out.width = "95%", fig.align = "left-aligned",echo=FALSE,warning=FALSE}
+```{r Cauchy, fig.cap="Pdf of the Cauchy distribution ($\\mu=0$, $\\gamma=1$).", fig.asp = .6, out.width = "95%", fig.align = "left",echo=FALSE,warning=FALSE}
 x <- seq(-5,5,by=.1)
 plot(x,dcauchy(x),type="l",lwd=2,xlab="",ylab="")
 ```
@@ -550,7 +550,7 @@ $$
 The facts that (a) $e^{iu\mu}$ is the characteristic function of the constant $\mu$ and (b) that a characteristic function uniquely characterises a distribution imply that the sample mean converges in distribution to the constant $\mu$, which further implies that it converges in probability to $\mu$.
 :::
 
-:::{.theorem #LindbergLevyCLT name="Lindberg-Levy Central limit theorem, CLT"}
+:::{.theorem #LindbergLevyCLTAppendix name="Lindberg-Levy Central limit theorem, CLT"}
 If $x_n$ is an i.i.d. sequence of random variables with mean $\mu$ and variance $\sigma^2$ ($\in ]0,+\infty[$), then:
 $$
 \boxed{\sqrt{n} (\bar{x}_n - \mu) \overset{d}{\rightarrow} \mathcal{N}(0,\sigma^2), \quad \mbox{where} \quad \bar{x}_n = \frac{1}{n} \sum_{i=1}^{n} x_i.}
@@ -656,7 +656,7 @@ with $\lambda(x)=\dfrac{\phi(x)}{\Phi(x)}$ is called the **inverse Mills ratio**
 
 Consider the case where $a \rightarrow - \infty$ (i.e. the conditioning set is $X<b$) and $\mu=0$, $\sigma=1$. Then Eq. \@ref(eq:Etrunc) gives $\mathbb{E}(X|X<b) = - \lambda(b) = - \dfrac{\phi(b)}{\Phi(b)}$, where $\lambda$ is the function computing the inverse Mills ratio.
 
-```{r inverseMills, echo=FALSE, fig.cap="$\\mathbb{E}(X|X<b)$ as a function of $b$ when $X\\sim \\mathcal{N}(0,1)$ (in black).", fig.align = 'left-aligned'}
+```{r inverseMills, echo=FALSE, fig.cap="$\\mathbb{E}(X|X<b)$ as a function of $b$ when $X\\sim \\mathcal{N}(0,1)$ (in black).", fig.align = 'left'}
 x <- seq(-10,10,by=.01)
 par(mfrow=c(1,1))
 par(plt=c(.15,.95,.25,.95))
@@ -860,7 +860,7 @@ $$
 \frac{1}{\sqrt{n}}\frac{\partial \log \mathcal{L}(\hat{\boldsymbol\theta}^0_n;\bv{y})}{\partial \boldsymbol\theta} \approx
 \mathcal{I}(\boldsymbol\theta_0)\sqrt{n}(\hat{\boldsymbol\theta}_n-\hat{\boldsymbol\theta}^0_n),
 $$
-which, associated to Eq. @\ref(eq:lr10), gives:
+which, associated to Eq. \@ref(eq:lr10), gives:
 $$
 \xi_n^{LR} \approx \frac{1}{n} \frac{\partial \log \mathcal{L}(\hat{\boldsymbol\theta}^0_n;\bv{y})}{\partial \boldsymbol\theta'} \mathcal{I}(\boldsymbol\theta_0)^{-1} \frac{\partial \log \mathcal{L}(\hat{\boldsymbol\theta}^0_n;\bv{y})}{\partial \boldsymbol\theta} \approx \xi_n^{LM}.
 $$
@@ -877,7 +877,7 @@ where $\boldsymbol\theta_\infty$, the pseudo true value, is such that $h(\boldsy
 
 Let us now demonstrate the equivalence of $\xi^{LM} and \xi^{W}$.
 
-We have (using Eq. \ref(eq:multiplier)):
+We have (using Eq. \@ref(eq:multiplier)):
 $$
 \xi^{LM}_n = \frac{1}{n}\hat\lambda_n' \dfrac{\partial h(\hat{\boldsymbol\theta}^0_n)}{\partial \boldsymbol\theta'} \mathcal{I}(\hat{\boldsymbol\theta}^0_n)^{-1}
 \frac{\partial h'(\hat{\boldsymbol\theta}^0_n;\bv{y})}{\partial \boldsymbol\theta} \hat\lambda_n.
@@ -968,7 +968,9 @@ Therefore, Eq. \@ref(eq:1) becomes:
 This implies that $\mathbb{E}([y_{t+1} - y^*_{t+1}]^2)$ is always larger than $\color{blue}{\mathbb{E}([y_{t+1} - \mathbb{E}(y_{t+1}|x_t)]^2)}$, and is therefore minimized if the second term is equal to zero, that is if $\mathbb{E}(y_{t+1}|x_t) = y^*_{t+1}$.
 :::
 
-**Proof of Proposition \@ref(prp:estimVARGaussian)**
+**Gaussian multivariate regression: likelihood derivation**
+
+For $y_t=\Pi'x_t+\varepsilon_t$ with independent Gaussian errors of positive definite covariance $\Omega$ and a full-rank regressor matrix, the conditional maximum-likelihood estimator of $\Pi$ equals equation-by-equation OLS. The covariance estimator is the residual cross-product matrix divided by the number of observations. The derivation follows.
 
 :::{.proof}
 Using Proposition \@ref(prp:pdfMultivarGaussian), we obtain that, conditionally on $x_1$, the log-likelihood is given by
@@ -1023,9 +1025,9 @@ M <- matrix(rows,length(rows),length(columns)) +
 max <- 3
 table_N01 <- pnorm(M)
 table_N01 <- matrix(table_N01,ncol=10)
-colnames(table_N01) <- columns
-rownames(table_N01) <- rows
-knitr::kable(table_N01, caption = "Quantiles of the $\\mathcal{N}(0,1)$ distribution. If $a$ and $b$ are respectively the row and column number; then the corresponding cell gives $\\mathbb{P}(X\\le a+b)$, where $X \\sim \\mathcal{N}(0,1)$.", digits=4)
+colnames(table_N01) <- sprintf("%.2f", columns)
+rownames(table_N01) <- sprintf("%.1f", rows)
+data_table(table_N01, long=TRUE, row_label="a", caption = "Cumulative probabilities of the $\\mathcal{N}(0,1)$ distribution. If $a$ and $b$ are respectively the row and column number; then the corresponding cell gives $\\mathbb{P}(X\\le a+b)$, where $X \\sim \\mathcal{N}(0,1)$.", digits=4)
 ```
 
 
@@ -1041,7 +1043,7 @@ for(df in all.df){
 }
 colnames(table_Student) <- all.alpha
 rownames(table_Student) <- all.df
-knitr::kable(table_Student, caption = "Quantiles of the Student-$t$ distribution. The rows correspond to different degrees of freedom ($\\nu$, say); the columns correspond to different probabilities ($z$, say). The cell gives $q$ that is s.t. $\\mathbb{P}(-q<X<q)=z$, with $X \\sim t(\\nu)$.", digits=3)
+data_table(table_Student, long=TRUE, row_label="df", caption = "Quantiles of the Student-$t$ distribution. The rows correspond to different degrees of freedom ($\\nu$, say); the columns correspond to different probabilities ($z$, say). The cell gives $q$ that is s.t. $\\mathbb{P}(-q<X<q)=z$, with $X \\sim t(\\nu)$.", digits=3)
 ```
 
 
@@ -1057,7 +1059,7 @@ for(df in all.df){
 }
 colnames(table_chi2) <- all.alpha
 rownames(table_chi2) <- all.df
-knitr::kable(table_chi2, caption = "Quantiles of the $\\chi^2$ distribution. The rows correspond to different degrees of freedom; the columns correspond to different probabilities.", digits=3)
+data_table(table_chi2, long=TRUE, row_label="df", caption = "Quantiles of the $\\chi^2$ distribution. The rows correspond to different degrees of freedom; the columns correspond to different probabilities.", digits=3)
 ```
 
 
@@ -1085,7 +1087,7 @@ for(alpha in all.alpha){
 }
 colnames(table_F) <- 1:max.n1
 rownames(table_F) <- RowNames
-knitr::kable(table_F, caption = "Quantiles of the $\\mathcal{F}$ distribution. The columns and rows correspond to different degrees of freedom (resp. $n_1$ and $n_2$). The different panels correspond to different probabilities ($\\alpha$) The corresponding cell gives $z$ that is s.t. $\\mathbb{P}(X \\le z)=\\alpha$, with $X \\sim \\mathcal{F}(n_1,n_2)$.", digits=3)
+data_table(table_F, long=TRUE, row_label="df2", caption = "Quantiles of the $\\mathcal{F}$ distribution. The columns and rows correspond to different degrees of freedom (resp. $n_1$ and $n_2$). The different panels correspond to different probabilities ($\\alpha$) The corresponding cell gives $z$ that is s.t. $\\mathbb{P}(X \\le z)=\\alpha$, with $X \\sim \\mathcal{F}(n_1,n_2)$.", digits=3)
 ```
 
 
