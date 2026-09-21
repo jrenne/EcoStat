@@ -717,13 +717,12 @@ if (knitr::is_latex_output()) cat("\\Needspace{12\\baselineskip}\n")
 
 ::: {.recapbox data-latex=""}
 
-- For discrete variables, joint probabilities can be arranged in a table; marginal probabilities are row or column totals.
-- A conditional probability changes the information available; Bayes' rule reverses the direction of conditioning.
-- A conditional expectation is a subpopulation mean; $\mathbb{E}(X\mid Y)$ varies with the group identified by $Y$.
-- Continuous distributions use densities and integrals in place of probabilities attached to points and sums.
-- Iterated expectations recover a population mean by averaging conditional means.
-- Total variance adds average within-group variance and variance between group means.
-- Bias and variance describe finite-sample performance; consistency describes behavior as sample size increases.
+- Moments summarize the location, dispersion, and co-movement of random variables; Section \@ref(basics-moments) introduces expectation, variance, and covariance.
+- A joint distribution determines marginal and conditional distributions. Example \@ref(exm:commuting-table) illustrates these operations for discrete variables, while Proposition \@ref(prp:conditional-density-formula) gives the continuous conditional-density formula.
+- Bayes' rule in Section \@ref(basics-bayes) reverses the direction of conditioning; Definition \@ref(def:independent) states when conditioning leaves a distribution unchanged.
+- Proposition \@ref(prp:lawiteratedexpect) recovers a population mean by averaging conditional means.
+- Proposition \@ref(prp:lawtotalvariance) decomposes population variance into within-group and between-group components.
+- Section \@ref(basics-estimators) distinguishes finite-sample bias and precision from consistency as the sample size grows.
 
 :::
 

@@ -1,4 +1,4 @@
-# Binary-choice models
+# Binary-choice models {#binary-choice}
 
 **Prerequisites.** Conditional probability, Bernoulli variables, linear regression, and maximum-likelihood estimation.
 
@@ -224,7 +224,7 @@ model_table(as.data.frame(Fishing))
 ```
 :::
 
-## Estimation
+## Estimation {#binary-estimation}
 
 Once the probability function has been specified, its parameters can be estimated by maximum likelihood. Each observation contributes the probability assigned to the outcome that actually occurred.
 
@@ -294,7 +294,7 @@ i. Denoting by $\hat{\bv{x}}$ the sample average of the $\bv{x}_i$s, compute $g'
 ii. Compute the average (across $i$) of $g'(\boldsymbol\theta_{MLE}'\bv{x}_i)\theta_{MLE,k}$.
 
 
-## Goodness of fit
+## Goodness of fit {#binary-fit}
 
 After interpreting individual coefficients, we turn to the performance of the model as a whole. For binary outcomes, fit can be assessed through likelihood-based measures, calibration, and the quality of probability predictions.
 
@@ -445,6 +445,23 @@ roc(data.reduced$y, predict_model, percent=T,
     ci.type="bars", print.thres.cex = 0.7, col = 'red',
     main = paste("ROC curve using","(N = ",nrow(data.reduced),")") )
 ```
+:::
+
+```{r binary-recap-space, echo=FALSE, results='asis'}
+if (knitr::is_latex_output()) cat("\\Needspace{14\\baselineskip}\n")
+```
+
+## Chapter recap {-}
+
+::: {.recapbox data-latex=""}
+
+- Chapter \@ref(binary-choice) models the conditional probability of a binary outcome rather than an unrestricted conditional mean.
+- The linear probability model is simple to estimate but can produce probabilities outside $[0,1]$ and requires heteroskedasticity-robust inference.
+- Section \@ref(latent) interprets probit and logit models through a latent index or a difference in utilities.
+- Section \@ref(Avregressors) accommodates covariates, such as price or travel time, whose values vary across alternatives.
+- Section \@ref(binary-estimation) derives the Bernoulli likelihood; Section \@ref(marginalFX) converts index coefficients into effects on predicted probabilities.
+- Section \@ref(binary-fit) assesses overall fit, while Section \@ref(binary-predictions) separates probability prediction, threshold-based classification, and ROC analysis.
+
 :::
 
 ```{r binary-exercise-pagebreak, echo=FALSE, results='asis'}

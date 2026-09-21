@@ -110,7 +110,7 @@ $$
 $$
 :::
 
-## Comparison of sample means
+## Comparison of sample means {#comparison-means}
 
 The one-sample CLT extends directly to comparisons between populations. The key object is then the difference between two independent sample means.
 
@@ -215,6 +215,22 @@ Under the null hypothesis of equal population means, the difference $\bar{m}-\ba
 <!-- %% Research on TCL and Casino: \url{http://digitalscholarship.unlv.edu/cgi/viewcontent.cgi?article=1293&context=grrj} -->
 <!-- %\end{footnotesize} -->
 <!-- %\end{frame} -->
+
+```{r clt-recap-space, echo=FALSE, results='asis'}
+if (knitr::is_latex_output()) cat("\\Needspace{11\\baselineskip}\n")
+```
+
+## Chapter recap {-}
+
+::: {.recapbox data-latex=""}
+
+- Theorem \@ref(thm:LLN) explains why a sample mean converges to its population mean; it is a consistency result.
+- Chebyshev's inequality bounds the probability of a large estimation error but does not describe its full distribution.
+- Theorem \@ref(thm:LindbergLevyCLT) gives the large-sample distribution of the standardized sample mean and therefore supports confidence intervals and tests.
+- The multivariate extension in Theorem \@ref(thm:MCLT) applies the same logic to vectors of sample moments.
+- Section \@ref(comparison-means) combines two independent CLT approximations to compare population means.
+
+:::
 
 ```{r clt-exercise-pagebreak, echo=FALSE, results='asis'}
 if (knitr::is_latex_output()) cat("\\clearpage\n")

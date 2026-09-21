@@ -54,7 +54,7 @@
 \zref@newlabel{mdf@pagelabel-9}{\default{1.3.2}\page{13}\abspage{13}\mdf@pagevalue{13}}
 \newlabel{def:condcdf}{{1.5}{13}{Conditional probability density function}{definition.1.5}{}}
 \zref@newlabel{mdf@pagelabel-10}{\default{1.3.2}\page{14}\abspage{14}\mdf@pagevalue{14}}
-\newlabel{prp:condcdf}{{1.1}{14}{Conditional density}{proposition.1.1}{}}
+\newlabel{prp:conditional-density-formula}{{1.1}{14}{Conditional density}{proposition.1.1}{}}
 \zref@newlabel{mdf@pagelabel-11}{\default{1.3.2}\page{14}\abspage{14}\mdf@pagevalue{14}}
 \newlabel{def:independent}{{1.6}{14}{Independent random variables}{definition.1.6}{}}
 \gdef \LT@ii {\LT@entry 
@@ -70,25 +70,25 @@
 \newlabel{exm:mixture}{{1.3}{16}{Mixture of Gaussian distributions}{example.1.3}{}}
 \@writefile{lof}{\contentsline {figure}{\numberline {1.4}{\ignorespaces Example of pdfs of mixtures of Gaussian distribututions.}}{16}{figure.caption.6}\protected@file@percent }
 \newlabel{fig:mixtureG}{{1.4}{16}{Example of pdfs of mixtures of Gaussian distribututions}{figure.caption.6}{}}
-\zref@newlabel{mdf@pagelabel-15}{\default{1.4}\page{17}\abspage{17}\mdf@pagevalue{17}}
-\newlabel{exm:Buffon}{{1.4}{17}{Buffon (1733)'s needles}{example.1.4}{}}
+\zref@newlabel{mdf@pagelabel-15}{\default{1.4}\page{16}\abspage{16}\mdf@pagevalue{16}}
+\newlabel{exm:Buffon}{{1.4}{16}{Buffon (1733)'s needles}{example.1.4}{}}
+\zref@newlabel{mdf@pagelabel-16}{\default{1.4}\page{17}\abspage{17}\mdf@pagevalue{17}}
 \@writefile{lof}{\contentsline {figure}{\numberline {1.5}{\ignorespaces Schematic representation of the problem.}}{17}{figure.caption.7}\protected@file@percent }
 \newlabel{fig:Buffon}{{1.5}{17}{Schematic representation of the problem}{figure.caption.7}{}}
-\zref@newlabel{mdf@pagelabel-16}{\default{1.4}\page{17}\abspage{17}\mdf@pagevalue{17}}
+\zref@newlabel{mdf@pagelabel-17}{\default{1.4}\page{17}\abspage{17}\mdf@pagevalue{17}}
 \@writefile{toc}{\contentsline {section}{\numberline {1.5}Law of total variance}{17}{section.1.5}\protected@file@percent }
 \newlabel{basics-total-variance}{{1.5}{17}{Law of total variance}{section.1.5}{}}
-\zref@newlabel{mdf@pagelabel-17}{\default{1.5}\page{18}\abspage{18}\mdf@pagevalue{18}}
-\newlabel{prp:lawtotalvariance}{{1.3}{18}{Law of total variance}{proposition.1.3}{}}
-\zref@newlabel{mdf@pagelabel-18}{\default{1.5}\page{18}\abspage{18}\mdf@pagevalue{18}}
-\newlabel{exm:mixture2}{{1.5}{18}{Mixture of Gaussian distributions (cont'd)}{example.1.5}{}}
+\zref@newlabel{mdf@pagelabel-18}{\default{1.5}\page{17}\abspage{17}\mdf@pagevalue{17}}
+\newlabel{prp:lawtotalvariance}{{1.3}{17}{Law of total variance}{proposition.1.3}{}}
 \zref@newlabel{mdf@pagelabel-19}{\default{1.5}\page{18}\abspage{18}\mdf@pagevalue{18}}
+\newlabel{exm:mixture2}{{1.5}{18}{Mixture of Gaussian distributions (cont'd)}{example.1.5}{}}
+\zref@newlabel{mdf@pagelabel-20}{\default{1.5}\page{18}\abspage{18}\mdf@pagevalue{18}}
 \@writefile{toc}{\contentsline {section}{\numberline {1.6}Bias, accuracy, and consistency}{18}{section.1.6}\protected@file@percent }
 \newlabel{basics-estimators}{{1.6}{18}{Bias, accuracy, and consistency}{section.1.6}{}}
-\zref@newlabel{mdf@pagelabel-20}{\default{1.6}\page{19}\abspage{19}\mdf@pagevalue{19}}
+\zref@newlabel{mdf@pagelabel-21}{\default{1.6}\page{19}\abspage{19}\mdf@pagevalue{19}}
 \newlabel{exm:NonConsist}{{1.6}{19}{Example of non-convergent estimator}{example.1.6}{}}
-\zref@newlabel{mdf@pagelabel-21}{\default{1.6}\page{20}\abspage{20}\mdf@pagevalue{20}}
-\@writefile{lof}{\contentsline {figure}{\numberline {1.6}{\ignorespaces Simulation of $\bar {X}_n$ when $X_i \sim i.i.d. \mbox  {Cauchy}$.}}{20}{figure.caption.8}\protected@file@percent }
-\newlabel{fig:figCauchy}{{1.6}{20}{Simulation of $\bar {X}_n$ when $X_i \sim i.i.d. \mbox {Cauchy}$}{figure.caption.8}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {1.6}{\ignorespaces Simulation of $\bar {X}_n$ when $X_i \sim i.i.d. \mbox  {Cauchy}$.}}{19}{figure.caption.8}\protected@file@percent }
+\newlabel{fig:figCauchy}{{1.6}{19}{Simulation of $\bar {X}_n$ when $X_i \sim i.i.d. \mbox {Cauchy}$}{figure.caption.8}{}}
 \newlabel{chapter-recap}{{1.6}{20}{Chapter recap}{section*.9}{}}
 \@writefile{toc}{\contentsline {section}{Chapter recap}{20}{section*.9}\protected@file@percent }
 \zref@newlabel{mdf@pagelabel-22}{\default{1.6}\page{20}\abspage{20}\mdf@pagevalue{20}}
@@ -136,772 +136,907 @@
 \zref@newlabel{mdf@pagelabel-33}{\default{2.2}\page{27}\abspage{27}\mdf@pagevalue{27}}
 \newlabel{thm:LindbergLevyCLT}{{2.2}{27}{Lindberg-Levy Central limit theorem, CLT}{theorem.2.2}{}}
 \newlabel{exr:ExoBuffon}{{2.1}{27}{}{exercise.2.1}{}}
-\newlabel{exr:ExoPileFace}{{2.2}{28}{}{exercise.2.2}{}}
+\newlabel{exr:ExoPileFace}{{2.2}{27}{}{exercise.2.2}{}}
 \zref@newlabel{mdf@pagelabel-34}{\default{2.2}\page{28}\abspage{28}\mdf@pagevalue{28}}
 \newlabel{thm:MCLT}{{2.3}{28}{Multivariate Central limit theorem, CLT}{theorem.2.3}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {2.3}Comparison of sample means}{28}{section.2.3}\protected@file@percent }
-\newlabel{comparison-of-sample-means}{{2.3}{28}{Comparison of sample means}{section.2.3}{}}
-\zref@newlabel{mdf@pagelabel-35}{\default{2.3}\page{29}\abspage{29}\mdf@pagevalue{29}}
-\newlabel{exm:comparSmplMeans}{{2.2}{29}{Comparison of sample means}{example.2.2}{}}
-\zref@newlabel{mdf@pagelabel-36}{\default{2.3}\page{30}\abspage{30}\mdf@pagevalue{30}}
-\@writefile{lof}{\contentsline {figure}{\numberline {2.2}{\ignorespaces Distribution of yearly gross incomes for Swiss residents under the age of 35. Source: SHP. Vertical dashed lines indicates the sample mean.}}{30}{figure.caption.12}\protected@file@percent }
-\newlabel{fig:RcompMeans}{{2.2}{30}{Distribution of yearly gross incomes for Swiss residents under the age of 35. Source: SHP. Vertical dashed lines indicates the sample mean}{figure.caption.12}{}}
-\@writefile{toc}{\contentsline {chapter}{\numberline {3}Statistical tests}{31}{chapter.3}\protected@file@percent }
+\newlabel{comparison-means}{{2.3}{28}{Comparison of sample means}{section.2.3}{}}
+\zref@newlabel{mdf@pagelabel-35}{\default{2.3}\page{28}\abspage{28}\mdf@pagevalue{28}}
+\newlabel{exm:comparSmplMeans}{{2.2}{28}{Comparison of sample means}{example.2.2}{}}
+\zref@newlabel{mdf@pagelabel-36}{\default{2.3}\page{29}\abspage{29}\mdf@pagevalue{29}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2.2}{\ignorespaces Distribution of yearly gross incomes for Swiss residents under the age of 35. Source: SHP. Vertical dashed lines indicates the sample mean.}}{29}{figure.caption.12}\protected@file@percent }
+\newlabel{fig:RcompMeans}{{2.2}{29}{Distribution of yearly gross incomes for Swiss residents under the age of 35. Source: SHP. Vertical dashed lines indicates the sample mean}{figure.caption.12}{}}
+\newlabel{chapter-recap-1}{{2.3}{29}{Chapter recap}{section*.13}{}}
+\@writefile{toc}{\contentsline {section}{Chapter recap}{29}{section*.13}\protected@file@percent }
+\zref@newlabel{mdf@pagelabel-37}{\default{2.3}\page{29}\abspage{29}\mdf@pagevalue{29}}
+\@writefile{toc}{\contentsline {section}{\numberline {2.4}Exercises}{30}{section.2.4}\protected@file@percent }
+\newlabel{clt-exercises}{{2.4}{30}{Exercises}{section.2.4}{}}
+\zref@newlabel{mdf@pagelabel-38}{\default{2.4}\page{30}\abspage{30}\mdf@pagevalue{30}}
+\newlabel{exr:clt-financial-returns}{{2.3}{30}{Financial returns and the CLT}{exercise.2.3}{}}
+\zref@newlabel{mdf@pagelabel-39}{\default{2.4}\page{31}\abspage{31}\mdf@pagevalue{31}}
+\newlabel{exr:clt-roulette}{{2.4}{31}{Roulette and the Central Limit Theorem}{exercise.2.4}{}}
+\zref@newlabel{mdf@pagelabel-40}{\default{2.4}\page{31}\abspage{31}\mdf@pagevalue{31}}
+\newlabel{exr:clt-payoff-true-false}{{2.5}{31}{Repeated-payoff game: true or false?}{exercise.2.5}{}}
+\zref@newlabel{mdf@pagelabel-41}{\default{2.4}\page{32}\abspage{32}\mdf@pagevalue{32}}
+\newlabel{exr:clt-two-samples-true-false}{{2.6}{32}{Comparing two sample means: true or false?}{exercise.2.6}{}}
+\@writefile{toc}{\contentsline {chapter}{\numberline {3}Statistical tests}{33}{chapter.3}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\newlabel{Tests}{{3}{31}{Statistical tests}{chapter.3}{}}
-\zref@newlabel{mdf@pagelabel-37}{\default{3}\page{32}\abspage{32}\mdf@pagevalue{32}}
-\newlabel{exm:FPFN}{{3.1}{32}{Early Warning Signals}{example.3.1}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {3.1}Size and power of a test}{32}{section.3.1}\protected@file@percent }
-\newlabel{size-and-power-of-a-test}{{3.1}{32}{Size and power of a test}{section.3.1}{}}
-\zref@newlabel{mdf@pagelabel-38}{\default{3.1}\page{32}\abspage{32}\mdf@pagevalue{32}}
-\newlabel{def:sizepower}{{3.1}{32}{Size and Power of a test}{definition.3.1}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {3.2}The different types of statistical tests}{32}{section.3.2}\protected@file@percent }
-\newlabel{the-different-types-of-statistical-tests}{{3.2}{32}{The different types of statistical tests}{section.3.2}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3.1}{\ignorespaces Two-sided test. Under $H_0$, $S \sim t(5)$. $\mitalpha $ is the size of the test.}}{33}{figure.caption.13}\protected@file@percent }
-\newlabel{fig:Illusttest1}{{3.1}{33}{Two-sided test. Under $H_0$, $S \sim t(5)$. $\alpha $ is the size of the test}{figure.caption.13}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3.2}{\ignorespaces Two-sided test. Under $H_0$, $S \sim t(5)$. $\mitalpha $ is the size of the test.}}{34}{figure.caption.14}\protected@file@percent }
-\newlabel{fig:Illusttest2}{{3.2}{34}{Two-sided test. Under $H_0$, $S \sim t(5)$. $\alpha $ is the size of the test}{figure.caption.14}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3.3}{\ignorespaces One-sided test. Under $H_0$, $S \sim \mitchi ^2(5)$. $\mitalpha $ is the size of the test.}}{35}{figure.caption.15}\protected@file@percent }
-\newlabel{fig:IllusTestOneSided1}{{3.3}{35}{One-sided test. Under $H_0$, $S \sim \chi ^2(5)$. $\alpha $ is the size of the test}{figure.caption.15}{}}
-\zref@newlabel{mdf@pagelabel-39}{\default{3.2}\page{35}\abspage{35}\mdf@pagevalue{35}}
-\newlabel{exm:Factory}{{3.2}{35}{A practical illustration of size and power}{example.3.2}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3.4}{\ignorespaces One-sided test. Under $H_0$, $S \sim \mitchi ^2(5)$. $\mitalpha $ is the size of the test.}}{36}{figure.caption.16}\protected@file@percent }
-\newlabel{fig:IllusTestOneSided2}{{3.4}{36}{One-sided test. Under $H_0$, $S \sim \chi ^2(5)$. $\alpha $ is the size of the test}{figure.caption.16}{}}
-\zref@newlabel{mdf@pagelabel-40}{\default{3.2}\page{37}\abspage{37}\mdf@pagevalue{37}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3.5}{\ignorespaces Factory example.}}{37}{figure.caption.17}\protected@file@percent }
-\newlabel{fig:FactoryR}{{3.5}{37}{Factory example}{figure.caption.17}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {3.3}Asymptotic properties of statistical tests}{38}{section.3.3}\protected@file@percent }
-\newlabel{asymptotic-properties-of-statistical-tests}{{3.3}{38}{Asymptotic properties of statistical tests}{section.3.3}{}}
-\zref@newlabel{mdf@pagelabel-41}{\default{3.3}\page{38}\abspage{38}\mdf@pagevalue{38}}
-\newlabel{def:asmyptlevel}{{3.2}{38}{Asymptotic level}{definition.3.2}{}}
-\zref@newlabel{mdf@pagelabel-42}{\default{3.3}\page{38}\abspage{38}\mdf@pagevalue{38}}
-\newlabel{exm:FactAsymptlevel}{{3.3}{38}{The factory example}{example.3.3}{}}
-\zref@newlabel{mdf@pagelabel-43}{\default{3.3}\page{38}\abspage{38}\mdf@pagevalue{38}}
-\newlabel{def:asmyptconsisttest}{{3.3}{38}{Asymptotically consistent test}{definition.3.3}{}}
-\zref@newlabel{mdf@pagelabel-44}{\default{3.3}\page{39}\abspage{39}\mdf@pagevalue{39}}
-\newlabel{exm:FactAsymptConsist}{{3.4}{39}{The factory example}{example.3.4}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {3.4}Example: Normality tests}{39}{section.3.4}\protected@file@percent }
-\newlabel{example-normality-tests}{{3.4}{39}{Example: Normality tests}{section.3.4}{}}
-\zref@newlabel{mdf@pagelabel-45}{\default{3.4}\page{40}\abspage{40}\mdf@pagevalue{40}}
-\newlabel{prp:normSkewKurt}{{3.1}{40}{Skewness and kurtosis of the normal distribution}{proposition.3.1}{}}
-\zref@newlabel{mdf@pagelabel-46}{\default{3.4}\page{40}\abspage{40}\mdf@pagevalue{40}}
-\newlabel{prp:conssitCentralMoments}{{3.2}{40}{Consistency of central sample moments}{proposition.3.2}{}}
-\zref@newlabel{mdf@pagelabel-47}{\default{3.4}\page{40}\abspage{40}\mdf@pagevalue{40}}
-\newlabel{prp:Asymptg3Normal}{{3.3}{40}{Asymptotic distribution of 3rd-order sample central moment of a normal distribution}{proposition.3.3}{}}
-\zref@newlabel{mdf@pagelabel-48}{\default{3.4}\page{40}\abspage{40}\mdf@pagevalue{40}}
-\newlabel{prp:Asymptg4Normal}{{3.4}{40}{Asymptotic distribution of 4th-order sample central moment of a normal distribution}{proposition.3.4}{}}
-\zref@newlabel{mdf@pagelabel-49}{\default{3.4}\page{41}\abspage{41}\mdf@pagevalue{41}}
-\newlabel{prp:Asymptg3g4Normal}{{3.5}{41}{Joint asymptotic distribution of 3rd and 4th-order sample central moments of a normal distribution}{proposition.3.5}{}}
-\zref@newlabel{mdf@pagelabel-50}{\default{3.4}\page{41}\abspage{41}\mdf@pagevalue{41}}
-\newlabel{prp:JB}{{3.6}{41}{Jarque-Bera asympt. distri}{proposition.3.6}{}}
-\zref@newlabel{mdf@pagelabel-51}{\default{3.4}\page{41}\abspage{41}\mdf@pagevalue{41}}
-\newlabel{exm:JB}{{3.5}{41}{Consistency of the Jarque-Bera normality test}{example.3.5}{}}
+\newlabel{Tests}{{3}{33}{Statistical tests}{chapter.3}{}}
+\zref@newlabel{mdf@pagelabel-42}{\default{3}\page{34}\abspage{34}\mdf@pagevalue{34}}
+\newlabel{exm:FPFN}{{3.1}{34}{Early Warning Signals}{example.3.1}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {3.1}Size and power of a test}{34}{section.3.1}\protected@file@percent }
+\newlabel{size-power}{{3.1}{34}{Size and power of a test}{section.3.1}{}}
+\zref@newlabel{mdf@pagelabel-43}{\default{3.1}\page{34}\abspage{34}\mdf@pagevalue{34}}
+\newlabel{def:sizepower}{{3.1}{34}{Size and Power of a test}{definition.3.1}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {3.2}Critical regions and p-values}{35}{section.3.2}\protected@file@percent }
+\newlabel{critical-regions}{{3.2}{35}{Critical regions and p-values}{section.3.2}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.1}{\ignorespaces Two-sided test. Under $H_0$, $S \sim t(5)$. $\mitalpha $ is the size of the test.}}{35}{figure.caption.14}\protected@file@percent }
+\newlabel{fig:Illusttest1}{{3.1}{35}{Two-sided test. Under $H_0$, $S \sim t(5)$. $\alpha $ is the size of the test}{figure.caption.14}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.2}{\ignorespaces Two-sided test. Under $H_0$, $S \sim t(5)$. $\mitalpha $ is the size of the test.}}{36}{figure.caption.15}\protected@file@percent }
+\newlabel{fig:Illusttest2}{{3.2}{36}{Two-sided test. Under $H_0$, $S \sim t(5)$. $\alpha $ is the size of the test}{figure.caption.15}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.3}{\ignorespaces One-sided test. Under $H_0$, $S \sim \mitchi ^2(5)$. $\mitalpha $ is the size of the test.}}{37}{figure.caption.16}\protected@file@percent }
+\newlabel{fig:IllusTestOneSided1}{{3.3}{37}{One-sided test. Under $H_0$, $S \sim \chi ^2(5)$. $\alpha $ is the size of the test}{figure.caption.16}{}}
+\zref@newlabel{mdf@pagelabel-44}{\default{3.2}\page{37}\abspage{37}\mdf@pagevalue{37}}
+\newlabel{exm:Factory}{{3.2}{37}{A practical illustration of size and power}{example.3.2}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.4}{\ignorespaces One-sided test. Under $H_0$, $S \sim \mitchi ^2(5)$. $\mitalpha $ is the size of the test.}}{38}{figure.caption.17}\protected@file@percent }
+\newlabel{fig:IllusTestOneSided2}{{3.4}{38}{One-sided test. Under $H_0$, $S \sim \chi ^2(5)$. $\alpha $ is the size of the test}{figure.caption.17}{}}
+\zref@newlabel{mdf@pagelabel-45}{\default{3.2}\page{39}\abspage{39}\mdf@pagevalue{39}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.5}{\ignorespaces Factory example.}}{39}{figure.caption.18}\protected@file@percent }
+\newlabel{fig:FactoryR}{{3.5}{39}{Factory example}{figure.caption.18}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {3.3}Asymptotic properties of statistical tests}{40}{section.3.3}\protected@file@percent }
+\newlabel{asymptotic-properties-of-statistical-tests}{{3.3}{40}{Asymptotic properties of statistical tests}{section.3.3}{}}
+\zref@newlabel{mdf@pagelabel-46}{\default{3.3}\page{40}\abspage{40}\mdf@pagevalue{40}}
+\newlabel{def:asmyptlevel}{{3.2}{40}{Asymptotic level}{definition.3.2}{}}
+\zref@newlabel{mdf@pagelabel-47}{\default{3.3}\page{40}\abspage{40}\mdf@pagevalue{40}}
+\newlabel{exm:FactAsymptlevel}{{3.3}{40}{The factory example}{example.3.3}{}}
+\zref@newlabel{mdf@pagelabel-48}{\default{3.3}\page{40}\abspage{40}\mdf@pagevalue{40}}
+\newlabel{def:asmyptconsisttest}{{3.3}{40}{Asymptotically consistent test}{definition.3.3}{}}
+\zref@newlabel{mdf@pagelabel-49}{\default{3.3}\page{41}\abspage{41}\mdf@pagevalue{41}}
+\newlabel{exm:FactAsymptConsist}{{3.4}{41}{The factory example}{example.3.4}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {3.4}Example: Normality tests}{41}{section.3.4}\protected@file@percent }
+\newlabel{example-normality-tests}{{3.4}{41}{Example: Normality tests}{section.3.4}{}}
+\zref@newlabel{mdf@pagelabel-50}{\default{3.4}\page{42}\abspage{42}\mdf@pagevalue{42}}
+\newlabel{prp:normSkewKurt}{{3.1}{42}{Skewness and kurtosis of the normal distribution}{proposition.3.1}{}}
+\zref@newlabel{mdf@pagelabel-51}{\default{3.4}\page{42}\abspage{42}\mdf@pagevalue{42}}
+\newlabel{prp:conssitCentralMoments}{{3.2}{42}{Consistency of central sample moments}{proposition.3.2}{}}
 \zref@newlabel{mdf@pagelabel-52}{\default{3.4}\page{42}\abspage{42}\mdf@pagevalue{42}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3.6}{\ignorespaces Distribution of the JB test statistic under $H_0$ (normality).}}{42}{figure.caption.18}\protected@file@percent }
-\newlabel{fig:JBTest2}{{3.6}{42}{Distribution of the JB test statistic under $H_0$ (normality)}{figure.caption.18}{}}
-\zref@newlabel{mdf@pagelabel-53}{\default{3.4}\page{43}\abspage{43}\mdf@pagevalue{43}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3.7}{\ignorespaces Distribution of the JB test statistic when the $y_i$'s are drawn from a uniform distribution (hence $H_0$ is not satisfied).}}{43}{figure.caption.19}\protected@file@percent }
-\newlabel{fig:JBTest3}{{3.7}{43}{Distribution of the JB test statistic when the $y_i$'s are drawn from a uniform distribution (hence $H_0$ is not satisfied)}{figure.caption.19}{}}
-\@writefile{toc}{\contentsline {chapter}{\numberline {4}Linear Regressions}{45}{chapter.4}\protected@file@percent }
+\newlabel{prp:Asymptg3Normal}{{3.3}{42}{Asymptotic distribution of 3rd-order sample central moment of a normal distribution}{proposition.3.3}{}}
+\zref@newlabel{mdf@pagelabel-53}{\default{3.4}\page{42}\abspage{42}\mdf@pagevalue{42}}
+\newlabel{prp:Asymptg4Normal}{{3.4}{42}{Asymptotic distribution of 4th-order sample central moment of a normal distribution}{proposition.3.4}{}}
+\zref@newlabel{mdf@pagelabel-54}{\default{3.4}\page{43}\abspage{43}\mdf@pagevalue{43}}
+\newlabel{prp:Asymptg3g4Normal}{{3.5}{43}{Joint asymptotic distribution of 3rd and 4th-order sample central moments of a normal distribution}{proposition.3.5}{}}
+\zref@newlabel{mdf@pagelabel-55}{\default{3.4}\page{43}\abspage{43}\mdf@pagevalue{43}}
+\newlabel{prp:JB}{{3.6}{43}{Jarque-Bera asympt. distri}{proposition.3.6}{}}
+\zref@newlabel{mdf@pagelabel-56}{\default{3.4}\page{43}\abspage{43}\mdf@pagevalue{43}}
+\newlabel{exm:JB-consistency}{{3.5}{43}{Consistency of the Jarque-Bera normality test}{example.3.5}{}}
+\zref@newlabel{mdf@pagelabel-57}{\default{3.4}\page{44}\abspage{44}\mdf@pagevalue{44}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.6}{\ignorespaces Distribution of the JB test statistic under $H_0$ (normality).}}{44}{figure.caption.19}\protected@file@percent }
+\newlabel{fig:JBTest2}{{3.6}{44}{Distribution of the JB test statistic under $H_0$ (normality)}{figure.caption.19}{}}
+\zref@newlabel{mdf@pagelabel-58}{\default{3.4}\page{45}\abspage{45}\mdf@pagevalue{45}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3.7}{\ignorespaces Distribution of the JB test statistic when the $y_i$'s are drawn from a uniform distribution (hence $H_0$ is not satisfied).}}{45}{figure.caption.20}\protected@file@percent }
+\newlabel{fig:JBTest3}{{3.7}{45}{Distribution of the JB test statistic when the $y_i$'s are drawn from a uniform distribution (hence $H_0$ is not satisfied)}{figure.caption.20}{}}
+\newlabel{chapter-recap-2}{{3.4}{45}{Chapter recap}{section*.21}{}}
+\@writefile{toc}{\contentsline {section}{Chapter recap}{45}{section*.21}\protected@file@percent }
+\zref@newlabel{mdf@pagelabel-59}{\default{3.4}\page{45}\abspage{45}\mdf@pagevalue{45}}
+\@writefile{toc}{\contentsline {section}{\numberline {3.5}Exercises}{46}{section.3.5}\protected@file@percent }
+\newlabel{tests-exercises}{{3.5}{46}{Exercises}{section.3.5}{}}
+\zref@newlabel{mdf@pagelabel-60}{\default{3.5}\page{46}\abspage{46}\mdf@pagevalue{46}}
+\newlabel{exr:tests-kurtosis-mixture}{{3.1}{46}{Kurtosis of a Gaussian scale mixture}{exercise.3.1}{}}
+\zref@newlabel{mdf@pagelabel-61}{\default{3.5}\page{46}\abspage{46}\mdf@pagevalue{46}}
+\newlabel{exr:tests-normal-test-true-false}{{3.2}{46}{Testing with a normal statistic: true or false?}{exercise.3.2}{}}
+\zref@newlabel{mdf@pagelabel-62}{\default{3.5}\page{47}\abspage{47}\mdf@pagevalue{47}}
+\newlabel{exr:tests-chi-square-true-false}{{3.3}{47}{Testing with a chi-squared statistic: true or false?}{exercise.3.3}{}}
+\zref@newlabel{mdf@pagelabel-63}{\default{3.5}\page{48}\abspage{48}\mdf@pagevalue{48}}
+\newlabel{exr:tests-power-normal-mean}{{3.4}{48}{Size, power, and sample size}{exercise.3.4}{}}
+\@writefile{toc}{\contentsline {chapter}{\numberline {4}Linear regressions}{49}{chapter.4}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\newlabel{ChapterLS}{{4}{45}{Linear Regressions}{chapter.4}{}}
-\zref@newlabel{mdf@pagelabel-54}{\default{4}\page{45}\abspage{45}\mdf@pagevalue{45}}
-\newlabel{def:essai}{{4.1}{45}{}{definition.4.1}{}}
-\newlabel{eq:linearspecif}{{4.1}{45}{}{equation.4.1}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {4.1}Hypotheses}{45}{section.4.1}\protected@file@percent }
-\newlabel{linearHyp}{{4.1}{45}{Hypotheses}{section.4.1}{}}
-\zref@newlabel{mdf@pagelabel-55}{\default{4.1}\page{45}\abspage{45}\mdf@pagevalue{45}}
-\newlabel{hyp:fullrank}{{4.1}{45}{Full rank}{hypothesis.4.1}{}}
-\zref@newlabel{mdf@pagelabel-56}{\default{4.1}\page{46}\abspage{46}\mdf@pagevalue{46}}
-\newlabel{hyp:exogeneity}{{4.2}{46}{Conditional mean-zero assumption}{hypothesis.4.2}{}}
-\zref@newlabel{mdf@pagelabel-57}{\default{4.1}\page{46}\abspage{46}\mdf@pagevalue{46}}
-\newlabel{prp:implicationExog}{{4.1}{46}{}{proposition.4.1}{}}
-\zref@newlabel{mdf@pagelabel-58}{\default{4.1}\page{46}\abspage{46}\mdf@pagevalue{46}}
-\newlabel{hyp:homoskedasticity}{{4.3}{46}{Homoskedasticity}{hypothesis.4.3}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4.1}{\ignorespaces Homoskedasticity vs heteroskedasticity. See text for the exact specifications.}}{47}{figure.caption.20}\protected@file@percent }
-\newlabel{fig:heteroskedasticity}{{4.1}{47}{Homoskedasticity vs heteroskedasticity. See text for the exact specifications}{figure.caption.20}{}}
-\zref@newlabel{mdf@pagelabel-59}{\default{4.1}\page{47}\abspage{47}\mdf@pagevalue{47}}
-\newlabel{hyp:noncorrelResid}{{4.4}{47}{Uncorrelated errors}{hypothesis.4.4}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4.2}{\ignorespaces Income versus age. Data are from the Swiss Household Panel. The sample is restricted to persons that have completed at least 19 years of study. The figure shows that the dispersion of yearly income increases with age.}}{48}{figure.caption.21}\protected@file@percent }
-\newlabel{fig:exmpSalarayPhDSHP}{{4.2}{48}{Income versus age. Data are from the Swiss Household Panel. The sample is restricted to persons that have completed at least 19 years of study. The figure shows that the dispersion of yearly income increases with age}{figure.caption.21}{}}
-\zref@newlabel{mdf@pagelabel-60}{\default{4.1}\page{48}\abspage{48}\mdf@pagevalue{48}}
-\newlabel{prp:Sigma}{{4.2}{48}{}{proposition.4.2}{}}
-\zref@newlabel{mdf@pagelabel-61}{\default{4.1}\page{48}\abspage{48}\mdf@pagevalue{48}}
-\newlabel{hyp:normality}{{4.5}{48}{Normal distribution}{hypothesis.4.5}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {4.2}Least square estimation}{48}{section.4.2}\protected@file@percent }
-\newlabel{LSquares}{{4.2}{48}{Least square estimation}{section.4.2}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.1}Derivation of the OLS formula}{48}{subsection.4.2.1}\protected@file@percent }
-\newlabel{derivation-of-the-ols-formula}{{4.2.1}{48}{Derivation of the OLS formula}{subsection.4.2.1}{}}
-\newlabel{eq:OLSFOC}{{4.3}{49}{Derivation of the OLS formula}{equation.4.3}{}}
-\newlabel{eq:Mres}{{4.4}{49}{Derivation of the OLS formula}{equation.4.4}{}}
-\newlabel{eq:Proj}{{4.5}{49}{Derivation of the OLS formula}{equation.4.5}{}}
-\zref@newlabel{mdf@pagelabel-62}{\default{4.2.1}\page{50}\abspage{50}\mdf@pagevalue{50}}
-\newlabel{exm:bivar}{{4.1}{50}{Bivariate case}{example.4.1}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.2}Properties of the OLS estimate (small sample)}{50}{subsection.4.2.2}\protected@file@percent }
-\newlabel{properties-of-the-ols-estimate-small-sample}{{4.2.2}{50}{Properties of the OLS estimate (small sample)}{subsection.4.2.2}{}}
-\zref@newlabel{mdf@pagelabel-63}{\default{4.2.2}\page{50}\abspage{50}\mdf@pagevalue{50}}
-\newlabel{prp:propOLS}{{4.3}{50}{Properties of the OLS estimator}{proposition.4.3}{}}
-\zref@newlabel{mdf@pagelabel-64}{\default{4.2.2}\page{51}\abspage{51}\mdf@pagevalue{51}}
-\newlabel{thm:GaussMarkov}{{4.1}{51}{Gauss-Markov Theorem}{theorem.4.1}{}}
-\zref@newlabel{mdf@pagelabel-65}{\default{4.2.2}\page{52}\abspage{52}\mdf@pagevalue{52}}
-\newlabel{thm:FW}{{4.2}{52}{Frisch-Waugh Theorem}{theorem.4.2}{}}
+\newlabel{ChapterLS}{{4}{49}{Linear regressions}{chapter.4}{}}
+\zref@newlabel{mdf@pagelabel-64}{\default{4}\page{49}\abspage{49}\mdf@pagevalue{49}}
+\newlabel{def:essai}{{4.1}{49}{}{definition.4.1}{}}
+\newlabel{eq:linearspecif}{{4.1}{49}{}{equation.4.1}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {4.1}Hypotheses}{49}{section.4.1}\protected@file@percent }
+\newlabel{linearHyp}{{4.1}{49}{Hypotheses}{section.4.1}{}}
+\zref@newlabel{mdf@pagelabel-65}{\default{4.1}\page{50}\abspage{50}\mdf@pagevalue{50}}
+\newlabel{hyp:fullrank}{{4.1}{50}{Full rank}{hypothesis.4.1}{}}
+\zref@newlabel{mdf@pagelabel-66}{\default{4.1}\page{50}\abspage{50}\mdf@pagevalue{50}}
+\newlabel{hyp:exogeneity}{{4.2}{50}{Conditional mean-zero assumption}{hypothesis.4.2}{}}
+\zref@newlabel{mdf@pagelabel-67}{\default{4.1}\page{50}\abspage{50}\mdf@pagevalue{50}}
+\newlabel{prp:implicationExog}{{4.1}{50}{}{proposition.4.1}{}}
+\zref@newlabel{mdf@pagelabel-68}{\default{4.1}\page{50}\abspage{50}\mdf@pagevalue{50}}
+\newlabel{hyp:homoskedasticity}{{4.3}{50}{Homoskedasticity}{hypothesis.4.3}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.1}{\ignorespaces Homoskedasticity vs heteroskedasticity. See text for the exact specifications.}}{51}{figure.caption.22}\protected@file@percent }
+\newlabel{fig:heteroskedasticity}{{4.1}{51}{Homoskedasticity vs heteroskedasticity. See text for the exact specifications}{figure.caption.22}{}}
+\zref@newlabel{mdf@pagelabel-69}{\default{4.1}\page{51}\abspage{51}\mdf@pagevalue{51}}
+\newlabel{hyp:noncorrelResid}{{4.4}{51}{Uncorrelated errors}{hypothesis.4.4}{}}
+\zref@newlabel{mdf@pagelabel-70}{\default{4.1}\page{51}\abspage{51}\mdf@pagevalue{51}}
+\newlabel{prp:Sigma}{{4.2}{51}{}{proposition.4.2}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.2}{\ignorespaces Income versus age. Data are from the Swiss Household Panel. The sample is restricted to persons that have completed at least 19 years of study. The figure shows that the dispersion of yearly income increases with age.}}{52}{figure.caption.23}\protected@file@percent }
+\newlabel{fig:exmpSalarayPhDSHP}{{4.2}{52}{Income versus age. Data are from the Swiss Household Panel. The sample is restricted to persons that have completed at least 19 years of study. The figure shows that the dispersion of yearly income increases with age}{figure.caption.23}{}}
+\zref@newlabel{mdf@pagelabel-71}{\default{4.1}\page{52}\abspage{52}\mdf@pagevalue{52}}
+\newlabel{hyp:normality}{{4.5}{52}{Normal distribution}{hypothesis.4.5}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {4.2}Least-squares estimation}{52}{section.4.2}\protected@file@percent }
+\newlabel{LSquares}{{4.2}{52}{Least-squares estimation}{section.4.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.1}Derivation of the OLS formula}{52}{subsection.4.2.1}\protected@file@percent }
+\newlabel{derivation-of-the-ols-formula}{{4.2.1}{52}{Derivation of the OLS formula}{subsection.4.2.1}{}}
+\newlabel{eq:OLSFOC}{{4.3}{53}{Derivation of the OLS formula}{equation.4.3}{}}
+\newlabel{eq:Mres}{{4.4}{53}{Derivation of the OLS formula}{equation.4.4}{}}
+\newlabel{eq:Proj}{{4.5}{53}{Derivation of the OLS formula}{equation.4.5}{}}
+\zref@newlabel{mdf@pagelabel-72}{\default{4.2.1}\page{53}\abspage{53}\mdf@pagevalue{53}}
+\newlabel{exm:bivar}{{4.1}{53}{Bivariate case}{example.4.1}{}}
+\zref@newlabel{mdf@pagelabel-73}{\default{4.2.1}\page{54}\abspage{54}\mdf@pagevalue{54}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.2}Properties of the OLS estimate (small sample)}{54}{subsection.4.2.2}\protected@file@percent }
+\newlabel{properties-of-the-ols-estimate-small-sample}{{4.2.2}{54}{Properties of the OLS estimate (small sample)}{subsection.4.2.2}{}}
+\zref@newlabel{mdf@pagelabel-74}{\default{4.2.2}\page{54}\abspage{54}\mdf@pagevalue{54}}
+\newlabel{prp:propOLS}{{4.3}{54}{Properties of the OLS estimator}{proposition.4.3}{}}
+\zref@newlabel{mdf@pagelabel-75}{\default{4.2.2}\page{55}\abspage{55}\mdf@pagevalue{55}}
+\newlabel{thm:GaussMarkov}{{4.1}{55}{Gauss-Markov Theorem}{theorem.4.1}{}}
+\zref@newlabel{mdf@pagelabel-76}{\default{4.2.2}\page{55}\abspage{55}\mdf@pagevalue{55}}
+\newlabel{thm:FW}{{4.2}{55}{Frisch-Waugh Theorem}{theorem.4.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.3}Goodness of fit}{56}{subsection.4.2.3}\protected@file@percent }
+\newlabel{goodness-of-fit}{{4.2.3}{56}{Goodness of fit}{subsection.4.2.3}{}}
 \citation{Greene2003Econometric}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.3}Goodness of fit}{53}{subsection.4.2.3}\protected@file@percent }
-\newlabel{goodness-of-fit}{{4.2.3}{53}{Goodness of fit}{subsection.4.2.3}{}}
-\newlabel{eq:RR2}{{4.6}{53}{Goodness of fit}{equation.4.6}{}}
-\zref@newlabel{mdf@pagelabel-66}{\default{4.2.3}\page{54}\abspage{54}\mdf@pagevalue{54}}
-\newlabel{prp:chgeR2}{{4.4}{54}{Change in SSR when a variable is added}{proposition.4.4}{}}
-\newlabel{eq:uu}{{4.7}{54}{Change in SSR when a variable is added}{equation.4.7}{}}
-\newlabel{eq:uuu}{{4.8}{54}{Goodness of fit}{equation.4.8}{}}
-\zref@newlabel{mdf@pagelabel-67}{\default{4.2.3}\page{54}\abspage{54}\mdf@pagevalue{54}}
-\newlabel{prp:chgeInR2}{{4.5}{54}{Change in the coefficient of determination when a variable is added}{proposition.4.5}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4.3}{\ignorespaces This figure illustrates the monotonous increase in the $R^2$ as a function of the number of explanatory variables. In the true model, there is no explanatory variables, i.e., $y_i = \mitvarepsilon _i$. We then take (independent) regressors and regress $y$ on the latter, progressively increasing the set of regressors.}}{55}{figure.caption.22}\protected@file@percent }
-\newlabel{fig:R2issue}{{4.3}{55}{This figure illustrates the monotonous increase in the $R^2$ as a function of the number of explanatory variables. In the true model, there is no explanatory variables, i.e., $y_i = \varepsilon _i$. We then take (independent) regressors and regress $y$ on the latter, progressively increasing the set of regressors}{figure.caption.22}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.4}Inference and confidence intervals (in small sample)}{55}{subsection.4.2.4}\protected@file@percent }
-\newlabel{inference-and-confidence-intervals-in-small-sample}{{4.2.4}{55}{Inference and confidence intervals (in small sample)}{subsection.4.2.4}{}}
-\newlabel{eq:distriBcondi}{{4.9}{56}{Inference and confidence intervals (in small sample)}{equation.4.9}{}}
-\zref@newlabel{mdf@pagelabel-68}{\default{4.2.4}\page{56}\abspage{56}\mdf@pagevalue{56}}
-\newlabel{prp:expects2}{{4.6}{56}{}{proposition.4.6}{}}
-\newlabel{eq:s2}{{4.10}{56}{}{equation.4.10}{}}
-\zref@newlabel{mdf@pagelabel-69}{\default{4.2.4}\page{56}\abspage{56}\mdf@pagevalue{56}}
-\newlabel{prp:s2distri}{{4.7}{56}{}{proposition.4.7}{}}
-\zref@newlabel{mdf@pagelabel-70}{\default{4.2.4}\page{57}\abspage{57}\mdf@pagevalue{57}}
-\newlabel{prp:indeps2b}{{4.8}{57}{}{proposition.4.8}{}}
-\newlabel{eq:resultstudentt}{{4.11}{57}{Inference and confidence intervals (in small sample)}{equation.4.11}{}}
-\newlabel{eq:resultstudentt2}{{4.12}{57}{Inference and confidence intervals (in small sample)}{equation.4.12}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4.4}{\ignorespaces The higher the degree of freedom, the closer the distribution of \(t(\mitnu )\) gets to the normal distribution. (Convergence in distribution.)}}{58}{figure.caption.23}\protected@file@percent }
-\newlabel{fig:chartStudent}{{4.4}{58}{The higher the degree of freedom, the closer the distribution of \(t(\nu )\) gets to the normal distribution. (Convergence in distribution.)}{figure.caption.23}{}}
-\zref@newlabel{mdf@pagelabel-71}{\default{4.2.4}\page{59}\abspage{59}\mdf@pagevalue{59}}
-\newlabel{exm:SHP0001}{{4.2}{59}{Education and income}{example.4.2}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.5}Testing a set of linear restrictions}{60}{subsection.4.2.5}\protected@file@percent }
-\newlabel{Ftest}{{4.2.5}{60}{Testing a set of linear restrictions}{subsection.4.2.5}{}}
-\newlabel{eq:restrictions}{{4.13}{60}{Testing a set of linear restrictions}{equation.4.13}{}}
-\newlabel{eq:H0Ftest}{{4.15}{60}{Testing a set of linear restrictions}{equation.4.15}{}}
-\newlabel{eq:W1}{{4.16}{60}{Testing a set of linear restrictions}{equation.4.16}{}}
-\zref@newlabel{mdf@pagelabel-72}{\default{4.2.5}\page{61}\abspage{61}\mdf@pagevalue{61}}
-\newlabel{prp:Ftest1}{{4.9}{61}{}{proposition.4.9}{}}
-\newlabel{eq:defFstatistics}{{4.17}{61}{}{equation.4.17}{}}
-\zref@newlabel{mdf@pagelabel-73}{\default{4.2.5}\page{61}\abspage{61}\mdf@pagevalue{61}}
-\newlabel{prp:Ftest}{{4.10}{61}{}{proposition.4.10}{}}
-\newlabel{eq:defFstatistics2}{{4.18}{61}{}{equation.4.18}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.6}Large Sample Properties}{62}{subsection.4.2.6}\protected@file@percent }
-\newlabel{largeSample}{{4.2.6}{62}{Large Sample Properties}{subsection.4.2.6}{}}
-\zref@newlabel{mdf@pagelabel-74}{\default{4.2.6}\page{62}\abspage{62}\mdf@pagevalue{62}}
-\newlabel{prp:asymptOLS}{{4.11}{62}{}{proposition.4.11}{}}
-\newlabel{eq:Qasympt}{{4.19}{62}{}{equation.4.19}{}}
-\newlabel{eq:convgceOLS}{{4.20}{62}{}{equation.4.20}{}}
-\newlabel{eq:sXX}{{4.21}{62}{Large Sample Properties}{equation.4.21}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {4.3}Common pitfalls in linear regressions}{62}{section.4.3}\protected@file@percent }
-\newlabel{CommonPitfalls}{{4.3}{62}{Common pitfalls in linear regressions}{section.4.3}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.3.1}Multicollinearity}{62}{subsection.4.3.1}\protected@file@percent }
-\newlabel{multicollinearity}{{4.3.1}{62}{Multicollinearity}{subsection.4.3.1}{}}
-\newlabel{eq:multicollin}{{4.22}{63}{Multicollinearity}{equation.4.22}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.3.2}Omitted variables}{63}{subsection.4.3.2}\protected@file@percent }
-\newlabel{Omitted}{{4.3.2}{63}{Omitted variables}{subsection.4.3.2}{}}
-\zref@newlabel{mdf@pagelabel-75}{\default{4.3.2}\page{63}\abspage{63}\mdf@pagevalue{63}}
-\newlabel{exm:CASchools}{{4.3}{63}{}{example.4.3}{}}
-\zref@newlabel{mdf@pagelabel-76}{\default{4.3.2}\page{64}\abspage{64}\mdf@pagevalue{64}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.3.3}Irrelevant variable}{64}{subsection.4.3.3}\protected@file@percent }
-\newlabel{irrelevant}{{4.3.3}{64}{Irrelevant variable}{subsection.4.3.3}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {4.4}Instrumental Variables}{64}{section.4.4}\protected@file@percent }
-\newlabel{IV}{{4.4}{64}{Instrumental Variables}{section.4.4}{}}
-\newlabel{eq:modelIV}{{4.23}{65}{Instrumental Variables}{equation.4.23}{}}
-\newlabel{eq:exmIV}{{4.24}{65}{Instrumental Variables}{equation.4.24}{}}
-\zref@newlabel{mdf@pagelabel-77}{\default{4.4}\page{65}\abspage{65}\mdf@pagevalue{65}}
-\newlabel{def:instruments}{{4.2}{65}{Instrumental variables}{definition.4.2}{}}
+\newlabel{eq:RR2}{{4.6}{57}{Goodness of fit}{equation.4.6}{}}
+\zref@newlabel{mdf@pagelabel-77}{\default{4.2.3}\page{57}\abspage{57}\mdf@pagevalue{57}}
+\newlabel{prp:chgeR2}{{4.4}{57}{Change in SSR when a variable is added}{proposition.4.4}{}}
+\newlabel{eq:uu}{{4.7}{57}{Change in SSR when a variable is added}{equation.4.7}{}}
+\newlabel{eq:uuu}{{4.8}{57}{Goodness of fit}{equation.4.8}{}}
+\zref@newlabel{mdf@pagelabel-78}{\default{4.2.3}\page{58}\abspage{58}\mdf@pagevalue{58}}
+\newlabel{prp:chgeInR2}{{4.5}{58}{Change in the coefficient of determination when a variable is added}{proposition.4.5}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.3}{\ignorespaces This figure illustrates the monotonous increase in the $R^2$ as a function of the number of explanatory variables. In the true model, there is no explanatory variables, i.e., $y_i = \mitvarepsilon _i$. We then take (independent) regressors and regress $y$ on the latter, progressively increasing the set of regressors.}}{58}{figure.caption.24}\protected@file@percent }
+\newlabel{fig:R2issue}{{4.3}{58}{This figure illustrates the monotonous increase in the $R^2$ as a function of the number of explanatory variables. In the true model, there is no explanatory variables, i.e., $y_i = \varepsilon _i$. We then take (independent) regressors and regress $y$ on the latter, progressively increasing the set of regressors}{figure.caption.24}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.4}Inference and confidence intervals (in small sample)}{58}{subsection.4.2.4}\protected@file@percent }
+\newlabel{inference-and-confidence-intervals-in-small-sample}{{4.2.4}{58}{Inference and confidence intervals (in small sample)}{subsection.4.2.4}{}}
+\newlabel{eq:distriBcondi}{{4.9}{59}{Inference and confidence intervals (in small sample)}{equation.4.9}{}}
+\zref@newlabel{mdf@pagelabel-79}{\default{4.2.4}\page{59}\abspage{59}\mdf@pagevalue{59}}
+\newlabel{prp:expects2}{{4.6}{59}{}{proposition.4.6}{}}
+\newlabel{eq:s2}{{4.10}{59}{}{equation.4.10}{}}
+\zref@newlabel{mdf@pagelabel-80}{\default{4.2.4}\page{59}\abspage{59}\mdf@pagevalue{59}}
+\newlabel{prp:s2distri}{{4.7}{59}{}{proposition.4.7}{}}
+\zref@newlabel{mdf@pagelabel-81}{\default{4.2.4}\page{60}\abspage{60}\mdf@pagevalue{60}}
+\newlabel{prp:indeps2b}{{4.8}{60}{}{proposition.4.8}{}}
+\newlabel{eq:resultstudentt}{{4.11}{60}{Inference and confidence intervals (in small sample)}{equation.4.11}{}}
+\newlabel{eq:resultstudentt2}{{4.12}{60}{Inference and confidence intervals (in small sample)}{equation.4.12}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.4}{\ignorespaces The higher the degree of freedom, the closer the distribution of \(t(\mitnu )\) gets to the normal distribution. (Convergence in distribution.)}}{61}{figure.caption.25}\protected@file@percent }
+\newlabel{fig:chartStudent}{{4.4}{61}{The higher the degree of freedom, the closer the distribution of \(t(\nu )\) gets to the normal distribution. (Convergence in distribution.)}{figure.caption.25}{}}
+\zref@newlabel{mdf@pagelabel-82}{\default{4.2.4}\page{62}\abspage{62}\mdf@pagevalue{62}}
+\newlabel{exm:SHP0001}{{4.2}{62}{Education and income}{example.4.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.5}Testing a set of linear restrictions}{63}{subsection.4.2.5}\protected@file@percent }
+\newlabel{Ftest}{{4.2.5}{63}{Testing a set of linear restrictions}{subsection.4.2.5}{}}
+\newlabel{eq:restrictions}{{4.13}{63}{Testing a set of linear restrictions}{equation.4.13}{}}
+\newlabel{eq:H0Ftest}{{4.15}{63}{Testing a set of linear restrictions}{equation.4.15}{}}
+\newlabel{eq:W1}{{4.16}{63}{Testing a set of linear restrictions}{equation.4.16}{}}
+\zref@newlabel{mdf@pagelabel-83}{\default{4.2.5}\page{63}\abspage{63}\mdf@pagevalue{63}}
+\newlabel{prp:Ftest1}{{4.9}{63}{}{proposition.4.9}{}}
+\newlabel{eq:defFstatistics}{{4.17}{63}{}{equation.4.17}{}}
+\zref@newlabel{mdf@pagelabel-84}{\default{4.2.5}\page{64}\abspage{64}\mdf@pagevalue{64}}
+\newlabel{prp:Ftest}{{4.10}{64}{}{proposition.4.10}{}}
+\newlabel{eq:defFstatistics2}{{4.18}{64}{}{equation.4.18}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.6}Large-sample properties}{64}{subsection.4.2.6}\protected@file@percent }
+\newlabel{largeSample}{{4.2.6}{64}{Large-sample properties}{subsection.4.2.6}{}}
+\zref@newlabel{mdf@pagelabel-85}{\default{4.2.6}\page{65}\abspage{65}\mdf@pagevalue{65}}
+\newlabel{prp:asymptOLS}{{4.11}{65}{}{proposition.4.11}{}}
+\newlabel{eq:Qasympt}{{4.19}{65}{}{equation.4.19}{}}
+\newlabel{eq:convgceOLS}{{4.20}{65}{}{equation.4.20}{}}
+\newlabel{eq:sXX}{{4.21}{65}{Large-sample properties}{equation.4.21}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {4.3}Common pitfalls in linear regressions}{65}{section.4.3}\protected@file@percent }
+\newlabel{CommonPitfalls}{{4.3}{65}{Common pitfalls in linear regressions}{section.4.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3.1}Multicollinearity}{65}{subsection.4.3.1}\protected@file@percent }
+\newlabel{multicollinearity}{{4.3.1}{65}{Multicollinearity}{subsection.4.3.1}{}}
+\newlabel{eq:multicollin}{{4.22}{65}{Multicollinearity}{equation.4.22}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3.2}Omitted variables}{66}{subsection.4.3.2}\protected@file@percent }
+\newlabel{Omitted}{{4.3.2}{66}{Omitted variables}{subsection.4.3.2}{}}
+\zref@newlabel{mdf@pagelabel-86}{\default{4.3.2}\page{66}\abspage{66}\mdf@pagevalue{66}}
+\newlabel{exm:CASchools}{{4.3}{66}{}{example.4.3}{}}
+\zref@newlabel{mdf@pagelabel-87}{\default{4.3.2}\page{67}\abspage{67}\mdf@pagevalue{67}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3.3}Irrelevant variable}{67}{subsection.4.3.3}\protected@file@percent }
+\newlabel{irrelevant}{{4.3.3}{67}{Irrelevant variable}{subsection.4.3.3}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {4.4}Instrumental Variables}{67}{section.4.4}\protected@file@percent }
+\newlabel{IV}{{4.4}{67}{Instrumental Variables}{section.4.4}{}}
+\newlabel{eq:modelIV}{{4.23}{67}{Instrumental Variables}{equation.4.23}{}}
+\newlabel{eq:exmIV}{{4.24}{67}{Instrumental Variables}{equation.4.24}{}}
+\zref@newlabel{mdf@pagelabel-88}{\default{4.4}\page{68}\abspage{68}\mdf@pagevalue{68}}
+\newlabel{def:instruments}{{4.2}{68}{Instrumental variables}{definition.4.2}{}}
+\zref@newlabel{mdf@pagelabel-89}{\default{4.4}\page{68}\abspage{68}\mdf@pagevalue{68}}
+\newlabel{prp:IV}{{4.12}{68}{Asymptotic distribution of the IV estimator}{proposition.4.12}{}}
 \citation{stock_yogo_2005}
 \citation{Andrews_Stock_Sun_2019}
 \citation{Durbin_1954}
 \citation{Wu_1973}
 \citation{Hausman_1978}
-\zref@newlabel{mdf@pagelabel-78}{\default{4.4}\page{66}\abspage{66}\mdf@pagevalue{66}}
-\newlabel{prp:IV}{{4.12}{66}{Asymptotic distribution of the IV estimator}{proposition.4.12}{}}
-\newlabel{eq:IV}{{4.25}{66}{Instrumental Variables}{equation.4.25}{}}
+\newlabel{eq:IV}{{4.25}{69}{Instrumental Variables}{equation.4.25}{}}
 \citation{Stock_Watson_2003}
-\zref@newlabel{mdf@pagelabel-79}{\default{4.4}\page{67}\abspage{67}\mdf@pagevalue{67}}
-\newlabel{exm:priceElasticity}{{4.4}{67}{Estimation of price elasticity}{example.4.4}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4.5}{\ignorespaces This figure illustrates the situation prevailing when estimating a price-elasticity (and the price is endogenous).}}{67}{figure.caption.26}\protected@file@percent }
-\newlabel{fig:figureIV}{{4.5}{67}{This figure illustrates the situation prevailing when estimating a price-elasticity (and the price is endogenous)}{figure.caption.26}{}}
-\zref@newlabel{mdf@pagelabel-80}{\default{4.4}\page{68}\abspage{68}\mdf@pagevalue{68}}
+\zref@newlabel{mdf@pagelabel-90}{\default{4.4}\page{70}\abspage{70}\mdf@pagevalue{70}}
+\newlabel{exm:priceElasticity}{{4.4}{70}{Estimation of price elasticity}{example.4.4}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.5}{\ignorespaces This figure illustrates the situation prevailing when estimating a price-elasticity (and the price is endogenous).}}{70}{figure.caption.28}\protected@file@percent }
+\newlabel{fig:figureIV}{{4.5}{70}{This figure illustrates the situation prevailing when estimating a price-elasticity (and the price is endogenous)}{figure.caption.28}{}}
+\zref@newlabel{mdf@pagelabel-91}{\default{4.4}\page{71}\abspage{71}\mdf@pagevalue{71}}
 \citation{Stock_Watson_2003}
 \citation{DEE20041697}
-\zref@newlabel{mdf@pagelabel-81}{\default{4.4}\page{69}\abspage{69}\mdf@pagevalue{69}}
-\zref@newlabel{mdf@pagelabel-82}{\default{4.4}\page{69}\abspage{69}\mdf@pagevalue{69}}
-\newlabel{exm:IVCollegeDistance}{{4.5}{69}{Education and wage}{example.4.5}{}}
-\zref@newlabel{mdf@pagelabel-83}{\default{4.4}\page{70}\abspage{70}\mdf@pagevalue{70}}
-\@writefile{toc}{\contentsline {section}{\numberline {4.5}General Regression Model (GRM) and robust covariance matrices}{70}{section.4.5}\protected@file@percent }
-\newlabel{general-regression-model-grm-and-robust-covariance-matrices}{{4.5}{70}{General Regression Model (GRM) and robust covariance matrices}{section.4.5}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.5.1}Presentation of the General Regression Model (GRM)}{70}{subsection.4.5.1}\protected@file@percent }
-\newlabel{presentation-of-the-general-regression-model-grm}{{4.5.1}{70}{Presentation of the General Regression Model (GRM)}{subsection.4.5.1}{}}
-\newlabel{eq:assumGLS2}{{4.26}{70}{Presentation of the General Regression Model (GRM)}{equation.4.26}{}}
-\zref@newlabel{mdf@pagelabel-84}{\default{4.5.1}\page{71}\abspage{71}\mdf@pagevalue{71}}
-\newlabel{def:GRM}{{4.3}{71}{General Regression Model (GRM)}{definition.4.3}{}}
-\newlabel{eq:heteroskedasticity}{{4.27}{71}{Presentation of the General Regression Model (GRM)}{equation.4.27}{}}
-\newlabel{eq:autocorrelation}{{4.28}{71}{Presentation of the General Regression Model (GRM)}{equation.4.28}{}}
-\zref@newlabel{mdf@pagelabel-85}{\default{4.5.1}\page{71}\abspage{71}\mdf@pagevalue{71}}
-\newlabel{exm:autocorrelaaa}{{4.6}{71}{Auto-regressive processes}{example.4.6}{}}
-\newlabel{eq:usual}{{4.29}{71}{Auto-regressive processes}{equation.4.29}{}}
-\newlabel{eq:usual2}{{4.30}{71}{Auto-regressive processes}{equation.4.30}{}}
-\newlabel{eq:SigmaAutocorrel}{{4.31}{71}{Auto-regressive processes}{equation.4.31}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.5.2}Generalized Least Squares}{71}{subsection.4.5.2}\protected@file@percent }
-\newlabel{GLS}{{4.5.2}{71}{Generalized Least Squares}{subsection.4.5.2}{}}
+\zref@newlabel{mdf@pagelabel-92}{\default{4.4}\page{72}\abspage{72}\mdf@pagevalue{72}}
+\newlabel{exm:IVCollegeDistance}{{4.5}{72}{Education and wage}{example.4.5}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {4.5}General Regression Model (GRM) and robust covariance matrices}{72}{section.4.5}\protected@file@percent }
+\newlabel{general-regression-model-grm-and-robust-covariance-matrices}{{4.5}{72}{General Regression Model (GRM) and robust covariance matrices}{section.4.5}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.5.1}Presentation of the General Regression Model (GRM)}{73}{subsection.4.5.1}\protected@file@percent }
+\newlabel{presentation-of-the-general-regression-model-grm}{{4.5.1}{73}{Presentation of the General Regression Model (GRM)}{subsection.4.5.1}{}}
+\newlabel{eq:assumGLS2}{{4.26}{73}{Presentation of the General Regression Model (GRM)}{equation.4.26}{}}
+\zref@newlabel{mdf@pagelabel-93}{\default{4.5.1}\page{73}\abspage{73}\mdf@pagevalue{73}}
+\newlabel{def:GRM}{{4.3}{73}{General Regression Model (GRM)}{definition.4.3}{}}
+\newlabel{eq:heteroskedasticity}{{4.27}{73}{Presentation of the General Regression Model (GRM)}{equation.4.27}{}}
+\newlabel{eq:autocorrelation}{{4.28}{73}{Presentation of the General Regression Model (GRM)}{equation.4.28}{}}
+\zref@newlabel{mdf@pagelabel-94}{\default{4.5.1}\page{73}\abspage{73}\mdf@pagevalue{73}}
+\newlabel{exm:autocorrelaaa}{{4.6}{73}{Auto-regressive processes}{example.4.6}{}}
+\newlabel{eq:usual}{{4.29}{73}{Auto-regressive processes}{equation.4.29}{}}
+\newlabel{eq:usual2}{{4.30}{73}{Auto-regressive processes}{equation.4.30}{}}
+\newlabel{eq:SigmaAutocorrel}{{4.31}{73}{Auto-regressive processes}{equation.4.31}{}}
 \citation{Cochrane_Orcutt_1949}
-\newlabel{eq:betaGLS}{{4.32}{72}{Generalized Least Squares}{equation.4.32}{}}
-\zref@newlabel{mdf@pagelabel-86}{\default{4.5.2}\page{72}\abspage{72}\mdf@pagevalue{72}}
-\newlabel{exm:autocorrelaaa2}{{4.7}{72}{GLS in the auto-correlation case}{example.4.7}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.5.3}Asymptotic properties of the OLS estimator in the GRM framework}{72}{subsection.4.5.3}\protected@file@percent }
-\newlabel{asymptotic-properties-of-the-ols-estimator-in-the-grm-framework}{{4.5.3}{72}{Asymptotic properties of the OLS estimator in the GRM framework}{subsection.4.5.3}{}}
-\newlabel{eq:xsx}{{4.33}{72}{Asymptotic properties of the OLS estimator in the GRM framework}{equation.4.33}{}}
-\zref@newlabel{mdf@pagelabel-87}{\default{4.5.3}\page{72}\abspage{72}\mdf@pagevalue{72}}
-\newlabel{prp:XXX}{{4.13}{72}{Consistency of the OLS estimator in the GRM framework}{proposition.4.13}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.5.2}Generalized Least Squares}{74}{subsection.4.5.2}\protected@file@percent }
+\newlabel{GLS}{{4.5.2}{74}{Generalized Least Squares}{subsection.4.5.2}{}}
+\newlabel{eq:betaGLS}{{4.32}{74}{Generalized Least Squares}{equation.4.32}{}}
+\zref@newlabel{mdf@pagelabel-95}{\default{4.5.2}\page{74}\abspage{74}\mdf@pagevalue{74}}
+\newlabel{exm:autocorrelaaa2}{{4.7}{74}{GLS in the auto-correlation case}{example.4.7}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.5.3}Asymptotic properties of the OLS estimator in the GRM framework}{74}{subsection.4.5.3}\protected@file@percent }
+\newlabel{asymptotic-properties-of-the-ols-estimator-in-the-grm-framework}{{4.5.3}{74}{Asymptotic properties of the OLS estimator in the GRM framework}{subsection.4.5.3}{}}
+\newlabel{eq:xsx}{{4.33}{74}{Asymptotic properties of the OLS estimator in the GRM framework}{equation.4.33}{}}
 \citation{White_1980}
 \citation{Newey_West_1987}
-\zref@newlabel{mdf@pagelabel-88}{\default{4.5.3}\page{73}\abspage{73}\mdf@pagevalue{73}}
-\newlabel{prp:AsymptGRM}{{4.14}{73}{Asymptotic distribution of the OLS estimator in the GRM framework}{proposition.4.14}{}}
-\zref@newlabel{mdf@pagelabel-89}{\default{4.5.3}\page{73}\abspage{73}\mdf@pagevalue{73}}
-\newlabel{prp:AsymptIVGRM}{{4.15}{73}{Asymptotic distribution of the IV estimator in the GRM framework}{proposition.4.15}{}}
-\newlabel{eq:GeneralXSigmaX}{{4.34}{73}{Asymptotic properties of the OLS estimator in the GRM framework}{equation.4.34}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.5.4}HAC-robust covariance matrices}{73}{subsection.4.5.4}\protected@file@percent }
-\newlabel{HAC}{{4.5.4}{73}{HAC-robust covariance matrices}{subsection.4.5.4}{}}
+\zref@newlabel{mdf@pagelabel-96}{\default{4.5.3}\page{75}\abspage{75}\mdf@pagevalue{75}}
+\newlabel{prp:ols-grm-consistency}{{4.13}{75}{Consistency of the OLS estimator in the GRM framework}{proposition.4.13}{}}
+\zref@newlabel{mdf@pagelabel-97}{\default{4.5.3}\page{75}\abspage{75}\mdf@pagevalue{75}}
+\newlabel{prp:AsymptGRM}{{4.14}{75}{Asymptotic distribution of the OLS estimator in the GRM framework}{proposition.4.14}{}}
+\zref@newlabel{mdf@pagelabel-98}{\default{4.5.3}\page{75}\abspage{75}\mdf@pagevalue{75}}
+\newlabel{prp:AsymptIVGRM}{{4.15}{75}{Asymptotic distribution of the IV estimator in the GRM framework}{proposition.4.15}{}}
+\newlabel{eq:GeneralXSigmaX}{{4.34}{75}{Asymptotic properties of the OLS estimator in the GRM framework}{equation.4.34}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.5.4}HAC-robust covariance matrices}{75}{subsection.4.5.4}\protected@file@percent }
+\newlabel{HAC}{{4.5.4}{75}{HAC-robust covariance matrices}{subsection.4.5.4}{}}
 \citation{White_1980}
 \citation{MacKinnon_White_1985}
-\zref@newlabel{mdf@pagelabel-90}{\default{4.5.4}\page{74}\abspage{74}\mdf@pagevalue{74}}
-\newlabel{exm:HCheteroskedasticity}{{4.8}{74}{Heteroskedasticity}{example.4.8}{}}
-\newlabel{eq:white}{{4.35}{74}{Heteroskedasticity}{equation.4.35}{}}
-\newlabel{eq:White}{{4.36}{74}{Heteroskedasticity}{equation.4.36}{}}
-\newlabel{eq:WhiteHC1}{{4.37}{74}{Heteroskedasticity}{equation.4.37}{}}
-\zref@newlabel{mdf@pagelabel-91}{\default{4.5.4}\page{75}\abspage{75}\mdf@pagevalue{75}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4.6}{\ignorespaces Situation of heteroskedasticity. The model is $y_i = x_i + \mitvarepsilon _i, \hskip 1em\relax \mitvarepsilon _i \sim \symcal {N}(0,x_i^2)$, where the $x_i$'s are i.i.d. $t(6)$.}}{75}{figure.caption.28}\protected@file@percent }
-\newlabel{fig:simulHeterosk}{{4.6}{75}{Situation of heteroskedasticity. The model is $y_i = x_i + \varepsilon _i, \quad \varepsilon _i \sim \mathcal {N}(0,x_i^2)$, where the $x_i$'s are i.i.d. $t(6)$}{figure.caption.28}{}}
+\zref@newlabel{mdf@pagelabel-99}{\default{4.5.4}\page{76}\abspage{76}\mdf@pagevalue{76}}
+\newlabel{exm:HCheteroskedasticity}{{4.8}{76}{Heteroskedasticity}{example.4.8}{}}
+\newlabel{eq:white}{{4.35}{76}{Heteroskedasticity}{equation.4.35}{}}
+\newlabel{eq:White}{{4.36}{76}{Heteroskedasticity}{equation.4.36}{}}
+\newlabel{eq:WhiteHC1}{{4.37}{76}{Heteroskedasticity}{equation.4.37}{}}
 \citation{JST_2017}
-\zref@newlabel{mdf@pagelabel-92}{\default{4.5.4}\page{76}\abspage{76}\mdf@pagevalue{76}}
+\zref@newlabel{mdf@pagelabel-100}{\default{4.5.4}\page{77}\abspage{77}\mdf@pagevalue{77}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.6}{\ignorespaces Situation of heteroskedasticity. The model is $y_i = x_i + \mitvarepsilon _i, \hskip 1em\relax \mitvarepsilon _i \sim \symcal {N}(0,x_i^2)$, where the $x_i$'s are i.i.d. $t(6)$.}}{77}{figure.caption.30}\protected@file@percent }
+\newlabel{fig:simulHeterosk}{{4.6}{77}{Situation of heteroskedasticity. The model is $y_i = x_i + \varepsilon _i, \quad \varepsilon _i \sim \mathcal {N}(0,x_i^2)$, where the $x_i$'s are i.i.d. $t(6)$}{figure.caption.30}{}}
 \citation{Newey_West_1987}
-\zref@newlabel{mdf@pagelabel-93}{\default{4.5.4}\page{77}\abspage{77}\mdf@pagevalue{77}}
-\newlabel{exm:HCheterAC}{{4.9}{77}{Heteroskedasticity and Autocorrelation (HAC)}{example.4.9}{}}
-\newlabel{eq:NW}{{4.39}{77}{Heteroskedasticity and Autocorrelation (HAC)}{equation.4.38}{}}
-\newlabel{eq:simul11}{{4.39}{77}{Heteroskedasticity and Autocorrelation (HAC)}{equation.4.39}{}}
-\newlabel{eq:simul22}{{4.40}{77}{Heteroskedasticity and Autocorrelation (HAC)}{equation.4.40}{}}
 \citation{Durbin_Watson_1950}
 \citation{Durbin_Watson_1951}
-\zref@newlabel{mdf@pagelabel-94}{\default{4.5.4}\page{78}\abspage{78}\mdf@pagevalue{78}}
-\zref@newlabel{mdf@pagelabel-95}{\default{4.5.4}\page{79}\abspage{79}\mdf@pagevalue{79}}
-\newlabel{exm:DurbinWats}{{4.10}{79}{Durbin-Watson test}{example.4.10}{}}
+\zref@newlabel{mdf@pagelabel-101}{\default{4.5.4}\page{78}\abspage{78}\mdf@pagevalue{78}}
+\newlabel{exm:HCheterAC}{{4.9}{78}{Heteroskedasticity and Autocorrelation (HAC)}{example.4.9}{}}
+\newlabel{eq:NW}{{4.39}{78}{Heteroskedasticity and Autocorrelation (HAC)}{equation.4.38}{}}
+\newlabel{eq:simul11}{{4.39}{78}{Heteroskedasticity and Autocorrelation (HAC)}{equation.4.39}{}}
+\newlabel{eq:simul22}{{4.40}{78}{Heteroskedasticity and Autocorrelation (HAC)}{equation.4.40}{}}
 \citation{MACKINNON2022}
 \citation{Cameron_Miller_2014}
-\zref@newlabel{mdf@pagelabel-96}{\default{4.5.4}\page{80}\abspage{80}\mdf@pagevalue{80}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.5.5}Cluster-robust covariance matrices}{80}{subsection.4.5.5}\protected@file@percent }
-\newlabel{Clusters}{{4.5.5}{80}{Cluster-robust covariance matrices}{subsection.4.5.5}{}}
+\zref@newlabel{mdf@pagelabel-102}{\default{4.5.4}\page{79}\abspage{79}\mdf@pagevalue{79}}
+\newlabel{exm:DurbinWats}{{4.10}{79}{Durbin-Watson test}{example.4.10}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.5.5}Cluster-robust covariance matrices}{79}{subsection.4.5.5}\protected@file@percent }
+\newlabel{Clusters}{{4.5.5}{79}{Cluster-robust covariance matrices}{subsection.4.5.5}{}}
 \newlabel{eq:BBB}{{4.41}{80}{Cluster-robust covariance matrices}{equation.4.41}{}}
 \newlabel{eq:cluster1}{{4.42}{80}{Cluster-robust covariance matrices}{equation.4.42}{}}
 \newlabel{eq:definiS}{{4.43}{80}{Cluster-robust covariance matrices}{equation.4.43}{}}
-\zref@newlabel{mdf@pagelabel-97}{\default{4.5.5}\page{80}\abspage{80}\mdf@pagevalue{80}}
+\zref@newlabel{mdf@pagelabel-103}{\default{4.5.5}\page{80}\abspage{80}\mdf@pagevalue{80}}
 \newlabel{hyp:cluster}{{4.6}{80}{Clusters}{hypothesis.4.6}{}}
+\newlabel{eq:cluster2}{{4.44}{80}{Cluster-robust covariance matrices}{equation.4.44}{}}
 \citation{White_1980}
 \citation{MACKINNON2022}
-\newlabel{eq:cluster2}{{4.44}{81}{Cluster-robust covariance matrices}{equation.4.44}{}}
 \newlabel{eq:AsymptCL}{{4.45}{81}{Cluster-robust covariance matrices}{equation.4.45}{}}
+\zref@newlabel{mdf@pagelabel-104}{\default{4.5.5}\page{81}\abspage{81}\mdf@pagevalue{81}}
+\newlabel{hyp:twowaycluster}{{4.7}{81}{Two-way clusters}{hypothesis.4.7}{}}
 \citation{MACKINNON2022}
 \citation{MACKINNON2022}
-\zref@newlabel{mdf@pagelabel-98}{\default{4.5.5}\page{82}\abspage{82}\mdf@pagevalue{82}}
-\newlabel{hyp:twowaycluster}{{4.7}{82}{Two-way clusters}{hypothesis.4.7}{}}
-\zref@newlabel{mdf@pagelabel-99}{\default{4.5.5}\page{82}\abspage{82}\mdf@pagevalue{82}}
+\zref@newlabel{mdf@pagelabel-105}{\default{4.5.5}\page{82}\abspage{82}\mdf@pagevalue{82}}
 \newlabel{prp:twoWayCov}{{4.16}{82}{Covariance of scores in the two-way-cluster setup}{proposition.4.16}{}}
 \citation{Tibshirani_2011}
 \citation{James2013}
 \@writefile{toc}{\contentsline {section}{\numberline {4.6}Shrinkage methods}{83}{section.4.6}\protected@file@percent }
-\newlabel{shrinkage-methods}{{4.6}{83}{Shrinkage methods}{section.4.6}{}}
+\newlabel{shrinkage}{{4.6}{83}{Shrinkage methods}{section.4.6}{}}
 \newlabel{eq:minLasso}{{4.47}{83}{Shrinkage methods}{equation.4.47}{}}
+\newlabel{chapter-recap-3}{{4.6}{86}{Chapter recap}{section*.34}{}}
+\@writefile{toc}{\contentsline {section}{Chapter recap}{86}{section*.34}\protected@file@percent }
+\zref@newlabel{mdf@pagelabel-106}{\default{4.6}\page{86}\abspage{86}\mdf@pagevalue{86}}
+\@writefile{toc}{\contentsline {section}{\numberline {4.7}Exercises}{87}{section.4.7}\protected@file@percent }
+\newlabel{regressions-exercises}{{4.7}{87}{Exercises}{section.4.7}{}}
+\zref@newlabel{mdf@pagelabel-107}{\default{4.7}\page{87}\abspage{87}\mdf@pagevalue{87}}
+\newlabel{exr:regressions-ols-inference}{{4.1}{87}{OLS inference in a three-regressor model}{exercise.4.1}{}}
+\zref@newlabel{mdf@pagelabel-108}{\default{4.7}\page{88}\abspage{88}\mdf@pagevalue{88}}
+\newlabel{exr:regressions-fitted-hyperplane}{{4.2}{88}{The fitted hyperplane and sample averages}{exercise.4.2}{}}
+\zref@newlabel{mdf@pagelabel-109}{\default{4.7}\page{89}\abspage{89}\mdf@pagevalue{89}}
+\newlabel{exr:regressions-variance-estimator}{{4.3}{89}{Unbiased estimation of the error variance}{exercise.4.3}{}}
+\zref@newlabel{mdf@pagelabel-110}{\default{4.7}\page{90}\abspage{90}\mdf@pagevalue{90}}
+\newlabel{exr:regressions-ols-properties}{{4.4}{90}{OLS assumptions, confidence intervals, and tests}{exercise.4.4}{}}
+\zref@newlabel{mdf@pagelabel-111}{\default{4.7}\page{91}\abspage{91}\mdf@pagevalue{91}}
+\newlabel{exr:regressions-gauss-markov-true-false}{{4.5}{91}{Gauss-Markov results: true or false?}{exercise.4.5}{}}
+\zref@newlabel{mdf@pagelabel-112}{\default{4.7}\page{92}\abspage{92}\mdf@pagevalue{92}}
+\newlabel{exr:regressions-ols-matrix-true-false}{{4.6}{92}{OLS matrices and residuals: true or false?}{exercise.4.6}{}}
+\zref@newlabel{mdf@pagelabel-113}{\default{4.7}\page{93}\abspage{93}\mdf@pagevalue{93}}
+\newlabel{exr:regressions-instrumental-variables-true-false}{{4.7}{93}{Endogeneity and instruments: true or false?}{exercise.4.7}{}}
+\zref@newlabel{mdf@pagelabel-114}{\default{4.7}\page{94}\abspage{94}\mdf@pagevalue{94}}
+\newlabel{exr:regressions-measurement-error}{{4.8}{94}{Measurement error in income}{exercise.4.8}{}}
+\zref@newlabel{mdf@pagelabel-115}{\default{4.7}\page{95}\abspage{95}\mdf@pagevalue{95}}
+\newlabel{exr:regressions-sentiment-returns}{{4.9}{95}{Consumer sentiment and stock returns}{exercise.4.9}{}}
+\zref@newlabel{mdf@pagelabel-116}{\default{4.7}\page{96}\abspage{96}\mdf@pagevalue{96}}
+\newlabel{exr:regressions-serial-correlation}{{4.10}{96}{A regression with MA(1) errors}{exercise.4.10}{}}
+\zref@newlabel{mdf@pagelabel-117}{\default{4.7}\page{97}\abspage{97}\mdf@pagevalue{97}}
+\newlabel{exr:regressions-projection-matrix-true-false}{{4.11}{97}{Projection matrices and OLS residuals: true or false?}{exercise.4.11}{}}
+\gdef \LT@v {\LT@entry 
+    {3}{129.54036pt}\LT@entry 
+    {1}{103.21873pt}}
+\zref@newlabel{mdf@pagelabel-118}{\default{4.7}\page{98}\abspage{98}\mdf@pagevalue{98}}
+\newlabel{exr:regressions-robust-inference}{{4.12}{98}{The covariance estimator changes inference}{exercise.4.12}{}}
+\zref@newlabel{mdf@pagelabel-119}{\default{4.7}\page{99}\abspage{99}\mdf@pagevalue{99}}
+\newlabel{exr:regressions-ridge-and-lasso}{{4.13}{99}{Ridge shrinkage in an orthogonal design}{exercise.4.13}{}}
 \citation{Stock_Watson_2003}
-\@writefile{toc}{\contentsline {chapter}{\numberline {5}Panel regressions}{89}{chapter.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {chapter}{\numberline {5}Panel regressions}{101}{chapter.5}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\newlabel{Panel}{{5}{89}{Panel regressions}{chapter.5}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {5.1}Specification and notations}{89}{section.5.1}\protected@file@percent }
-\newlabel{specification-and-notations}{{5.1}{89}{Specification and notations}{section.5.1}{}}
-\newlabel{eq:panel1}{{5.1}{89}{Specification and notations}{equation.5.1}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {5.1}{\ignorespaces The data are the same for both panels. On Panel (b), blue dots are for $t=1$, red dots are for $t=2$. The lines relate the dots associated to the same entity $i$.}}{90}{figure.caption.32}\protected@file@percent }
-\newlabel{fig:simulPanel}{{5.1}{90}{The data are the same for both panels. On Panel (b), blue dots are for $t=1$, red dots are for $t=2$. The lines relate the dots associated to the same entity $i$}{figure.caption.32}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {5.2}{\ignorespaces Cigarette consumption versus real price in the CigarettesSW panel dataset.}}{90}{figure.caption.33}\protected@file@percent }
-\newlabel{fig:cigarettes}{{5.2}{90}{Cigarette consumption versus real price in the CigarettesSW panel dataset}{figure.caption.33}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {5.2}Three standard cases}{91}{section.5.2}\protected@file@percent }
-\newlabel{three-standard-cases}{{5.2}{91}{Three standard cases}{section.5.2}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {5.3}Estimation of Fixed-Effects Models}{91}{section.5.3}\protected@file@percent }
-\newlabel{FixedEffect}{{5.3}{91}{Estimation of Fixed-Effects Models}{section.5.3}{}}
-\zref@newlabel{mdf@pagelabel-100}{\default{5.3}\page{91}\abspage{91}\mdf@pagevalue{91}}
-\newlabel{hyp:FE}{{5.1}{91}{Fixed-effect model}{hypothesis.5.1}{}}
-\newlabel{eq:LSDV}{{5.2}{92}{Estimation of Fixed-Effects Models}{equation.5.2}{}}
-\newlabel{eq:bfixedeffects11}{{5.3}{92}{Estimation of Fixed-Effects Models}{equation.5.3}{}}
-\newlabel{eq:bfixedeffects}{{5.5}{92}{Estimation of Fixed-Effects Models}{equation.5.5}{}}
-\newlabel{eq:a}{{5.6}{93}{Estimation of Fixed-Effects Models}{equation.5.6}{}}
-\newlabel{eq:LSDV2}{{5.7}{93}{Estimation of Fixed-Effects Models}{equation.5.7}{}}
+\newlabel{Panel}{{5}{101}{Panel regressions}{chapter.5}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {5.1}Specification and notations}{101}{section.5.1}\protected@file@percent }
+\newlabel{specification-and-notations}{{5.1}{101}{Specification and notations}{section.5.1}{}}
+\newlabel{eq:panel1}{{5.1}{101}{Specification and notations}{equation.5.1}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.1}{\ignorespaces The data are the same for both panels. On Panel (b), blue dots are for $t=1$, red dots are for $t=2$. The lines relate the dots associated to the same entity $i$.}}{102}{figure.caption.35}\protected@file@percent }
+\newlabel{fig:simulPanel}{{5.1}{102}{The data are the same for both panels. On Panel (b), blue dots are for $t=1$, red dots are for $t=2$. The lines relate the dots associated to the same entity $i$}{figure.caption.35}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.2}{\ignorespaces Cigarette consumption versus real price in the CigarettesSW panel dataset.}}{102}{figure.caption.36}\protected@file@percent }
+\newlabel{fig:cigarettes}{{5.2}{102}{Cigarette consumption versus real price in the CigarettesSW panel dataset}{figure.caption.36}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {5.2}Three standard cases}{103}{section.5.2}\protected@file@percent }
+\newlabel{panel-cases}{{5.2}{103}{Three standard cases}{section.5.2}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {5.3}Estimation of fixed-effects models}{103}{section.5.3}\protected@file@percent }
+\newlabel{FixedEffect}{{5.3}{103}{Estimation of fixed-effects models}{section.5.3}{}}
+\zref@newlabel{mdf@pagelabel-120}{\default{5.3}\page{103}\abspage{103}\mdf@pagevalue{103}}
+\newlabel{hyp:FE}{{5.1}{103}{Fixed-effect model}{hypothesis.5.1}{}}
+\zref@newlabel{mdf@pagelabel-121}{\default{5.3}\page{104}\abspage{104}\mdf@pagevalue{104}}
+\newlabel{eq:LSDV}{{5.2}{104}{Estimation of fixed-effects models}{equation.5.2}{}}
+\newlabel{eq:bfixedeffects11}{{5.3}{104}{Estimation of fixed-effects models}{equation.5.3}{}}
+\newlabel{eq:bfixedeffects}{{5.4}{105}{Estimation of fixed-effects models}{equation.5.4}{}}
+\newlabel{eq:a}{{5.5}{105}{Estimation of fixed-effects models}{equation.5.5}{}}
+\newlabel{eq:LSDV2}{{5.6}{105}{Estimation of fixed-effects models}{equation.5.6}{}}
 \citation{JST_2017}
-\zref@newlabel{mdf@pagelabel-101}{\default{5.3}\page{94}\abspage{94}\mdf@pagevalue{94}}
-\newlabel{exm:JSTPanel}{{5.1}{94}{Housing prices and interest rates}{example.5.1}{}}
-\zref@newlabel{mdf@pagelabel-102}{\default{5.3}\page{95}\abspage{95}\mdf@pagevalue{95}}
-\zref@newlabel{mdf@pagelabel-103}{\default{5.3}\page{96}\abspage{96}\mdf@pagevalue{96}}
-\@writefile{toc}{\contentsline {section}{\numberline {5.4}Estimation of random effects models}{96}{section.5.4}\protected@file@percent }
-\newlabel{RandomEffect}{{5.4}{96}{Estimation of random effects models}{section.5.4}{}}
-\newlabel{eq:OLSRUM}{{5.8}{97}{Estimation of random effects models}{equation.5.8}{}}
+\zref@newlabel{mdf@pagelabel-122}{\default{5.3}\page{106}\abspage{106}\mdf@pagevalue{106}}
+\newlabel{exm:JSTPanel}{{5.1}{106}{Housing prices and interest rates}{example.5.1}{}}
+\zref@newlabel{mdf@pagelabel-123}{\default{5.3}\page{107}\abspage{107}\mdf@pagevalue{107}}
+\@writefile{toc}{\contentsline {section}{\numberline {5.4}Estimation of random effects models}{107}{section.5.4}\protected@file@percent }
+\newlabel{RandomEffect}{{5.4}{107}{Estimation of random effects models}{section.5.4}{}}
+\newlabel{eq:OLSRUM}{{5.7}{108}{Estimation of random effects models}{equation.5.7}{}}
 \citation{Hausman_1978}
-\zref@newlabel{mdf@pagelabel-104}{\default{5.4}\page{99}\abspage{99}\mdf@pagevalue{99}}
-\newlabel{exm:airbnb}{{5.2}{99}{Airbnb prices: district effects and clustered uncertainty}{example.5.2}{}}
-\zref@newlabel{mdf@pagelabel-105}{\default{5.4}\page{100}\abspage{100}\mdf@pagevalue{100}}
-\@writefile{lof}{\contentsline {figure}{\numberline {5.3}{\ignorespaces Airbnb prices in Zurich, 22 June 2017. Circle area is proportional to the recorded price; white lines delineate districts.}}{100}{figure.caption.34}\protected@file@percent }
-\newlabel{fig:airbnb}{{5.3}{100}{Airbnb prices in Zurich, 22 June 2017. Circle area is proportional to the recorded price; white lines delineate districts}{figure.caption.34}{}}
-\zref@newlabel{mdf@pagelabel-106}{\default{5.4}\page{101}\abspage{101}\mdf@pagevalue{101}}
-\zref@newlabel{mdf@pagelabel-107}{\default{5.4}\page{102}\abspage{102}\mdf@pagevalue{102}}
-\@writefile{lof}{\contentsline {figure}{\numberline {5.4}{\ignorespaces Airbnb price residuals without and with district effects. Blue: observed price above fitted price; orange: below. Both panels use the same area scale for absolute residuals.}}{102}{figure.caption.36}\protected@file@percent }
-\newlabel{fig:airbnb3}{{5.4}{102}{Airbnb price residuals without and with district effects. Blue: observed price above fitted price; orange: below. Both panels use the same area scale for absolute residuals}{figure.caption.36}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {5.5}Dynamic Panel Regressions}{102}{section.5.5}\protected@file@percent }
-\newlabel{DynPanel}{{5.5}{102}{Dynamic Panel Regressions}{section.5.5}{}}
-\newlabel{eq:paneldyn}{{5.9}{102}{Dynamic Panel Regressions}{equation.5.9}{}}
+\zref@newlabel{mdf@pagelabel-124}{\default{5.4}\page{109}\abspage{109}\mdf@pagevalue{109}}
+\newlabel{exm:airbnb}{{5.2}{109}{Airbnb prices: district effects and clustered uncertainty}{example.5.2}{}}
+\zref@newlabel{mdf@pagelabel-125}{\default{5.4}\page{110}\abspage{110}\mdf@pagevalue{110}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.3}{\ignorespaces Airbnb prices in Zurich, 22 June 2017. Circle area is proportional to the recorded price; white lines delineate districts.}}{110}{figure.caption.37}\protected@file@percent }
+\newlabel{fig:airbnb}{{5.3}{110}{Airbnb prices in Zurich, 22 June 2017. Circle area is proportional to the recorded price; white lines delineate districts}{figure.caption.37}{}}
+\zref@newlabel{mdf@pagelabel-126}{\default{5.4}\page{111}\abspage{111}\mdf@pagevalue{111}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.4}{\ignorespaces Airbnb price residuals without and with district effects. Blue: observed price above fitted price; orange: below. Both panels use the same area scale for absolute residuals.}}{111}{figure.caption.39}\protected@file@percent }
+\newlabel{fig:airbnb3}{{5.4}{111}{Airbnb price residuals without and with district effects. Blue: observed price above fitted price; orange: below. Both panels use the same area scale for absolute residuals}{figure.caption.39}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {5.5}Dynamic panel regressions}{111}{section.5.5}\protected@file@percent }
+\newlabel{DynPanel}{{5.5}{111}{Dynamic panel regressions}{section.5.5}{}}
 \citation{Anderson_Hsiao_1982}
-\newlabel{eq:paneldynFisrtDiff}{{5.10}{103}{Dynamic Panel Regressions}{equation.5.10}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {5.5}{\ignorespaces illustration of the bias pertianing to the LSDV estimation approach in the presence of auto-correlation of the depend variable.}}{104}{figure.caption.37}\protected@file@percent }
-\newlabel{fig:dynpanel1}{{5.5}{104}{illustration of the bias pertianing to the LSDV estimation approach in the presence of auto-correlation of the depend variable}{figure.caption.37}{}}
+\newlabel{eq:paneldyn}{{5.8}{112}{Dynamic panel regressions}{equation.5.8}{}}
+\newlabel{eq:paneldynFisrtDiff}{{5.9}{112}{Dynamic panel regressions}{equation.5.9}{}}
 \citation{Arellano_Bond_1991}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.5}{\ignorespaces illustration of the bias pertianing to the LSDV estimation approach in the presence of auto-correlation of the depend variable.}}{113}{figure.caption.40}\protected@file@percent }
+\newlabel{fig:dynpanel1}{{5.5}{113}{illustration of the bias pertianing to the LSDV estimation approach in the presence of auto-correlation of the depend variable}{figure.caption.40}{}}
 \citation{Fritsch_et_al_2019}
 \citation{Arellano_Bond_1991}
 \citation{Arellano_Bond_1991}
 \citation{Abadie_Cattaneo_2018}
 \citation{angrist_mostly_2008}
-\@writefile{toc}{\contentsline {section}{\numberline {5.6}Introduction to program evaluation}{108}{section.5.6}\protected@file@percent }
-\newlabel{introduction-to-program-evaluation}{{5.6}{108}{Introduction to program evaluation}{section.5.6}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.6.1}Presentation of the problem}{108}{subsection.5.6.1}\protected@file@percent }
-\newlabel{presentation-of-the-problem}{{5.6.1}{108}{Presentation of the problem}{subsection.5.6.1}{}}
-\newlabel{eq:EY1a}{{5.11}{109}{Presentation of the problem}{equation.5.11}{}}
-\newlabel{eq:EY0a}{{5.12}{109}{Presentation of the problem}{equation.5.11}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.6.2}Randomized controlled trials (RCTs)}{109}{subsection.5.6.2}\protected@file@percent }
-\newlabel{randomized-controlled-trials-rcts}{{5.6.2}{109}{Randomized controlled trials (RCTs)}{subsection.5.6.2}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.6.3}Difference-in-Difference (DiD) approach}{109}{subsection.5.6.3}\protected@file@percent }
-\newlabel{difference-in-difference-did-approach}{{5.6.3}{109}{Difference-in-Difference (DiD) approach}{subsection.5.6.3}{}}
-\newlabel{eq:DiD}{{5.13}{109}{Difference-in-Difference (DiD) approach}{equation.5.13}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {5.6}Introduction to program evaluation}{116}{section.5.6}\protected@file@percent }
+\newlabel{program-evaluation}{{5.6}{116}{Introduction to program evaluation}{section.5.6}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.6.1}Presentation of the problem}{116}{subsection.5.6.1}\protected@file@percent }
+\newlabel{presentation-of-the-problem}{{5.6.1}{116}{Presentation of the problem}{subsection.5.6.1}{}}
+\newlabel{eq:EY1a}{{5.10}{117}{Presentation of the problem}{equation.5.10}{}}
+\newlabel{eq:EY0a}{{5.11}{117}{Presentation of the problem}{equation.5.10}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.6.2}Randomized controlled trials (RCTs)}{117}{subsection.5.6.2}\protected@file@percent }
+\newlabel{randomized-controlled-trials-rcts}{{5.6.2}{117}{Randomized controlled trials (RCTs)}{subsection.5.6.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.6.3}Difference-in-differences (DiD) approach}{117}{subsection.5.6.3}\protected@file@percent }
+\newlabel{did}{{5.6.3}{117}{Difference-in-differences (DiD) approach}{subsection.5.6.3}{}}
+\newlabel{eq:DiD}{{5.12}{117}{Difference-in-differences (DiD) approach}{equation.5.12}{}}
+\citation{Meyer_Viscusi_Durbin_1995}
+\@writefile{lof}{\contentsline {figure}{\numberline {5.6}{\ignorespaces Source: Abadie et al., (1998).}}{118}{figure.caption.45}\protected@file@percent }
+\newlabel{fig:figAbadie}{{5.6}{118}{Source: Abadie et al., (1998)}{figure.caption.45}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.6.4}Application of the DiD approach}{118}{subsection.5.6.4}\protected@file@percent }
+\newlabel{application-of-the-did-approach}{{5.6.4}{118}{Application of the DiD approach}{subsection.5.6.4}{}}
 \citation{Meyer_Viscusi_Durbin_1995}
 \citation{Meyer_Viscusi_Durbin_1995}
-\@writefile{lof}{\contentsline {figure}{\numberline {5.6}{\ignorespaces Source: Abadie et al., (1998).}}{110}{figure.caption.42}\protected@file@percent }
-\newlabel{fig:figAbadie}{{5.6}{110}{Source: Abadie et al., (1998)}{figure.caption.42}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.6.4}Application of the DiD approach}{110}{subsection.5.6.4}\protected@file@percent }
-\newlabel{application-of-the-did-approach}{{5.6.4}{110}{Application of the DiD approach}{subsection.5.6.4}{}}
-\citation{Meyer_Viscusi_Durbin_1995}
-\@writefile{lof}{\contentsline {figure}{\numberline {5.7}{\ignorespaces Source: Meyer et al., (1995).}}{111}{figure.caption.43}\protected@file@percent }
-\newlabel{fig:figMeyer}{{5.7}{111}{Source: Meyer et al., (1995)}{figure.caption.43}{}}
-\@writefile{toc}{\contentsline {chapter}{\numberline {6}Estimation Methods}{113}{chapter.6}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {5.7}{\ignorespaces Source: Meyer et al., (1995).}}{119}{figure.caption.46}\protected@file@percent }
+\newlabel{fig:figMeyer}{{5.7}{119}{Source: Meyer et al., (1995)}{figure.caption.46}{}}
+\newlabel{chapter-recap-4}{{5.6.4}{120}{Chapter recap}{section*.47}{}}
+\@writefile{toc}{\contentsline {section}{Chapter recap}{120}{section*.47}\protected@file@percent }
+\zref@newlabel{mdf@pagelabel-127}{\default{5.6.4}\page{120}\abspage{120}\mdf@pagevalue{120}}
+\@writefile{toc}{\contentsline {section}{\numberline {5.7}Exercises}{121}{section.5.7}\protected@file@percent }
+\newlabel{panel-exercises}{{5.7}{121}{Exercises}{section.5.7}{}}
+\zref@newlabel{mdf@pagelabel-128}{\default{5.7}\page{121}\abspage{121}\mdf@pagevalue{121}}
+\newlabel{exr:panel-fixed-effects}{{5.1}{121}{Fixed effects in a panel model}{exercise.5.1}{}}
+\zref@newlabel{mdf@pagelabel-129}{\default{5.7}\page{122}\abspage{122}\mdf@pagevalue{122}}
+\newlabel{exr:panel-effects-true-false}{{5.2}{122}{Individual and time effects: true or false?}{exercise.5.2}{}}
+\gdef \LT@vi {\LT@entry 
+    {3}{43.33052pt}\LT@entry 
+    {1}{44.26187pt}\LT@entry 
+    {1}{29.1244pt}}
+\zref@newlabel{mdf@pagelabel-130}{\default{5.7}\page{123}\abspage{123}\mdf@pagevalue{123}}
+\newlabel{exr:panel-difference-in-differences}{{5.3}{123}{Difference-in-differences from group means}{exercise.5.3}{}}
+\zref@newlabel{mdf@pagelabel-131}{\default{5.7}\page{124}\abspage{124}\mdf@pagevalue{124}}
+\newlabel{exr:panel-dynamic-panel}{{5.4}{124}{Endogeneity after first differencing}{exercise.5.4}{}}
+\@writefile{toc}{\contentsline {chapter}{\numberline {6}Estimation methods}{125}{chapter.6}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\newlabel{estimation-methods}{{6}{113}{Estimation Methods}{chapter.6}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {6.1}Generalized Method of Moments (GMM)}{113}{section.6.1}\protected@file@percent }
-\newlabel{secGMM}{{6.1}{113}{Generalized Method of Moments (GMM)}{section.6.1}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {6.1.1}Definition of the GMM estimator}{113}{subsection.6.1.1}\protected@file@percent }
-\newlabel{definition-of-the-gmm-estimator}{{6.1.1}{113}{Definition of the GMM estimator}{subsection.6.1.1}{}}
-\zref@newlabel{mdf@pagelabel-108}{\default{6.1.1}\page{113}\abspage{113}\mdf@pagevalue{113}}
-\newlabel{def:GMM}{{6.1}{113}{}{definition.6.1}{}}
-\newlabel{eq:consistGMM}{{6.1}{113}{Definition of the GMM estimator}{equation.6.1}{}}
+\newlabel{estimation-methods}{{6}{125}{Estimation methods}{chapter.6}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {6.1}Generalized Method of Moments (GMM)}{125}{section.6.1}\protected@file@percent }
+\newlabel{secGMM}{{6.1}{125}{Generalized Method of Moments (GMM)}{section.6.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.1.1}Definition of the GMM estimator}{125}{subsection.6.1.1}\protected@file@percent }
+\newlabel{definition-of-the-gmm-estimator}{{6.1.1}{125}{Definition of the GMM estimator}{subsection.6.1.1}{}}
+\zref@newlabel{mdf@pagelabel-132}{\default{6.1.1}\page{126}\abspage{126}\mdf@pagevalue{126}}
+\newlabel{def:GMM}{{6.1}{126}{}{definition.6.1}{}}
+\newlabel{eq:consistGMM}{{6.1}{126}{Definition of the GMM estimator}{equation.6.1}{}}
 \citation{Newey_West_1987}
-\newlabel{eq:Shat}{{6.2}{114}{Definition of the GMM estimator}{equation.6.2}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {6.1.2}Asymptotic distribution of the GMM estimator}{114}{subsection.6.1.2}\protected@file@percent }
-\newlabel{asymptotic-distribution-of-the-gmm-estimator}{{6.1.2}{114}{Asymptotic distribution of the GMM estimator}{subsection.6.1.2}{}}
-\newlabel{eq:asymptGMM}{{6.3}{114}{Asymptotic distribution of the GMM estimator}{equation.6.3}{}}
 \citation{Sargan_1958}
 \citation{Hansen_1982}
-\newlabel{eq:VGMM}{{6.4}{115}{Asymptotic distribution of the GMM estimator}{equation.6.4}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {6.1.3}Testing hypotheses in the GMM framework}{115}{subsection.6.1.3}\protected@file@percent }
-\newlabel{overidentif}{{6.1.3}{115}{Testing hypotheses in the GMM framework}{subsection.6.1.3}{}}
-\newlabel{eq:HansenSargan}{{6.5}{115}{Testing hypotheses in the GMM framework}{equation.6.5}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {6.1.4}Example: Estimation of the Stochastic Discount Factor (s.d.f.)}{115}{subsection.6.1.4}\protected@file@percent }
-\newlabel{example-estimation-of-the-stochastic-discount-factor-s.d.f.}{{6.1.4}{115}{Example: Estimation of the Stochastic Discount Factor (s.d.f.)}{subsection.6.1.4}{}}
-\newlabel{eq:sdf}{{6.6}{116}{Example: Estimation of the Stochastic Discount Factor (s.d.f.)}{equation.6.6}{}}
-\newlabel{eq:momF}{{6.7}{116}{Example: Estimation of the Stochastic Discount Factor (s.d.f.)}{equation.6.7}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {6.2}Maximum Likelihood Estimation}{118}{section.6.2}\protected@file@percent }
-\newlabel{secMLE}{{6.2}{118}{Maximum Likelihood Estimation}{section.6.2}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {6.2.1}Intuition}{118}{subsection.6.2.1}\protected@file@percent }
-\newlabel{intuition}{{6.2.1}{118}{Intuition}{subsection.6.2.1}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {6.1}{\ignorespaces The red ticks, at the bottom, indicate observations (there are 200 of them). The historgram is based on these 200 observations}}{119}{figure.caption.44}\protected@file@percent }
-\newlabel{fig:MLE1}{{6.1}{119}{The red ticks, at the bottom, indicate observations (there are 200 of them). The historgram is based on these 200 observations}{figure.caption.44}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {6.2.2}Definition and properties}{119}{subsection.6.2.2}\protected@file@percent }
-\newlabel{definition-and-properties}{{6.2.2}{119}{Definition and properties}{subsection.6.2.2}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {6.2}{\ignorespaces Proba. that $y_i-\mitvarepsilon \le Y_i < y_i+\mitvarepsilon $, $i \in \{1,2,3,4\}$. The vertical red line indicates the maximum of the function.}}{120}{figure.caption.45}\protected@file@percent }
-\newlabel{fig:MLE2}{{6.2}{120}{Proba. that $y_i-\varepsilon \le Y_i < y_i+\varepsilon $, $i \in \{1,2,3,4\}$. The vertical red line indicates the maximum of the function}{figure.caption.45}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {6.3}{\ignorespaces Log-likelihood function associated with the 200 i.i.d. observations. The vertical red line indicates the maximum of the function.}}{120}{figure.caption.46}\protected@file@percent }
-\newlabel{fig:MLE3}{{6.3}{120}{Log-likelihood function associated with the 200 i.i.d. observations. The vertical red line indicates the maximum of the function}{figure.caption.46}{}}
-\zref@newlabel{mdf@pagelabel-109}{\default{6.2.2}\page{121}\abspage{121}\mdf@pagevalue{121}}
-\newlabel{def:likelihood}{{6.2}{121}{Likelihood function}{definition.6.2}{}}
-\zref@newlabel{mdf@pagelabel-110}{\default{6.2.2}\page{121}\abspage{121}\mdf@pagevalue{121}}
-\newlabel{exm:normal}{{6.1}{121}{Gaussian distribution}{example.6.1}{}}
-\zref@newlabel{mdf@pagelabel-111}{\default{6.2.2}\page{121}\abspage{121}\mdf@pagevalue{121}}
-\newlabel{def:score}{{6.3}{121}{Score}{definition.6.3}{}}
-\zref@newlabel{mdf@pagelabel-112}{\default{6.2.2}\page{121}\abspage{121}\mdf@pagevalue{121}}
-\newlabel{prp:score}{{6.1}{121}{Score expectation}{proposition.6.1}{}}
-\zref@newlabel{mdf@pagelabel-113}{\default{6.2.2}\page{121}\abspage{121}\mdf@pagevalue{121}}
-\newlabel{def:Fisher}{{6.4}{121}{Fisher information matrix}{definition.6.4}{}}
-\zref@newlabel{mdf@pagelabel-114}{\default{6.2.2}\page{122}\abspage{122}\mdf@pagevalue{122}}
-\newlabel{prp:Fisher}{{6.2}{122}{}{proposition.6.2}{}}
-\zref@newlabel{mdf@pagelabel-115}{\default{6.2.2}\page{122}\abspage{122}\mdf@pagevalue{122}}
-\zref@newlabel{mdf@pagelabel-116}{\default{6.2.2}\page{122}\abspage{122}\mdf@pagevalue{122}}
-\newlabel{prp:additiv}{{6.3}{122}{Additive property of the Information matrix}{proposition.6.3}{}}
-\zref@newlabel{mdf@pagelabel-117}{\default{6.2.2}\page{122}\abspage{122}\mdf@pagevalue{122}}
-\newlabel{thm:FDCR}{{6.1}{122}{Frechet-Darmois-Cramer-Rao bound}{theorem.6.1}{}}
-\zref@newlabel{mdf@pagelabel-118}{\default{6.2.2}\page{123}\abspage{123}\mdf@pagevalue{123}}
-\newlabel{def:identif}{{6.5}{123}{Identifiability}{definition.6.5}{}}
-\zref@newlabel{mdf@pagelabel-119}{\default{6.2.2}\page{123}\abspage{123}\mdf@pagevalue{123}}
-\newlabel{def:MLEest}{{6.6}{123}{Maximum Likelihood Estimator (MLE)}{definition.6.6}{}}
-\newlabel{eq:MLEestimator}{{6.8}{123}{Maximum Likelihood Estimator (MLE)}{equation.6.8}{}}
-\zref@newlabel{mdf@pagelabel-120}{\default{6.2.2}\page{123}\abspage{123}\mdf@pagevalue{123}}
-\newlabel{def:likFunction}{{6.7}{123}{Likelihood equation}{definition.6.7}{}}
-\zref@newlabel{mdf@pagelabel-121}{\default{6.2.2}\page{123}\abspage{123}\mdf@pagevalue{123}}
-\newlabel{hyp:MLEregularity}{{6.1}{123}{Regularity assumptions}{hypothesis.6.1}{}}
-\zref@newlabel{mdf@pagelabel-122}{\default{6.2.2}\page{123}\abspage{123}\mdf@pagevalue{123}}
-\newlabel{prp:MLEproperties}{{6.4}{123}{Properties of MLE}{proposition.6.4}{}}
-\newlabel{eq:normMLE}{{6.10}{123}{Properties of MLE}{equation.6.10}{}}
-\newlabel{eq:III1}{{6.11}{124}{Definition and properties}{equation.6.11}{}}
-\newlabel{eq:I2}{{6.12}{124}{Definition and properties}{equation.6.11}{}}
-\newlabel{eq:III3}{{6.13}{124}{Definition and properties}{equation.6.13}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {6.2.3}To sum up -- MLE in practice}{124}{subsection.6.2.3}\protected@file@percent }
-\newlabel{to-sum-up-mle-in-practice}{{6.2.3}{124}{To sum up -- MLE in practice}{subsection.6.2.3}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {6.2.4}Example: MLE estimation of a mixture of Gaussian distribution}{124}{subsection.6.2.4}\protected@file@percent }
-\newlabel{example-mle-estimation-of-a-mixture-of-gaussian-distribution}{{6.2.4}{124}{Example: MLE estimation of a mixture of Gaussian distribution}{subsection.6.2.4}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {6.4}{\ignorespaces Time series of SMI weekly returns (source: Yahoo Finance).}}{125}{figure.caption.47}\protected@file@percent }
-\newlabel{fig:smiData}{{6.4}{125}{Time series of SMI weekly returns (source: Yahoo Finance)}{figure.caption.47}{}}
-\newlabel{eq:DeltaMethod}{{6.15}{126}{Example: MLE estimation of a mixture of Gaussian distribution}{equation.6.15}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {6.5}{\ignorespaces Comparison of different estimates of the distribution of returns.}}{128}{figure.caption.50}\protected@file@percent }
-\newlabel{fig:smidistri}{{6.5}{128}{Comparison of different estimates of the distribution of returns}{figure.caption.50}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {6.2.5}Test procedures}{128}{subsection.6.2.5}\protected@file@percent }
-\newlabel{TestMLE}{{6.2.5}{128}{Test procedures}{subsection.6.2.5}{}}
-\zref@newlabel{mdf@pagelabel-123}{\default{6.2.5}\page{129}\abspage{129}\mdf@pagevalue{129}}
-\newlabel{prp:Walddistri}{{6.5}{129}{Asymptotic distribution of the Wald statistic}{proposition.6.5}{}}
-\newlabel{eq:varinWald}{{6.17}{129}{Asymptotic distribution of the Wald statistic}{equation.6.17}{}}
-\zref@newlabel{mdf@pagelabel-124}{\default{6.2.5}\page{129}\abspage{129}\mdf@pagevalue{129}}
-\newlabel{prp:LMdistri}{{6.6}{129}{Asymptotic distribution of the LM test statistic}{proposition.6.6}{}}
-\newlabel{eq:xiLM}{{6.18}{129}{Asymptotic distribution of the LM test statistic}{equation.6.18}{}}
-\zref@newlabel{mdf@pagelabel-125}{\default{6.2.5}\page{130}\abspage{130}\mdf@pagevalue{130}}
-\newlabel{def:LR}{{6.8}{130}{Likelihood Ratio test statistics}{definition.6.8}{}}
-\zref@newlabel{mdf@pagelabel-126}{\default{6.2.5}\page{130}\abspage{130}\mdf@pagevalue{130}}
-\newlabel{prp:equivLRLMW}{{6.7}{130}{Asymptotic equivalence of LR, LM, and Wald tests}{proposition.6.7}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {6.3}Bayesian approach}{130}{section.6.3}\protected@file@percent }
-\newlabel{bayesian-approach}{{6.3}{130}{Bayesian approach}{section.6.3}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {6.3.1}Introduction}{130}{subsection.6.3.1}\protected@file@percent }
-\newlabel{introduction}{{6.3.1}{130}{Introduction}{subsection.6.3.1}{}}
-\newlabel{eq:post1}{{6.19}{131}{Introduction}{equation.6.19}{}}
-\newlabel{eq:post2}{{6.21}{131}{Introduction}{equation.6.21}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {6.3.2}Monte-Carlo Markov Chains}{131}{subsection.6.3.2}\protected@file@percent }
-\newlabel{monte-carlo-markov-chains}{{6.3.2}{131}{Monte-Carlo Markov Chains}{subsection.6.3.2}{}}
-\zref@newlabel{mdf@pagelabel-127}{\default{6.3.2}\page{132}\abspage{132}\mdf@pagevalue{132}}
-\newlabel{def:MC}{{6.9}{132}{Markov Chain}{definition.6.9}{}}
-\newlabel{eq:alphaXXX}{{6.22}{132}{Monte-Carlo Markov Chains}{equation.6.22}{}}
-\newlabel{eq:symmQ}{{6.23}{132}{Monte-Carlo Markov Chains}{equation.6.23}{}}
-\newlabel{eq:hypoQ}{{6.24}{132}{Monte-Carlo Markov Chains}{equation.6.24}{}}
+\newlabel{eq:Shat}{{6.2}{127}{Definition of the GMM estimator}{equation.6.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.1.2}Asymptotic distribution of the GMM estimator}{127}{subsection.6.1.2}\protected@file@percent }
+\newlabel{asymptotic-distribution-of-the-gmm-estimator}{{6.1.2}{127}{Asymptotic distribution of the GMM estimator}{subsection.6.1.2}{}}
+\newlabel{eq:asymptGMM}{{6.3}{127}{Asymptotic distribution of the GMM estimator}{equation.6.3}{}}
+\newlabel{eq:VGMM}{{6.4}{127}{Asymptotic distribution of the GMM estimator}{equation.6.4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.1.3}Testing hypotheses in the GMM framework}{127}{subsection.6.1.3}\protected@file@percent }
+\newlabel{overidentif}{{6.1.3}{127}{Testing hypotheses in the GMM framework}{subsection.6.1.3}{}}
+\newlabel{eq:HansenSargan}{{6.5}{127}{Testing hypotheses in the GMM framework}{equation.6.5}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.1.4}Example: Estimation of the Stochastic Discount Factor (s.d.f.)}{128}{subsection.6.1.4}\protected@file@percent }
+\newlabel{example-estimation-of-the-stochastic-discount-factor-s.d.f.}{{6.1.4}{128}{Example: Estimation of the Stochastic Discount Factor (s.d.f.)}{subsection.6.1.4}{}}
+\newlabel{eq:sdf}{{6.6}{128}{Example: Estimation of the Stochastic Discount Factor (s.d.f.)}{equation.6.6}{}}
+\newlabel{eq:momF}{{6.7}{128}{Example: Estimation of the Stochastic Discount Factor (s.d.f.)}{equation.6.7}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {6.2}Maximum likelihood estimation}{129}{section.6.2}\protected@file@percent }
+\newlabel{secMLE}{{6.2}{129}{Maximum likelihood estimation}{section.6.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.2.1}Intuition}{129}{subsection.6.2.1}\protected@file@percent }
+\newlabel{intuition}{{6.2.1}{129}{Intuition}{subsection.6.2.1}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {6.1}{\ignorespaces The red ticks, at the bottom, indicate observations (there are 200 of them). The historgram is based on these 200 observations}}{130}{figure.caption.48}\protected@file@percent }
+\newlabel{fig:MLE1}{{6.1}{130}{The red ticks, at the bottom, indicate observations (there are 200 of them). The historgram is based on these 200 observations}{figure.caption.48}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.2.2}Definition and properties}{130}{subsection.6.2.2}\protected@file@percent }
+\newlabel{definition-and-properties}{{6.2.2}{130}{Definition and properties}{subsection.6.2.2}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {6.2}{\ignorespaces Proba. that $y_i-\mitvarepsilon \le Y_i < y_i+\mitvarepsilon $, $i \in \{1,2,3,4\}$. The vertical red line indicates the maximum of the function.}}{131}{figure.caption.49}\protected@file@percent }
+\newlabel{fig:MLE2}{{6.2}{131}{Proba. that $y_i-\varepsilon \le Y_i < y_i+\varepsilon $, $i \in \{1,2,3,4\}$. The vertical red line indicates the maximum of the function}{figure.caption.49}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {6.3}{\ignorespaces Log-likelihood function associated with the 200 i.i.d. observations. The vertical red line indicates the maximum of the function.}}{131}{figure.caption.50}\protected@file@percent }
+\newlabel{fig:MLE3}{{6.3}{131}{Log-likelihood function associated with the 200 i.i.d. observations. The vertical red line indicates the maximum of the function}{figure.caption.50}{}}
+\zref@newlabel{mdf@pagelabel-133}{\default{6.2.2}\page{132}\abspage{132}\mdf@pagevalue{132}}
+\newlabel{def:likelihood}{{6.2}{132}{Likelihood function}{definition.6.2}{}}
+\zref@newlabel{mdf@pagelabel-134}{\default{6.2.2}\page{132}\abspage{132}\mdf@pagevalue{132}}
+\newlabel{exm:normal}{{6.1}{132}{Gaussian distribution}{example.6.1}{}}
+\zref@newlabel{mdf@pagelabel-135}{\default{6.2.2}\page{132}\abspage{132}\mdf@pagevalue{132}}
+\newlabel{def:score}{{6.3}{132}{Score}{definition.6.3}{}}
+\zref@newlabel{mdf@pagelabel-136}{\default{6.2.2}\page{132}\abspage{132}\mdf@pagevalue{132}}
+\newlabel{prp:score-expectation}{{6.1}{132}{Score expectation}{proposition.6.1}{}}
+\zref@newlabel{mdf@pagelabel-137}{\default{6.2.2}\page{132}\abspage{132}\mdf@pagevalue{132}}
+\newlabel{def:Fisher}{{6.4}{132}{Fisher information matrix}{definition.6.4}{}}
+\zref@newlabel{mdf@pagelabel-138}{\default{6.2.2}\page{133}\abspage{133}\mdf@pagevalue{133}}
+\newlabel{prp:information-equality}{{6.2}{133}{Information equality}{proposition.6.2}{}}
+\zref@newlabel{mdf@pagelabel-139}{\default{6.2.2}\page{133}\abspage{133}\mdf@pagevalue{133}}
+\zref@newlabel{mdf@pagelabel-140}{\default{6.2.2}\page{133}\abspage{133}\mdf@pagevalue{133}}
+\newlabel{prp:additiv}{{6.3}{133}{Additive property of the Information matrix}{proposition.6.3}{}}
+\zref@newlabel{mdf@pagelabel-141}{\default{6.2.2}\page{133}\abspage{133}\mdf@pagevalue{133}}
+\newlabel{thm:FDCR}{{6.1}{133}{Frechet-Darmois-Cramer-Rao bound}{theorem.6.1}{}}
+\zref@newlabel{mdf@pagelabel-142}{\default{6.2.2}\page{134}\abspage{134}\mdf@pagevalue{134}}
+\newlabel{def:identif}{{6.5}{134}{Identifiability}{definition.6.5}{}}
+\zref@newlabel{mdf@pagelabel-143}{\default{6.2.2}\page{134}\abspage{134}\mdf@pagevalue{134}}
+\newlabel{def:MLEest}{{6.6}{134}{Maximum Likelihood Estimator (MLE)}{definition.6.6}{}}
+\newlabel{eq:MLEestimator}{{6.8}{134}{Maximum Likelihood Estimator (MLE)}{equation.6.8}{}}
+\zref@newlabel{mdf@pagelabel-144}{\default{6.2.2}\page{134}\abspage{134}\mdf@pagevalue{134}}
+\newlabel{def:likFunction}{{6.7}{134}{Likelihood equation}{definition.6.7}{}}
+\zref@newlabel{mdf@pagelabel-145}{\default{6.2.2}\page{134}\abspage{134}\mdf@pagevalue{134}}
+\newlabel{hyp:MLEregularity}{{6.1}{134}{Regularity assumptions}{hypothesis.6.1}{}}
+\zref@newlabel{mdf@pagelabel-146}{\default{6.2.2}\page{135}\abspage{135}\mdf@pagevalue{135}}
+\newlabel{prp:MLEproperties}{{6.4}{135}{Properties of MLE}{proposition.6.4}{}}
+\newlabel{eq:normMLE}{{6.10}{135}{Properties of MLE}{equation.6.10}{}}
+\newlabel{eq:III1}{{6.11}{135}{Definition and properties}{equation.6.11}{}}
+\newlabel{eq:I2}{{6.12}{135}{Definition and properties}{equation.6.11}{}}
+\newlabel{eq:III3}{{6.13}{135}{Definition and properties}{equation.6.13}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.2.3}MLE in practice}{135}{subsection.6.2.3}\protected@file@percent }
+\newlabel{mle-in-practice}{{6.2.3}{135}{MLE in practice}{subsection.6.2.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.2.4}Example: MLE estimation of a Gaussian mixture}{136}{subsection.6.2.4}\protected@file@percent }
+\newlabel{example-mle-estimation-of-a-gaussian-mixture}{{6.2.4}{136}{Example: MLE estimation of a Gaussian mixture}{subsection.6.2.4}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {6.4}{\ignorespaces Time series of SMI weekly returns (source: Yahoo Finance).}}{136}{figure.caption.51}\protected@file@percent }
+\newlabel{fig:smiData}{{6.4}{136}{Time series of SMI weekly returns (source: Yahoo Finance)}{figure.caption.51}{}}
+\newlabel{eq:DeltaMethod}{{6.15}{137}{Example: MLE estimation of a Gaussian mixture}{equation.6.15}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.2.5}Test procedures}{137}{subsection.6.2.5}\protected@file@percent }
+\newlabel{TestMLE}{{6.2.5}{137}{Test procedures}{subsection.6.2.5}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {6.5}{\ignorespaces Comparison of different estimates of the distribution of returns.}}{138}{figure.caption.54}\protected@file@percent }
+\newlabel{fig:smidistri}{{6.5}{138}{Comparison of different estimates of the distribution of returns}{figure.caption.54}{}}
+\zref@newlabel{mdf@pagelabel-147}{\default{6.2.5}\page{139}\abspage{139}\mdf@pagevalue{139}}
+\newlabel{prp:Walddistri}{{6.5}{139}{Asymptotic distribution of the Wald statistic}{proposition.6.5}{}}
+\newlabel{eq:varinWald}{{6.17}{139}{Asymptotic distribution of the Wald statistic}{equation.6.17}{}}
+\zref@newlabel{mdf@pagelabel-148}{\default{6.2.5}\page{139}\abspage{139}\mdf@pagevalue{139}}
+\newlabel{prp:LMdistri}{{6.6}{139}{Asymptotic distribution of the LM test statistic}{proposition.6.6}{}}
+\newlabel{eq:xiLM}{{6.18}{139}{Asymptotic distribution of the LM test statistic}{equation.6.18}{}}
+\zref@newlabel{mdf@pagelabel-149}{\default{6.2.5}\page{140}\abspage{140}\mdf@pagevalue{140}}
+\newlabel{def:LR}{{6.8}{140}{Likelihood Ratio test statistics}{definition.6.8}{}}
+\zref@newlabel{mdf@pagelabel-150}{\default{6.2.5}\page{140}\abspage{140}\mdf@pagevalue{140}}
+\newlabel{prp:equivLRLMW}{{6.7}{140}{Asymptotic equivalence of LR, LM, and Wald tests}{proposition.6.7}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {6.3}Bayesian approach}{140}{section.6.3}\protected@file@percent }
+\newlabel{bayesian}{{6.3}{140}{Bayesian approach}{section.6.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.3.1}Introduction}{140}{subsection.6.3.1}\protected@file@percent }
+\newlabel{introduction}{{6.3.1}{140}{Introduction}{subsection.6.3.1}{}}
+\newlabel{eq:post1}{{6.19}{141}{Introduction}{equation.6.19}{}}
+\newlabel{eq:post2}{{6.21}{141}{Introduction}{equation.6.21}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.3.2}Monte-Carlo Markov Chains}{141}{subsection.6.3.2}\protected@file@percent }
+\newlabel{monte-carlo-markov-chains}{{6.3.2}{141}{Monte-Carlo Markov Chains}{subsection.6.3.2}{}}
+\zref@newlabel{mdf@pagelabel-151}{\default{6.3.2}\page{142}\abspage{142}\mdf@pagevalue{142}}
+\newlabel{def:MC}{{6.9}{142}{Markov Chain}{definition.6.9}{}}
+\newlabel{eq:mh-acceptance}{{6.22}{142}{Monte-Carlo Markov Chains}{equation.6.22}{}}
+\newlabel{eq:symmQ}{{6.23}{142}{Monte-Carlo Markov Chains}{equation.6.23}{}}
+\newlabel{eq:hypoQ}{{6.24}{142}{Monte-Carlo Markov Chains}{equation.6.24}{}}
 \citation{Roberts_Gelman_Gilks_1997}
-\@writefile{toc}{\contentsline {subsection}{\numberline {6.3.3}Example: AR(1) specification}{133}{subsection.6.3.3}\protected@file@percent }
-\newlabel{example-ar1-specification}{{6.3.3}{133}{Example: AR(1) specification}{subsection.6.3.3}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {6.6}{\ignorespaces The upper line of plot compares prior (black) and posterior (red) distributions. The vertical dashed blue lines indicate the true values of the parameters. The second row of plots show the sequence of $\boldsymbol  \mittheta _i$'s generated by the MCMC algorithm. These sequences are the ones used to produce the posterior distributions (red lines) in the upper plots.}}{136}{figure.caption.51}\protected@file@percent }
-\newlabel{fig:MCMC8}{{6.6}{136}{The upper line of plot compares prior (black) and posterior (red) distributions. The vertical dashed blue lines indicate the true values of the parameters. The second row of plots show the sequence of $\boldsymbol \theta _i$'s generated by the MCMC algorithm. These sequences are the ones used to produce the posterior distributions (red lines) in the upper plots}{figure.caption.51}{}}
-\@writefile{toc}{\contentsline {chapter}{\numberline {7}Binary-choice models}{137}{chapter.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.3.3}Example: AR(1) specification}{143}{subsection.6.3.3}\protected@file@percent }
+\newlabel{example-ar1-specification}{{6.3.3}{143}{Example: AR(1) specification}{subsection.6.3.3}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {6.6}{\ignorespaces The upper line of plot compares prior (black) and posterior (red) distributions. The vertical dashed blue lines indicate the true values of the parameters. The second row of plots show the sequence of $\boldsymbol  \mittheta _i$'s generated by the MCMC algorithm. These sequences are the ones used to produce the posterior distributions (red lines) in the upper plots.}}{145}{figure.caption.55}\protected@file@percent }
+\newlabel{fig:MCMC8}{{6.6}{145}{The upper line of plot compares prior (black) and posterior (red) distributions. The vertical dashed blue lines indicate the true values of the parameters. The second row of plots show the sequence of $\boldsymbol \theta _i$'s generated by the MCMC algorithm. These sequences are the ones used to produce the posterior distributions (red lines) in the upper plots}{figure.caption.55}{}}
+\newlabel{chapter-recap-5}{{6.3.3}{145}{Chapter recap}{section*.56}{}}
+\@writefile{toc}{\contentsline {section}{Chapter recap}{145}{section*.56}\protected@file@percent }
+\zref@newlabel{mdf@pagelabel-152}{\default{6.3.3}\page{145}\abspage{145}\mdf@pagevalue{145}}
+\@writefile{toc}{\contentsline {section}{\numberline {6.4}Exercises}{146}{section.6.4}\protected@file@percent }
+\newlabel{estimation-exercises}{{6.4}{146}{Exercises}{section.6.4}{}}
+\zref@newlabel{mdf@pagelabel-153}{\default{6.4}\page{146}\abspage{146}\mdf@pagevalue{146}}
+\newlabel{exr:estimation-mle-exponential}{{6.1}{146}{Maximum likelihood for an exponential distribution}{exercise.6.1}{}}
+\zref@newlabel{mdf@pagelabel-154}{\default{6.4}\page{147}\abspage{147}\mdf@pagevalue{147}}
+\newlabel{exr:estimation-mle-poisson}{{6.2}{147}{Maximum likelihood for a Poisson distribution}{exercise.6.2}{}}
+\zref@newlabel{mdf@pagelabel-155}{\default{6.4}\page{147}\abspage{147}\mdf@pagevalue{147}}
+\newlabel{exr:estimation-mle-normal}{{6.3}{147}{Maximum likelihood for a normal distribution}{exercise.6.3}{}}
+\zref@newlabel{mdf@pagelabel-156}{\default{6.4}\page{148}\abspage{148}\mdf@pagevalue{148}}
+\newlabel{exr:estimation-gdp-crises}{{6.4}{148}{Maximum likelihood with GDP crises}{exercise.6.4}{}}
+\zref@newlabel{mdf@pagelabel-157}{\default{6.4}\page{149}\abspage{149}\mdf@pagevalue{149}}
+\newlabel{exr:estimation-ols-versus-mle}{{6.5}{149}{OLS and maximum likelihood}{exercise.6.5}{}}
+\zref@newlabel{mdf@pagelabel-158}{\default{6.4}\page{149}\abspage{149}\mdf@pagevalue{149}}
+\newlabel{exr:estimation-ols-mle-numerical}{{6.6}{149}{Numerical comparison of OLS and ML inference}{exercise.6.6}{}}
+\zref@newlabel{mdf@pagelabel-159}{\default{6.4}\page{150}\abspage{150}\mdf@pagevalue{150}}
+\newlabel{exr:estimation-mle-true-false}{{6.7}{150}{Maximum-likelihood theory: true or false?}{exercise.6.7}{}}
+\zref@newlabel{mdf@pagelabel-160}{\default{6.4}\page{151}\abspage{151}\mdf@pagevalue{151}}
+\newlabel{exr:estimation-gmm-moments}{{6.8}{151}{Exactly identified and overidentified moments}{exercise.6.8}{}}
+\zref@newlabel{mdf@pagelabel-161}{\default{6.4}\page{151}\abspage{151}\mdf@pagevalue{151}}
+\newlabel{exr:estimation-bayesian-normal-mean}{{6.9}{151}{Bayesian updating for a normal mean}{exercise.6.9}{}}
+\@writefile{toc}{\contentsline {chapter}{\numberline {7}Binary-choice models}{153}{chapter.7}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\newlabel{binary-choice-models}{{7}{137}{Binary-choice models}{chapter.7}{}}
-\newlabel{eq:binaryBenroulli}{{7.1}{137}{Binary-choice models}{equation.7.1}{}}
-\newlabel{eq:genericBinary}{{7.2}{137}{Binary-choice models}{equation.7.2}{}}
-\gdef \LT@v {\LT@entry 
+\newlabel{binary-choice}{{7}{153}{Binary-choice models}{chapter.7}{}}
+\newlabel{eq:binaryBenroulli}{{7.1}{153}{Binary-choice models}{equation.7.1}{}}
+\newlabel{eq:genericBinary}{{7.2}{153}{Binary-choice models}{equation.7.2}{}}
+\gdef \LT@vii {\LT@entry 
     {1}{98.41321pt}\LT@entry 
     {1}{165.99788pt}\LT@entry 
     {1}{190.833pt}}
-\@writefile{lof}{\contentsline {figure}{\numberline {7.1}{\ignorespaces Fitting a binary variable with a linear model (Linear Probability Model, LPM). The model is $\symbb {P}(y_i=1|x_i)=\mitPhi (0.5+2x_i)$, where $\mitPhi $ is the c.d.f. of the normal distribution and where $x_i \sim \,i.i.d.\,\symcal {N}(0,1)$.}}{138}{figure.caption.52}\protected@file@percent }
-\newlabel{fig:LPM}{{7.1}{138}{Fitting a binary variable with a linear model (Linear Probability Model, LPM). The model is $\mathbb {P}(y_i=1|x_i)=\Phi (0.5+2x_i)$, where $\Phi $ is the c.d.f. of the normal distribution and where $x_i \sim \,i.i.d.\,\mathcal {N}(0,1)$}{figure.caption.52}{}}
-\newlabel{tab:foo}{{7.1}{138}{Binary-choice models}{table.7.1}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {7.1}{\ignorespaces  This table provides examples of function \(g\), s.t. \(\symbb {P}(y_i=1|\mathbf {x}_i;\boldsymbol  heta) = g(\boldsymbol  \mittheta '\mathbf {x}_i)\). The LPM case (last row) is given for comparison but, again, it does not satisfy \(g(\boldsymbol  \mittheta '\mathbf {x}_i) \in [0,1]\) for any value of \(\boldsymbol  \mittheta '\mathbf {x}_i\).}}{138}{table.7.1}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {7.2}{\ignorespaces Probit, Logit, and Log-log functions.}}{138}{figure.caption.53}\protected@file@percent }
-\newlabel{fig:ProbLogit}{{7.2}{138}{Probit, Logit, and Log-log functions}{figure.caption.53}{}}
-\newlabel{eq:probit}{{7.3}{138}{Binary-choice models}{equation.7.3}{}}
-\newlabel{eq:logit}{{7.4}{138}{Binary-choice models}{equation.7.4}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {7.1}Interpretation in terms of latent variable, and utility-based models}{138}{section.7.1}\protected@file@percent }
-\newlabel{latent}{{7.1}{138}{Interpretation in terms of latent variable, and utility-based models}{section.7.1}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {7.3}{\ignorespaces The model is $\symbb {P}(y_i=1|x_i)=\mitPhi (0.5+2x_i)$, where $\mitPhi $ is the c.d.f. of the normal distribution and where $x_i \sim \,i.i.d.\,\symcal {N}(0,1)$. Crosses give the model-implied probabilities of having $y_i=1$ (conditional on $x_i$).}}{139}{figure.caption.54}\protected@file@percent }
-\newlabel{fig:LPM2}{{7.3}{139}{The model is $\mathbb {P}(y_i=1|x_i)=\Phi (0.5+2x_i)$, where $\Phi $ is the c.d.f. of the normal distribution and where $x_i \sim \,i.i.d.\,\mathcal {N}(0,1)$. Crosses give the model-implied probabilities of having $y_i=1$ (conditional on $x_i$)}{figure.caption.54}{}}
-\newlabel{eq:utility}{{7.5}{139}{Interpretation in terms of latent variable, and utility-based models}{equation.7.5}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {7.1}{\ignorespaces Fitting a binary variable with a linear model (Linear Probability Model, LPM). The model is $\symbb {P}(y_i=1|x_i)=\mitPhi (0.5+2x_i)$, where $\mitPhi $ is the c.d.f. of the normal distribution and where $x_i \sim \,i.i.d.\,\symcal {N}(0,1)$.}}{154}{figure.caption.57}\protected@file@percent }
+\newlabel{fig:LPM}{{7.1}{154}{Fitting a binary variable with a linear model (Linear Probability Model, LPM). The model is $\mathbb {P}(y_i=1|x_i)=\Phi (0.5+2x_i)$, where $\Phi $ is the c.d.f. of the normal distribution and where $x_i \sim \,i.i.d.\,\mathcal {N}(0,1)$}{figure.caption.57}{}}
+\newlabel{tab:foo}{{7.1}{154}{Binary-choice models}{table.7.1}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {7.1}{\ignorespaces  This table provides examples of function \(g\), s.t. \(\symbb {P}(y_i=1|\mathbf {x}_i;\boldsymbol  \mittheta ) = g(\boldsymbol  \mittheta '\mathbf {x}_i)\). The LPM case (last row) is given for comparison but, again, it does not satisfy \(g(\boldsymbol  \mittheta '\mathbf {x}_i) \in [0,1]\) for every value of \(\boldsymbol  \mittheta '\mathbf {x}_i\).}}{154}{table.7.1}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {7.2}{\ignorespaces Probit, Logit, and Log-log functions.}}{155}{figure.caption.58}\protected@file@percent }
+\newlabel{fig:ProbLogit}{{7.2}{155}{Probit, Logit, and Log-log functions}{figure.caption.58}{}}
+\newlabel{eq:probit}{{7.3}{155}{Binary-choice models}{equation.7.3}{}}
+\newlabel{eq:logit}{{7.4}{155}{Binary-choice models}{equation.7.4}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {7.1}Latent-variable and utility interpretations}{155}{section.7.1}\protected@file@percent }
+\newlabel{latent}{{7.1}{155}{Latent-variable and utility interpretations}{section.7.1}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {7.3}{\ignorespaces The model is $\symbb {P}(y_i=1|x_i)=\mitPhi (0.5+2x_i)$, where $\mitPhi $ is the c.d.f. of the normal distribution and where $x_i \sim \,i.i.d.\,\symcal {N}(0,1)$. Crosses give the model-implied probabilities of having $y_i=1$ (conditional on $x_i$).}}{156}{figure.caption.59}\protected@file@percent }
+\newlabel{fig:LPM2}{{7.3}{156}{The model is $\mathbb {P}(y_i=1|x_i)=\Phi (0.5+2x_i)$, where $\Phi $ is the c.d.f. of the normal distribution and where $x_i \sim \,i.i.d.\,\mathcal {N}(0,1)$. Crosses give the model-implied probabilities of having $y_i=1$ (conditional on $x_i$)}{figure.caption.59}{}}
+\newlabel{eq:utility}{{7.5}{156}{Latent-variable and utility interpretations}{equation.7.5}{}}
 \citation{Nakosteen_Zimmer_1980}
-\@writefile{lof}{\contentsline {figure}{\numberline {7.4}{\ignorespaces Distribution of $y_i^*$ conditional on $\mathbf {x}_i$.}}{140}{figure.caption.55}\protected@file@percent }
-\newlabel{fig:Latent}{{7.4}{140}{Distribution of $y_i^*$ conditional on $\mathbf {x}_i$}{figure.caption.55}{}}
-\zref@newlabel{mdf@pagelabel-128}{\default{7.1}\page{140}\abspage{140}\mdf@pagevalue{140}}
-\newlabel{exm:migration}{{7.1}{140}{Migration and income}{example.7.1}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {7.2}Alternative-Varying Regressors}{140}{section.7.2}\protected@file@percent }
-\newlabel{Avregressors}{{7.2}{140}{Alternative-Varying Regressors}{section.7.2}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {7.4}{\ignorespaces Distribution of $y_i^*$ conditional on $\mathbf {x}_i$.}}{157}{figure.caption.60}\protected@file@percent }
+\newlabel{fig:Latent}{{7.4}{157}{Distribution of $y_i^*$ conditional on $\mathbf {x}_i$}{figure.caption.60}{}}
+\zref@newlabel{mdf@pagelabel-162}{\default{7.1}\page{157}\abspage{157}\mdf@pagevalue{157}}
+\newlabel{exm:migration}{{7.1}{157}{Migration and income}{example.7.1}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {7.2}Alternative-varying regressors}{157}{section.7.2}\protected@file@percent }
+\newlabel{Avregressors}{{7.2}{157}{Alternative-varying regressors}{section.7.2}{}}
 \citation{Cameron_Trivedi_2005}
-\newlabel{eq:utility2}{{7.6}{141}{Alternative-Varying Regressors}{equation.7.6}{}}
-\newlabel{eq:utility3}{{7.7}{141}{Alternative-Varying Regressors}{equation.7.7}{}}
-\zref@newlabel{mdf@pagelabel-129}{\default{7.2}\page{141}\abspage{141}\mdf@pagevalue{141}}
-\newlabel{exm:FishingTable}{{7.2}{141}{Fishing-mode dataset}{example.7.2}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {7.3}Estimation}{141}{section.7.3}\protected@file@percent }
-\newlabel{estimation}{{7.3}{141}{Estimation}{section.7.3}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {7.4}Marginal effects}{143}{section.7.4}\protected@file@percent }
-\newlabel{marginalFX}{{7.4}{143}{Marginal effects}{section.7.4}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {7.5}Goodness of fit}{143}{section.7.5}\protected@file@percent }
-\newlabel{goodness-of-fit-1}{{7.5}{143}{Goodness of fit}{section.7.5}{}}
-\zref@newlabel{mdf@pagelabel-130}{\default{7.5}\page{143}\abspage{143}\mdf@pagevalue{143}}
-\newlabel{exm:creditProbit}{{7.3}{143}{Credit and defaults (Lending-club dataset)}{example.7.3}{}}
-\zref@newlabel{mdf@pagelabel-131}{\default{7.5}\page{144}\abspage{144}\mdf@pagevalue{144}}
-\zref@newlabel{mdf@pagelabel-132}{\default{7.5}\page{145}\abspage{145}\mdf@pagevalue{145}}
-\zref@newlabel{mdf@pagelabel-133}{\default{7.5}\page{146}\abspage{146}\mdf@pagevalue{146}}
+\newlabel{eq:utility2}{{7.6}{158}{Alternative-varying regressors}{equation.7.6}{}}
+\newlabel{eq:utility3}{{7.7}{158}{Alternative-varying regressors}{equation.7.7}{}}
+\zref@newlabel{mdf@pagelabel-163}{\default{7.2}\page{158}\abspage{158}\mdf@pagevalue{158}}
+\newlabel{exm:FishingTable}{{7.2}{158}{Fishing-mode dataset}{example.7.2}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {7.3}Estimation}{158}{section.7.3}\protected@file@percent }
+\newlabel{binary-estimation}{{7.3}{158}{Estimation}{section.7.3}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {7.4}Marginal effects}{159}{section.7.4}\protected@file@percent }
+\newlabel{marginalFX}{{7.4}{159}{Marginal effects}{section.7.4}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {7.5}Goodness of fit}{160}{section.7.5}\protected@file@percent }
+\newlabel{binary-fit}{{7.5}{160}{Goodness of fit}{section.7.5}{}}
+\zref@newlabel{mdf@pagelabel-164}{\default{7.5}\page{160}\abspage{160}\mdf@pagevalue{160}}
+\newlabel{exm:creditProbit}{{7.3}{160}{Credit and defaults (Lending-club dataset)}{example.7.3}{}}
+\zref@newlabel{mdf@pagelabel-165}{\default{7.5}\page{161}\abspage{161}\mdf@pagevalue{161}}
+\zref@newlabel{mdf@pagelabel-166}{\default{7.5}\page{162}\abspage{162}\mdf@pagevalue{162}}
 \citation{Cameron_Trivedi_2005}
-\zref@newlabel{mdf@pagelabel-134}{\default{7.5}\page{147}\abspage{147}\mdf@pagevalue{147}}
-\newlabel{exm:Fisch142}{{7.4}{147}{Replicating Table 14.2 of Cameron and Trivedi (2005)}{example.7.4}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {7.6}Predictions and ROC curves}{147}{section.7.6}\protected@file@percent }
-\newlabel{predictions-and-roc-curves}{{7.6}{147}{Predictions and ROC curves}{section.7.6}{}}
-\zref@newlabel{mdf@pagelabel-135}{\default{7.6}\page{148}\abspage{148}\mdf@pagevalue{148}}
-\newlabel{exm:FishingROC}{{7.5}{148}{ROC with the fishing-mode dataset}{example.7.5}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {7.5}{\ignorespaces Application of the ROC methodology on the fishing-mode dataset.}}{148}{figure.caption.56}\protected@file@percent }
-\newlabel{fig:fishing3}{{7.5}{148}{Application of the ROC methodology on the fishing-mode dataset}{figure.caption.56}{}}
-\@writefile{toc}{\contentsline {chapter}{\numberline {8}Time Series}{149}{chapter.8}\protected@file@percent }
+\zref@newlabel{mdf@pagelabel-167}{\default{7.5}\page{163}\abspage{163}\mdf@pagevalue{163}}
+\zref@newlabel{mdf@pagelabel-168}{\default{7.5}\page{163}\abspage{163}\mdf@pagevalue{163}}
+\newlabel{exm:Fisch142}{{7.4}{163}{Replicating Table 14.2 of Cameron and Trivedi (2005)}{example.7.4}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {7.6}Predictions and ROC curves}{163}{section.7.6}\protected@file@percent }
+\newlabel{binary-predictions}{{7.6}{163}{Predictions and ROC curves}{section.7.6}{}}
+\zref@newlabel{mdf@pagelabel-169}{\default{7.6}\page{164}\abspage{164}\mdf@pagevalue{164}}
+\newlabel{exm:FishingROC}{{7.5}{164}{ROC with the fishing-mode dataset}{example.7.5}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {7.5}{\ignorespaces Application of the ROC methodology on the fishing-mode dataset.}}{164}{figure.caption.61}\protected@file@percent }
+\newlabel{fig:fishing3}{{7.5}{164}{Application of the ROC methodology on the fishing-mode dataset}{figure.caption.61}{}}
+\newlabel{chapter-recap-6}{{7.6}{165}{Chapter recap}{section*.62}{}}
+\@writefile{toc}{\contentsline {section}{Chapter recap}{165}{section*.62}\protected@file@percent }
+\zref@newlabel{mdf@pagelabel-170}{\default{7.6}\page{165}\abspage{165}\mdf@pagevalue{165}}
+\@writefile{toc}{\contentsline {section}{\numberline {7.7}Exercises}{166}{section.7.7}\protected@file@percent }
+\newlabel{binary-exercises}{{7.7}{166}{Exercises}{section.7.7}{}}
+\zref@newlabel{mdf@pagelabel-171}{\default{7.7}\page{166}\abspage{166}\mdf@pagevalue{166}}
+\newlabel{exr:binary-multinomial-choice}{{7.1}{166}{Ordered-probit model}{exercise.7.1}{}}
+\zref@newlabel{mdf@pagelabel-172}{\default{7.7}\page{167}\abspage{167}\mdf@pagevalue{167}}
+\zref@newlabel{mdf@pagelabel-173}{\default{7.7}\page{167}\abspage{167}\mdf@pagevalue{167}}
+\newlabel{exr:binary-probit-models-true-false}{{7.2}{167}{Comparing probit specifications: true or false?}{exercise.7.2}{}}
+\zref@newlabel{mdf@pagelabel-174}{\default{7.7}\page{168}\abspage{168}\mdf@pagevalue{168}}
+\zref@newlabel{mdf@pagelabel-175}{\default{7.7}\page{168}\abspage{168}\mdf@pagevalue{168}}
+\newlabel{exr:binary-probit-mle-true-false}{{7.3}{168}{Probit maximum likelihood: true or false?}{exercise.7.3}{}}
+\gdef \LT@viii {\LT@entry 
+    {1}{57.67842pt}\LT@entry 
+    {1}{63.67842pt}\LT@entry 
+    {1}{63.67842pt}\LT@entry 
+    {1}{63.67842pt}\LT@entry 
+    {1}{63.67842pt}\LT@entry 
+    {1}{63.67842pt}\LT@entry 
+    {1}{57.67842pt}}
+\zref@newlabel{mdf@pagelabel-176}{\default{7.7}\page{169}\abspage{169}\mdf@pagevalue{169}}
+\newlabel{exr:binary-marginal-effects}{{7.4}{169}{Marginal effects in a probit model}{exercise.7.4}{}}
+\zref@newlabel{mdf@pagelabel-177}{\default{7.7}\page{169}\abspage{169}\mdf@pagevalue{169}}
+\newlabel{exr:binary-classification-roc}{{7.5}{169}{Classification thresholds and ROC coordinates}{exercise.7.5}{}}
+\@writefile{toc}{\contentsline {chapter}{\numberline {8}Time Series}{171}{chapter.8}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\newlabel{TS}{{8}{149}{Time Series}{chapter.8}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {8.1}Introduction to time series}{149}{section.8.1}\protected@file@percent }
-\newlabel{introduction-to-time-series}{{8.1}{149}{Introduction to time series}{section.8.1}{}}
-\zref@newlabel{mdf@pagelabel-136}{\default{8.1}\page{149}\abspage{149}\mdf@pagevalue{149}}
-\newlabel{def:whitenoise}{{8.1}{149}{White noise}{definition.8.1}{}}
-\zref@newlabel{mdf@pagelabel-137}{\default{8.1}\page{149}\abspage{149}\mdf@pagevalue{149}}
-\newlabel{def:MDS}{{8.2}{149}{Martingale Difference Sequence}{definition.8.2}{}}
-\zref@newlabel{mdf@pagelabel-138}{\default{8.1}\page{149}\abspage{149}\mdf@pagevalue{149}}
-\newlabel{exm:ARCH}{{8.1}{149}{ARCH process}{example.8.1}{}}
-\zref@newlabel{mdf@pagelabel-139}{\default{8.1}\page{150}\abspage{150}\mdf@pagevalue{150}}
-\newlabel{exm:whiteNotMDS}{{8.2}{150}{}{example.8.2}{}}
-\newlabel{eq:lagOp}{{8.1}{150}{Introduction to time series}{equation.8.1}{}}
-\zref@newlabel{mdf@pagelabel-140}{\default{8.1}\page{150}\abspage{150}\mdf@pagevalue{150}}
-\newlabel{def:autocov}{{8.3}{150}{Autocovariance}{definition.8.3}{}}
-\zref@newlabel{mdf@pagelabel-141}{\default{8.1}\page{151}\abspage{151}\mdf@pagevalue{151}}
-\newlabel{def:covstat}{{8.4}{151}{Covariance stationarity}{definition.8.4}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {8.1}{\ignorespaces Example of a process that is not covariance stationary ($y_t = 0.1t + \mitvarepsilon _t$, where $\mitvarepsilon _t \sim \symcal {N}(0,1)$).}}{151}{figure.caption.57}\protected@file@percent }
-\newlabel{fig:nonstat1}{{8.1}{151}{Example of a process that is not covariance stationary ($y_t = 0.1t + \varepsilon _t$, where $\varepsilon _t \sim \mathcal {N}(0,1)$)}{figure.caption.57}{}}
-\zref@newlabel{mdf@pagelabel-142}{\default{8.1}\page{151}\abspage{151}\mdf@pagevalue{151}}
-\newlabel{def:strictstat}{{8.5}{151}{Strict stationarity}{definition.8.5}{}}
-\zref@newlabel{mdf@pagelabel-143}{\default{8.1}\page{151}\abspage{151}\mdf@pagevalue{151}}
-\newlabel{prp:gammaMinus}{{8.1}{151}{}{proposition.8.1}{}}
+\newlabel{TS}{{8}{171}{Time Series}{chapter.8}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {8.1}Introduction to time series}{171}{section.8.1}\protected@file@percent }
+\newlabel{introduction-to-time-series}{{8.1}{171}{Introduction to time series}{section.8.1}{}}
+\zref@newlabel{mdf@pagelabel-178}{\default{8.1}\page{171}\abspage{171}\mdf@pagevalue{171}}
+\newlabel{def:whitenoise}{{8.1}{171}{White noise}{definition.8.1}{}}
+\zref@newlabel{mdf@pagelabel-179}{\default{8.1}\page{172}\abspage{172}\mdf@pagevalue{172}}
+\newlabel{def:MDS}{{8.2}{172}{Martingale Difference Sequence}{definition.8.2}{}}
+\zref@newlabel{mdf@pagelabel-180}{\default{8.1}\page{172}\abspage{172}\mdf@pagevalue{172}}
+\newlabel{exm:ARCH}{{8.1}{172}{ARCH process}{example.8.1}{}}
+\zref@newlabel{mdf@pagelabel-181}{\default{8.1}\page{172}\abspage{172}\mdf@pagevalue{172}}
+\newlabel{exm:whiteNotMDS}{{8.2}{172}{}{example.8.2}{}}
+\newlabel{eq:lagOp}{{8.1}{172}{Introduction to time series}{equation.8.1}{}}
+\zref@newlabel{mdf@pagelabel-182}{\default{8.1}\page{173}\abspage{173}\mdf@pagevalue{173}}
+\newlabel{def:autocov}{{8.3}{173}{Autocovariance}{definition.8.3}{}}
+\zref@newlabel{mdf@pagelabel-183}{\default{8.1}\page{173}\abspage{173}\mdf@pagevalue{173}}
+\newlabel{def:covstat}{{8.4}{173}{Covariance stationarity}{definition.8.4}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {8.1}{\ignorespaces Example of a process that is not covariance stationary ($y_t = 0.1t + \mitvarepsilon _t$, where $\mitvarepsilon _t \sim \symcal {N}(0,1)$).}}{173}{figure.caption.63}\protected@file@percent }
+\newlabel{fig:nonstat1}{{8.1}{173}{Example of a process that is not covariance stationary ($y_t = 0.1t + \varepsilon _t$, where $\varepsilon _t \sim \mathcal {N}(0,1)$)}{figure.caption.63}{}}
 \citation{JST_2017}
-\@writefile{lof}{\contentsline {figure}{\numberline {8.2}{\ignorespaces Example of a process that is covariance stationary but not strictly stationary. The red lines delineate the 99\% confidence interval of the standard normal distribution ($\pm 2.58$).}}{152}{figure.caption.58}\protected@file@percent }
-\newlabel{fig:nonstat2}{{8.2}{152}{Example of a process that is covariance stationary but not strictly stationary. The red lines delineate the 99\% confidence interval of the standard normal distribution ($\pm 2.58$)}{figure.caption.58}{}}
-\zref@newlabel{mdf@pagelabel-144}{\default{8.1}\page{152}\abspage{152}\mdf@pagevalue{152}}
-\newlabel{def:autocor}{{8.6}{152}{Auto-correlation}{definition.8.6}{}}
-\zref@newlabel{mdf@pagelabel-145}{\default{8.1}\page{152}\abspage{152}\mdf@pagevalue{152}}
-\newlabel{def:ergodicity}{{8.7}{152}{Mean ergodicity}{definition.8.7}{}}
-\zref@newlabel{mdf@pagelabel-146}{\default{8.1}\page{152}\abspage{152}\mdf@pagevalue{152}}
-\newlabel{def:ergod2nd}{{8.8}{152}{Second-moment ergodicity}{definition.8.8}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {8.3}{\ignorespaces Annual growth rate of Swiss GDP, based on the Jorda-Schularick-Taylor Macrohistory Database.}}{153}{figure.caption.59}\protected@file@percent }
-\newlabel{fig:autocov}{{8.3}{153}{Annual growth rate of Swiss GDP, based on the Jorda-Schularick-Taylor Macrohistory Database}{figure.caption.59}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {8.4}{\ignorespaces For order $j$, the slope of the blue line is, approximately, $\hat {\mitgamma }_j/\widehat {\symbb {V}ar}(y_t)$, where hats indicate sample moments.}}{153}{figure.caption.60}\protected@file@percent }
-\newlabel{fig:autocov2}{{8.4}{153}{For order $j$, the slope of the blue line is, approximately, $\hat {\gamma }_j/\widehat {\mathbb {V}ar}(y_t)$, where hats indicate sample moments}{figure.caption.60}{}}
-\citation{Anderson_1971}
+\zref@newlabel{mdf@pagelabel-184}{\default{8.1}\page{174}\abspage{174}\mdf@pagevalue{174}}
+\newlabel{def:strictstat}{{8.5}{174}{Strict stationarity}{definition.8.5}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {8.2}{\ignorespaces Example of a process that is covariance stationary but not strictly stationary. The red lines delineate the 99\% confidence interval of the standard normal distribution ($\pm 2.58$).}}{174}{figure.caption.64}\protected@file@percent }
+\newlabel{fig:nonstat2}{{8.2}{174}{Example of a process that is covariance stationary but not strictly stationary. The red lines delineate the 99\% confidence interval of the standard normal distribution ($\pm 2.58$)}{figure.caption.64}{}}
+\zref@newlabel{mdf@pagelabel-185}{\default{8.1}\page{174}\abspage{174}\mdf@pagevalue{174}}
+\newlabel{prp:gammaMinus}{{8.1}{174}{}{proposition.8.1}{}}
+\zref@newlabel{mdf@pagelabel-186}{\default{8.1}\page{174}\abspage{174}\mdf@pagevalue{174}}
+\newlabel{def:autocor}{{8.6}{174}{Auto-correlation}{definition.8.6}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {8.3}{\ignorespaces Annual growth rate of Swiss GDP, based on the Jorda-Schularick-Taylor Macrohistory Database.}}{175}{figure.caption.65}\protected@file@percent }
+\newlabel{fig:autocov}{{8.3}{175}{Annual growth rate of Swiss GDP, based on the Jorda-Schularick-Taylor Macrohistory Database}{figure.caption.65}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {8.4}{\ignorespaces For order $j$, the slope of the blue line is, approximately, $\hat {\mitgamma }_j/\widehat {\symbb {V}ar}(y_t)$, where hats indicate sample moments.}}{175}{figure.caption.66}\protected@file@percent }
+\newlabel{fig:autocov2}{{8.4}{175}{For order $j$, the slope of the blue line is, approximately, $\hat {\gamma }_j/\widehat {\mathbb {V}ar}(y_t)$, where hats indicate sample moments}{figure.caption.66}{}}
+\zref@newlabel{mdf@pagelabel-187}{\default{8.1}\page{176}\abspage{176}\mdf@pagevalue{176}}
+\newlabel{def:ergodicity}{{8.7}{176}{Mean ergodicity}{definition.8.7}{}}
+\zref@newlabel{mdf@pagelabel-188}{\default{8.1}\page{176}\abspage{176}\mdf@pagevalue{176}}
+\newlabel{def:ergod2nd}{{8.8}{176}{Second-moment ergodicity}{definition.8.8}{}}
+\zref@newlabel{mdf@pagelabel-189}{\default{8.1}\page{176}\abspage{176}\mdf@pagevalue{176}}
+\newlabel{thm:CLTcovstat}{{8.1}{176}{Sample mean of a weakly dependent stationary process}{theorem.8.1}{}}
+\newlabel{eq:TCL20}{{8.2}{176}{Sample mean of a weakly dependent stationary process}{equation.8.2}{}}
+\newlabel{eq:TCL2}{{8.3}{176}{Sample mean of a weakly dependent stationary process}{equation.8.2}{}}
+\newlabel{eq:TCL4ts}{{8.4}{176}{Sample mean of a weakly dependent stationary process}{equation.8.4}{}}
+\zref@newlabel{mdf@pagelabel-190}{\default{8.1}\page{176}\abspage{176}\mdf@pagevalue{176}}
+\newlabel{def:LRV}{{8.9}{176}{Long-run variance}{definition.8.9}{}}
 \citation{Newey_West_1987}
-\zref@newlabel{mdf@pagelabel-147}{\default{8.1}\page{154}\abspage{154}\mdf@pagevalue{154}}
-\newlabel{thm:CLTcovstat}{{8.1}{154}{Central Limit Theorem for covariance-stationary processes}{theorem.8.1}{}}
-\newlabel{eq:TCL20}{{8.2}{154}{Central Limit Theorem for covariance-stationary processes}{equation.8.2}{}}
-\newlabel{eq:TCL2}{{8.3}{154}{Central Limit Theorem for covariance-stationary processes}{equation.8.2}{}}
-\newlabel{eq:TCL4ts}{{8.4}{154}{Central Limit Theorem for covariance-stationary processes}{equation.8.2}{}}
-\zref@newlabel{mdf@pagelabel-148}{\default{8.1}\page{154}\abspage{154}\mdf@pagevalue{154}}
-\newlabel{def:LRV}{{8.9}{154}{Long-run variance}{definition.8.9}{}}
-\newlabel{eq:covSmplMean}{{8.5}{154}{Introduction to time series}{equation.8.5}{}}
-\newlabel{eq:NWest}{{8.6}{154}{Introduction to time series}{equation.8.6}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {8.5}{\ignorespaces The three samples have been simulated using the following data generating process: $x_t = \mitmu + \mitrho (x_{t-1}-\mitmu ) + \sqrt  {1-\mitrho ^2}\mitvarepsilon _t$, where $\mitvarepsilon _t \sim \symcal {N}(0,1)$. Case A: $\mitrho = 0$; Case B: $\mitrho = 0.7$; Case C: $\mitrho = 0.999$. In the three cases, $\symbb {E}(x_t)=\mitmu =2$ and $\symbb {V}ar(x_t)=1$.}}{155}{figure.caption.61}\protected@file@percent }
-\newlabel{fig:TVTCL}{{8.5}{155}{The three samples have been simulated using the following data generating process: $x_t = \mu + \rho (x_{t-1}-\mu ) + \sqrt {1-\rho ^2}\varepsilon _t$, where $\varepsilon _t \sim \mathcal {N}(0,1)$. Case A: $\rho = 0$; Case B: $\rho = 0.7$; Case C: $\rho = 0.999$. In the three cases, $\mathbb {E}(x_t)=\mu =2$ and $\mathbb {V}ar(x_t)=1$}{figure.caption.61}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {8.2}Univariate processes}{155}{section.8.2}\protected@file@percent }
-\newlabel{univariate-processes}{{8.2}{155}{Univariate processes}{section.8.2}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {8.2.1}Moving Average (MA) processes}{155}{subsection.8.2.1}\protected@file@percent }
-\newlabel{moving-average-ma-processes}{{8.2.1}{155}{Moving Average (MA) processes}{subsection.8.2.1}{}}
-\zref@newlabel{mdf@pagelabel-149}{\default{8.2.1}\page{155}\abspage{155}\mdf@pagevalue{155}}
-\zref@newlabel{mdf@pagelabel-150}{\default{8.2.1}\page{156}\abspage{156}\mdf@pagevalue{156}}
-\newlabel{def:MAq}{{8.11}{156}{MA(q) process}{definition.8.11}{}}
-\zref@newlabel{mdf@pagelabel-151}{\default{8.2.1}\page{156}\abspage{156}\mdf@pagevalue{156}}
-\newlabel{prp:covMAq}{{8.2}{156}{Covariance-stationarity of an MA(q) process}{proposition.8.2}{}}
-\newlabel{eq:autocovMA}{{8.7}{156}{Covariance-stationarity of an MA(q) process}{equation.8.7}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {8.6}{\ignorespaces Simulation of MA processes.}}{157}{figure.caption.62}\protected@file@percent }
-\newlabel{fig:simMA}{{8.6}{157}{Simulation of MA processes}{figure.caption.62}{}}
-\zref@newlabel{mdf@pagelabel-152}{\default{8.2.1}\page{157}\abspage{157}\mdf@pagevalue{157}}
-\newlabel{def:summability}{{8.12}{157}{Absolute and square summability}{definition.8.12}{}}
-\zref@newlabel{mdf@pagelabel-153}{\default{8.2.1}\page{157}\abspage{157}\mdf@pagevalue{157}}
-\newlabel{thm:infMA}{{8.2}{157}{Existence condition for an infinite MA process}{theorem.8.2}{}}
-\zref@newlabel{mdf@pagelabel-154}{\default{8.2.1}\page{158}\abspage{158}\mdf@pagevalue{158}}
-\zref@newlabel{mdf@pagelabel-155}{\default{8.2.1}\page{158}\abspage{158}\mdf@pagevalue{158}}
-\newlabel{prp:momentsMAinf}{{8.3}{158}{First two moments of an infinite MA process}{proposition.8.3}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {8.2.2}Auto-Regressive (AR) processes}{158}{subsection.8.2.2}\protected@file@percent }
-\newlabel{ARsection}{{8.2.2}{158}{Auto-Regressive (AR) processes}{subsection.8.2.2}{}}
-\zref@newlabel{mdf@pagelabel-156}{\default{8.2.2}\page{158}\abspage{158}\mdf@pagevalue{158}}
-\newlabel{def:AR1}{{8.13}{158}{First-order AR process (AR(1))}{definition.8.13}{}}
-\zref@newlabel{mdf@pagelabel-157}{\default{8.2.2}\page{159}\abspage{159}\mdf@pagevalue{159}}
-\newlabel{prp:statioAR1}{{8.4}{159}{Covariance-stationarity of an AR(1) process}{proposition.8.4}{}}
-\zref@newlabel{mdf@pagelabel-158}{\default{8.2.2}\page{159}\abspage{159}\mdf@pagevalue{159}}
-\newlabel{def:ARp}{{8.14}{159}{AR(p) process}{definition.8.14}{}}
-\newlabel{eq:AR}{{8.8}{159}{AR(p) process}{equation.8.8}{}}
-\newlabel{eq:F}{{8.9}{159}{Auto-Regressive (AR) processes}{equation.8.9}{}}
-\zref@newlabel{mdf@pagelabel-159}{\default{8.2.2}\page{160}\abspage{160}\mdf@pagevalue{160}}
-\newlabel{prp:Feigen}{{8.5}{160}{The eigenvalues of matrix F}{proposition.8.5}{}}
-\newlabel{eq:Feigen}{{8.10}{160}{The eigenvalues of matrix F}{equation.8.10}{}}
-\zref@newlabel{mdf@pagelabel-160}{\default{8.2.2}\page{160}\abspage{160}\mdf@pagevalue{160}}
-\newlabel{prp:stability}{{8.6}{160}{Covariance-stationarity of an AR(p) process}{proposition.8.6}{}}
-\newlabel{eq:outside}{{8.11}{160}{Covariance-stationarity of an AR(p) process}{equation.8.11}{}}
-\newlabel{eq:inside}{{8.12}{160}{Covariance-stationarity of an AR(p) process}{equation.8.12}{}}
-\newlabel{eq:EAR}{{8.14}{160}{Auto-Regressive (AR) processes}{equation.8.14}{}}
-\newlabel{eq:gammas}{{8.15}{161}{Auto-Regressive (AR) processes}{equation.8.15}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {8.2.3}PACF approach to identify AR/MA processes}{161}{subsection.8.2.3}\protected@file@percent }
-\newlabel{PACFapproach}{{8.2.3}{161}{PACF approach to identify AR/MA processes}{subsection.8.2.3}{}}
+\newlabel{eq:covSmplMean}{{8.5}{177}{Introduction to time series}{equation.8.5}{}}
+\newlabel{eq:NWest}{{8.6}{177}{Introduction to time series}{equation.8.6}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {8.5}{\ignorespaces The three samples have been simulated using the following data generating process: $x_t = \mitmu + \mitrho (x_{t-1}-\mitmu ) + \sqrt  {1-\mitrho ^2}\mitvarepsilon _t$, where $\mitvarepsilon _t \sim \symcal {N}(0,1)$. Case A: $\mitrho = 0$; Case B: $\mitrho = 0.7$; Case C: $\mitrho = 0.999$. In the three cases, $\symbb {E}(x_t)=\mitmu =2$ and $\symbb {V}ar(x_t)=1$.}}{177}{figure.caption.67}\protected@file@percent }
+\newlabel{fig:TVTCL}{{8.5}{177}{The three samples have been simulated using the following data generating process: $x_t = \mu + \rho (x_{t-1}-\mu ) + \sqrt {1-\rho ^2}\varepsilon _t$, where $\varepsilon _t \sim \mathcal {N}(0,1)$. Case A: $\rho = 0$; Case B: $\rho = 0.7$; Case C: $\rho = 0.999$. In the three cases, $\mathbb {E}(x_t)=\mu =2$ and $\mathbb {V}ar(x_t)=1$}{figure.caption.67}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {8.2}Univariate processes}{178}{section.8.2}\protected@file@percent }
+\newlabel{univariate-processes}{{8.2}{178}{Univariate processes}{section.8.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {8.2.1}Moving Average (MA) processes}{178}{subsection.8.2.1}\protected@file@percent }
+\newlabel{moving-average-ma-processes}{{8.2.1}{178}{Moving Average (MA) processes}{subsection.8.2.1}{}}
+\zref@newlabel{mdf@pagelabel-191}{\default{8.2.1}\page{178}\abspage{178}\mdf@pagevalue{178}}
+\zref@newlabel{mdf@pagelabel-192}{\default{8.2.1}\page{178}\abspage{178}\mdf@pagevalue{178}}
+\newlabel{def:MAq}{{8.11}{178}{MA(q) process}{definition.8.11}{}}
+\zref@newlabel{mdf@pagelabel-193}{\default{8.2.1}\page{179}\abspage{179}\mdf@pagevalue{179}}
+\newlabel{prp:covMAq}{{8.2}{179}{Covariance-stationarity of an MA(q) process}{proposition.8.2}{}}
+\newlabel{eq:autocovMA}{{8.7}{179}{Covariance-stationarity of an MA(q) process}{equation.8.7}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {8.6}{\ignorespaces Simulation of MA processes.}}{179}{figure.caption.68}\protected@file@percent }
+\newlabel{fig:simMA}{{8.6}{179}{Simulation of MA processes}{figure.caption.68}{}}
+\zref@newlabel{mdf@pagelabel-194}{\default{8.2.1}\page{180}\abspage{180}\mdf@pagevalue{180}}
+\newlabel{def:summability}{{8.12}{180}{Absolute and square summability}{definition.8.12}{}}
+\zref@newlabel{mdf@pagelabel-195}{\default{8.2.1}\page{180}\abspage{180}\mdf@pagevalue{180}}
+\newlabel{thm:infMA}{{8.2}{180}{Existence condition for an infinite MA process}{theorem.8.2}{}}
+\zref@newlabel{mdf@pagelabel-196}{\default{8.2.1}\page{180}\abspage{180}\mdf@pagevalue{180}}
+\newlabel{prp:momentsMAinf}{{8.3}{180}{First two moments of an infinite MA process}{proposition.8.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {8.2.2}Autoregressive (AR) processes}{180}{subsection.8.2.2}\protected@file@percent }
+\newlabel{ARsection}{{8.2.2}{180}{Autoregressive (AR) processes}{subsection.8.2.2}{}}
+\zref@newlabel{mdf@pagelabel-197}{\default{8.2.2}\page{181}\abspage{181}\mdf@pagevalue{181}}
+\newlabel{def:AR1}{{8.13}{181}{First-order AR process (AR(1))}{definition.8.13}{}}
+\zref@newlabel{mdf@pagelabel-198}{\default{8.2.2}\page{181}\abspage{181}\mdf@pagevalue{181}}
+\newlabel{prp:statioAR1}{{8.4}{181}{Causal covariance-stationarity of an AR(1) process}{proposition.8.4}{}}
+\zref@newlabel{mdf@pagelabel-199}{\default{8.2.2}\page{181}\abspage{181}\mdf@pagevalue{181}}
+\newlabel{def:ARp}{{8.14}{181}{AR(p) process}{definition.8.14}{}}
+\newlabel{eq:AR}{{8.8}{181}{AR(p) process}{equation.8.8}{}}
+\zref@newlabel{mdf@pagelabel-200}{\default{8.2.2}\page{182}\abspage{182}\mdf@pagevalue{182}}
+\newlabel{eq:F}{{8.9}{182}{Autoregressive (AR) processes}{equation.8.9}{}}
+\zref@newlabel{mdf@pagelabel-201}{\default{8.2.2}\page{182}\abspage{182}\mdf@pagevalue{182}}
+\newlabel{prp:Feigen}{{8.5}{182}{The eigenvalues of matrix F}{proposition.8.5}{}}
+\newlabel{eq:Feigen}{{8.10}{182}{The eigenvalues of matrix F}{equation.8.10}{}}
+\zref@newlabel{mdf@pagelabel-202}{\default{8.2.2}\page{182}\abspage{182}\mdf@pagevalue{182}}
+\newlabel{prp:stability}{{8.6}{182}{Covariance-stationarity of an AR(p) process}{proposition.8.6}{}}
+\newlabel{eq:outside}{{8.11}{182}{Covariance-stationarity of an AR(p) process}{equation.8.11}{}}
+\newlabel{eq:inside}{{8.12}{182}{Covariance-stationarity of an AR(p) process}{equation.8.12}{}}
+\newlabel{eq:EAR}{{8.14}{183}{Autoregressive (AR) processes}{equation.8.14}{}}
+\newlabel{eq:gammas}{{8.15}{183}{Autoregressive (AR) processes}{equation.8.15}{}}
 \citation{DEGOOIJER2006443}
-\zref@newlabel{mdf@pagelabel-161}{\default{8.2.3}\page{162}\abspage{162}\mdf@pagevalue{162}}
-\newlabel{def:partialAC}{{8.15}{162}{Partial auto-correlation}{definition.8.15}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {8.3}Forecasting}{162}{section.8.3}\protected@file@percent }
-\newlabel{forecasting}{{8.3}{162}{Forecasting}{section.8.3}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {8.7}{\ignorespaces ACF/PACF analysis of two processes (MA process on the left, AR on the right).}}{163}{figure.caption.64}\protected@file@percent }
-\newlabel{fig:pacf}{{8.7}{163}{ACF/PACF analysis of two processes (MA process on the left, AR on the right)}{figure.caption.64}{}}
-\zref@newlabel{mdf@pagelabel-162}{\default{8.3}\page{163}\abspage{163}\mdf@pagevalue{163}}
-\newlabel{prp:smallestMSE}{{8.7}{163}{Smallest MSE}{proposition.8.7}{}}
-\zref@newlabel{mdf@pagelabel-163}{\default{8.3}\page{164}\abspage{164}\mdf@pagevalue{164}}
-\newlabel{prp:smallestMSElinear}{{8.8}{164}{}{proposition.8.8}{}}
-\newlabel{eq:proj}{{8.16}{164}{}{equation.8.16}{}}
-\newlabel{eq:linproj}{{8.17}{164}{Forecasting}{equation.8.17}{}}
-\zref@newlabel{mdf@pagelabel-164}{\default{8.3}\page{164}\abspage{164}\mdf@pagevalue{164}}
-\newlabel{exm:fcstMAq}{{8.3}{164}{Forecasting an MA(q) process}{example.8.3}{}}
-\zref@newlabel{mdf@pagelabel-165}{\default{8.3}\page{165}\abspage{165}\mdf@pagevalue{165}}
-\zref@newlabel{mdf@pagelabel-166}{\default{8.3}\page{165}\abspage{165}\mdf@pagevalue{165}}
-\newlabel{exm:fcstARp}{{8.4}{165}{Forecasting an AR(p) process}{example.8.4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {8.2.3}PACF approach to identify AR/MA processes}{184}{subsection.8.2.3}\protected@file@percent }
+\newlabel{PACFapproach}{{8.2.3}{184}{PACF approach to identify AR/MA processes}{subsection.8.2.3}{}}
+\zref@newlabel{mdf@pagelabel-203}{\default{8.2.3}\page{184}\abspage{184}\mdf@pagevalue{184}}
+\newlabel{def:partialAC}{{8.15}{184}{Partial auto-correlation}{definition.8.15}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {8.3}Forecasting}{184}{section.8.3}\protected@file@percent }
+\newlabel{forecasting}{{8.3}{184}{Forecasting}{section.8.3}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {8.7}{\ignorespaces ACF/PACF analysis of two processes (MA process on the left, AR on the right).}}{185}{figure.caption.70}\protected@file@percent }
+\newlabel{fig:pacf}{{8.7}{185}{ACF/PACF analysis of two processes (MA process on the left, AR on the right)}{figure.caption.70}{}}
+\zref@newlabel{mdf@pagelabel-204}{\default{8.3}\page{185}\abspage{185}\mdf@pagevalue{185}}
+\newlabel{prp:smallestMSE}{{8.7}{185}{Smallest MSE}{proposition.8.7}{}}
+\zref@newlabel{mdf@pagelabel-205}{\default{8.3}\page{186}\abspage{186}\mdf@pagevalue{186}}
+\newlabel{prp:smallestMSElinear}{{8.8}{186}{}{proposition.8.8}{}}
+\newlabel{eq:proj}{{8.16}{186}{}{equation.8.16}{}}
+\newlabel{eq:linproj}{{8.17}{186}{Forecasting}{equation.8.17}{}}
+\zref@newlabel{mdf@pagelabel-206}{\default{8.3}\page{186}\abspage{186}\mdf@pagevalue{186}}
+\newlabel{exm:fcstMAq}{{8.3}{186}{Forecasting an MA(q) process}{example.8.3}{}}
+\zref@newlabel{mdf@pagelabel-207}{\default{8.3}\page{187}\abspage{187}\mdf@pagevalue{187}}
+\zref@newlabel{mdf@pagelabel-208}{\default{8.3}\page{187}\abspage{187}\mdf@pagevalue{187}}
+\newlabel{exm:fcstARp}{{8.4}{187}{Forecasting an AR(p) process}{example.8.4}{}}
 \citation{Diebold_Mariano_1995}
 \citation{Newey_West_1987}
 \citation{JST_2017}
-\zref@newlabel{mdf@pagelabel-167}{\default{8.3}\page{167}\abspage{167}\mdf@pagevalue{167}}
-\newlabel{exm:SwissOutOfSample}{{8.5}{167}{Forecasting Swiss GDP growth}{example.8.5}{}}
-\zref@newlabel{mdf@pagelabel-168}{\default{8.3}\page{168}\abspage{168}\mdf@pagevalue{168}}
-\@writefile{toc}{\contentsline {chapter}{\numberline {9}Appendix}{169}{chapter.9}\protected@file@percent }
+\zref@newlabel{mdf@pagelabel-209}{\default{8.3}\page{189}\abspage{189}\mdf@pagevalue{189}}
+\newlabel{exm:SwissOutOfSample}{{8.5}{189}{Forecasting Swiss GDP growth}{example.8.5}{}}
+\newlabel{chapter-recap-7}{{8.3}{190}{Chapter recap}{section*.71}{}}
+\@writefile{toc}{\contentsline {section}{Chapter recap}{190}{section*.71}\protected@file@percent }
+\zref@newlabel{mdf@pagelabel-210}{\default{8.3}\page{190}\abspage{190}\mdf@pagevalue{190}}
+\@writefile{toc}{\contentsline {section}{\numberline {8.4}Exercises}{191}{section.8.4}\protected@file@percent }
+\newlabel{time-series-exercises}{{8.4}{191}{Exercises}{section.8.4}{}}
+\zref@newlabel{mdf@pagelabel-211}{\default{8.4}\page{191}\abspage{191}\mdf@pagevalue{191}}
+\newlabel{exr:time-series-stationarity}{{8.1}{191}{Stationarity of autoregressive processes}{exercise.8.1}{}}
+\zref@newlabel{mdf@pagelabel-212}{\default{8.4}\page{191}\abspage{191}\mdf@pagevalue{191}}
+\newlabel{exr:time-series-yule-walker}{{8.2}{191}{Yule-Walker equations for an AR(2)}{exercise.8.2}{}}
+\zref@newlabel{mdf@pagelabel-213}{\default{8.4}\page{192}\abspage{192}\mdf@pagevalue{192}}
+\newlabel{exr:time-series-forecasting}{{8.3}{192}{Two-step forecasting}{exercise.8.3}{}}
+\zref@newlabel{mdf@pagelabel-214}{\default{8.4}\page{192}\abspage{192}\mdf@pagevalue{192}}
+\newlabel{exr:time-series-ar2-true-false}{{8.4}{192}{AR(2) forecasts and variances: true or false?}{exercise.8.4}{}}
+\zref@newlabel{mdf@pagelabel-215}{\default{8.4}\page{193}\abspage{193}\mdf@pagevalue{193}}
+\newlabel{exr:time-series-sample-mean-true-false}{{8.5}{193}{Serial dependence and the sample mean: true or false?}{exercise.8.5}{}}
+\@writefile{toc}{\contentsline {chapter}{\numberline {9}Appendix}{195}{chapter.9}\protected@file@percent }
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\newlabel{append}{{9}{169}{Appendix}{chapter.9}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {9.1}Principal component analysis (PCA)}{169}{section.9.1}\protected@file@percent }
-\newlabel{PCAapp}{{9.1}{169}{Principal component analysis (PCA)}{section.9.1}{}}
-\newlabel{eq:PCA11}{{9.1}{169}{Principal component analysis (PCA)}{equation.9.1}{}}
+\newlabel{append}{{9}{195}{Appendix}{chapter.9}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {9.1}Principal component analysis (PCA)}{195}{section.9.1}\protected@file@percent }
+\newlabel{PCAapp}{{9.1}{195}{Principal component analysis (PCA)}{section.9.1}{}}
+\newlabel{eq:PCA11}{{9.1}{195}{Principal component analysis (PCA)}{equation.9.1}{}}
 \citation{Litterman_Scheinkman_1991}
-\@writefile{lof}{\contentsline {figure}{\numberline {9.1}{\ignorespaces Some PCA results. The dataset contains 8 time series of U.S. interest rates of different maturities.}}{171}{figure.caption.65}\protected@file@percent }
-\newlabel{fig:USydsPCA1}{{9.1}{171}{Some PCA results. The dataset contains 8 time series of U.S. interest rates of different maturities}{figure.caption.65}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {9.2}Linear algebra: definitions and results}{171}{section.9.2}\protected@file@percent }
-\newlabel{LinAlgebra}{{9.2}{171}{Linear algebra: definitions and results}{section.9.2}{}}
-\zref@newlabel{mdf@pagelabel-169}{\default{9.2}\page{172}\abspage{172}\mdf@pagevalue{172}}
-\newlabel{def:determinant}{{9.1}{172}{Eigenvalues}{definition.9.1}{}}
-\zref@newlabel{mdf@pagelabel-170}{\default{9.2}\page{172}\abspage{172}\mdf@pagevalue{172}}
-\newlabel{prp:determinant}{{9.1}{172}{Properties of the determinant}{proposition.9.1}{}}
-\zref@newlabel{mdf@pagelabel-171}{\default{9.2}\page{172}\abspage{172}\mdf@pagevalue{172}}
-\newlabel{def:MoorPenrose}{{9.2}{172}{Moore-Penrose inverse}{definition.9.2}{}}
-\zref@newlabel{mdf@pagelabel-172}{\default{9.2}\page{172}\abspage{172}\mdf@pagevalue{172}}
-\newlabel{prp:MoorPenrose}{{9.2}{172}{Properties of the Moore-Penrose inverse}{proposition.9.2}{}}
-\zref@newlabel{mdf@pagelabel-173}{\default{9.2}\page{172}\abspage{172}\mdf@pagevalue{172}}
-\newlabel{def:idempotent}{{9.3}{172}{Idempotent matrix}{definition.9.3}{}}
-\zref@newlabel{mdf@pagelabel-174}{\default{9.2}\page{172}\abspage{172}\mdf@pagevalue{172}}
-\newlabel{prp:rootsidempotent}{{9.3}{172}{Roots of an idempotent matrix}{proposition.9.3}{}}
-\zref@newlabel{mdf@pagelabel-175}{\default{9.2}\page{173}\abspage{173}\mdf@pagevalue{173}}
-\newlabel{prp:chi2idempotent}{{9.4}{173}{Idempotent matrix and chi-square distribution}{proposition.9.4}{}}
-\zref@newlabel{mdf@pagelabel-176}{\default{9.2}\page{173}\abspage{173}\mdf@pagevalue{173}}
-\newlabel{prp:constrainedLS}{{9.5}{173}{Constrained least squares}{proposition.9.5}{}}
-\zref@newlabel{mdf@pagelabel-177}{\default{9.2}\page{173}\abspage{173}\mdf@pagevalue{173}}
-\newlabel{prp:inversepartitioned}{{9.6}{173}{Inverse of a partitioned matrix}{proposition.9.6}{}}
-\zref@newlabel{mdf@pagelabel-178}{\default{9.2}\page{173}\abspage{173}\mdf@pagevalue{173}}
-\newlabel{def:FOD}{{9.4}{173}{Matrix derivatives}{definition.9.4}{}}
-\zref@newlabel{mdf@pagelabel-179}{\default{9.2}\page{174}\abspage{174}\mdf@pagevalue{174}}
-\newlabel{prp:partial}{{9.7}{174}{}{proposition.9.7}{}}
-\zref@newlabel{mdf@pagelabel-180}{\default{9.2}\page{174}\abspage{174}\mdf@pagevalue{174}}
-\newlabel{prp:absMs}{{9.8}{174}{Square and absolute summability}{proposition.9.8}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {9.3}Statistical analysis: definitions and results}{174}{section.9.3}\protected@file@percent }
-\newlabel{variousResults}{{9.3}{174}{Statistical analysis: definitions and results}{section.9.3}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {9.3.1}Moments and statistics}{174}{subsection.9.3.1}\protected@file@percent }
-\newlabel{moments-and-statistics}{{9.3.1}{174}{Moments and statistics}{subsection.9.3.1}{}}
-\zref@newlabel{mdf@pagelabel-181}{\default{9.3.1}\page{174}\abspage{174}\mdf@pagevalue{174}}
-\newlabel{def:partialcorrel}{{9.5}{174}{Partial correlation}{definition.9.5}{}}
-\newlabel{eq:pc}{{9.2}{174}{Partial correlation}{equation.9.2}{}}
-\zref@newlabel{mdf@pagelabel-182}{\default{9.3.1}\page{174}\abspage{174}\mdf@pagevalue{174}}
-\newlabel{def:skewnesskurtosis}{{9.6}{174}{Skewness and kurtosis}{definition.9.6}{}}
-\zref@newlabel{mdf@pagelabel-183}{\default{9.3.1}\page{175}\abspage{175}\mdf@pagevalue{175}}
-\newlabel{thm:CauchySchwarz}{{9.1}{175}{Cauchy-Schwarz inequality}{theorem.9.1}{}}
-\zref@newlabel{mdf@pagelabel-184}{\default{9.3.1}\page{175}\abspage{175}\mdf@pagevalue{175}}
-\newlabel{def:asmyptlevelAppendix}{{9.7}{175}{Asymptotic level}{definition.9.7}{}}
-\zref@newlabel{mdf@pagelabel-185}{\default{9.3.1}\page{175}\abspage{175}\mdf@pagevalue{175}}
-\newlabel{def:asmyptconsisttestAppendix}{{9.8}{175}{Asymptotically consistent test}{definition.9.8}{}}
-\zref@newlabel{mdf@pagelabel-186}{\default{9.3.1}\page{175}\abspage{175}\mdf@pagevalue{175}}
-\newlabel{def:Kullback}{{9.9}{175}{Kullback discrepancy}{definition.9.9}{}}
-\zref@newlabel{mdf@pagelabel-187}{\default{9.3.1}\page{176}\abspage{176}\mdf@pagevalue{176}}
-\newlabel{prp:Kullback}{{9.9}{176}{Properties of the Kullback discrepancy}{proposition.9.9}{}}
-\zref@newlabel{mdf@pagelabel-188}{\default{9.3.1}\page{176}\abspage{176}\mdf@pagevalue{176}}
-\newlabel{def:characteristic}{{9.10}{176}{Characteristic function}{definition.9.10}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {9.3.2}Standard distributions}{176}{subsection.9.3.2}\protected@file@percent }
-\newlabel{standard-distributions}{{9.3.2}{176}{Standard distributions}{subsection.9.3.2}{}}
-\zref@newlabel{mdf@pagelabel-189}{\default{9.3.2}\page{176}\abspage{176}\mdf@pagevalue{176}}
-\newlabel{def:fstatistics}{{9.11}{176}{F distribution}{definition.9.11}{}}
-\zref@newlabel{mdf@pagelabel-190}{\default{9.3.2}\page{176}\abspage{176}\mdf@pagevalue{176}}
-\newlabel{def:tStudent}{{9.12}{176}{Student-t distribution}{definition.9.12}{}}
-\zref@newlabel{mdf@pagelabel-191}{\default{9.3.2}\page{176}\abspage{176}\mdf@pagevalue{176}}
-\newlabel{def:chi2}{{9.13}{176}{Chi-square distribution}{definition.9.13}{}}
-\zref@newlabel{mdf@pagelabel-192}{\default{9.3.2}\page{176}\abspage{176}\mdf@pagevalue{176}}
-\newlabel{def:Cauchy}{{9.14}{176}{Cauchy distribution}{definition.9.14}{}}
-\zref@newlabel{mdf@pagelabel-193}{\default{9.3.2}\page{177}\abspage{177}\mdf@pagevalue{177}}
-\@writefile{lof}{\contentsline {figure}{\numberline {9.2}{\ignorespaces Pdf of the Cauchy distribution ($\mitmu =0$, $\mitgamma =1$).}}{177}{figure.caption.66}\protected@file@percent }
-\newlabel{fig:Cauchy}{{9.2}{177}{Pdf of the Cauchy distribution ($\mu =0$, $\gamma =1$)}{figure.caption.66}{}}
-\zref@newlabel{mdf@pagelabel-194}{\default{9.3.2}\page{177}\abspage{177}\mdf@pagevalue{177}}
-\newlabel{prp:waldtypeproduct}{{9.10}{177}{Inner product of a multivariate Gaussian variable}{proposition.9.10}{}}
-\zref@newlabel{mdf@pagelabel-195}{\default{9.3.2}\page{178}\abspage{178}\mdf@pagevalue{178}}
-\newlabel{def:GEVdistri}{{9.15}{178}{Generalized Extreme Value (GEV) distribution}{definition.9.15}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {9.3.3}Stochastic convergences}{178}{subsection.9.3.3}\protected@file@percent }
-\newlabel{StochConvergences}{{9.3.3}{178}{Stochastic convergences}{subsection.9.3.3}{}}
-\zref@newlabel{mdf@pagelabel-196}{\default{9.3.3}\page{178}\abspage{178}\mdf@pagevalue{178}}
-\newlabel{prp:chebychev}{{9.11}{178}{Chebychev's inequality}{proposition.9.11}{}}
-\zref@newlabel{mdf@pagelabel-197}{\default{9.3.3}\page{178}\abspage{178}\mdf@pagevalue{178}}
-\newlabel{def:convergenceproba}{{9.16}{178}{Convergence in probability}{definition.9.16}{}}
-\zref@newlabel{mdf@pagelabel-198}{\default{9.3.3}\page{178}\abspage{178}\mdf@pagevalue{178}}
-\newlabel{def:convergenceLr}{{9.17}{178}{Convergence in the Lr norm}{definition.9.17}{}}
-\zref@newlabel{mdf@pagelabel-199}{\default{9.3.3}\page{179}\abspage{179}\mdf@pagevalue{179}}
-\newlabel{def:convergenceAlmost}{{9.18}{179}{Almost sure convergence}{definition.9.18}{}}
-\zref@newlabel{mdf@pagelabel-200}{\default{9.3.3}\page{179}\abspage{179}\mdf@pagevalue{179}}
-\newlabel{def:cvgceDistri}{{9.19}{179}{Convergence in distribution}{definition.9.19}{}}
-\zref@newlabel{mdf@pagelabel-201}{\default{9.3.3}\page{179}\abspage{179}\mdf@pagevalue{179}}
-\newlabel{prp:Slutsky}{{9.12}{179}{Rules for limiting distributions (Slutsky)}{proposition.9.12}{}}
-\zref@newlabel{mdf@pagelabel-202}{\default{9.3.3}\page{180}\abspage{180}\mdf@pagevalue{180}}
-\newlabel{prp:implicationsconv}{{9.13}{180}{Implications of stochastic convergences}{proposition.9.13}{}}
-\newlabel{eq:convgce1}{{9.3}{180}{Stochastic convergences}{}{}}
-\newlabel{eq:convgce2}{{9.3}{180}{Stochastic convergences}{equation.9.3}{}}
-\zref@newlabel{mdf@pagelabel-203}{\default{9.3.3}\page{180}\abspage{180}\mdf@pagevalue{180}}
-\newlabel{prp:cvgce11}{{9.14}{180}{Convergence in distribution to a constant}{proposition.9.14}{}}
-\zref@newlabel{mdf@pagelabel-204}{\default{9.3.3}\page{181}\abspage{181}\mdf@pagevalue{181}}
-\newlabel{exm:plimButNotLr}{{9.1}{181}{Convergence in probability but not $L^r$}{example.9.1}{}}
-\zref@newlabel{mdf@pagelabel-205}{\default{9.3.3}\page{181}\abspage{181}\mdf@pagevalue{181}}
-\newlabel{thm:cauchycritstatic}{{9.2}{181}{Cauchy criterion (non-stochastic case)}{theorem.9.2}{}}
-\zref@newlabel{mdf@pagelabel-206}{\default{9.3.3}\page{181}\abspage{181}\mdf@pagevalue{181}}
-\newlabel{thm:cauchycritstochastic}{{9.3}{181}{Cauchy criterion (stochastic case)}{theorem.9.3}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {9.3.4}Central limit theorem}{181}{subsection.9.3.4}\protected@file@percent }
-\newlabel{CLTappend}{{9.3.4}{181}{Central limit theorem}{subsection.9.3.4}{}}
-\zref@newlabel{mdf@pagelabel-207}{\default{9.3.4}\page{181}\abspage{181}\mdf@pagevalue{181}}
-\newlabel{thm:LLNappendix}{{9.4}{181}{Law of large numbers}{theorem.9.4}{}}
-\zref@newlabel{mdf@pagelabel-208}{\default{9.3.4}\page{182}\abspage{182}\mdf@pagevalue{182}}
-\newlabel{thm:LindbergLevyCLTAppendix}{{9.5}{182}{Lindberg-Levy Central limit theorem, CLT}{theorem.9.5}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {9.4}Some properties of Gaussian variables}{182}{section.9.4}\protected@file@percent }
-\newlabel{GaussianVar}{{9.4}{182}{Some properties of Gaussian variables}{section.9.4}{}}
-\zref@newlabel{mdf@pagelabel-209}{\default{9.4}\page{182}\abspage{182}\mdf@pagevalue{182}}
-\newlabel{prp:bandsindependent}{{9.15}{182}{}{proposition.9.15}{}}
-\zref@newlabel{mdf@pagelabel-210}{\default{9.4}\page{182}\abspage{182}\mdf@pagevalue{182}}
-\newlabel{prp:update}{{9.16}{182}{Bayesian update in a vector of Gaussian variables}{proposition.9.16}{}}
-\zref@newlabel{mdf@pagelabel-211}{\default{9.4}\page{183}\abspage{183}\mdf@pagevalue{183}}
-\newlabel{prp:truncated}{{9.17}{183}{Truncated distributions}{proposition.9.17}{}}
-\newlabel{eq:Etrunc}{{9.4}{183}{Truncated distributions}{equation.9.4}{}}
-\newlabel{eq:Vtrunc}{{9.5}{183}{Truncated distributions}{equation.9.5}{}}
-\newlabel{eq:Vtrunc2}{{9.6}{183}{Truncated distributions}{equation.9.6}{}}
-\zref@newlabel{mdf@pagelabel-212}{\default{9.4}\page{183}\abspage{183}\mdf@pagevalue{183}}
-\newlabel{prp:pdfMultivarGaussian}{{9.18}{183}{p.d.f. of a multivariate Gaussian variable}{proposition.9.18}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {9.5}Proofs}{183}{section.9.5}\protected@file@percent }
-\newlabel{AppendixProof}{{9.5}{183}{Proofs}{section.9.5}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {9.3}{\ignorespaces $\symbb {E}(X|X<b)$ as a function of $b$ when $X\sim \symcal {N}(0,1)$ (in black).}}{184}{figure.caption.67}\protected@file@percent }
-\newlabel{fig:inverseMills}{{9.3}{184}{$\mathbb {E}(X|X<b)$ as a function of $b$ when $X\sim \mathcal {N}(0,1)$ (in black)}{figure.caption.67}{}}
-\newlabel{eq:XXX}{{9.7}{185}{Proofs}{equation.9.7}{}}
-\newlabel{eq:lm10}{{9.8}{186}{Proofs}{equation.9.8}{}}
-\newlabel{eq:lm1}{{9.9}{186}{Proofs}{equation.9.9}{}}
-\newlabel{eq:lm29}{{9.10}{186}{Proofs}{equation.9.10}{}}
-\newlabel{eq:lm30}{{9.11}{186}{Proofs}{equation.9.11}{}}
-\newlabel{eq:lm2}{{9.12}{186}{Proofs}{equation.9.12}{}}
-\newlabel{eq:lm3}{{9.13}{186}{Proofs}{equation.9.13}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {9.1}{\ignorespaces Some PCA results. The dataset contains 8 time series of U.S. interest rates of different maturities.}}{197}{figure.caption.72}\protected@file@percent }
+\newlabel{fig:USydsPCA1}{{9.1}{197}{Some PCA results. The dataset contains 8 time series of U.S. interest rates of different maturities}{figure.caption.72}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {9.2}Linear algebra: definitions and results}{198}{section.9.2}\protected@file@percent }
+\newlabel{LinAlgebra}{{9.2}{198}{Linear algebra: definitions and results}{section.9.2}{}}
+\zref@newlabel{mdf@pagelabel-216}{\default{9.2}\page{198}\abspage{198}\mdf@pagevalue{198}}
+\newlabel{def:eigenvalues}{{9.1}{198}{Eigenvalues}{definition.9.1}{}}
+\zref@newlabel{mdf@pagelabel-217}{\default{9.2}\page{198}\abspage{198}\mdf@pagevalue{198}}
+\newlabel{prp:determinant}{{9.1}{198}{Properties of the determinant}{proposition.9.1}{}}
+\zref@newlabel{mdf@pagelabel-218}{\default{9.2}\page{198}\abspage{198}\mdf@pagevalue{198}}
+\newlabel{def:MoorPenrose}{{9.2}{198}{Moore-Penrose inverse}{definition.9.2}{}}
+\zref@newlabel{mdf@pagelabel-219}{\default{9.2}\page{198}\abspage{198}\mdf@pagevalue{198}}
+\newlabel{prp:MoorPenrose-properties}{{9.2}{198}{Properties of the Moore-Penrose inverse}{proposition.9.2}{}}
+\zref@newlabel{mdf@pagelabel-220}{\default{9.2}\page{198}\abspage{198}\mdf@pagevalue{198}}
+\newlabel{def:idempotent}{{9.3}{198}{Idempotent matrix}{definition.9.3}{}}
+\zref@newlabel{mdf@pagelabel-221}{\default{9.2}\page{199}\abspage{199}\mdf@pagevalue{199}}
+\newlabel{prp:rootsidempotent}{{9.3}{199}{Roots of an idempotent matrix}{proposition.9.3}{}}
+\zref@newlabel{mdf@pagelabel-222}{\default{9.2}\page{199}\abspage{199}\mdf@pagevalue{199}}
+\newlabel{prp:chi2idempotent}{{9.4}{199}{Idempotent matrix and chi-square distribution}{proposition.9.4}{}}
+\zref@newlabel{mdf@pagelabel-223}{\default{9.2}\page{199}\abspage{199}\mdf@pagevalue{199}}
+\newlabel{prp:constrainedLS}{{9.5}{199}{Constrained least squares}{proposition.9.5}{}}
+\zref@newlabel{mdf@pagelabel-224}{\default{9.2}\page{199}\abspage{199}\mdf@pagevalue{199}}
+\newlabel{prp:inversepartitioned}{{9.6}{199}{Inverse of a partitioned matrix}{proposition.9.6}{}}
+\zref@newlabel{mdf@pagelabel-225}{\default{9.2}\page{199}\abspage{199}\mdf@pagevalue{199}}
+\newlabel{def:FOD}{{9.4}{199}{Matrix derivatives}{definition.9.4}{}}
+\zref@newlabel{mdf@pagelabel-226}{\default{9.2}\page{200}\abspage{200}\mdf@pagevalue{200}}
+\zref@newlabel{mdf@pagelabel-227}{\default{9.2}\page{200}\abspage{200}\mdf@pagevalue{200}}
+\newlabel{prp:partial}{{9.7}{200}{}{proposition.9.7}{}}
+\zref@newlabel{mdf@pagelabel-228}{\default{9.2}\page{200}\abspage{200}\mdf@pagevalue{200}}
+\newlabel{prp:absMs}{{9.8}{200}{Square and absolute summability}{proposition.9.8}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {9.3}Statistical analysis: definitions and results}{200}{section.9.3}\protected@file@percent }
+\newlabel{variousResults}{{9.3}{200}{Statistical analysis: definitions and results}{section.9.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {9.3.1}Moments and statistics}{200}{subsection.9.3.1}\protected@file@percent }
+\newlabel{moments-and-statistics}{{9.3.1}{200}{Moments and statistics}{subsection.9.3.1}{}}
+\zref@newlabel{mdf@pagelabel-229}{\default{9.3.1}\page{200}\abspage{200}\mdf@pagevalue{200}}
+\newlabel{def:partialcorrel}{{9.5}{200}{Partial correlation}{definition.9.5}{}}
+\newlabel{eq:pc}{{9.2}{200}{Partial correlation}{equation.9.2}{}}
+\zref@newlabel{mdf@pagelabel-230}{\default{9.3.1}\page{200}\abspage{200}\mdf@pagevalue{200}}
+\newlabel{def:skewnesskurtosis}{{9.6}{200}{Skewness and kurtosis}{definition.9.6}{}}
+\zref@newlabel{mdf@pagelabel-231}{\default{9.3.1}\page{201}\abspage{201}\mdf@pagevalue{201}}
+\zref@newlabel{mdf@pagelabel-232}{\default{9.3.1}\page{201}\abspage{201}\mdf@pagevalue{201}}
+\newlabel{thm:CauchySchwarz}{{9.1}{201}{Cauchy-Schwarz inequality}{theorem.9.1}{}}
+\zref@newlabel{mdf@pagelabel-233}{\default{9.3.1}\page{201}\abspage{201}\mdf@pagevalue{201}}
+\newlabel{def:asmyptlevelAppendix}{{9.7}{201}{Asymptotic level}{definition.9.7}{}}
+\zref@newlabel{mdf@pagelabel-234}{\default{9.3.1}\page{201}\abspage{201}\mdf@pagevalue{201}}
+\newlabel{def:asmyptconsisttestAppendix}{{9.8}{201}{Asymptotically consistent test}{definition.9.8}{}}
+\zref@newlabel{mdf@pagelabel-235}{\default{9.3.1}\page{201}\abspage{201}\mdf@pagevalue{201}}
+\newlabel{def:Kullback}{{9.9}{201}{Kullback discrepancy}{definition.9.9}{}}
+\zref@newlabel{mdf@pagelabel-236}{\default{9.3.1}\page{202}\abspage{202}\mdf@pagevalue{202}}
+\newlabel{prp:Kullback-properties}{{9.9}{202}{Properties of the Kullback discrepancy}{proposition.9.9}{}}
+\zref@newlabel{mdf@pagelabel-237}{\default{9.3.1}\page{202}\abspage{202}\mdf@pagevalue{202}}
+\newlabel{def:characteristic}{{9.10}{202}{Characteristic function}{definition.9.10}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {9.3.2}Standard distributions}{202}{subsection.9.3.2}\protected@file@percent }
+\newlabel{standard-distributions}{{9.3.2}{202}{Standard distributions}{subsection.9.3.2}{}}
+\zref@newlabel{mdf@pagelabel-238}{\default{9.3.2}\page{202}\abspage{202}\mdf@pagevalue{202}}
+\newlabel{def:fstatistics}{{9.11}{202}{F distribution}{definition.9.11}{}}
+\zref@newlabel{mdf@pagelabel-239}{\default{9.3.2}\page{202}\abspage{202}\mdf@pagevalue{202}}
+\newlabel{def:tStudent}{{9.12}{202}{Student-t distribution}{definition.9.12}{}}
+\zref@newlabel{mdf@pagelabel-240}{\default{9.3.2}\page{202}\abspage{202}\mdf@pagevalue{202}}
+\newlabel{def:chi2}{{9.13}{202}{Chi-square distribution}{definition.9.13}{}}
+\zref@newlabel{mdf@pagelabel-241}{\default{9.3.2}\page{202}\abspage{202}\mdf@pagevalue{202}}
+\newlabel{def:Cauchy}{{9.14}{202}{Cauchy distribution}{definition.9.14}{}}
+\zref@newlabel{mdf@pagelabel-242}{\default{9.3.2}\page{203}\abspage{203}\mdf@pagevalue{203}}
+\@writefile{lof}{\contentsline {figure}{\numberline {9.2}{\ignorespaces Pdf of the Cauchy distribution ($\mitmu =0$, $\mitgamma =1$).}}{203}{figure.caption.73}\protected@file@percent }
+\newlabel{fig:Cauchy}{{9.2}{203}{Pdf of the Cauchy distribution ($\mu =0$, $\gamma =1$)}{figure.caption.73}{}}
+\zref@newlabel{mdf@pagelabel-243}{\default{9.3.2}\page{203}\abspage{203}\mdf@pagevalue{203}}
+\newlabel{prp:waldtypeproduct}{{9.10}{203}{Inner product of a multivariate Gaussian variable}{proposition.9.10}{}}
+\zref@newlabel{mdf@pagelabel-244}{\default{9.3.2}\page{204}\abspage{204}\mdf@pagevalue{204}}
+\newlabel{def:GEVdistri}{{9.15}{204}{Generalized Extreme Value (GEV) distribution}{definition.9.15}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {9.3.3}Stochastic convergences}{204}{subsection.9.3.3}\protected@file@percent }
+\newlabel{StochConvergences}{{9.3.3}{204}{Stochastic convergences}{subsection.9.3.3}{}}
+\zref@newlabel{mdf@pagelabel-245}{\default{9.3.3}\page{204}\abspage{204}\mdf@pagevalue{204}}
+\newlabel{prp:chebychev}{{9.11}{204}{Chebychev's inequality}{proposition.9.11}{}}
+\zref@newlabel{mdf@pagelabel-246}{\default{9.3.3}\page{204}\abspage{204}\mdf@pagevalue{204}}
+\newlabel{def:convergenceproba}{{9.16}{204}{Convergence in probability}{definition.9.16}{}}
+\zref@newlabel{mdf@pagelabel-247}{\default{9.3.3}\page{204}\abspage{204}\mdf@pagevalue{204}}
+\newlabel{def:convergenceLr}{{9.17}{204}{Convergence in the Lr norm}{definition.9.17}{}}
+\zref@newlabel{mdf@pagelabel-248}{\default{9.3.3}\page{205}\abspage{205}\mdf@pagevalue{205}}
+\newlabel{def:convergenceAlmost}{{9.18}{205}{Almost sure convergence}{definition.9.18}{}}
+\zref@newlabel{mdf@pagelabel-249}{\default{9.3.3}\page{205}\abspage{205}\mdf@pagevalue{205}}
+\newlabel{def:cvgceDistri}{{9.19}{205}{Convergence in distribution}{definition.9.19}{}}
+\zref@newlabel{mdf@pagelabel-250}{\default{9.3.3}\page{205}\abspage{205}\mdf@pagevalue{205}}
+\newlabel{prp:Slutsky}{{9.12}{205}{Rules for limiting distributions (Slutsky)}{proposition.9.12}{}}
+\zref@newlabel{mdf@pagelabel-251}{\default{9.3.3}\page{206}\abspage{206}\mdf@pagevalue{206}}
+\newlabel{prp:implicationsconv}{{9.13}{206}{Implications of stochastic convergences}{proposition.9.13}{}}
+\newlabel{eq:convgce1}{{9.3}{206}{Stochastic convergences}{}{}}
+\newlabel{eq:convgce2}{{9.3}{206}{Stochastic convergences}{equation.9.3}{}}
+\zref@newlabel{mdf@pagelabel-252}{\default{9.3.3}\page{206}\abspage{206}\mdf@pagevalue{206}}
+\newlabel{prp:cvgce11}{{9.14}{206}{Convergence in distribution to a constant}{proposition.9.14}{}}
+\zref@newlabel{mdf@pagelabel-253}{\default{9.3.3}\page{207}\abspage{207}\mdf@pagevalue{207}}
+\newlabel{exm:plimButNotLr}{{9.1}{207}{Convergence in probability but not $L^r$}{example.9.1}{}}
+\zref@newlabel{mdf@pagelabel-254}{\default{9.3.3}\page{207}\abspage{207}\mdf@pagevalue{207}}
+\newlabel{thm:cauchycritstatic}{{9.2}{207}{Cauchy criterion (non-stochastic case)}{theorem.9.2}{}}
+\zref@newlabel{mdf@pagelabel-255}{\default{9.3.3}\page{207}\abspage{207}\mdf@pagevalue{207}}
+\newlabel{thm:cauchycritstochastic}{{9.3}{207}{Cauchy criterion (stochastic case)}{theorem.9.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {9.3.4}Central limit theorem}{207}{subsection.9.3.4}\protected@file@percent }
+\newlabel{CLTappend}{{9.3.4}{207}{Central limit theorem}{subsection.9.3.4}{}}
+\zref@newlabel{mdf@pagelabel-256}{\default{9.3.4}\page{207}\abspage{207}\mdf@pagevalue{207}}
+\newlabel{thm:LLNappendix}{{9.4}{207}{Law of large numbers}{theorem.9.4}{}}
+\zref@newlabel{mdf@pagelabel-257}{\default{9.3.4}\page{208}\abspage{208}\mdf@pagevalue{208}}
+\newlabel{thm:LindbergLevyCLTAppendix}{{9.5}{208}{Lindberg-Levy Central limit theorem, CLT}{theorem.9.5}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {9.4}Some properties of Gaussian variables}{208}{section.9.4}\protected@file@percent }
+\newlabel{GaussianVar}{{9.4}{208}{Some properties of Gaussian variables}{section.9.4}{}}
+\zref@newlabel{mdf@pagelabel-258}{\default{9.4}\page{208}\abspage{208}\mdf@pagevalue{208}}
+\newlabel{prp:bandsindependent}{{9.15}{208}{}{proposition.9.15}{}}
+\zref@newlabel{mdf@pagelabel-259}{\default{9.4}\page{208}\abspage{208}\mdf@pagevalue{208}}
+\newlabel{prp:update}{{9.16}{208}{Bayesian update in a vector of Gaussian variables}{proposition.9.16}{}}
+\zref@newlabel{mdf@pagelabel-260}{\default{9.4}\page{209}\abspage{209}\mdf@pagevalue{209}}
+\newlabel{prp:truncated}{{9.17}{209}{Truncated distributions}{proposition.9.17}{}}
+\newlabel{eq:Etrunc}{{9.4}{209}{Truncated distributions}{equation.9.4}{}}
+\newlabel{eq:Vtrunc}{{9.5}{209}{Truncated distributions}{equation.9.5}{}}
+\newlabel{eq:Vtrunc2}{{9.6}{209}{Truncated distributions}{equation.9.6}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {9.3}{\ignorespaces $\symbb {E}(X|X<b)$ as a function of $b$ when $X\sim \symcal {N}(0,1)$ (in black).}}{210}{figure.caption.74}\protected@file@percent }
+\newlabel{fig:inverseMills}{{9.3}{210}{$\mathbb {E}(X|X<b)$ as a function of $b$ when $X\sim \mathcal {N}(0,1)$ (in black)}{figure.caption.74}{}}
+\zref@newlabel{mdf@pagelabel-261}{\default{9.4}\page{211}\abspage{211}\mdf@pagevalue{211}}
+\newlabel{prp:pdfMultivarGaussian}{{9.18}{211}{p.d.f. of a multivariate Gaussian variable}{proposition.9.18}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {9.5}Proofs}{211}{section.9.5}\protected@file@percent }
+\newlabel{AppendixProof}{{9.5}{211}{Proofs}{section.9.5}{}}
+\newlabel{eq:wald-delta-limit}{{9.7}{212}{Proofs}{equation.9.7}{}}
+\newlabel{eq:lm10}{{9.8}{212}{Proofs}{equation.9.8}{}}
+\newlabel{eq:lm1}{{9.9}{212}{Proofs}{equation.9.9}{}}
+\newlabel{eq:lm29}{{9.10}{212}{Proofs}{equation.9.10}{}}
+\newlabel{eq:lm30}{{9.11}{212}{Proofs}{equation.9.11}{}}
 \citation{gourieroux_monfort_1995}
-\newlabel{eq:multiplier}{{9.14}{187}{Proofs}{equation.9.14}{}}
-\newlabel{eq:lm20}{{9.15}{187}{Proofs}{equation.9.15}{}}
-\newlabel{eq:lr10}{{9.16}{188}{Proofs}{equation.9.16}{}}
-\newlabel{eq:1}{{9.17}{190}{Proofs}{equation.9.17}{}}
-\gdef \LT@vi {\LT@entry 
+\newlabel{eq:lm2}{{9.12}{213}{Proofs}{equation.9.12}{}}
+\newlabel{eq:lm3}{{9.13}{213}{Proofs}{equation.9.13}{}}
+\newlabel{eq:multiplier}{{9.14}{213}{Proofs}{equation.9.14}{}}
+\newlabel{eq:lm20}{{9.15}{213}{Proofs}{equation.9.15}{}}
+\newlabel{eq:lr10}{{9.16}{214}{Proofs}{equation.9.16}{}}
+\newlabel{eq:1}{{9.17}{216}{Proofs}{equation.9.17}{}}
+\gdef \LT@ix {\LT@entry 
     {5}{25.20631pt}\LT@entry 
     {5}{41.05666pt}\LT@entry 
     {5}{41.05666pt}\LT@entry 
@@ -913,7 +1048,11 @@
     {5}{41.05666pt}\LT@entry 
     {5}{41.05666pt}\LT@entry 
     {5}{41.05666pt}}
-\gdef \LT@vii {\LT@entry 
+\@writefile{toc}{\contentsline {section}{\numberline {9.6}Statistical tables}{218}{section.9.6}\protected@file@percent }
+\newlabel{statistical-tables}{{9.6}{218}{Statistical tables}{section.9.6}{}}
+\newlabel{tab:Normal}{{9.1}{218}{Statistical tables}{table.9.1}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {9.1}{\ignorespaces Cumulative probabilities of the $\symcal {N}(0,1)$ distribution. If $a$ and $b$ are respectively the row and column number; then the corresponding cell gives $\symbb {P}(X\le a+b)$, where $X \sim \symcal {N}(0,1)$.}}{218}{table.9.1}\protected@file@percent }
+\gdef \LT@x {\LT@entry 
     {5}{27.85036pt}\LT@entry 
     {5}{35.77321pt}\LT@entry 
     {5}{35.77321pt}\LT@entry 
@@ -923,13 +1062,7 @@
     {5}{41.05666pt}\LT@entry 
     {5}{41.05666pt}\LT@entry 
     {5}{46.3401pt}}
-\@writefile{toc}{\contentsline {section}{\numberline {9.6}Statistical Tables}{192}{section.9.6}\protected@file@percent }
-\newlabel{statistical-tables}{{9.6}{192}{Statistical Tables}{section.9.6}{}}
-\newlabel{tab:Normal}{{9.1}{192}{Statistical Tables}{table.9.1}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {9.1}{\ignorespaces Cumulative probabilities of the $\symcal {N}(0,1)$ distribution. If $a$ and $b$ are respectively the row and column number; then the corresponding cell gives $\symbb {P}(X\le a+b)$, where $X \sim \symcal {N}(0,1)$.}}{192}{table.9.1}\protected@file@percent }
-\newlabel{tab:Student}{{9.2}{192}{Statistical Tables}{table.9.2}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {9.2}{\ignorespaces Quantiles of the Student-$t$ distribution. The rows correspond to different degrees of freedom ($\mitnu $, say); the columns correspond to different probabilities ($z$, say). The cell gives $q$ that is s.t. $\symbb {P}(-q<X<q)=z$, with $X \sim t(\mitnu )$.}}{192}{table.9.2}\protected@file@percent }
-\gdef \LT@viii {\LT@entry 
+\gdef \LT@xi {\LT@entry 
     {5}{27.85036pt}\LT@entry 
     {5}{46.3401pt}\LT@entry 
     {5}{46.3401pt}\LT@entry 
@@ -939,7 +1072,11 @@
     {5}{46.3401pt}\LT@entry 
     {5}{46.3401pt}\LT@entry 
     {5}{46.3401pt}}
-\gdef \LT@ix {\LT@entry 
+\newlabel{tab:Student}{{9.2}{219}{Statistical tables}{table.9.2}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {9.2}{\ignorespaces Quantiles of the Student-$t$ distribution. The rows correspond to different degrees of freedom ($\mitnu $, say); the columns correspond to different probabilities ($z$, say). The cell gives $q$ that is s.t. $\symbb {P}(-q<X<q)=z$, with $X \sim t(\mitnu )$.}}{219}{table.9.2}\protected@file@percent }
+\newlabel{tab:Chi2}{{9.3}{219}{Statistical tables}{table.9.3}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {9.3}{\ignorespaces Quantiles of the $\mitchi ^2$ distribution. The rows correspond to different degrees of freedom; the columns correspond to different probabilities.}}{219}{table.9.3}\protected@file@percent }
+\gdef \LT@xii {\LT@entry 
     {5}{64.5608pt}\LT@entry 
     {5}{41.05666pt}\LT@entry 
     {5}{41.05666pt}\LT@entry 
@@ -951,44 +1088,41 @@
     {5}{41.05666pt}\LT@entry 
     {5}{41.05666pt}\LT@entry 
     {5}{41.05666pt}}
-\newlabel{tab:Chi2}{{9.3}{193}{Statistical Tables}{table.9.3}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {9.3}{\ignorespaces Quantiles of the $\mitchi ^2$ distribution. The rows correspond to different degrees of freedom; the columns correspond to different probabilities.}}{193}{table.9.3}\protected@file@percent }
-\newlabel{tab:Fstat}{{9.4}{193}{Statistical Tables}{table.9.4}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {9.4}{\ignorespaces Quantiles of the $\symcal {F}$ distribution. The columns and rows correspond to different degrees of freedom (resp. $n_1$ and $n_2$). The different panels correspond to different probabilities ($\mitalpha $) The corresponding cell gives $z$ that is s.t. $\symbb {P}(X \le z)=\mitalpha $, with $X \sim \symcal {F}(n_1,n_2)$.}}{193}{table.9.4}\protected@file@percent }
+\newlabel{tab:Fstat}{{9.4}{220}{Statistical tables}{table.9.4}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {9.4}{\ignorespaces Quantiles of the $\symcal {F}$ distribution. The columns and rows correspond to different degrees of freedom (resp. $n_1$ and $n_2$). The different panels correspond to different probabilities ($\mitalpha $) The corresponding cell gives $z$ that is s.t. $\symbb {P}(X \le z)=\mitalpha $, with $X \sim \symcal {F}(n_1,n_2)$.}}{220}{table.9.4}\protected@file@percent }
 \bibdata{book.bib,packages.bib}
 \bibcite{Abadie_Cattaneo_2018}{{1}{2018}{{Abadie and Cattaneo}}{{}}}
-\bibcite{Anderson_1971}{{2}{1971}{{Anderson}}{{}}}
-\bibcite{Anderson_Hsiao_1982}{{3}{1982}{{Anderson and Hsiao}}{{}}}
-\bibcite{Andrews_Stock_Sun_2019}{{4}{2019}{{Andrews et~al.}}{{}}}
-\bibcite{angrist_mostly_2008}{{5}{2008}{{Angrist and Pischke}}{{}}}
-\bibcite{Arellano_Bond_1991}{{6}{1991}{{Arellano and Bond}}{{}}}
-\bibcite{Cameron_Miller_2014}{{7}{2014}{{Cameron and Miller}}{{}}}
-\bibcite{Cameron_Trivedi_2005}{{8}{2005}{{Cameron and Trivedi}}{{}}}
-\bibcite{Cochrane_Orcutt_1949}{{9}{1949}{{Cochrane and Orcutt}}{{}}}
-\bibcite{DEGOOIJER2006443}{{10}{2006}{{{De Gooijer} and Hyndman}}{{}}}
-\bibcite{DEE20041697}{{11}{2004}{{Dee}}{{}}}
-\bibcite{Diebold_Mariano_1995}{{12}{1995}{{Diebold and Mariano}}{{}}}
-\bibcite{Durbin_1954}{{13}{1954}{{Durbin}}{{}}}
-\bibcite{Durbin_Watson_1950}{{14}{1950}{{Durbin and Watson}}{{}}}
-\bibcite{Durbin_Watson_1951}{{15}{1951}{{Durbin and Watson}}{{}}}
-\bibcite{Fritsch_et_al_2019}{{16}{2019}{{Fritsch et~al.}}{{}}}
-\bibcite{gourieroux_monfort_1995}{{17}{1995}{{Gouri\'eroux and Monfort}}{{}}}
-\bibcite{Greene2003Econometric}{{18}{2003}{{Greene}}{{}}}
-\bibcite{Hansen_1982}{{19}{1982}{{Hansen}}{{}}}
-\bibcite{Hausman_1978}{{20}{1978}{{Hausman}}{{}}}
-\bibcite{James2013}{{21}{2013}{{James et~al.}}{{}}}
-\bibcite{JST_2017}{{22}{2017}{{Jord\`a et~al.}}{{}}}
-\bibcite{Litterman_Scheinkman_1991}{{23}{1991}{{Litterman and Scheinkman}}{{}}}
-\bibcite{MacKinnon_White_1985}{{24}{1985}{{MacKinnon and White}}{{}}}
-\bibcite{MACKINNON2022}{{25}{2022}{{MacKinnon et~al.}}{{}}}
-\bibcite{Meyer_Viscusi_Durbin_1995}{{26}{1995}{{Meyer et~al.}}{{}}}
-\bibcite{Nakosteen_Zimmer_1980}{{27}{1980}{{Nakosteen and Zimmer}}{{}}}
-\bibcite{Newey_West_1987}{{28}{1987}{{Newey and West}}{{}}}
-\bibcite{Roberts_Gelman_Gilks_1997}{{29}{1997}{{Roberts et~al.}}{{}}}
-\bibcite{Sargan_1958}{{30}{1958}{{Sargan}}{{}}}
-\bibcite{Stock_Watson_2003}{{31}{2003}{{Stock and Watson}}{{}}}
-\bibcite{stock_yogo_2005}{{32}{2005}{{Stock and Yogo}}{{}}}
-\bibcite{Tibshirani_2011}{{33}{2011}{{Tibshirani}}{{}}}
-\bibcite{White_1980}{{34}{1980}{{White}}{{}}}
-\bibcite{Wu_1973}{{35}{1973}{{Wu}}{{}}}
-\gdef \@abspage@last{196}
+\bibcite{Anderson_Hsiao_1982}{{2}{1982}{{Anderson and Hsiao}}{{}}}
+\bibcite{Andrews_Stock_Sun_2019}{{3}{2019}{{Andrews et~al.}}{{}}}
+\bibcite{angrist_mostly_2008}{{4}{2008}{{Angrist and Pischke}}{{}}}
+\bibcite{Arellano_Bond_1991}{{5}{1991}{{Arellano and Bond}}{{}}}
+\bibcite{Cameron_Miller_2014}{{6}{2014}{{Cameron and Miller}}{{}}}
+\bibcite{Cameron_Trivedi_2005}{{7}{2005}{{Cameron and Trivedi}}{{}}}
+\bibcite{Cochrane_Orcutt_1949}{{8}{1949}{{Cochrane and Orcutt}}{{}}}
+\bibcite{DEGOOIJER2006443}{{9}{2006}{{{De Gooijer} and Hyndman}}{{}}}
+\bibcite{DEE20041697}{{10}{2004}{{Dee}}{{}}}
+\bibcite{Diebold_Mariano_1995}{{11}{1995}{{Diebold and Mariano}}{{}}}
+\bibcite{Durbin_1954}{{12}{1954}{{Durbin}}{{}}}
+\bibcite{Durbin_Watson_1950}{{13}{1950}{{Durbin and Watson}}{{}}}
+\bibcite{Durbin_Watson_1951}{{14}{1951}{{Durbin and Watson}}{{}}}
+\bibcite{Fritsch_et_al_2019}{{15}{2019}{{Fritsch et~al.}}{{}}}
+\bibcite{gourieroux_monfort_1995}{{16}{1995}{{Gouri\'eroux and Monfort}}{{}}}
+\bibcite{Greene2003Econometric}{{17}{2003}{{Greene}}{{}}}
+\bibcite{Hansen_1982}{{18}{1982}{{Hansen}}{{}}}
+\bibcite{Hausman_1978}{{19}{1978}{{Hausman}}{{}}}
+\bibcite{James2013}{{20}{2013}{{James et~al.}}{{}}}
+\bibcite{JST_2017}{{21}{2017}{{Jord\`a et~al.}}{{}}}
+\bibcite{Litterman_Scheinkman_1991}{{22}{1991}{{Litterman and Scheinkman}}{{}}}
+\bibcite{MacKinnon_White_1985}{{23}{1985}{{MacKinnon and White}}{{}}}
+\bibcite{MACKINNON2022}{{24}{2022}{{MacKinnon et~al.}}{{}}}
+\bibcite{Meyer_Viscusi_Durbin_1995}{{25}{1995}{{Meyer et~al.}}{{}}}
+\bibcite{Nakosteen_Zimmer_1980}{{26}{1980}{{Nakosteen and Zimmer}}{{}}}
+\bibcite{Newey_West_1987}{{27}{1987}{{Newey and West}}{{}}}
+\bibcite{Roberts_Gelman_Gilks_1997}{{28}{1997}{{Roberts et~al.}}{{}}}
+\bibcite{Sargan_1958}{{29}{1958}{{Sargan}}{{}}}
+\bibcite{Stock_Watson_2003}{{30}{2003}{{Stock and Watson}}{{}}}
+\bibcite{stock_yogo_2005}{{31}{2005}{{Stock and Yogo}}{{}}}
+\bibcite{Tibshirani_2011}{{32}{2011}{{Tibshirani}}{{}}}
+\bibcite{White_1980}{{33}{1980}{{White}}{{}}}
+\bibcite{Wu_1973}{{34}{1973}{{Wu}}{{}}}
+\gdef \@abspage@last{224}

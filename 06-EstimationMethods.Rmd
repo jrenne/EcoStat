@@ -850,7 +850,7 @@ See Appendix \@ref(AppendixProof).
 
 
 
-## Bayesian approach
+## Bayesian approach {#bayesian}
 
 GMM and maximum likelihood treat the parameter as fixed and evaluate estimators through repeated samples. Bayesian inference instead represents uncertainty about the parameter with a probability distribution and updates that distribution after observing the data.
 
@@ -1074,6 +1074,23 @@ for(i in 1:length(means_prior)){
   plot(resultMCMC[,i],1:length(resultMCMC[,i]),xlim=c(min(x),max(x)),
        type="l",xlab="",ylab="")}
 ```
+
+```{r estimation-recap-space, echo=FALSE, results='asis'}
+if (knitr::is_latex_output()) cat("\\Needspace{15\\baselineskip}\n")
+```
+
+## Chapter recap {-}
+
+::: {.recapbox data-latex=""}
+
+- Section \@ref(secGMM) builds estimators from population moment conditions; Definition \@ref(def:GMM) turns their sample analogues into a quadratic criterion.
+- The weighting matrix determines GMM efficiency, while Section \@ref(overidentif) uses excess moment conditions to assess specification.
+- Definition \@ref(def:likelihood) views the observed sample as a function of the parameter; Definitions \@ref(def:score) and \@ref(def:Fisher) summarize its local slope and curvature.
+- Definition \@ref(def:MLEest) defines the maximum-likelihood estimator, and Proposition \@ref(prp:MLEproperties) states its main large-sample properties under regularity conditions.
+- Section \@ref(TestMLE) compares Wald, LM, and likelihood-ratio tests; Proposition \@ref(prp:equivLRLMW) establishes their asymptotic equivalence under the null.
+- Section \@ref(bayesian) combines priors and likelihoods into posterior distributions, while Definition \@ref(def:MC) supplies the Markov-chain language used for posterior simulation.
+
+:::
 
 ```{r estimation-exercise-pagebreak, echo=FALSE, results='asis'}
 if (knitr::is_latex_output()) cat("\\clearpage\n")

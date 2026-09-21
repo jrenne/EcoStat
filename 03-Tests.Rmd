@@ -76,7 +76,7 @@ In most cases, size and power involve a trade-off. In the early-warning example,
 
 
 
-## Critical regions and p-values
+## Critical regions and p-values {#critical-regions}
 
 The shape of the critical region depends on which values of $S$ contradict the null. Its boundary is calibrated so that $\mathbb{P}_\theta(S\in\Omega)\le\alpha$ for every $\theta\in\Theta_0$, with equality at a least-favourable null value when the test has size exactly $\alpha$. A smaller significance level therefore reserves rejection for more unusual outcomes under $H_0$.
 
@@ -575,6 +575,23 @@ for(i in 1:length(all.n)){
   lines(xx,dchisq(xx,df = 2),col="red")
 }
 ```
+
+:::
+
+```{r tests-recap-space, echo=FALSE, results='asis'}
+if (knitr::is_latex_output()) cat("\\Needspace{13\\baselineskip}\n")
+```
+
+## Chapter recap {-}
+
+::: {.recapbox data-latex=""}
+
+- Definition \@ref(def:sizepower) distinguishes the rejection probability under the null (size) from the rejection probability under an alternative (power).
+- Section \@ref(critical-regions) explains how the direction of evidence determines the rejection region and how a p-value summarizes the evidence against the null.
+- Example \@ref(exm:Factory) shows the size-power trade-off in a finite-sample decision rule.
+- Definition \@ref(def:asmyptlevel) extends size control to tests whose null distribution is known only asymptotically.
+- Definition \@ref(def:asmyptconsisttest) requires the rejection probability to converge to one under every fixed alternative.
+- Proposition \@ref(prp:JB) combines sample skewness and kurtosis into the asymptotic Jarque-Bera normality test.
 
 :::
 

@@ -467,7 +467,7 @@ which implies that
 
 \begin{figure}
 
-{\centering \includegraphics[width=0.8\linewidth]{images/tikzplot}
+{\centering \includegraphics[width=0.8\linewidth]{images/tikzplot} 
 
 }
 
@@ -763,19 +763,17 @@ The realization below is especially deceptive. For several thousand observations
 \begin{itemize}
 \tightlist
 \item
-  For discrete variables, joint probabilities can be arranged in a table; marginal probabilities are row or column totals.
+  Moments summarize the location, dispersion, and co-movement of random variables; Section \ref{basics-moments} introduces expectation, variance, and covariance.
 \item
-  A conditional probability changes the information available; Bayes' rule reverses the direction of conditioning.
+  A joint distribution determines marginal and conditional distributions. Example \ref{exm:commuting-table} illustrates these operations for discrete variables, while Proposition \ref{prp:conditional-density-formula} gives the continuous conditional-density formula.
 \item
-  A conditional expectation is a subpopulation mean; \(\mathbb{E}(X\mid Y)\) varies with the group identified by \(Y\).
+  Bayes' rule in Section \ref{basics-bayes} reverses the direction of conditioning; Definition \ref{def:independent} states when conditioning leaves a distribution unchanged.
 \item
-  Continuous distributions use densities and integrals in place of probabilities attached to points and sums.
+  Proposition \ref{prp:lawiteratedexpect} recovers a population mean by averaging conditional means.
 \item
-  Iterated expectations recover a population mean by averaging conditional means.
+  Proposition \ref{prp:lawtotalvariance} decomposes population variance into within-group and between-group components.
 \item
-  Total variance adds average within-group variance and variance between group means.
-\item
-  Bias and variance describe finite-sample performance; consistency describes behavior as sample size increases.
+  Section \ref{basics-estimators} distinguishes finite-sample bias and precision from consistency as the sample size grows.
 \end{itemize}
 
 \end{recapbox}
@@ -1142,7 +1140,7 @@ The CLT can be extended to the case where each \(x_i\) is a vector. (In that cas
 \]
 \end{theorem}
 
-\section{Comparison of sample means}\label{comparison-of-sample-means}
+\section{Comparison of sample means}\label{comparison-means}
 
 The one-sample CLT extends directly to comparisons between populations. The key object is then the difference between two independent sample means.
 
@@ -1187,6 +1185,29 @@ Let us compute \(\bar{m}\), \(\bar{w}\), and the estimated standard error \(\hat
 
 Under the null hypothesis of equal population means, the difference \(\bar{m}-\bar{w}\) would fall outside \([\)-4758,4758\(]\) with probability approximately 5\%, and outside \([\)-6263,6263\(]\) with probability approximately 1\%. The observed difference is 10327, so we reject equality at both significance levels.
 \end{example}
+
+\Needspace{11\baselineskip}
+
+\section*{Chapter recap}\label{chapter-recap-1}
+\addcontentsline{toc}{section}{Chapter recap}
+
+\begin{recapbox}
+
+\begin{itemize}
+\tightlist
+\item
+  Theorem \ref{thm:LLN} explains why a sample mean converges to its population mean; it is a consistency result.
+\item
+  Chebyshev's inequality bounds the probability of a large estimation error but does not describe its full distribution.
+\item
+  Theorem \ref{thm:LindbergLevyCLT} gives the large-sample distribution of the standardized sample mean and therefore supports confidence intervals and tests.
+\item
+  The multivariate extension in Theorem \ref{thm:MCLT} applies the same logic to vectors of sample moments.
+\item
+  Section \ref{comparison-means} combines two independent CLT approximations to compare population means.
+\end{itemize}
+
+\end{recapbox}
 
 \clearpage
 
@@ -1435,7 +1456,7 @@ The power is the probability that the test will lead to the rejection of the nul
 
 In most cases, size and power involve a trade-off. In the early-warning example, increasing \(a\) reduces false positives and therefore the size of the rule, but it also increases false negatives and therefore reduces power. The next section shows how a critical region formalizes this choice.
 
-\section{Critical regions and p-values}\label{critical-regions-and-p-values}
+\section{Critical regions and p-values}\label{critical-regions}
 
 The shape of the critical region depends on which values of \(S\) contradict the null. Its boundary is calibrated so that \(\mathbb{P}_\theta(S\in\Omega)\le\alpha\) for every \(\theta\in\Theta_0\), with equality at a least-favourable null value when the test has size exactly \(\alpha\). A smaller significance level therefore reserves rejection for more unusual outcomes under \(H_0\).
 
@@ -1661,6 +1682,31 @@ We next draw the \(y_i\)'s from a uniform distribution, so \(H_0\) is not satisf
 \end{figure}
 
 \end{example}
+
+\Needspace{13\baselineskip}
+
+\section*{Chapter recap}\label{chapter-recap-2}
+\addcontentsline{toc}{section}{Chapter recap}
+
+\begin{recapbox}
+
+\begin{itemize}
+\tightlist
+\item
+  Definition \ref{def:sizepower} distinguishes the rejection probability under the null (size) from the rejection probability under an alternative (power).
+\item
+  Section \ref{critical-regions} explains how the direction of evidence determines the rejection region and how a p-value summarizes the evidence against the null.
+\item
+  Example \ref{exm:Factory} shows the size-power trade-off in a finite-sample decision rule.
+\item
+  Definition \ref{def:asmyptlevel} extends size control to tests whose null distribution is known only asymptotically.
+\item
+  Definition \ref{def:asmyptconsisttest} requires the rejection probability to converge to one under every fixed alternative.
+\item
+  Proposition \ref{prp:JB} combines sample skewness and kurtosis into the asymptotic Jarque-Bera normality test.
+\end{itemize}
+
+\end{recapbox}
 
 \clearpage
 
@@ -1907,8 +1953,8 @@ Y_i = 2 + 2X_i + \left(2\mathbb{I}_{\{X_i<0\}}+0.2\mathbb{I}_{\{X_i\ge0\}}\right
 Figure \ref{fig:exmpSalarayPhDSHP} shows a real-data pattern that suggests heteroskedasticity, based on data taken from the \href{https://forscenter.ch/projects/swiss-household-panel/}{Swiss Household Panel}. The sample is restricted to persons (i) who are younger than 35 years in 2019, and (ii) who have completed at least 19 years of study. The dispersion of yearly income appears to increase with age, although the graph alone is not a formal test.
 
 \begin{verbatim}
-##
-##    8    9   10   12   13   14   16   19   21
+## 
+##    8    9   10   12   13   14   16   19   21 
 ##   70  325  350 1985  454  117  990 1263  168
 \end{verbatim}
 
@@ -2024,20 +2070,20 @@ It is easily checked that \(\mathbf{X}'\mathbf{e}=0\). Each column of \(\mathbf{
 
 We have:
 \begin{eqnarray*}
-\mathbf{X}'\mathbf{X} &=&
+\mathbf{X}'\mathbf{X} &=& 
 \left[\begin{array}{cc}
 n & \sum_i w_i \\
 \sum_i w_i & \sum_i w_i^2
 \end{array}
 \right],\\
-(\mathbf{X}'\mathbf{X})^{-1} &=&
+(\mathbf{X}'\mathbf{X})^{-1} &=& 
 \frac{1}{n\sum_i w_i^2-(\sum_i w_i)^2}
 \left[\begin{array}{cc}
 \sum_i w_i^2 & -\sum_i w_i \\
 -\sum_i w_i & n
 \end{array}
 \right],\\
-(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{y} &=&
+(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{y} &=& 
 \frac{1}{n\sum_i w_i^2-(\sum_i w_i)^2}
 \left[\begin{array}{c}
 \sum_i w_i^2\sum_i y_i -\sum_i w_i \sum_i w_iy_i \\
@@ -2174,27 +2220,27 @@ This result can be illustrated with regressions involving the number of Google s
 \setlength{\tabcolsep}{4pt}\renewcommand{\arraystretch}{1.08}
 \begin{adjustbox}{max width=\linewidth}
 
-\begin{tabular}{@{\extracolsep{4pt}}lcc}
-\\[-1.8ex]\hline
-\hline \\[-1.8ex]
- & \multicolumn{2}{c}{\textit{Dependent variable:}} \\
-\cline{2-3}
-\\[-1.8ex] & parapluie & deseas\_parapluie \\
-\\[-1.8ex] & (1) & (2)\\
-\hline \\[-1.8ex]
- precip & 0.13001$^{***}$ &  \\
-  & (0.03594) &  \\
-  deseas\_precip &  & 0.13001$^{***}$ \\
-  &  & (0.03277) \\
- \hline \\[-1.8ex]
-Monthly dummy & Yes & No \\
-Observations & 72 & 72 \\
-R$^{2}$ & 0.51793 & 0.18148 \\
-Adjusted R$^{2}$ & 0.41988 & 0.16995 \\
-\hline
-\hline \\[-1.8ex]
-\textit{Note:}  & \multicolumn{2}{r}{$^{*}$p$<$0.1; $^{**}$p$<$0.05; $^{***}$p$<$0.01} \\
-\end{tabular}
+\begin{tabular}{@{\extracolsep{4pt}}lcc} 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+ & \multicolumn{2}{c}{\textit{Dependent variable:}} \\ 
+\cline{2-3} 
+\\[-1.8ex] & parapluie & deseas\_parapluie \\ 
+\\[-1.8ex] & (1) & (2)\\ 
+\hline \\[-1.8ex] 
+ precip & 0.13001$^{***}$ &  \\ 
+  & (0.03594) &  \\ 
+  deseas\_precip &  & 0.13001$^{***}$ \\ 
+  &  & (0.03277) \\ 
+ \hline \\[-1.8ex] 
+Monthly dummy & Yes & No \\ 
+Observations & 72 & 72 \\ 
+R$^{2}$ & 0.51793 & 0.18148 \\ 
+Adjusted R$^{2}$ & 0.41988 & 0.16995 \\ 
+\hline 
+\hline \\[-1.8ex] 
+\textit{Note:}  & \multicolumn{2}{r}{$^{*}$p$<$0.1; $^{**}$p$<$0.05; $^{***}$p$<$0.01} \\ 
+\end{tabular} 
 \end{adjustbox}\end{center}
 
 When \(b_2\) is scalar (and then \(\mathbf{X}_2\) is of dimension \(n \times 1\)), Theorem \ref{thm:FW} gives the expression of the \textbf{partial regression coefficient} \(b_2\):
@@ -2603,7 +2649,7 @@ Consider the following model (the ``True model''):
 \]
 If one computes \(\mathbf{b}_1\) by regressing \(\mathbf{y}\) on \(\mathbf{X}_1\) only, one gets:
 \[
-\mathbf{b}_1 = (\mathbf{X}_1'\mathbf{X}_1)^{-1}\mathbf{X}_1'\mathbf{y} = \boldsymbol\beta_1 + (\mathbf{X}_1'\mathbf{X}_1)^{-1}\mathbf{X}_1'\mathbf{X}_2\boldsymbol\beta_2 +
+\mathbf{b}_1 = (\mathbf{X}_1'\mathbf{X}_1)^{-1}\mathbf{X}_1'\mathbf{y} = \boldsymbol\beta_1 + (\mathbf{X}_1'\mathbf{X}_1)^{-1}\mathbf{X}_1'\mathbf{X}_2\boldsymbol\beta_2 + 
 (\mathbf{X}_1'\mathbf{X}_1)^{-1}\mathbf{X}_1'\boldsymbol\varepsilon.
 \]
 
@@ -2622,30 +2668,30 @@ Let us use the \href{https://rdrr.io/cran/AER/man/CASchools.html}{California Tes
 \setlength{\tabcolsep}{4pt}\renewcommand{\arraystretch}{1.08}
 \begin{adjustbox}{max width=\linewidth}
 
-\begin{tabular}{@{\extracolsep{4pt}}lccc}
-\\[-1.8ex]\hline
-\hline \\[-1.8ex]
- & \multicolumn{3}{c}{\textit{Dependent variable:}} \\
-\cline{2-4}
-\\[-1.8ex] & \multicolumn{3}{c}{testscr} \\
-\\[-1.8ex] & (1) & (2) & (3)\\
-\hline \\[-1.8ex]
- str & $-$2.280$^{***}$ & $-$1.117$^{***}$ & $-$0.998$^{***}$ \\
-  & (0.480) & (0.240) & (0.239) \\
-  lunch &  & $-$0.600$^{***}$ & $-$0.547$^{***}$ \\
-  &  & (0.017) & (0.022) \\
-  english &  &  & $-$0.122$^{***}$ \\
-  &  &  & (0.032) \\
-  Constant & 698.933$^{***}$ & 702.911$^{***}$ & 700.150$^{***}$ \\
-  & (9.467) & (4.700) & (4.686) \\
- \hline \\[-1.8ex]
-Observations & 420 & 420 & 420 \\
-R$^{2}$ & 0.051 & 0.767 & 0.775 \\
-Adjusted R$^{2}$ & 0.049 & 0.766 & 0.773 \\
-\hline
-\hline \\[-1.8ex]
-\textit{Note:}  & \multicolumn{3}{r}{$^{*}$p$<$0.1; $^{**}$p$<$0.05; $^{***}$p$<$0.01} \\
-\end{tabular}
+\begin{tabular}{@{\extracolsep{4pt}}lccc} 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+ & \multicolumn{3}{c}{\textit{Dependent variable:}} \\ 
+\cline{2-4} 
+\\[-1.8ex] & \multicolumn{3}{c}{testscr} \\ 
+\\[-1.8ex] & (1) & (2) & (3)\\ 
+\hline \\[-1.8ex] 
+ str & $-$2.280$^{***}$ & $-$1.117$^{***}$ & $-$0.998$^{***}$ \\ 
+  & (0.480) & (0.240) & (0.239) \\ 
+  lunch &  & $-$0.600$^{***}$ & $-$0.547$^{***}$ \\ 
+  &  & (0.017) & (0.022) \\ 
+  english &  &  & $-$0.122$^{***}$ \\ 
+  &  &  & (0.032) \\ 
+  Constant & 698.933$^{***}$ & 702.911$^{***}$ & 700.150$^{***}$ \\ 
+  & (9.467) & (4.700) & (4.686) \\ 
+ \hline \\[-1.8ex] 
+Observations & 420 & 420 & 420 \\ 
+R$^{2}$ & 0.051 & 0.767 & 0.775 \\ 
+Adjusted R$^{2}$ & 0.049 & 0.766 & 0.773 \\ 
+\hline 
+\hline \\[-1.8ex] 
+\textit{Note:}  & \multicolumn{3}{r}{$^{*}$p$<$0.1; $^{**}$p$<$0.05; $^{***}$p$<$0.01} \\ 
+\end{tabular} 
 \end{adjustbox}\end{center}
 
 \end{example}
@@ -2806,30 +2852,30 @@ Let us use IV regressions to estimate the price elasticity of cigarette demand. 
 \setlength{\tabcolsep}{4pt}\renewcommand{\arraystretch}{1.08}
 \begin{adjustbox}{max width=\linewidth}
 
-\begin{tabular}{@{\extracolsep{4pt}}lccc}
-\\[-1.8ex]\hline
-\hline \\[-1.8ex]
- & \multicolumn{3}{c}{\textit{Dependent variable:}} \\
-\cline{2-4}
-\\[-1.8ex] & \multicolumn{3}{c}{log(packs)} \\
-\\[-1.8ex] & \textit{OLS} & \multicolumn{2}{c}{\textit{instrumental}} \\
- & \textit{} & \multicolumn{2}{c}{\textit{variable}} \\
-\\[-1.8ex] & (1) & (2) & (3)\\
-\hline \\[-1.8ex]
- log(rprice) & $-$1.407$^{***}$ & $-$1.277$^{***}$ & $-$1.084$^{***}$ \\
-  & (0.251) & (0.263) & (0.317) \\
-  log(rincome) & 0.344 & 0.280 &  \\
-  & (0.235) & (0.239) &  \\
-  Constant & 10.342$^{***}$ & 9.895$^{***}$ & 9.720$^{***}$ \\
-  & (1.023) & (1.059) & (1.514) \\
- \hline \\[-1.8ex]
-Observations & 48 & 48 & 48 \\
-R$^{2}$ & 0.433 & 0.429 & 0.401 \\
-Adjusted R$^{2}$ & 0.408 & 0.404 & 0.388 \\
-\hline
-\hline \\[-1.8ex]
-\textit{Note:}  & \multicolumn{3}{r}{$^{*}$p$<$0.1; $^{**}$p$<$0.05; $^{***}$p$<$0.01} \\
-\end{tabular}
+\begin{tabular}{@{\extracolsep{4pt}}lccc} 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+ & \multicolumn{3}{c}{\textit{Dependent variable:}} \\ 
+\cline{2-4} 
+\\[-1.8ex] & \multicolumn{3}{c}{log(packs)} \\ 
+\\[-1.8ex] & \textit{OLS} & \multicolumn{2}{c}{\textit{instrumental}} \\ 
+ & \textit{} & \multicolumn{2}{c}{\textit{variable}} \\ 
+\\[-1.8ex] & (1) & (2) & (3)\\ 
+\hline \\[-1.8ex] 
+ log(rprice) & $-$1.407$^{***}$ & $-$1.277$^{***}$ & $-$1.084$^{***}$ \\ 
+  & (0.251) & (0.263) & (0.317) \\ 
+  log(rincome) & 0.344 & 0.280 &  \\ 
+  & (0.235) & (0.239) &  \\ 
+  Constant & 10.342$^{***}$ & 9.895$^{***}$ & 9.720$^{***}$ \\ 
+  & (1.023) & (1.059) & (1.514) \\ 
+ \hline \\[-1.8ex] 
+Observations & 48 & 48 & 48 \\ 
+R$^{2}$ & 0.433 & 0.429 & 0.401 \\ 
+Adjusted R$^{2}$ & 0.408 & 0.404 & 0.388 \\ 
+\hline 
+\hline \\[-1.8ex] 
+\textit{Note:}  & \multicolumn{3}{r}{$^{*}$p$<$0.1; $^{**}$p$<$0.05; $^{***}$p$<$0.01} \\ 
+\end{tabular} 
 \end{adjustbox}\end{center}
 \begin{table}[H]
 \centering\begingroup\fontsize{10}{12}\selectfont
@@ -2870,42 +2916,42 @@ In this example, we make use of another dataset proposed by \citet{Stock_Watson_
 \setlength{\tabcolsep}{4pt}\renewcommand{\arraystretch}{1.08}
 \begin{adjustbox}{max width=\linewidth}
 
-\begin{tabular}{@{\extracolsep{4pt}}lcccc}
-\\[-1.8ex]\hline
-\hline \\[-1.8ex]
- & \multicolumn{4}{c}{\textit{Dependent variable:}} \\
-\cline{2-5}
-\\[-1.8ex] & education & \multicolumn{3}{c}{wage} \\
-\\[-1.8ex] & \textit{OLS} & \textit{OLS} & \textit{instrumental} & \textit{OLS} \\
- & \textit{} & \textit{} & \textit{variable} & \textit{} \\
-\\[-1.8ex] & (1) & (2) & (3) & (4)\\
-\hline \\[-1.8ex]
- urbanyes & $-$0.092 & 0.046 & 0.046 & 0.070 \\
-  & (0.065) & (0.045) & (0.060) & (0.045) \\
-  genderfemale & $-$0.025 & $-$0.071$^{*}$ & $-$0.071 & $-$0.085$^{**}$ \\
-  & (0.052) & (0.037) & (0.050) & (0.037) \\
-  ethnicityafam & $-$0.524$^{***}$ & $-$0.227$^{***}$ & $-$0.227$^{**}$ & $-$0.556$^{***}$ \\
-  & (0.072) & (0.073) & (0.099) & (0.052) \\
-  ethnicityhispanic & $-$0.275$^{***}$ & $-$0.351$^{***}$ & $-$0.351$^{***}$ & $-$0.544$^{***}$ \\
-  & (0.068) & (0.057) & (0.077) & (0.049) \\
-  unemp & 0.010 & 0.139$^{***}$ & 0.139$^{***}$ & 0.133$^{***}$ \\
-  & (0.010) & (0.007) & (0.009) & (0.007) \\
-  distance & $-$0.087$^{***}$ &  &  &  \\
-  & (0.012) &  &  &  \\
-  ed.pred &  & 0.647$^{***}$ &  &  \\
-  &  & (0.101) &  &  \\
-  education &  &  & 0.647$^{***}$ & 0.005 \\
-  &  &  & (0.136) & (0.010) \\
-  Constant & 14.061$^{***}$ & $-$0.359 & $-$0.359 & 8.641$^{***}$ \\
-  & (0.083) & (1.412) & (1.908) & (0.157) \\
- \hline \\[-1.8ex]
-Observations & 4,739 & 4,739 & 4,739 & 4,739 \\
-R$^{2}$ & 0.023 & 0.117 & $-$0.612 & 0.110 \\
-Adjusted R$^{2}$ & 0.022 & 0.116 & $-$0.614 & 0.109 \\
-\hline
-\hline \\[-1.8ex]
-\textit{Note:}  & \multicolumn{4}{r}{$^{*}$p$<$0.1; $^{**}$p$<$0.05; $^{***}$p$<$0.01} \\
-\end{tabular}
+\begin{tabular}{@{\extracolsep{4pt}}lcccc} 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+ & \multicolumn{4}{c}{\textit{Dependent variable:}} \\ 
+\cline{2-5} 
+\\[-1.8ex] & education & \multicolumn{3}{c}{wage} \\ 
+\\[-1.8ex] & \textit{OLS} & \textit{OLS} & \textit{instrumental} & \textit{OLS} \\ 
+ & \textit{} & \textit{} & \textit{variable} & \textit{} \\ 
+\\[-1.8ex] & (1) & (2) & (3) & (4)\\ 
+\hline \\[-1.8ex] 
+ urbanyes & $-$0.092 & 0.046 & 0.046 & 0.070 \\ 
+  & (0.065) & (0.045) & (0.060) & (0.045) \\ 
+  genderfemale & $-$0.025 & $-$0.071$^{*}$ & $-$0.071 & $-$0.085$^{**}$ \\ 
+  & (0.052) & (0.037) & (0.050) & (0.037) \\ 
+  ethnicityafam & $-$0.524$^{***}$ & $-$0.227$^{***}$ & $-$0.227$^{**}$ & $-$0.556$^{***}$ \\ 
+  & (0.072) & (0.073) & (0.099) & (0.052) \\ 
+  ethnicityhispanic & $-$0.275$^{***}$ & $-$0.351$^{***}$ & $-$0.351$^{***}$ & $-$0.544$^{***}$ \\ 
+  & (0.068) & (0.057) & (0.077) & (0.049) \\ 
+  unemp & 0.010 & 0.139$^{***}$ & 0.139$^{***}$ & 0.133$^{***}$ \\ 
+  & (0.010) & (0.007) & (0.009) & (0.007) \\ 
+  distance & $-$0.087$^{***}$ &  &  &  \\ 
+  & (0.012) &  &  &  \\ 
+  ed.pred &  & 0.647$^{***}$ &  &  \\ 
+  &  & (0.101) &  &  \\ 
+  education &  &  & 0.647$^{***}$ & 0.005 \\ 
+  &  &  & (0.136) & (0.010) \\ 
+  Constant & 14.061$^{***}$ & $-$0.359 & $-$0.359 & 8.641$^{***}$ \\ 
+  & (0.083) & (1.412) & (1.908) & (0.157) \\ 
+ \hline \\[-1.8ex] 
+Observations & 4,739 & 4,739 & 4,739 & 4,739 \\ 
+R$^{2}$ & 0.023 & 0.117 & $-$0.612 & 0.110 \\ 
+Adjusted R$^{2}$ & 0.022 & 0.116 & $-$0.614 & 0.109 \\ 
+\hline 
+\hline \\[-1.8ex] 
+\textit{Note:}  & \multicolumn{4}{r}{$^{*}$p$<$0.1; $^{**}$p$<$0.05; $^{***}$p$<$0.01} \\ 
+\end{tabular} 
 \end{adjustbox}\end{center}
 
 \end{example}
@@ -3066,7 +3112,7 @@ When only heteroskedasticity prevails, i.e., when matrix \(\boldsymbol\Sigma\) i
 \begin{example}[Heteroskedasticity]
 \protect\hypertarget{exm:HCheteroskedasticity}{}\label{exm:HCheteroskedasticity}This is the case of Eq. \eqref{eq:heteroskedasticity}. We have \(\sigma_{i,j}=0\) for \(i \ne j\). Hence, in this case, we then need to estimate \(\frac{1}{n}\sum_{i=1}^{n}\sigma_{i}^2\mathbf{x}_i\mathbf{x}'_i\). \citet{White_1980} has shown that, under general conditions:
 \begin{equation}
-\mbox{plim}\left( \frac{1}{n}\sum_{i=1}^{n}\sigma_{i}^2\mathbf{x}_i\mathbf{x}'_i \right) =
+\mbox{plim}\left( \frac{1}{n}\sum_{i=1}^{n}\sigma_{i}^2\mathbf{x}_i\mathbf{x}'_i \right) = 
 \mbox{plim}\left( \frac{1}{n}\sum_{i=1}^{n}e_{i}^2\mathbf{x}_i\mathbf{x}'_i \right). \label{eq:white}
 \end{equation}
 The estimator of \(\frac{1}{n}\mathbf{X}'\boldsymbol\Sigma\mathbf{X}\) therefore is:
@@ -3117,25 +3163,25 @@ In the following example, we regress GDP growth rates from the \citet{JST_2017} 
 \setlength{\tabcolsep}{4pt}\renewcommand{\arraystretch}{1.08}
 \begin{adjustbox}{max width=\linewidth}
 
-\begin{tabular}{@{\extracolsep{4pt}}lccc}
-\\[-1.8ex]\hline
-\hline \\[-1.8ex]
- & \multicolumn{3}{c}{\textit{Dependent variable:}} \\
-\cline{2-4}
-\\[-1.8ex] & \multicolumn{3}{c}{growth} \\
- & No HC & HC0 & HC1 \\
-\\[-1.8ex] & (1) & (2) & (3)\\
-\hline \\[-1.8ex]
- crisisJST & $-$0.015$^{***}$ & $-$0.015$^{***}$ & $-$0.015$^{***}$ \\
-  & (0.005) & (0.005) & (0.006) \\
-  Constant & 0.042$^{***}$ & 0.042$^{***}$ & 0.042$^{***}$ \\
-  & (0.005) & (0.007) & (0.007) \\
- \hline \\[-1.8ex]
-Observations & 1,258 & 1,258 & 1,258 \\
-\hline
-\hline \\[-1.8ex]
-\textit{Note:}  & \multicolumn{3}{r}{$^{*}$p$<$0.1; $^{**}$p$<$0.05; $^{***}$p$<$0.01} \\
-\end{tabular}
+\begin{tabular}{@{\extracolsep{4pt}}lccc} 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+ & \multicolumn{3}{c}{\textit{Dependent variable:}} \\ 
+\cline{2-4} 
+\\[-1.8ex] & \multicolumn{3}{c}{growth} \\ 
+ & No HC & HC0 & HC1 \\ 
+\\[-1.8ex] & (1) & (2) & (3)\\ 
+\hline \\[-1.8ex] 
+ crisisJST & $-$0.015$^{***}$ & $-$0.015$^{***}$ & $-$0.015$^{***}$ \\ 
+  & (0.005) & (0.005) & (0.006) \\ 
+  Constant & 0.042$^{***}$ & 0.042$^{***}$ & 0.042$^{***}$ \\ 
+  & (0.005) & (0.007) & (0.007) \\ 
+ \hline \\[-1.8ex] 
+Observations & 1,258 & 1,258 & 1,258 \\ 
+\hline 
+\hline \\[-1.8ex] 
+\textit{Note:}  & \multicolumn{3}{r}{$^{*}$p$<$0.1; $^{**}$p$<$0.05; $^{***}$p$<$0.01} \\ 
+\end{tabular} 
 \end{adjustbox}\end{center}
 
 \begin{example}[Heteroskedasticity and Autocorrelation (HAC)]
@@ -3333,25 +3379,25 @@ Let us come back to the analysis of the effect of systemic financial crises on G
 \setlength{\tabcolsep}{4pt}\renewcommand{\arraystretch}{1.08}
 \begin{adjustbox}{max width=\linewidth}
 
-\begin{tabular}{@{\extracolsep{4pt}}lcccc}
-\\[-1.8ex]\hline
-\hline \\[-1.8ex]
- & \multicolumn{4}{c}{\textit{Dependent variable:}} \\
-\cline{2-5}
-\\[-1.8ex] & \multicolumn{4}{c}{growth} \\
- & No HAC & Heterosk. & 1-way Clust. & 2-way Clust. \\
-\\[-1.8ex] & (1) & (2) & (3) & (4)\\
-\hline \\[-1.8ex]
- crisisJST & $-$0.015$^{***}$ & $-$0.015$^{***}$ & $-$0.015$^{***}$ & $-$0.015$^{**}$ \\
-  & (0.005) & (0.006) & (0.006) & (0.007) \\
-  Constant & 0.042$^{***}$ & 0.042$^{***}$ & 0.042$^{***}$ & 0.042$^{***}$ \\
-  & (0.005) & (0.007) & (0.007) & (0.002) \\
- \hline \\[-1.8ex]
-Observations & 1,258 & 1,258 & 1,258 & 1,258 \\
-\hline
-\hline \\[-1.8ex]
-\textit{Note:}  & \multicolumn{4}{r}{$^{*}$p$<$0.1; $^{**}$p$<$0.05; $^{***}$p$<$0.01} \\
-\end{tabular}
+\begin{tabular}{@{\extracolsep{4pt}}lcccc} 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+ & \multicolumn{4}{c}{\textit{Dependent variable:}} \\ 
+\cline{2-5} 
+\\[-1.8ex] & \multicolumn{4}{c}{growth} \\ 
+ & No HAC & Heterosk. & 1-way Clust. & 2-way Clust. \\ 
+\\[-1.8ex] & (1) & (2) & (3) & (4)\\ 
+\hline \\[-1.8ex] 
+ crisisJST & $-$0.015$^{***}$ & $-$0.015$^{***}$ & $-$0.015$^{***}$ & $-$0.015$^{**}$ \\ 
+  & (0.005) & (0.006) & (0.006) & (0.007) \\ 
+  Constant & 0.042$^{***}$ & 0.042$^{***}$ & 0.042$^{***}$ & 0.042$^{***}$ \\ 
+  & (0.005) & (0.007) & (0.007) & (0.002) \\ 
+ \hline \\[-1.8ex] 
+Observations & 1,258 & 1,258 & 1,258 & 1,258 \\ 
+\hline 
+\hline \\[-1.8ex] 
+\textit{Note:}  & \multicolumn{4}{r}{$^{*}$p$<$0.1; $^{**}$p$<$0.05; $^{***}$p$<$0.01} \\ 
+\end{tabular} 
 \end{adjustbox}\end{center}
 
 \section{Shrinkage methods}\label{shrinkage}
@@ -3461,7 +3507,7 @@ The \texttt{glmnet} package (see \href{https://glmnet.stanford.edu/articles/glmn
 ## (Intercept)           2.539322e-14
 ## delinq_2yrs           9.364945e-02
 ## annual_inc            1.019866e-02
-## annual_inc2           .
+## annual_inc2           .           
 ## log_annual_inc       -5.285472e-02
 ## dti                  -2.249588e-02
 ## installment           7.299546e+00
@@ -3472,7 +3518,7 @@ The \texttt{glmnet} package (see \href{https://glmnet.stanford.edu/articles/glmn
 ## emp_length_10        -1.970788e-02
 ## owner                -8.766370e-03
 ## mortgage             -4.224765e-02
-## pub_rec_bankruptcies  .
+## pub_rec_bankruptcies  .           
 ## revol_util            2.418006e-01
 ## revol_bal            -2.431620e-02
 \end{verbatim}
@@ -3485,6 +3531,33 @@ The \texttt{glmnet} package (see \href{https://glmnet.stanford.edu/articles/glmn
 ## 21583 -0.2662681
 ## 21608 -0.2047079
 \end{verbatim}
+
+\Needspace{16\baselineskip}
+
+\section*{Chapter recap}\label{chapter-recap-3}
+\addcontentsline{toc}{section}{Chapter recap}
+
+\begin{recapbox}
+
+\begin{itemize}
+\tightlist
+\item
+  Section \ref{linearHyp} states the assumptions that determine the finite- and large-sample properties of regression estimators.
+\item
+  Section \ref{LSquares} derives OLS, and Theorem \ref{thm:GaussMarkov} identifies its efficiency among linear unbiased estimators under the Gauss-Markov assumptions.
+\item
+  Proposition \ref{prp:Ftest} shows how jointly imposed linear restrictions can be tested by comparing restricted and unrestricted fit.
+\item
+  Section \ref{CommonPitfalls} separates multicollinearity, omitted-variable bias, and the loss of precision caused by irrelevant regressors.
+\item
+  Definition \ref{def:instruments} states the relevance and exogeneity requirements for instrumental variables.
+\item
+  Definition \ref{def:GRM} allows heteroskedastic and correlated disturbances; Sections \ref{HAC} and \ref{Clusters} develop corresponding covariance estimators.
+\item
+  Section \ref{shrinkage} explains how ridge and lasso estimation trade fit against coefficient magnitude when many covariates are available.
+\end{itemize}
+
+\end{recapbox}
 
 \clearpage
 
@@ -4082,7 +4155,7 @@ where
 \bar{y}_i = \frac{1}{T} \sum_{t=1}^T y_{i,t}, \quad \bar{\varepsilon}_i = \frac{1}{T}\sum_{t=1}^T \varepsilon_{i,t} \quad \mbox{and} \quad \bar{\mathbf{x}}_i = \frac{1}{T}\sum_{t=1}^T \mathbf{x}_{i,t}.
 \]
 
-\section{Three standard cases}\label{three-standard-cases}
+\section{Three standard cases}\label{panel-cases}
 
 How the individual effect relates to the observed regressors determines the appropriate estimator. The following three cases separate pooled models, fixed effects, and random effects.
 
@@ -4262,30 +4335,30 @@ Using state and year fixed effects in the \texttt{CigarettesSW} panel dataset yi
 \setlength{\tabcolsep}{4pt}\renewcommand{\arraystretch}{1.08}
 \begin{adjustbox}{max width=\linewidth}
 
-\begin{tabular}{@{\extracolsep{4pt}}lccc}
-\\[-1.8ex]\hline
-\hline \\[-1.8ex]
- & \multicolumn{3}{c}{\textit{Dependent variable:}} \\
-\cline{2-4}
-\\[-1.8ex] & \multicolumn{3}{c}{log(packs)} \\
-\\[-1.8ex] & (1) & (2) & (3)\\
-\hline \\[-1.8ex]
- log(rprice) & $-$1.334$^{***}$ & $-$1.210$^{***}$ & $-$1.056$^{***}$ \\
-  & (0.135) & (0.114) & (0.149) \\
-  log(rincome) & 0.318$^{**}$ & 0.121 & 0.497 \\
-  & (0.136) & (0.190) & (0.304) \\
-  Constant & 10.067$^{***}$ & 9.954$^{***}$ & 8.360$^{***}$ \\
-  & (0.516) & (0.264) & (1.049) \\
- \hline \\[-1.8ex]
-State FE & No & Yes & Yes \\
-Year FE & No & No & Yes \\
-Observations & 96 & 96 & 96 \\
-R$^{2}$ & 0.552 & 0.966 & 0.967 \\
-Adjusted R$^{2}$ & 0.542 & 0.929 & 0.931 \\
-\hline
-\hline \\[-1.8ex]
-\textit{Note:}  & \multicolumn{3}{r}{$^{*}$p$<$0.1; $^{**}$p$<$0.05; $^{***}$p$<$0.01} \\
-\end{tabular}
+\begin{tabular}{@{\extracolsep{4pt}}lccc} 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+ & \multicolumn{3}{c}{\textit{Dependent variable:}} \\ 
+\cline{2-4} 
+\\[-1.8ex] & \multicolumn{3}{c}{log(packs)} \\ 
+\\[-1.8ex] & (1) & (2) & (3)\\ 
+\hline \\[-1.8ex] 
+ log(rprice) & $-$1.334$^{***}$ & $-$1.210$^{***}$ & $-$1.056$^{***}$ \\ 
+  & (0.135) & (0.114) & (0.149) \\ 
+  log(rincome) & 0.318$^{**}$ & 0.121 & 0.497 \\ 
+  & (0.136) & (0.190) & (0.304) \\ 
+  Constant & 10.067$^{***}$ & 9.954$^{***}$ & 8.360$^{***}$ \\ 
+  & (0.516) & (0.264) & (1.049) \\ 
+ \hline \\[-1.8ex] 
+State FE & No & Yes & Yes \\ 
+Year FE & No & No & Yes \\ 
+Observations & 96 & 96 & 96 \\ 
+R$^{2}$ & 0.552 & 0.966 & 0.967 \\ 
+Adjusted R$^{2}$ & 0.542 & 0.929 & 0.931 \\ 
+\hline 
+\hline \\[-1.8ex] 
+\textit{Note:}  & \multicolumn{3}{r}{$^{*}$p$<$0.1; $^{**}$p$<$0.05; $^{***}$p$<$0.01} \\ 
+\end{tabular} 
 \end{adjustbox}\end{center}
 
 \begin{example}[Housing prices and interest rates]
@@ -4297,29 +4370,29 @@ In this example, we want to estimate the effect of short and long-term interest 
 \setlength{\tabcolsep}{4pt}\renewcommand{\arraystretch}{1.08}
 \begin{adjustbox}{max width=\linewidth}
 
-\begin{tabular}{@{\extracolsep{4pt}}lcccc}
-\\[-1.8ex]\hline
-\hline \\[-1.8ex]
- & \multicolumn{4}{c}{\textit{Dependent variable:}} \\
-\cline{2-5}
-\\[-1.8ex] & \multicolumn{4}{c}{dhpreal} \\
- & no FE & with FE & no FE & with FE \\
-\\[-1.8ex] & (1) & (2) & (3) & (4)\\
-\hline \\[-1.8ex]
- stir & 0.485$^{***}$ & 0.532$^{***}$ &  &  \\
-  & (0.114) & (0.134) &  &  \\
-  ltrate & $-$0.690$^{***}$ & $-$0.384$^{***}$ &  &  \\
-  & (0.127) & (0.145) &  &  \\
-  I(ltrate - stir) &  &  & $-$0.476$^{***}$ & $-$0.475$^{***}$ \\
-  &  &  & (0.115) & (0.125) \\
- \hline \\[-1.8ex]
-Country FE & No & Yes & No & Yes \\
-Year FE & No & Yes & No & Yes \\
-Observations & 1,141 & 1,141 & 1,141 & 1,141 \\
-\hline
-\hline \\[-1.8ex]
-\textit{Note:}  & \multicolumn{4}{r}{$^{*}$p$<$0.1; $^{**}$p$<$0.05; $^{***}$p$<$0.01} \\
-\end{tabular}
+\begin{tabular}{@{\extracolsep{4pt}}lcccc} 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+ & \multicolumn{4}{c}{\textit{Dependent variable:}} \\ 
+\cline{2-5} 
+\\[-1.8ex] & \multicolumn{4}{c}{dhpreal} \\ 
+ & no FE & with FE & no FE & with FE \\ 
+\\[-1.8ex] & (1) & (2) & (3) & (4)\\ 
+\hline \\[-1.8ex] 
+ stir & 0.485$^{***}$ & 0.532$^{***}$ &  &  \\ 
+  & (0.114) & (0.134) &  &  \\ 
+  ltrate & $-$0.690$^{***}$ & $-$0.384$^{***}$ &  &  \\ 
+  & (0.127) & (0.145) &  &  \\ 
+  I(ltrate - stir) &  &  & $-$0.476$^{***}$ & $-$0.475$^{***}$ \\ 
+  &  &  & (0.115) & (0.125) \\ 
+ \hline \\[-1.8ex] 
+Country FE & No & Yes & No & Yes \\ 
+Year FE & No & Yes & No & Yes \\ 
+Observations & 1,141 & 1,141 & 1,141 & 1,141 \\ 
+\hline 
+\hline \\[-1.8ex] 
+\textit{Note:}  & \multicolumn{4}{r}{$^{*}$p$<$0.1; $^{**}$p$<$0.05; $^{***}$p$<$0.01} \\ 
+\end{tabular} 
 \end{adjustbox}\end{center}
 
 If we suspect heteroskedasticity and autocorrelation (HAC) in the residuals, we can apply cluster corrections (see Section \ref{Clusters}):
@@ -4328,29 +4401,29 @@ If we suspect heteroskedasticity and autocorrelation (HAC) in the residuals, we 
 \setlength{\tabcolsep}{4pt}\renewcommand{\arraystretch}{1.08}
 \begin{adjustbox}{max width=\linewidth}
 
-\begin{tabular}{@{\extracolsep{4pt}}lcccc}
-\\[-1.8ex]\hline
-\hline \\[-1.8ex]
- & \multicolumn{4}{c}{\textit{Dependent variable:}} \\
-\cline{2-5}
-\\[-1.8ex] & \multicolumn{4}{c}{dhpreal} \\
- & no FE & with FE & no FE & with FE \\
-\\[-1.8ex] & (1) & (2) & (3) & (4)\\
-\hline \\[-1.8ex]
- stir & 0.485$^{*}$ & 0.532$^{**}$ &  &  \\
-  & (0.271) & (0.240) &  &  \\
-  ltrate & $-$0.690$^{**}$ & $-$0.384$^{*}$ &  &  \\
-  & (0.269) & (0.200) &  &  \\
-  I(ltrate - stir) &  &  & $-$0.476$^{*}$ & $-$0.475$^{**}$ \\
-  &  &  & (0.255) & (0.213) \\
- \hline \\[-1.8ex]
-Country FE & No & Yes & No & Yes \\
-Year FE & No & Yes & No & Yes \\
-Observations & 1,141 & 1,141 & 1,141 & 1,141 \\
-\hline
-\hline \\[-1.8ex]
-\textit{Note:}  & \multicolumn{4}{r}{$^{*}$p$<$0.1; $^{**}$p$<$0.05; $^{***}$p$<$0.01} \\
-\end{tabular}
+\begin{tabular}{@{\extracolsep{4pt}}lcccc} 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+ & \multicolumn{4}{c}{\textit{Dependent variable:}} \\ 
+\cline{2-5} 
+\\[-1.8ex] & \multicolumn{4}{c}{dhpreal} \\ 
+ & no FE & with FE & no FE & with FE \\ 
+\\[-1.8ex] & (1) & (2) & (3) & (4)\\ 
+\hline \\[-1.8ex] 
+ stir & 0.485$^{*}$ & 0.532$^{**}$ &  &  \\ 
+  & (0.271) & (0.240) &  &  \\ 
+  ltrate & $-$0.690$^{**}$ & $-$0.384$^{*}$ &  &  \\ 
+  & (0.269) & (0.200) &  &  \\ 
+  I(ltrate - stir) &  &  & $-$0.476$^{*}$ & $-$0.475$^{**}$ \\ 
+  &  &  & (0.255) & (0.213) \\ 
+ \hline \\[-1.8ex] 
+Country FE & No & Yes & No & Yes \\ 
+Year FE & No & Yes & No & Yes \\ 
+Observations & 1,141 & 1,141 & 1,141 & 1,141 \\ 
+\hline 
+\hline \\[-1.8ex] 
+\textit{Note:}  & \multicolumn{4}{r}{$^{*}$p$<$0.1; $^{**}$p$<$0.05; $^{***}$p$<$0.01} \\ 
+\end{tabular} 
 \end{adjustbox}\end{center}
 
 \end{example}
@@ -4445,39 +4518,39 @@ Let us come back to Example \ref{exm:JSTPanel}, concerning the relationship betw
 \setlength{\tabcolsep}{4pt}\renewcommand{\arraystretch}{1.08}
 \begin{adjustbox}{max width=\linewidth}
 
-\begin{tabular}{@{\extracolsep{4pt}}lccc}
-\\[-1.8ex]\hline
-\hline \\[-1.8ex]
- & \multicolumn{3}{c}{\textit{Dependent variable:}} \\
-\cline{2-4}
-\\[-1.8ex] & \multicolumn{3}{c}{dhpreal} \\
- & Pooled & Random Effect & Fixed Effects \\
-\\[-1.8ex] & (1) & (2) & (3)\\
-\hline \\[-1.8ex]
- stir & 0.485$^{***}$ & 0.456$^{***}$ & 0.532$^{***}$ \\
-  & (0.114) & (0.019) & (0.134) \\
-  ltrate & $-$0.690$^{***}$ & $-$0.541$^{***}$ & $-$0.384$^{***}$ \\
-  & (0.127) & (0.020) & (0.145) \\
-  Constant & 4.103$^{***}$ & 3.341$^{***}$ &  \\
-  & (0.421) & (0.096) &  \\
- \hline \\[-1.8ex]
-State FE & No & Yes & Yes \\
-Year FE & No & Yes & Yes \\
-Observations & 1,141 & 1,141 & 1,141 \\
-R$^{2}$ & 0.027 & 0.024 & 0.015 \\
-Adjusted R$^{2}$ & 0.025 & 0.022 & $-$0.067 \\
-\hline
-\hline \\[-1.8ex]
-\textit{Note:}  & \multicolumn{3}{r}{$^{*}$p$<$0.1; $^{**}$p$<$0.05; $^{***}$p$<$0.01} \\
-\end{tabular}
+\begin{tabular}{@{\extracolsep{4pt}}lccc} 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+ & \multicolumn{3}{c}{\textit{Dependent variable:}} \\ 
+\cline{2-4} 
+\\[-1.8ex] & \multicolumn{3}{c}{dhpreal} \\ 
+ & Pooled & Random Effect & Fixed Effects \\ 
+\\[-1.8ex] & (1) & (2) & (3)\\ 
+\hline \\[-1.8ex] 
+ stir & 0.485$^{***}$ & 0.456$^{***}$ & 0.532$^{***}$ \\ 
+  & (0.114) & (0.019) & (0.134) \\ 
+  ltrate & $-$0.690$^{***}$ & $-$0.541$^{***}$ & $-$0.384$^{***}$ \\ 
+  & (0.127) & (0.020) & (0.145) \\ 
+  Constant & 4.103$^{***}$ & 3.341$^{***}$ &  \\ 
+  & (0.421) & (0.096) &  \\ 
+ \hline \\[-1.8ex] 
+State FE & No & Yes & Yes \\ 
+Year FE & No & Yes & Yes \\ 
+Observations & 1,141 & 1,141 & 1,141 \\ 
+R$^{2}$ & 0.027 & 0.024 & 0.015 \\ 
+Adjusted R$^{2}$ & 0.025 & 0.022 & $-$0.067 \\ 
+\hline 
+\hline \\[-1.8ex] 
+\textit{Note:}  & \multicolumn{3}{r}{$^{*}$p$<$0.1; $^{**}$p$<$0.05; $^{***}$p$<$0.01} \\ 
+\end{tabular} 
 \end{adjustbox}\end{center}
 
 One can run an \citet{Hausman_1978} test in order to check whether or not the fixed-effect model is needed. Indeed, if this is not the case (i.e., if the covariates are not correlated to the disturbances), then it is preferable to use the random-effect estimation as the latter is more efficient.
 
 \begin{verbatim}
-##
+## 
 ##  Hausman Test
-##
+## 
 ## data:  dhpreal ~ stir + ltrate
 ## chisq = 3.8386, df = 2, p-value = 0.1467
 ## alternative hypothesis: one model is inconsistent
@@ -4496,7 +4569,7 @@ Our analysis uses 1321 listings in 12 districts. Figure \ref{fig:airbnb} shows t
 
 \begin{figure}
 
-{\centering \includegraphics[width=0.95\linewidth]{EcoStat_files/figure-latex/airbnb-1}
+{\centering \includegraphics[width=0.95\linewidth]{EcoStat_files/figure-latex/airbnb-1} 
 
 }
 
@@ -4532,7 +4605,7 @@ Within each model, the coefficient estimates are identical whichever covariance 
 
 \begin{figure}
 
-{\centering \includegraphics[width=1\linewidth]{EcoStat_files/figure-latex/airbnb3-1}
+{\centering \includegraphics[width=1\linewidth]{EcoStat_files/figure-latex/airbnb3-1} 
 
 }
 
@@ -4745,9 +4818,9 @@ L2.output & 0.101\\
 Function \texttt{mtest.fct} of package \texttt{pdynmc} implements this test. Here is its result in the present case:
 
 \begin{verbatim}
-##
+## 
 ##  Arellano and Bond (1991) serial correlation test of degree 3
-##
+## 
 ## data:  1step GMM Estimation
 ## normal = 0.07225, p-value = 0.9424
 ## alternative hypothesis: serial correlation of order 3 in the error terms
@@ -4756,24 +4829,24 @@ Function \texttt{mtest.fct} of package \texttt{pdynmc} implements this test. Her
 One can also implement the Hansen J-test of the over-identifying restrictions (see Section \ref{overidentif}):
 
 \begin{verbatim}
-##
+## 
 ##  J-Test of Hansen
-##
+## 
 ## data:  1step GMM Estimation
 ## chisq = 48.75, df = 25, p-value = 0.00303
 ## alternative hypothesis: overidentifying restrictions invalid
 \end{verbatim}
 
 \begin{verbatim}
-##
+## 
 ##  J-Test of Hansen
-##
+## 
 ## data:  2step GMM Estimation
 ## chisq = 31.381, df = 25, p-value = 0.1767
 ## alternative hypothesis: overidentifying restrictions invalid
 \end{verbatim}
 
-\section{Introduction to program evaluation}\label{introduction-to-program-evaluation}
+\section{Introduction to program evaluation}\label{program-evaluation}
 
 Panel methods are especially useful when a policy or intervention affects some entities but not others. Program evaluation studies the causal effects of such treatments, including the implementation or announcement of policy measures. This section introduces potential outcomes, randomized controlled trials, and difference-in-differences. See \citet{Abadie_Cattaneo_2018} for a broad review and \citet{angrist_mostly_2008} for a foundational treatment.
 
@@ -4819,7 +4892,7 @@ Y_{i} = W_{i} \beta_{1} + X_i'\boldsymbol\beta_z + \varepsilon_i,
 \]
 where \(\mathbb{E}(\varepsilon_i|X_i) = 0\) (and \(W_i\) is independent from \(X_i\) and \(\varepsilon_i\)). In this case, we obtain a consistent estimate of \(\beta_1\) by regressing \(\mathbf{y}\) on \(\mathbf{Z} = [\mathbf{w},\mathbf{X}]\).
 
-\subsection{Difference-in-Difference (DiD) approach}\label{difference-in-difference-did-approach}
+\subsection{Difference-in-differences (DiD) approach}\label{did}
 
 Random assignment is often unavailable. Difference-in-differences instead uses changes over time in a treated group and a comparison group, relying on a parallel-trends assumption to construct the missing counterfactual.
 
@@ -4855,7 +4928,7 @@ This is illustrated by Figure \ref{fig:figAbadie}, which represents the generic 
 
 \begin{figure}
 
-{\centering \includegraphics[width=0.95\linewidth]{images/Abadie_et_al_2018}
+{\centering \includegraphics[width=0.95\linewidth]{images/Abadie_et_al_2018} 
 
 }
 
@@ -4872,7 +4945,7 @@ As shown in Figure \ref{fig:figMeyer}, the measure has only affected high-earnin
 
 \begin{figure}
 
-{\centering \includegraphics[width=0.9\linewidth]{images/Figure_Meyer_et_al}
+{\centering \includegraphics[width=0.9\linewidth]{images/Figure_Meyer_et_al} 
 
 }
 
@@ -4887,45 +4960,70 @@ In the table of results below, the parameter of interest is the one associated w
 \setlength{\tabcolsep}{4pt}\renewcommand{\arraystretch}{1.08}
 \begin{adjustbox}{max width=\linewidth}
 
-\begin{tabular}{@{\extracolsep{4pt}}lccc}
-\\[-1.8ex]\hline
-\hline \\[-1.8ex]
- & \multicolumn{3}{c}{\textit{Dependent variable:}} \\
-\cline{2-4}
-\\[-1.8ex] & \multicolumn{3}{c}{log(durat)} \\
-\\[-1.8ex] & (1) & (2) & (3)\\
-\hline \\[-1.8ex]
- afchnge & 0.008 & $-$0.004 & 0.016 \\
-  & (0.045) & (0.038) & (0.045) \\
-  highearn & 0.256$^{***}$ & $-$0.595 & $-$1.522 \\
-  & (0.047) & (0.930) & (1.099) \\
-  afchnge:highearn & 0.191$^{***}$ & 0.162$^{***}$ & 0.215$^{***}$ \\
-  & (0.069) & (0.059) & (0.069) \\
-  lprewage &  & 0.207$^{**}$ & 0.258$^{**}$ \\
-  &  & (0.088) & (0.104) \\
-  male &  & $-$0.070$^{*}$ & $-$0.072 \\
-  &  & (0.039) & (0.046) \\
-  married &  & 0.055 & 0.051 \\
-  &  & (0.035) & (0.041) \\
-  lage &  & 0.244$^{***}$ & 0.252$^{***}$ \\
-  &  & (0.044) & (0.052) \\
-  ltotmed &  & 0.361$^{***}$ &  \\
-  &  & (0.011) &  \\
-  hosp &  & 0.252$^{***}$ &  \\
-  &  & (0.044) &  \\
-  highearn:lprewage &  & 0.065 & 0.232 \\
-  &  & (0.158) & (0.187) \\
- \hline \\[-1.8ex]
-industry dummy & no & yes & yes \\
-injury dummy & no & yes & yes \\
-Observations & 5,626 & 5,347 & 5,347 \\
-R$^{2}$ & 0.021 & 0.319 & 0.049 \\
-Adjusted R$^{2}$ & 0.020 & 0.316 & 0.046 \\
-\hline
-\hline \\[-1.8ex]
-\textit{Note:}  & \multicolumn{3}{r}{$^{*}$p$<$0.1; $^{**}$p$<$0.05; $^{***}$p$<$0.01} \\
-\end{tabular}
+\begin{tabular}{@{\extracolsep{4pt}}lccc} 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+ & \multicolumn{3}{c}{\textit{Dependent variable:}} \\ 
+\cline{2-4} 
+\\[-1.8ex] & \multicolumn{3}{c}{log(durat)} \\ 
+\\[-1.8ex] & (1) & (2) & (3)\\ 
+\hline \\[-1.8ex] 
+ afchnge & 0.008 & $-$0.004 & 0.016 \\ 
+  & (0.045) & (0.038) & (0.045) \\ 
+  highearn & 0.256$^{***}$ & $-$0.595 & $-$1.522 \\ 
+  & (0.047) & (0.930) & (1.099) \\ 
+  afchnge:highearn & 0.191$^{***}$ & 0.162$^{***}$ & 0.215$^{***}$ \\ 
+  & (0.069) & (0.059) & (0.069) \\ 
+  lprewage &  & 0.207$^{**}$ & 0.258$^{**}$ \\ 
+  &  & (0.088) & (0.104) \\ 
+  male &  & $-$0.070$^{*}$ & $-$0.072 \\ 
+  &  & (0.039) & (0.046) \\ 
+  married &  & 0.055 & 0.051 \\ 
+  &  & (0.035) & (0.041) \\ 
+  lage &  & 0.244$^{***}$ & 0.252$^{***}$ \\ 
+  &  & (0.044) & (0.052) \\ 
+  ltotmed &  & 0.361$^{***}$ &  \\ 
+  &  & (0.011) &  \\ 
+  hosp &  & 0.252$^{***}$ &  \\ 
+  &  & (0.044) &  \\ 
+  highearn:lprewage &  & 0.065 & 0.232 \\ 
+  &  & (0.158) & (0.187) \\ 
+ \hline \\[-1.8ex] 
+industry dummy & no & yes & yes \\ 
+injury dummy & no & yes & yes \\ 
+Observations & 5,626 & 5,347 & 5,347 \\ 
+R$^{2}$ & 0.021 & 0.319 & 0.049 \\ 
+Adjusted R$^{2}$ & 0.020 & 0.316 & 0.046 \\ 
+\hline 
+\hline \\[-1.8ex] 
+\textit{Note:}  & \multicolumn{3}{r}{$^{*}$p$<$0.1; $^{**}$p$<$0.05; $^{***}$p$<$0.01} \\ 
+\end{tabular} 
 \end{adjustbox}\end{center}
+
+\Needspace{15\baselineskip}
+
+\section*{Chapter recap}\label{chapter-recap-4}
+\addcontentsline{toc}{section}{Chapter recap}
+
+\begin{recapbox}
+
+\begin{itemize}
+\tightlist
+\item
+  Section \ref{panel-cases} distinguishes pooled, fixed-effects, and random-effects models according to the role of unobserved individual heterogeneity.
+\item
+  Hypothesis \ref{hyp:FE} permits individual effects to be correlated with regressors; Section \ref{FixedEffect} removes those effects using dummy variables, within transformations, or first differences.
+\item
+  Section \ref{RandomEffect} gains efficiency by assuming that individual effects are uncorrelated with the regressors and incorporating them into the error covariance structure.
+\item
+  Example \ref{exm:airbnb} shows why effect estimates and uncertainty estimates answer different questions in panel applications.
+\item
+  Section \ref{DynPanel} explains why lagged dependent variables become endogenous after fixed-effect transformations and how earlier observations provide instruments.
+\item
+  Section \ref{program-evaluation} introduces potential outcomes and randomized assignment; Section \ref{did} develops difference-in-differences under a parallel-trends assumption.
+\end{itemize}
+
+\end{recapbox}
 
 \clearpage
 
@@ -5782,7 +5880,7 @@ where \(\mathcal{L}_R\) (respectively \(\mathcal{L}_U\)) is the likelihood funct
 See Appendix \ref{AppendixProof}.
 \end{proof}
 
-\section{Bayesian approach}\label{bayesian-approach}
+\section{Bayesian approach}\label{bayesian}
 
 GMM and maximum likelihood treat the parameter as fixed and evaluate estimators through repeated samples. Bayesian inference instead represents uncertainty about the parameter with a probability distribution and updates that distribution after observing the data.
 
@@ -5916,6 +6014,31 @@ Specify the Gaussian priors:
 \begin{figure}
 \includegraphics[width=1\linewidth]{EcoStat_files/figure-latex/MCMC8-1} \caption{The upper line of plot compares prior (black) and posterior (red) distributions. The vertical dashed blue lines indicate the true values of the parameters. The second row of plots show the sequence of $\boldsymbol\theta_i$'s generated by the MCMC algorithm. These sequences are the ones used to produce the posterior distributions (red lines) in the upper plots.}\label{fig:MCMC8}
 \end{figure}
+
+\Needspace{15\baselineskip}
+
+\section*{Chapter recap}\label{chapter-recap-5}
+\addcontentsline{toc}{section}{Chapter recap}
+
+\begin{recapbox}
+
+\begin{itemize}
+\tightlist
+\item
+  Section \ref{secGMM} builds estimators from population moment conditions; Definition \ref{def:GMM} turns their sample analogues into a quadratic criterion.
+\item
+  The weighting matrix determines GMM efficiency, while Section \ref{overidentif} uses excess moment conditions to assess specification.
+\item
+  Definition \ref{def:likelihood} views the observed sample as a function of the parameter; Definitions \ref{def:score} and \ref{def:Fisher} summarize its local slope and curvature.
+\item
+  Definition \ref{def:MLEest} defines the maximum-likelihood estimator, and Proposition \ref{prp:MLEproperties} states its main large-sample properties under regularity conditions.
+\item
+  Section \ref{TestMLE} compares Wald, LM, and likelihood-ratio tests; Proposition \ref{prp:equivLRLMW} establishes their asymptotic equivalence under the null.
+\item
+  Section \ref{bayesian} combines priors and likelihoods into posterior distributions, while Definition \ref{def:MC} supplies the Markov-chain language used for posterior simulation.
+\end{itemize}
+
+\end{recapbox}
 
 \clearpage
 
@@ -6225,7 +6348,7 @@ Conditional on \(\mu\), let \(Y_1,\dots,Y_n\) be i.i.d. \(\mathcal{N}(\mu,\sigma
 
 \end{exercisebox}
 
-\chapter{Binary-choice models}\label{binary-choice-models}
+\chapter{Binary-choice models}\label{binary-choice}
 
 \textbf{Prerequisites.} Conditional probability, Bernoulli variables, linear regression, and maximum-likelihood estimation.
 
@@ -6447,27 +6570,27 @@ The fishing-mode dataset used in \citet{Cameron_Trivedi_2005} (Chapters 14 and 1
 \setlength{\tabcolsep}{4pt}\renewcommand{\arraystretch}{1.08}
 \begin{adjustbox}{max width=\linewidth}
 
-\begin{tabular}{@{\extracolsep{4pt}}lccccc}
-\\[-1.8ex]\hline
-\hline \\[-1.8ex]
-Statistic & \multicolumn{1}{c}{N} & \multicolumn{1}{c}{Mean} & \multicolumn{1}{c}{St. Dev.} & \multicolumn{1}{c}{Min} & \multicolumn{1}{c}{Max} \\
-\hline \\[-1.8ex]
-price.beach & 1,182 & 103.422 & 103.641 & 1.290 & 843.186 \\
-price.pier & 1,182 & 103.422 & 103.641 & 1.290 & 843.186 \\
-price.boat & 1,182 & 55.257 & 62.713 & 2.290 & 666.110 \\
-price.charter & 1,182 & 84.379 & 63.545 & 27.290 & 691.110 \\
-catch.beach & 1,182 & 0.241 & 0.191 & 0.068 & 0.533 \\
-catch.pier & 1,182 & 0.162 & 0.160 & 0.001 & 0.452 \\
-catch.boat & 1,182 & 0.171 & 0.210 & 0.0002 & 0.737 \\
-catch.charter & 1,182 & 0.629 & 0.706 & 0.002 & 2.310 \\
-income & 1,182 & 4,099.337 & 2,461.964 & 416.667 & 12,500.000 \\
-\hline \\[-1.8ex]
-\end{tabular}
+\begin{tabular}{@{\extracolsep{4pt}}lccccc} 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+Statistic & \multicolumn{1}{c}{N} & \multicolumn{1}{c}{Mean} & \multicolumn{1}{c}{St. Dev.} & \multicolumn{1}{c}{Min} & \multicolumn{1}{c}{Max} \\ 
+\hline \\[-1.8ex] 
+price.beach & 1,182 & 103.422 & 103.641 & 1.290 & 843.186 \\ 
+price.pier & 1,182 & 103.422 & 103.641 & 1.290 & 843.186 \\ 
+price.boat & 1,182 & 55.257 & 62.713 & 2.290 & 666.110 \\ 
+price.charter & 1,182 & 84.379 & 63.545 & 27.290 & 691.110 \\ 
+catch.beach & 1,182 & 0.241 & 0.191 & 0.068 & 0.533 \\ 
+catch.pier & 1,182 & 0.162 & 0.160 & 0.001 & 0.452 \\ 
+catch.boat & 1,182 & 0.171 & 0.210 & 0.0002 & 0.737 \\ 
+catch.charter & 1,182 & 0.629 & 0.706 & 0.002 & 2.310 \\ 
+income & 1,182 & 4,099.337 & 2,461.964 & 416.667 & 12,500.000 \\ 
+\hline \\[-1.8ex] 
+\end{tabular} 
 \end{adjustbox}\end{center}
 
 \end{example}
 
-\section{Estimation}\label{estimation}
+\section{Estimation}\label{binary-estimation}
 
 Once the probability function has been specified, its parameters can be estimated by maximum likelihood. Each observation contributes the probability assigned to the outcome that actually occurred.
 
@@ -6541,7 +6664,7 @@ For agent \(i\), this marginal effect is consistently estimated by \(g'(\boldsym
   Compute the average (across \(i\)) of \(g'(\boldsymbol\theta_{MLE}'\mathbf{x}_i)\theta_{MLE,k}\).
 \end{enumerate}
 
-\section{Goodness of fit}\label{goodness-of-fit-1}
+\section{Goodness of fit}\label{binary-fit}
 
 After interpreting individual coefficients, we turn to the performance of the model as a whole. For binary outcomes, fit can be assessed through likelihood-based measures, calibration, and the quality of probability predictions.
 
@@ -6568,46 +6691,46 @@ We consider three specifications. The first contains only a constant and serves 
 \setlength{\tabcolsep}{4pt}\renewcommand{\arraystretch}{1.08}
 \begin{adjustbox}{max width=\linewidth}
 
-\begin{tabular}{@{\extracolsep{4pt}}lccc}
-\\[-1.8ex]\hline
-\hline \\[-1.8ex]
- & \multicolumn{3}{c}{\textit{Dependent variable:}} \\
-\cline{2-4}
-\\[-1.8ex] & \multicolumn{3}{c}{Default} \\
-\\[-1.8ex] & (1) & (2) & (3)\\
-\hline \\[-1.8ex]
- gradeB &  &  & 0.400$^{***}$ \\
-  &  &  & (0.055) \\
-  gradeC &  &  & 0.587$^{***}$ \\
-  &  &  & (0.057) \\
-  gradeD &  &  & 0.820$^{***}$ \\
-  &  &  & (0.061) \\
-  gradeE &  &  & 0.874$^{***}$ \\
-  &  &  & (0.091) \\
-  gradeF &  &  & 1.230$^{***}$ \\
-  &  &  & (0.147) \\
-  gradeG &  &  & 1.439$^{***}$ \\
-  &  &  & (0.227) \\
-  log(loan\_amnt) &  & $-$0.149$^{**}$ & $-$0.194$^{***}$ \\
-  &  & (0.060) & (0.061) \\
-  amt2income &  & 1.266$^{***}$ & 1.222$^{***}$ \\
-  &  & (0.383) & (0.393) \\
-  delinq\_2yrs &  & 0.096$^{***}$ & 0.009 \\
-  &  & (0.034) & (0.035) \\
-  log(annual\_inc) &  & $-$1.444$^{**}$ & $-$0.874 \\
-  &  & (0.569) & (0.586) \\
-  I(log(annual\_inc)$\hat{\mkern6mu}$2) &  & 0.064$^{**}$ & 0.038 \\
-  &  & (0.025) & (0.026) \\
-  Constant & $-$1.231$^{***}$ & 7.937$^{***}$ & 4.749 \\
-  & (0.017) & (3.060) & (3.154) \\
- \hline \\[-1.8ex]
-Observations & 9,156 & 9,156 & 9,156 \\
-Log Likelihood & $-$3,157.696 & $-$3,120.625 & $-$2,981.343 \\
-Akaike Inf. Crit. & 6,317.392 & 6,253.250 & 5,986.686 \\
-\hline
-\hline \\[-1.8ex]
-\textit{Note:}  & \multicolumn{3}{r}{$^{*}$p$<$0.1; $^{**}$p$<$0.05; $^{***}$p$<$0.01} \\
-\end{tabular}
+\begin{tabular}{@{\extracolsep{4pt}}lccc} 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+ & \multicolumn{3}{c}{\textit{Dependent variable:}} \\ 
+\cline{2-4} 
+\\[-1.8ex] & \multicolumn{3}{c}{Default} \\ 
+\\[-1.8ex] & (1) & (2) & (3)\\ 
+\hline \\[-1.8ex] 
+ gradeB &  &  & 0.400$^{***}$ \\ 
+  &  &  & (0.055) \\ 
+  gradeC &  &  & 0.587$^{***}$ \\ 
+  &  &  & (0.057) \\ 
+  gradeD &  &  & 0.820$^{***}$ \\ 
+  &  &  & (0.061) \\ 
+  gradeE &  &  & 0.874$^{***}$ \\ 
+  &  &  & (0.091) \\ 
+  gradeF &  &  & 1.230$^{***}$ \\ 
+  &  &  & (0.147) \\ 
+  gradeG &  &  & 1.439$^{***}$ \\ 
+  &  &  & (0.227) \\ 
+  log(loan\_amnt) &  & $-$0.149$^{**}$ & $-$0.194$^{***}$ \\ 
+  &  & (0.060) & (0.061) \\ 
+  amt2income &  & 1.266$^{***}$ & 1.222$^{***}$ \\ 
+  &  & (0.383) & (0.393) \\ 
+  delinq\_2yrs &  & 0.096$^{***}$ & 0.009 \\ 
+  &  & (0.034) & (0.035) \\ 
+  log(annual\_inc) &  & $-$1.444$^{**}$ & $-$0.874 \\ 
+  &  & (0.569) & (0.586) \\ 
+  I(log(annual\_inc)$\hat{\mkern6mu}$2) &  & 0.064$^{**}$ & 0.038 \\ 
+  &  & (0.025) & (0.026) \\ 
+  Constant & $-$1.231$^{***}$ & 7.937$^{***}$ & 4.749 \\ 
+  & (0.017) & (3.060) & (3.154) \\ 
+ \hline \\[-1.8ex] 
+Observations & 9,156 & 9,156 & 9,156 \\ 
+Log Likelihood & $-$3,157.696 & $-$3,120.625 & $-$2,981.343 \\ 
+Akaike Inf. Crit. & 6,317.392 & 6,253.250 & 5,986.686 \\ 
+\hline 
+\hline \\[-1.8ex] 
+\textit{Note:}  & \multicolumn{3}{r}{$^{*}$p$<$0.1; $^{**}$p$<$0.05; $^{***}$p$<$0.01} \\ 
+\end{tabular} 
 \end{adjustbox}\end{center}
 
 The pseudo-\(R^2\) values for the latter two specifications are:
@@ -6619,7 +6742,7 @@ The pseudo-\(R^2\) values for the latter two specifications are:
 For a continuous regressor entering linearly, the average marginal effect is the average normal density times its coefficient. For example, treating \texttt{delinq\_2yrs} as continuous gives (method ii of Section \ref{marginalFX}):
 
 \begin{verbatim}
-## delinq_2yrs
+## delinq_2yrs 
 ## 0.001574178
 \end{verbatim}
 
@@ -6649,31 +6772,31 @@ We replicate Table 14.2 of \citet{Cameron_Trivedi_2005} (see Example \ref{exm:Fi
 \setlength{\tabcolsep}{4pt}\renewcommand{\arraystretch}{1.08}
 \begin{adjustbox}{max width=\linewidth}
 
-\begin{tabular}{@{\extracolsep{4pt}}lccc}
-\\[-1.8ex]\hline
-\hline \\[-1.8ex]
- & \multicolumn{3}{c}{\textit{Dependent variable:}} \\
-\cline{2-4}
-\\[-1.8ex] & \multicolumn{3}{c}{y} \\
-\\[-1.8ex] & \textit{logistic} & \textit{probit} & \textit{OLS} \\
-\\[-1.8ex] & (1) & (2) & (3)\\
-\hline \\[-1.8ex]
- lnrelp & $-$1.823$^{***}$ & $-$1.056$^{***}$ & $-$0.243$^{***}$ \\
-  & (0.145) & (0.075) & (0.010) \\
-  Constant & 2.053$^{***}$ & 1.194$^{***}$ & 0.784$^{***}$ \\
-  & (0.169) & (0.088) & (0.013) \\
- \hline \\[-1.8ex]
-Observations & 630 & 630 & 630 \\
-R$^{2}$ &  &  & 0.463 \\
-Adjusted R$^{2}$ &  &  & 0.462 \\
-Log Likelihood & $-$206.827 & $-$204.411 &  \\
-Akaike Inf. Crit. & 417.654 & 412.822 &  \\
-Residual Std. Error &  &  & 0.330 (df = 628) \\
-F Statistic &  &  & 542.123$^{***}$ (df = 1; 628) \\
-\hline
-\hline \\[-1.8ex]
-\textit{Note:}  & \multicolumn{3}{r}{$^{*}$p$<$0.1; $^{**}$p$<$0.05; $^{***}$p$<$0.01} \\
-\end{tabular}
+\begin{tabular}{@{\extracolsep{4pt}}lccc} 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+ & \multicolumn{3}{c}{\textit{Dependent variable:}} \\ 
+\cline{2-4} 
+\\[-1.8ex] & \multicolumn{3}{c}{y} \\ 
+\\[-1.8ex] & \textit{logistic} & \textit{probit} & \textit{OLS} \\ 
+\\[-1.8ex] & (1) & (2) & (3)\\ 
+\hline \\[-1.8ex] 
+ lnrelp & $-$1.823$^{***}$ & $-$1.056$^{***}$ & $-$0.243$^{***}$ \\ 
+  & (0.145) & (0.075) & (0.010) \\ 
+  Constant & 2.053$^{***}$ & 1.194$^{***}$ & 0.784$^{***}$ \\ 
+  & (0.169) & (0.088) & (0.013) \\ 
+ \hline \\[-1.8ex] 
+Observations & 630 & 630 & 630 \\ 
+R$^{2}$ &  &  & 0.463 \\ 
+Adjusted R$^{2}$ &  &  & 0.462 \\ 
+Log Likelihood & $-$206.827 & $-$204.411 &  \\ 
+Akaike Inf. Crit. & 417.654 & 412.822 &  \\ 
+Residual Std. Error &  &  & 0.330 (df = 628) \\ 
+F Statistic &  &  & 542.123$^{***}$ (df = 1; 628) \\ 
+\hline 
+\hline \\[-1.8ex] 
+\textit{Note:}  & \multicolumn{3}{r}{$^{*}$p$<$0.1; $^{**}$p$<$0.05; $^{***}$p$<$0.01} \\ 
+\end{tabular} 
 \end{adjustbox}\end{center}
 
 \end{example}
@@ -6711,6 +6834,31 @@ Figure \ref{fig:fishing3} shows the ROC curve associated with the probit model e
 \end{figure}
 
 \end{example}
+
+\Needspace{14\baselineskip}
+
+\section*{Chapter recap}\label{chapter-recap-6}
+\addcontentsline{toc}{section}{Chapter recap}
+
+\begin{recapbox}
+
+\begin{itemize}
+\tightlist
+\item
+  Chapter \ref{binary-choice} models the conditional probability of a binary outcome rather than an unrestricted conditional mean.
+\item
+  The linear probability model is simple to estimate but can produce probabilities outside \([0,1]\) and requires heteroskedasticity-robust inference.
+\item
+  Section \ref{latent} interprets probit and logit models through a latent index or a difference in utilities.
+\item
+  Section \ref{Avregressors} accommodates covariates, such as price or travel time, whose values vary across alternatives.
+\item
+  Section \ref{binary-estimation} derives the Bernoulli likelihood; Section \ref{marginalFX} converts index coefficients into effects on predicted probabilities.
+\item
+  Section \ref{binary-fit} assesses overall fit, while Section \ref{binary-predictions} separates probability prediction, threshold-based classification, and ROC analysis.
+\end{itemize}
+
+\end{recapbox}
 
 \clearpage
 
@@ -7247,7 +7395,7 @@ For a MA(1) process, the autocorrelation of order \(j\) (see Def. \ref{def:autoc
 
 Notice that process \(y_t\) defined through:
 \[
-y_t = \mu + \varepsilon_t +\theta \varepsilon_{t-1},
+y_t = \mu + \varepsilon_t +\theta \varepsilon_{t-1}, 
 \]
 where \(\mathbb{V}ar(\varepsilon_t)=\sigma^2\), has the same mean and autocovariances as
 \[
@@ -7770,9 +7918,9 @@ where \(\Phi\) is the c.d.f. of the standard normal distribution.
 We want to forecast this GDP growth. We envision two specifications : an AR(1) specification (the one advocated by the AIC criteria), and an ARMA(2,2) specification. We are interested in 2-year-ahead forecasts (i.e., \(h=2\) since the data are yearly).
 
 \begin{verbatim}
-##
+## 
 ##  Diebold-Mariano Test
-##
+## 
 ## data:  e1e2
 ## DM = -0.82989, Forecast horizon = 2, Loss function power = 2, p-value =
 ## 0.7946
@@ -7784,9 +7932,9 @@ With \texttt{alternative\ =\ "greater"} The alternative hypothesis is that metho
 Assume now that we want to compare the AR(1) process to a multivariate (VAR) model. We consider a bivariate VAR, where GDP growth is complemented with CPI-based inflation rate.
 
 \begin{verbatim}
-##
+## 
 ##  Diebold-Mariano Test
-##
+## 
 ## data:  e1e3
 ## DM = -0.11555, Forecast horizon = 2, Loss function power = 2, p-value =
 ## 0.5458
@@ -7795,6 +7943,33 @@ Assume now that we want to compare the AR(1) process to a multivariate (VAR) mod
 
 Again, we do not find that the alternative model (here the VAR(1) model) is better than the AR(1) model to forecast GDP growth.
 \end{example}
+
+\Needspace{16\baselineskip}
+
+\section*{Chapter recap}\label{chapter-recap-7}
+\addcontentsline{toc}{section}{Chapter recap}
+
+\begin{recapbox}
+
+\begin{itemize}
+\tightlist
+\item
+  Definitions \ref{def:whitenoise} and \ref{def:MDS} formalize two notions of innovations; a martingale difference may remain conditionally heteroskedastic.
+\item
+  Definition \ref{def:covstat} requires stable first and second moments, and Theorem \ref{thm:CLTcovstat} shows how serial dependence changes the precision of a sample mean through the long-run variance.
+\item
+  Definition \ref{def:MAq} and Proposition \ref{prp:covMAq} characterize finite moving-average processes and their autocovariance cutoff.
+\item
+  Definition \ref{def:AR1} introduces autoregressive dynamics; Propositions \ref{prp:statioAR1} and \ref{prp:stability} give stability conditions for AR(1) and AR(p) processes.
+\item
+  Definition \ref{def:partialAC} motivates PACF-based identification by isolating dependence at a given lag after controlling for shorter lags.
+\item
+  Propositions \ref{prp:smallestMSE} and \ref{prp:smallestMSElinear} characterize optimal unrestricted and linear forecasts.
+\item
+  Example \ref{exm:SwissOutOfSample} illustrates why forecast models should be compared with out-of-sample loss rather than in-sample fit alone.
+\end{itemize}
+
+\end{recapbox}
 
 \clearpage
 

@@ -1643,6 +1643,24 @@ coef(cvglmnet, s = "lambda.min") # associated parameters
 predict(cvglmnet, newx = as.matrix(x)[1:5,], s = "lambda.min") 
 ```
 
+```{r regressions-recap-space, echo=FALSE, results='asis'}
+if (knitr::is_latex_output()) cat("\\Needspace{16\\baselineskip}\n")
+```
+
+## Chapter recap {-}
+
+::: {.recapbox data-latex=""}
+
+- Section \@ref(linearHyp) states the assumptions that determine the finite- and large-sample properties of regression estimators.
+- Section \@ref(LSquares) derives OLS, and Theorem \@ref(thm:GaussMarkov) identifies its efficiency among linear unbiased estimators under the Gauss-Markov assumptions.
+- Proposition \@ref(prp:Ftest) shows how jointly imposed linear restrictions can be tested by comparing restricted and unrestricted fit.
+- Section \@ref(CommonPitfalls) separates multicollinearity, omitted-variable bias, and the loss of precision caused by irrelevant regressors.
+- Definition \@ref(def:instruments) states the relevance and exogeneity requirements for instrumental variables.
+- Definition \@ref(def:GRM) allows heteroskedastic and correlated disturbances; Sections \@ref(HAC) and \@ref(Clusters) develop corresponding covariance estimators.
+- Section \@ref(shrinkage) explains how ridge and lasso estimation trade fit against coefficient magnitude when many covariates are available.
+
+:::
+
 ```{r regressions-exercise-pagebreak, echo=FALSE, results='asis'}
 if (knitr::is_latex_output()) cat("\\clearpage\n")
 ```

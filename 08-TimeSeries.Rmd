@@ -932,6 +932,24 @@ res.DM
 Again, we do not find that the alternative model (here the VAR(1) model) is better than the AR(1) model to forecast GDP growth.
 :::
 
+```{r time-series-recap-space, echo=FALSE, results='asis'}
+if (knitr::is_latex_output()) cat("\\Needspace{16\\baselineskip}\n")
+```
+
+## Chapter recap {-}
+
+::: {.recapbox data-latex=""}
+
+- Definitions \@ref(def:whitenoise) and \@ref(def:MDS) formalize two notions of innovations; a martingale difference may remain conditionally heteroskedastic.
+- Definition \@ref(def:covstat) requires stable first and second moments, and Theorem \@ref(thm:CLTcovstat) shows how serial dependence changes the precision of a sample mean through the long-run variance.
+- Definition \@ref(def:MAq) and Proposition \@ref(prp:covMAq) characterize finite moving-average processes and their autocovariance cutoff.
+- Definition \@ref(def:AR1) introduces autoregressive dynamics; Propositions \@ref(prp:statioAR1) and \@ref(prp:stability) give stability conditions for AR(1) and AR(p) processes.
+- Definition \@ref(def:partialAC) motivates PACF-based identification by isolating dependence at a given lag after controlling for shorter lags.
+- Propositions \@ref(prp:smallestMSE) and \@ref(prp:smallestMSElinear) characterize optimal unrestricted and linear forecasts.
+- Example \@ref(exm:SwissOutOfSample) illustrates why forecast models should be compared with out-of-sample loss rather than in-sample fit alone.
+
+:::
+
 ```{r time-series-exercise-pagebreak, echo=FALSE, results='asis'}
 if (knitr::is_latex_output()) cat("\\clearpage\n")
 ```
