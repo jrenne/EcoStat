@@ -1,12 +1,24 @@
 # Binary-choice models
 
-In microeconometric models, the variables of interest often feature restricted distributions ---for instance with discontinuous support---, which necessitates specific models. Typically,  in many instances, the variables to be explained (the $y_i$'s) have only two possible values ($0$ and $1$, say). That is, they are binary variables. The probability for them to be equal to either 0 or 1 may depend on independent variables, gathered in vectors $\bv{x}_i$ ($K \times 1$).
+**Prerequisites.** Conditional probability, Bernoulli variables, linear regression, and maximum-likelihood estimation.
+
+**After working through this chapter, you should be able to:**
+
+- Explain why a linear probability model has heteroskedastic disturbances and potentially inadmissible fitted values.
+- Interpret probit and logit models through conditional probabilities and latent variables.
+- Write and maximize the likelihood of a binary-choice model.
+- Compute and interpret marginal effects.
+- Compare models using likelihood-based measures and assess predictions with classification rates and ROC curves.
+
+**Roadmap.** We start from the linear probability model and then introduce nonlinear probability functions. A latent-variable representation motivates probit and logit specifications. The remaining sections cover estimation, marginal effects, goodness of fit, and predictive evaluation before the exercises in Section \@ref(binary-exercises).
+
+Many economic outcomes are qualitative rather than continuous: a household defaults or does not, an individual participates or does not, and a firm enters a market or stays out. When $y_i\in\{0,1\}$, the object to model is the conditional probability $\mathbb{P}(y_i=1\mid\bv{x}_i)$. The covariates are collected in a $K\times1$ vector $\bv{x}_i$.
 
 The spectrum of applications is wide:
 
 * Binary decisions (e.g. in referendums, being owner or renter, living in the city or in the countryside, in/out of the labour force,...),
 * Contamination (disease or default),
-* Success/failure (exams).
+* Success/failure outcomes.
 
 Without loss of generality, the model reads:
 \begin{equation}\label{eq:binaryBenroulli}
@@ -27,7 +39,7 @@ An estimation strategy is to assume that $g(\bv{x}_i;\boldsymbol\theta)$ can be 
 $$
 y_i = \tilde{\boldsymbol\theta}'\bv{x}_i + \varepsilon_i.
 $$
-Notwithstanding the fact that this specification does not exclude negative probabilities or probabilities greater than one, it could be compatible with the *assumption of zero conditional mean* (Hypothesis \@ref(hyp:exogeneity)) and with the *assumption of non-correlated residuals* (Hypothesis \@ref(hyp:noncorrelResid)), but more difficultly with the *homoskedasticity assumption* (Hypothesis \@ref(hyp:homoskedasticity)). Moreover, the $\varepsilon_i$'s cannot be Gaussian (because $y_i \in \{0,1\}$). Hence, using a linear regression to study the relationship between $\bv{x}_i$ and $y_i$ can be consistent but it is inefficient.
+If the conditional probability is truly linear, OLS consistently estimates its coefficients; if it is nonlinear, OLS instead estimates the coefficients of the best linear projection. The fitted values can fall below zero or above one. Moreover, because $\mathbb{V}ar(y_i\mid\bv{x}_i)=p_i(1-p_i)$, the disturbances are generally heteroskedastic, so heteroskedasticity-robust standard errors should be used. The disturbances cannot be conditionally Gaussian because $y_i\in\{0,1\}$.
 
 
 
@@ -55,13 +67,13 @@ legend("topleft",
 Except for its last row (LPM case), Table \@ref(tab:foo) provides examples of functions $g$ valued in $[0,1]$, and that can therefore used in models of the type: $\mathbb{P}(y_i=1|\bv{x}_i;\boldsymbol\theta) = g(\boldsymbol\theta'\bv{x}_i)$ (see Eq. \@ref(eq:genericBinary)). The "linear" case is given for comparison, but note that it does not satisfy $g(\boldsymbol\theta'\bv{x}_i) \in [0,1]$ for any value of $\boldsymbol\theta'\bv{x}_i$.
 
 
-Table: (\#tab:foo) This table provides examples of function $g$, s.t. $\mathbb{P}(y_i=1|\bv{x}_i;\boldsymbol	heta) = g(\boldsymbol\theta'\bv{x}_i)$. The LPM case (last row) is given for comparison but, again, it does not satisfy $g(\boldsymbol\theta'\bv{x}_i) \in [0,1]$ for any value of $\boldsymbol\theta'\bv{x}_i$.
+Table: (\#tab:foo) This table provides examples of function $g$, s.t. $\mathbb{P}(y_i=1|\bv{x}_i;\boldsymbol\theta) = g(\boldsymbol\theta'\bv{x}_i)$. The LPM case (last row) is given for comparison but, again, it does not satisfy $g(\boldsymbol\theta'\bv{x}_i) \in [0,1]$ for every value of $\boldsymbol\theta'\bv{x}_i$.
 
 | Model   | Function $g$ | Derivative   |
 |---------|---------------|------------------|
 | Probit  | $\Phi$  | $\phi$      |
 | Logit   | $\dfrac{\exp(x)}{1+\exp(x)}$    | $\dfrac{\exp(x)}{(1+\exp(x))^2}$ |
-| log-log | $1 - \exp(-\exp(x))$ | $\exp(-\exp(x))\exp(x)$     |
+| Complementary log-log | $1 - \exp(-\exp(x))$ | $\exp(-\exp(x))\exp(x)$     |
 | linear (LPM)  | $x$  | 1  |
 
 
@@ -74,7 +86,7 @@ plot(x,pnorm(x),type="l",lwd=2,col="black",xlab="x",ylab="")
 lines(x,1/(1+exp(-x)),col="blue",lwd=2)
 lines(x,1- exp(-exp(x)),col="red",lwd=2)
 legend("topleft",
-       c("Probit","Logit","Log-log"),
+       c("Probit","Logit","Complementary log-log"),
        lty=c(1,1,1), # gives the legend appropriate symbols (lines)       
        lwd=c(2,2,2), # line width
        col=c("black","blue","red"),
@@ -109,7 +121,9 @@ legend("topleft",
 ```
 
 
-## Interpretation in terms of latent variable, and utility-based models {#latent}
+## Latent-variable and utility interpretations {#latent}
+
+Probability functions specify how covariates map into observed choices. A latent-variable representation supplies an economic interpretation: the observed binary outcome records whether an unobserved index crosses a threshold.
 
 The probit model has an interpretation in terms of latent variables, which, in turn, is often exploited  in structural models, called **Random Utility Models (RUM)**. In such structural models, it is assumed that the agents that have to take the decision do so by selecting the outcome that provides them with the larger utility (for agent $i$, two possible outcomes: $y_i=0$ or $y_i=1$). Part of this utility is observed by the econometrician ---it depends on the covariates $\bv{x}_i$--- and part of it is latent.
 
@@ -176,7 +190,10 @@ $$
 where $\bv{x}$ is the union of the $\bv{x}_i$s, for $i \in \{p,m,c\}$.
 :::
 
-## Alternative-Varying Regressors {#Avregressors}
+
+## Alternative-varying regressors {#Avregressors}
+
+So far, the regressors have described the decision maker. Some choice problems also include attributes that differ across alternatives, such as prices or travel times. These variables require a specification in which utility is indexed by the available choice.
 
 In some cases, regressors may depend on the considered alternative ($0$ or $1$). For instance:
 
@@ -193,7 +210,7 @@ where the $\bv{u}_{i,j}$'s are regressors associated with agent $i$, but taking 
 \end{equation}
 and, if $\theta^{(u)}_{1}=\theta^{(u)}_{0}=\theta^{(u)}$ ---as is customary--- we get:
 \begin{equation}
-\mathbb{P}(y_i = 1|\bv{x}_i;\boldsymbol\theta)  = F\left({\theta^{(u)}_{1}}'(\bv{u}_{i,1}-\bv{u}_{i,0})+[\boldsymbol\theta_1^{(v)}-\boldsymbol\theta_0^{(v)}]'\bv{v}_i\right).(\#eq:utility3)
+\mathbb{P}(y_i = 1|\bv{x}_i;\boldsymbol\theta)  = F\left({\theta^{(u)}}'(\bv{u}_{i,1}-\bv{u}_{i,0})+[\boldsymbol\theta_1^{(v)}-\boldsymbol\theta_0^{(v)}]'\bv{v}_i\right).(\#eq:utility3)
 \end{equation}
 
 :::{.example #FishingTable name="Fishing-mode dataset"}
@@ -208,6 +225,8 @@ model_table(as.data.frame(Fishing))
 :::
 
 ## Estimation
+
+Once the probability function has been specified, its parameters can be estimated by maximum likelihood. Each observation contributes the probability assigned to the outcome that actually occurred.
 
 These models can be estimated by Maximum Likelihood approaches (see Section \@ref(secMLE)).
 
@@ -257,9 +276,11 @@ $$
 $$
 where $g'(x)=\dfrac{\exp(-x)}{(1 + \exp(-x))^2}$.
 
-Remark that, since $g'(x)>0$, $-\partial^2 \log \mathcal{L}(\boldsymbol\theta;\bv{y},\bv{X})/\partial \boldsymbol\theta \partial \boldsymbol\theta'$ is positive definite.
+Since $g'(x)>0$, $-\partial^2 \log \mathcal{L}(\boldsymbol\theta;\bv{y},\bv{X})/\partial \boldsymbol\theta \partial \boldsymbol\theta'$ is positive semidefinite. It is positive definite when the design matrix has full column rank and the fitted probabilities are non-degenerate.
 
 ## Marginal effects {#marginalFX}
+
+The coefficients of probit and logit models affect a latent index, so they are not themselves changes in probability. Marginal effects translate coefficient estimates back into the probability scale and generally depend on the covariate values.
 
 How to measure marginal effects, i.e. the effect on the probability that $y_i=1$ of a marginal increase of $x_{i,k}$? This  object is given by:
 $$
@@ -274,6 +295,8 @@ ii. Compute the average (across $i$) of $g'(\boldsymbol\theta_{MLE}'\bv{x}_i)\th
 
 
 ## Goodness of fit
+
+After interpreting individual coefficients, we turn to the performance of the model as a whole. For binary outcomes, fit can be assessed through likelihood-based measures, calibration, and the quality of probability predictions.
 
 There is no obvious version of "$R^2$" for binary-choice models. Existing measures are called **pseudo-$R^2$ measures**.
 
@@ -301,9 +324,9 @@ plot(as.factor(credit_binary$Default)~log(credit_binary$annual_inc),
      ylevels=2:1,ylab="Default status",xlab="log(annual income)")
 ```
 
-The previous figure suggests that the effect of annual income on the probability of default is non-monotonous. We will therefore include a quadratic term in one of our specification (namely `eq1` below).
+The previous figure suggests that the effect of annual income on the probability of default is non-monotonic. We therefore include a quadratic income term in the specifications with explanatory variables.
 
-We consider three specifications. The first one (`eq0`), with no explanatory variables, is trivial. It will just be used to compute the pseudo-$R^2$. In the second (`eq1`), we consider a few covariates (loan amount, the ratio between the amount and annual income, The number of more-than-30 days past-due incidences of delinquency in the borrower's credit file for the past 2 years, and a quadratic function of annual income). In the third model (`eq2`), we add a credit rating.
+We consider three specifications. The first contains only a constant and serves as the reference model for computing the pseudo-$R^2$. The second includes the loan amount, the ratio of the loan amount to annual income, the number of delinquencies in the borrower's credit file during the previous two years, and a quadratic function of annual income. The third specification also includes the borrower's credit grade.
 
 ```{r Probitlending2,warning=FALSE}
 eq0 <- glm(Default ~ 1,data=credit_binary,family=binomial(link="probit"))
@@ -316,7 +339,7 @@ eq2 <- glm(Default ~ grade + log(loan_amnt) + amt2income + delinq_2yrs +
 model_table(eq0,eq1,eq2,no.space = TRUE)
 ```
 
-Let us compute the pseudo R2 for the last two models:
+The pseudo-$R^2$ values for the latter two specifications are:
 
 ```{r Probitlending2bis}
 logL0 <- logLik(eq0);logL1 <- logLik(eq1);logL2 <- logLik(eq2)
@@ -351,7 +374,7 @@ new_predict_eq2  <- predict(eq2, newdata = new_credit, type = "response")
 mean(new_predict_eq2 - bas_predict_eq2)
 ```
 
-We can employ a likelihood ratio test (see Def. \@ref(def:LR)) to see if the two variables associated with annual income are jointly statistically significant (in the context of `eq1`):
+We can employ a likelihood-ratio test (see Def. \@ref(def:LR)) to assess whether the two annual-income terms are jointly statistically significant in the second specification.
 ```{r Probitlending6}
 eq1restr <- glm(Default ~ log(loan_amnt) + amt2income + delinq_2yrs,
                 data=credit_binary,family=binomial(link="probit"))
@@ -367,7 +390,7 @@ The computation gives a p-value of `r round(pvalue,4)`.
 
 :::{.example #Fisch142 name="Replicating Table 14.2 of Cameron and Trivedi (2005)"}
 
-The following lines of codes replicate Table 14.2 of @Cameron_Trivedi_2005 (see Example \@ref(exm:FishingTable)).
+We replicate Table 14.2 of @Cameron_Trivedi_2005 (see Example \@ref(exm:FishingTable)).
 
 ```{r fishing2, warning=FALSE}
 data.reduced <- subset(Fishing,mode %in% c("charter","pier"))
@@ -394,18 +417,20 @@ model_table(reg.logit, reg.probit, reg.OLS,no.space = TRUE)
 :::
 
 
-## Predictions and ROC curves
+## Predictions and ROC curves {#binary-predictions}
 
-How to compute model-implied predicted outcomes? As is the case for $y_i$, predicted outcomes $\hat{y}_i$ need to be valued in $\{0,1\}$. A natural choice consists in considering that $\hat{y}_i=1$ if $\mathbb{P}(y_i=1|\bv{x}_i;\boldsymbol\theta) > 0.5$, i.e., in taking a cutoff of $c=0.5$. There exist, though, situations where doing so is not relevant. For instance, we may have some models where all predicted probabilities are small, but some less than others. In this context, a model-implied probability of 10\% (say) could characterize a "high-risk" entity. However, using a cutoff of 50\% would not identify this level of riskiness.
+A predicted probability becomes a classification only after a threshold is chosen. ROC curves summarize the trade-off between true- and false-positive rates across all possible thresholds, separating the model's ranking ability from any single decision rule.
+
+To convert predicted probabilities into binary classifications, choose a cutoff $c$ and set $\hat y_i=1$ when $\mathbb{P}(y_i=1\mid\bv{x}_i;\boldsymbol\theta)>c$. Although $c=0.5$ is a familiar default, it need not suit the decision problem. If the event is rare, a predicted probability of 10\% may already identify a high-risk entity, while a 50\% cutoff would classify every observation as low risk.
 
 The **receiver operating characteristics (ROC)** curve consitutes a more general approach. The idea is to remain agnostic and to consider all possible values of the cutoff $c$. It works as follows. For each potential cutoff $c \in [0,1]$, compute (and plot):
 
 *	The fraction of $y = 1$ values correctly classified (*True Positive Rate*) against
-* The fraction of $y = 0$ values incorrectly specified (*False Positive Rate*).
+* The fraction of $y = 0$ values incorrectly classified (*False Positive Rate*).
 
 Such a curve mechanically starts at (0,0) ---which corresponds to $c=1$--- and terminates at (1,1) --situation when $c=0$.
 
-In the case of no predictive ability (worst situation), the ROC curve is a straight line between (0,0) and (1,1).
+With no discriminatory ability, the expected ROC curve is the diagonal between (0,0) and (1,1). A score whose ROC curve lies below that diagonal is systematically reversed and can be improved by reversing its ranking.
 
 :::{.example #FishingROC name="ROC with the fishing-mode dataset"}
 Figure \@ref(fig:fishing3) shows the ROC curve associated with the probit model estimated in Example \@ref(exm:Fisch142).
@@ -422,3 +447,15 @@ roc(data.reduced$y, predict_model, percent=T,
 ```
 :::
 
+```{r binary-exercise-pagebreak, echo=FALSE, results='asis'}
+if (knitr::is_latex_output()) cat("\\clearpage\n")
+```
+
+## Exercises {#binary-exercises}
+
+Attempt each question before class and explain your reasoning, including for the true-or-false statements. **Foundation** exercises apply a result directly; **Standard** exercises require several steps; **Advanced** exercises combine several results or require a longer derivation. Worked solutions and exercise-specific hints are reserved for teaching sessions and are not included in this student edition.
+
+```{r binary-exercise-bank, echo=FALSE, results='asis'}
+source("R/exercises.R")
+render_exercises("binary")
+```

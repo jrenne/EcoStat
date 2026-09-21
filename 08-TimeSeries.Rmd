@@ -1,10 +1,23 @@
 # Time Series {#TS}
 
+**Prerequisites.** Expectations, variances and covariances, the central limit theorem, linear regression, and basic matrix algebra.
+
+**After working through this chapter, you should be able to:**
+
+- Distinguish white noise, martingale differences, strict stationarity, and covariance stationarity.
+- Compute autocovariances and long-run variances.
+- Determine whether AR and MA representations are stable and causal.
+- Use autocorrelation and partial autocorrelation for model identification.
+- Construct point forecasts and forecast-error variances.
+- Evaluate forecasts in and out of sample.
+
+**Roadmap.** The chapter first develops the probabilistic language needed for time-indexed data. It then studies moving-average and autoregressive processes, including their identification, before turning to forecasting and forecast evaluation. Section \@ref(time-series-exercises) provides analytical applications.
+
 ## Introduction to time series
 
-A time series is an infinite sequence of random variables indexed by time: $\{y_t\}_{t=-\infty}^{+\infty}=\{\dots, y_{-2},y_{-1},y_{0},y_{1},\dots,y_t,\dots\}$, $y_i \in \mathbb{R}^k$. In practice, we only observe samples, typically: $\{y_{1},\dots,y_T\}$.
+A time series is a sequence of random variables indexed by time: $\{y_t\}_{t=-\infty}^{+\infty}=\{\dots,y_{-1},y_0,y_1,\dots\}$, with $y_t\in\mathbb{R}^k$. In practice, we observe only a finite stretch, typically $\{y_1,\dots,y_T\}$. Unlike a random sample, these observations may be dependent across dates, so the order in which they occur contains information.
 
-Standard time series models are built using **shocks** that we will often denote by $\varepsilon_t$. Typically, $\mathbb{E}(\varepsilon_t)=0$. In many models, the shocks are supposed to be i.i.d., but there exist other (less restrictive) notions of shocks. In particular, the definition of many processes is based on white noises:
+Time-series models describe current observations in terms of past information and new **shocks**, usually denoted by $\varepsilon_t$. Although shocks are sometimes assumed i.i.d., many results need only weaker restrictions. We begin with white noise and martingale differences, then introduce the lag operator and stationarity.
 
 :::{.definition #whitenoise name="White noise"}
 The process $\{\varepsilon_t\}_{t \in] -\infty,+\infty[}$ is a white noise if, for all $t$:
@@ -13,6 +26,7 @@ a. $\mathbb{E}(\varepsilon_t)=0$,
 b. $\mathbb{E}(\varepsilon_t^2)=\sigma^2<\infty$ and
 c. for all $s\ne t$, $\mathbb{E}(\varepsilon_t \varepsilon_s)=0$.
 :::
+
 
 Another type of shocks that are commonly used are Martingale Difference Sequences:
 
@@ -30,7 +44,7 @@ The Autoregressive conditional heteroskedasticity (ARCH) process is an example o
 $$
 \varepsilon_{t} = \sigma_t \times z_{t},
 $$
-where $z_t \sim i.i.d.\,\mathcal{N}(0,1)$ and $\sigma_t^2 = w + \alpha \varepsilon_{t-1}^2$.
+where $z_t \sim i.i.d.\,\mathcal{N}(0,1)$, $w>0$, $\alpha\ge0$, and $\sigma_t^2 = w + \alpha \varepsilon_{t-1}^2$. A finite, time-invariant unconditional variance additionally requires $\alpha<1$.
 :::
 
 :::{.example #whiteNotMDS}
@@ -106,7 +120,7 @@ The following process is  covariance stationary but not strictly stationary:
 $$
 y_t = \mathbb{I}_{\{t<1000\}}\varepsilon_{1,t}+\mathbb{I}_{\{t\ge1000\}}\varepsilon_{2,t},
 $$
-where $\varepsilon_{1,t} \sim \mathcal{N}(0,1)$ and $\varepsilon_{2,t} \sim \sqrt{\frac{\nu - 2}{\nu}} t(\nu)$ and $\nu = 4$.
+where $\{\varepsilon_{1,t}\}$ and $\{\varepsilon_{2,t}\}$ are independent i.i.d. sequences, $\varepsilon_{1,t} \sim \mathcal{N}(0,1)$, $\varepsilon_{2,t} \sim \sqrt{\frac{\nu - 2}{\nu}} t(\nu)$, and $\nu = 4$. Both regimes have mean zero and variance one, but their marginal distributions differ.
 
 ```{r nonstat2, echo=FALSE, fig.cap="Example of a process that is covariance stationary but not strictly stationary. The red lines delineate the 99\\% confidence interval of the standard normal distribution ($\\pm 2.58$).", fig.asp = .6, out.width = "95%", fig.align = 'left'}
 T <- 2000
@@ -186,26 +200,30 @@ $$
 
 It should be noted that ergodicity and stationarity are different properties. Typically if the process $\{x_t\}$ is such that, $\forall t$, $x_t \equiv y$, where $y \sim\,\mathcal{N}(0,1)$ (say), then $\{x_t\}$ is stationary but not ergodic.
 
-:::{.theorem #CLTcovstat name="Central Limit Theorem for covariance-stationary processes"}
+:::{.theorem #CLTcovstat name="Sample mean of a weakly dependent stationary process"}
 
-If process $y_t$ is covariance stationary and if the series of autocovariances is absolutely summable ($\sum_{j=-\infty}^{+\infty} |\gamma_j| <\infty$), then:
+If process $y_t$ is covariance stationary and the series of autocovariances is absolutely summable ($\sum_{j=-\infty}^{+\infty} |\gamma_j| <\infty$), then:
 \begin{eqnarray}
 \bar{y}_T \overset{m.s.}{\rightarrow} \mu &=& \mathbb{E}(y_t) (\#eq:TCL20)\\
-\mbox{lim}_{T \rightarrow +\infty} T \mathbb{E}\left[(\bar{y}_T - \mu)^2\right] &=& \sum_{j=-\infty}^{+\infty} \gamma_j (\#eq:TCL2)\\
-\sqrt{T}(\bar{y}_T - \mu) &\overset{d}{\rightarrow}& \mathcal{N}\left(0,\sum_{j=-\infty}^{+\infty} \gamma_j \right) (\#eq:TCL4ts).
+\mbox{lim}_{T \rightarrow +\infty} T \mathbb{E}\left[(\bar{y}_T - \mu)^2\right] &=& \sum_{j=-\infty}^{+\infty} \gamma_j. (\#eq:TCL2)
 \end{eqnarray}
+
+Covariance stationarity and summable autocovariances alone do **not** imply asymptotic normality. If the process additionally satisfies a suitable central-limit condition---for example, standard strong-mixing and moment conditions---then
+\begin{equation}
+\sqrt{T}(\bar{y}_T - \mu) \overset{d}{\rightarrow} \mathcal{N}\left(0,\sum_{j=-\infty}^{+\infty} \gamma_j \right). (\#eq:TCL4ts)
+\end{equation}
 
 [Mean square (m.s.) and distribution (d.) convergences: see Definitions \@ref(def:cvgceDistri) and \@ref(def:convergenceLr).]
 :::
 
 :::{.proof}
-By Proposition \@ref(prp:absMs), Eq. \@ref(eq:TCL2) implies Eq. \@ref(eq:TCL20). For Eq. \@ref(eq:TCL2), see Appendix \@ref(AppendixProof). For Eq. \@ref(eq:TCL4ts), see @Anderson_1971, p. 429.
+By Proposition \@ref(prp:absMs), Eq. \@ref(eq:TCL2) implies Eq. \@ref(eq:TCL20). For Eq. \@ref(eq:TCL2), see Appendix \@ref(AppendixProof). Equation \@ref(eq:TCL4ts) follows only after imposing an appropriate central-limit condition.
 :::
 
 :::{.definition #LRV name="Long-run variance"}
 Under the assumptions of Theorem \@ref(thm:CLTcovstat), the limit appearing in Eq. \@ref(eq:TCL2) exists and is called **long-run variance**. It is denoted by $S$, i.e.:
 $$
-S = \Sigma_{j=-\infty}^{+\infty} \gamma_j  = \mbox{lim}_{T \rightarrow +\infty} T \mathbb{E}[(\bar{y}_T - \mu)^2].
+S = \sum_{j=-\infty}^{+\infty} \gamma_j  = \mbox{lim}_{T \rightarrow +\infty} T \mathbb{E}[(\bar{y}_T - \mu)^2].
 $$
 :::
 
@@ -214,14 +232,15 @@ If $y_t$ is ergodic for second moments (see Def. \@ref(def:ergod2nd)), a natural
 \begin{equation}
 \hat\gamma_0 + 2 \sum_{\nu=1}^{q} \hat\gamma_\nu, (\#eq:covSmplMean)
 \end{equation}
-where $\hat\gamma_\nu = \frac{1}{T}\sum_{\nu+1}^{T} (y_t - \bar{y})(y_{t-\nu} - \bar{y})$.
+where $\hat\gamma_\nu = \frac{1}{T}\sum_{t=\nu+1}^{T} (y_t - \bar{y})(y_{t-\nu} - \bar{y})$.
 
-However, for small samples, Eq. \@ref(eq:covSmplMean) does not necessarily result in a positive definite matrix. @Newey_West_1987 have proposed an estimator that does not have this defect. Their estimator is given by:
+However, for small samples, Eq. \@ref(eq:covSmplMean) can be negative (or, in the multivariate case, fail to be positive semidefinite). @Newey_West_1987 proposed the following nonnegative estimator:
 \begin{equation}
 S^{NW}=\hat\gamma_0 + 2 \sum_{\nu=1}^{q}\left(1-\frac{\nu}{q+1}\right) \hat\gamma_\nu.(\#eq:NWest)
 \end{equation}
+For consistency, the bandwidth $q=q_T$ must be chosen together with the sample size; standard sufficient conditions include $q_T\rightarrow\infty$ and $q_T/T\rightarrow0$, along with moment and weak-dependence conditions.
 
-Loosely speaking, Theorem \@ref(thm:CLTcovstat) says that, for a given sample size, the higher the "persistency" of a process, the lower the accuracy of the sample mean as an estimate of the population mean. To illustrate, consider three processes that feature the same marginal variance (equal to one, say), but different autocorrelations: 0\%, 70\%, and 99.9\%. Figure \@ref(fig:TVTCL) displays simulated paths of such three processes. It indeed appears that, the larger the autocorrelation of the process, the further the sample mean (dashed red line) from the population mean (red solid line).
+Theorem \@ref(thm:CLTcovstat) implies that persistence reduces the precision of a sample mean for a given sample size. Figure \@ref(fig:TVTCL) illustrates this point with three processes that have the same marginal variance but autocorrelations of 0\%, 70\%, and 99.9\%. As persistence rises, the sample mean (dashed red line) can remain farther from the population mean (solid red line).
 
 The same type of simulations can be performed using [this ShinyApp](https://jrenne.shinyapps.io/MacroEc/) (use panel "AR(1) Simulation").
 
@@ -251,6 +270,8 @@ for(rho in all.rho){
 
 
 ## Univariate processes
+
+The preceding concepts provide the language for studying particular models. We now build two basic classes from white-noise shocks: moving-average processes, which depend on current and past shocks, and autoregressive processes, which depend on their own past values.
 
 ### Moving Average (MA) processes
 
@@ -386,7 +407,9 @@ The absolute summability of $\{\theta_{i}\}$ and the fact that $\mathbb{E}(\vare
 :::
 
 
-### Auto-Regressive (AR) processes {#ARsection}
+### Autoregressive (AR) processes {#ARsection}
+
+Moving-average models describe dependence directly through past shocks. Autoregressive models describe it recursively through past observations, which makes them especially natural for persistence and forecasting.
 
 :::{.definition #AR1 name="First-order AR process (AR(1))"}
 Consider a white noise process $\{\varepsilon_t\}_{t = -\infty}^{+\infty}$ (see Def. \@ref(def:whitenoise)). Process $y_t$ is an AR(1) process if it is defined by the following difference equation:
@@ -430,8 +453,8 @@ By what precedes, we have:
 
 
 
-:::{.proposition #statioAR1 name="Covariance-stationarity of an AR(1) process"}
-The AR(1) process, as defined in Def. \@ref(def:AR1), is covariance-stationary iff $|\phi|<1$.
+:::{.proposition #statioAR1 name="Causal covariance-stationarity of an AR(1) process"}
+The AR(1) equation in Def. \@ref(def:AR1) has a causal covariance-stationary solution---one expressible in current and past shocks---if and only if $|\phi|<1$.
 :::
 
 
@@ -596,7 +619,7 @@ and
 \end{equation}
 
 
-In the following lines of codes, we compute the eigenvalues of the $F$ matrices associated with the following processes (where $\varepsilon_t$ is a white noise):
+To assess stationarity, we compute the eigenvalues of the $F$ matrices associated with the following processes (where $\varepsilon_t$ is a white noise):
 \begin{eqnarray*}
 x_t &=& 0.9 x_{t-1} -0.2 x_{t-2} + \varepsilon_t\\
 y_t &=& 1.1 y_{t-1} -0.3 y_{t-2} + \varepsilon_t\\
@@ -636,6 +659,8 @@ Using $\gamma_j = \gamma_{-j}$ (Prop. \@ref(prp:gammaMinus)), one can express $(
 
 ### PACF approach to identify AR/MA processes {#PACFapproach}
 
+The autocorrelation patterns derived above help distinguish model classes. An MA process has an autocorrelation function that cuts off, whereas an AR process has a partial autocorrelation function that cuts off. Sample ACFs and PACFs turn these population properties into practical diagnostic tools.
+
 We have seen that the $k^{th}$-order auto-correlation of a MA(q) process is null if $k>q$. This is exploited, in practice, to determine the order of a MA process. Moreover, since this is not the case for an AR process, this can be used to distinguish an AR from an MA process.
 
 There exists an equivalent approach to determine whether a process can be modeled as an AR process; it is based on partial auto-correlations:
@@ -660,7 +685,7 @@ The residuals of the latter regressions ($\varepsilon_{t+h}$) are uncorrelated t
 
 Besides, it can be shown that $\phi_{p,p}=\phi_p$. Hence  $\phi_{p,p}=\phi_p$ but  $\phi_{h,h}=0$ for $h>p$. This can be used to determine the order of an AR process. By contrast (importantly) if $y_t$ follows an MA(q) process, then $\phi_{k,k}$ asymptotically approaches zero instead of cutting off abruptly.
 
-As illustrated below, functions `acf` and `pacf` can be conveniently used to employ the (P)ACF approach. (Note also the use of function `sim.arma` to simulate ARMA processes.)
+Figure \@ref(fig:pacf) illustrates the ACF/PACF approach using a simulated MA process in the left column and a simulated AR process in the right column.
 
 ```{r pacf, echo=TRUE, fig.cap="ACF/PACF analysis of two processes (MA process on the left, AR on the right).", fig.asp = .6, out.width = "100%", fig.align = 'left'}
 library(AEC)
@@ -683,6 +708,8 @@ par(mfg=c(3,2));pacf(y.sim)
 
 
 ## Forecasting {#forecasting}
+
+The models above describe temporal dependence. Forecasting uses that dependence to construct the best prediction available from current information, quantify its uncertainty, and compare competing specifications out of sample.
 
 Forecasting has always been an important part of the time series field (@DEGOOIJER2006443). Macroeconomic forecasts are done in many places: Public Administration (notably Treasuries), Central Banks, International Institutions (e.g. IMF, OECD), banks, big firms. These institutions are interested in the **point estimates** ($\sim$ most likely value) of the variable of interest. They also sometimes need to measure the **uncertainty** ($\sim$ dispersion of likely outcomes) associated to the point estimates.[^FootnoteFamChart]
 
@@ -721,12 +748,12 @@ This projection, denoted by $\hat{P}(y_{t+1}|x_t):=\boldsymbol\alpha'x_t$, satis
 :::{.proof}
 Consider the function $f:$ $\boldsymbol\alpha \rightarrow \mathbb{E}\left( [y_{t+1} - \boldsymbol\alpha'x_t]^2 \right)$. We have:
 $$
-f(\boldsymbol\alpha) = \mathbb{E}\left( y_{t+1}^2 - 2 y_t x_t'\boldsymbol\alpha + \boldsymbol\alpha'x_t x_t'\boldsymbol\alpha] \right).
+f(\boldsymbol\alpha) = \mathbb{E}\left( y_{t+1}^2 - 2 y_{t+1} x_t'\boldsymbol\alpha + \boldsymbol\alpha'x_t x_t'\boldsymbol\alpha \right).
 $$
 We have $\partial f(\boldsymbol\alpha)/\partial \boldsymbol\alpha = \mathbb{E}(-2 y_{t+1} x_t + 2 x_t x_t'\boldsymbol\alpha)$. The function is minimised for $\partial f(\boldsymbol\alpha)/\partial \boldsymbol\alpha =0$.
 :::
 
-Eq. \@ref(eq:proj) implies that $\mathbb{E}\left( y_{t+1}x_t \right)=\mathbb{E}\left(x_tx_t' \right)\boldsymbol\alpha$. (Note that $x_t x_t'\boldsymbol\alpha=x_t (x_t'\boldsymbol\alpha)=(\boldsymbol\alpha'x_t) x_t'$.)
+Eq. \@ref(eq:proj) implies that $\mathbb{E}\left( y_{t+1}x_t \right)=\mathbb{E}\left(x_tx_t' \right)\boldsymbol\alpha$. (Note that $x_t x_t'\boldsymbol\alpha=x_t (x_t'\boldsymbol\alpha)=(\boldsymbol\alpha'x_t) x_t$.)
 
 Hence, if $\mathbb{E}\left(x_tx_t' \right)$ is nonsingular,
 \begin{equation}
@@ -740,7 +767,7 @@ $$
 
 Consider the regression $y_{t+1} = \boldsymbol\beta'\bv{x}_t + \varepsilon_{t+1}$. The OLS estimate is:
 $$
-\bv{b} = \left[ \underbrace{ \frac{1}{T} \sum_{i=1}^T \bv{x}_t\bv{x}_t'}_{\bv{m}_1} \right]^{-1}\left[  \underbrace{ \frac{1}{T} \sum_{i=1}^T \bv{x}_t'y_{t+1}}_{\bv{m}_2} \right].
+\bv{b} = \left[ \underbrace{ \frac{1}{T-1} \sum_{t=1}^{T-1} \bv{x}_t\bv{x}_t'}_{\bv{m}_1} \right]^{-1}\left[  \underbrace{ \frac{1}{T-1} \sum_{t=1}^{T-1} \bv{x}_t y_{t+1}}_{\bv{m}_2} \right].
 $$
 If $\{x_t,y_t\}$ is covariance-stationary and ergodic for the second moments then the sample moments ($\bv{m}_1$ and $\bv{m}_2$) converges in probability to the associated population moments and $\bv{b} \overset{p}{\rightarrow} \boldsymbol\alpha$ (where $\boldsymbol\alpha$ is defined in Eq. \@ref(eq:linproj)).
 
@@ -788,7 +815,7 @@ $$
 $$
 with $\boldsymbol\mu = [\mu,\dots,\mu]'$ ($\mu$ is defined in Eq. \@ref(eq:EAR)). Hence:
 $$
-\bv{y}_{t+h} - \boldsymbol\mu = \boldsymbol\xi_{t+h} + F \boldsymbol\xi_{t+h-1} + \dots + F^{h-1} \boldsymbol\xi_{t+1} + F^h (\bv{y}_{t}- \mu).
+\bv{y}_{t+h} - \boldsymbol\mu = \boldsymbol\xi_{t+h} + F \boldsymbol\xi_{t+h-1} + \dots + F^{h-1} \boldsymbol\xi_{t+1} + F^h (\bv{y}_{t}- \boldsymbol\mu).
 $$
 Therefore:
 \begin{eqnarray*}
@@ -808,7 +835,7 @@ $$
 
 Alternative approach: Taking the (conditional) expectations of both sides of
 $$
-y_{t+h} - \mu = \phi_1 (y_{t+h-1} - \mu) + \phi_2 (y_{t+h-2} - \mu) + \dots + \phi_p (y_{t-p} - \mu) + \varepsilon_{t+h},
+y_{t+h} - \mu = \phi_1 (y_{t+h-1} - \mu) + \phi_2 (y_{t+h-2} - \mu) + \dots + \phi_p (y_{t+h-p} - \mu) + \varepsilon_{t+h},
 $$
 we obtain:
 \begin{eqnarray*}
@@ -825,7 +852,7 @@ The recursion begins with $\mathbb{E}(y_{t-k}|y_{t},y_{t-1},\dots)=y_{t-k}$ (for
 
 **Assessing the performances of a forecasting model**
 
-Once one has fitted a model on a given dataset (of length $T$, say), one compute MSE (mean square errors) to evaluate the performance of the model. But this MSE is the **in-sample** one. It is easy to reduce in-sample MSE. Typically, if the model is estimated by OLS, adding covariates mechanically reduces the MSE (see Props. \@ref(prp:chgeR2) and \@ref(prp:chgeInR2)). That is, even if additional data are irrelevant, the $R^2$ of the regression increases. Adding irrelevant variables increases the (in-sample) $R^2$ but is bound to increase the **out-of-sample** MSE.
+Once one has fitted a model on a given dataset (of length $T$, say), one can compute its mean squared error (MSE). This is an **in-sample** measure. If the model is estimated by OLS, adding covariates cannot increase the in-sample residual sum of squares (see Props. \@ref(prp:chgeR2) and \@ref(prp:chgeInR2)). Irrelevant regressors generally increase estimation variance and can worsen **out-of-sample** MSE, although this is not a deterministic result in every realized sample.
 
 Therefore, it is important to analyse **out-of-sample** performances of the forecasting model:
 
@@ -843,7 +870,7 @@ It may be the case that your forecasts serve a specific purpose and that, for in
 * If you dislike large positive errors, you may set $L(e)=\exp(e)$.
 * If you are concerned about both positive and negative errors (indifferently), you may set $L(e)=e^2$ (standard approach).
 
-Let us define the sequence $\{d_t\}_{t=1,\dots,T} \equiv \{L(e^{A}_t)-L(e^{B}_t)\}_{t=1,\dots,T}$ and assume that this sequence is covariance stationary. We consider the following null hypothesis: $H_0:$ $\bar{d}=0$, where $\bar{d}$ denotes the population mean of the $d_t$s. Under $H_0$ and under the assumption of covariance-stationarity of $d_t$, we have (Theorem \@ref(thm:CLTcovstat)):
+Let us define the sequence $\{d_t\}_{t=1,\dots,T} \equiv \{L(e^{A}_t)-L(e^{B}_t)\}_{t=1,\dots,T}$ and assume that it is covariance stationary and satisfies the weak-dependence and moment conditions needed for the central limit theorem. We consider the null hypothesis $H_0:\mathbb{E}(d_t)=0$. Under $H_0$, Theorem \@ref(thm:CLTcovstat) gives:
 $$
 \sqrt{T} \bar{d}_T \overset{d}{\rightarrow} \mathcal{N}\left(0,\sum_{j=-\infty}^{+\infty} \gamma_j \right),
 $$	
@@ -905,6 +932,15 @@ res.DM
 Again, we do not find that the alternative model (here the VAR(1) model) is better than the AR(1) model to forecast GDP growth.
 :::
 
+```{r time-series-exercise-pagebreak, echo=FALSE, results='asis'}
+if (knitr::is_latex_output()) cat("\\clearpage\n")
+```
 
+## Exercises {#time-series-exercises}
 
+Attempt each question before class and explain your reasoning, including for the true-or-false statements. **Foundation** exercises apply a result directly; **Standard** exercises require several steps; **Advanced** exercises combine several results or require a longer derivation. Worked solutions and exercise-specific hints are reserved for teaching sessions and are not included in this student edition.
 
+```{r time-series-exercise-bank, echo=FALSE, results='asis'}
+source("R/exercises.R")
+render_exercises("time-series")
+```

@@ -1,8 +1,20 @@
 # Panel regressions {#Panel}
 
+**Prerequisites.** Linear regression, omitted-variable bias, generalized least squares, instrumental variables, and hypothesis testing.
+
+**After working through this chapter, you should be able to:**
+
+- Recognize the structure of a panel dataset and distinguish pooled, fixed-effects, and random-effects models.
+- Derive and interpret the within estimator.
+- Explain when random-effects estimation is consistent and how it differs from fixed effects.
+- Identify the source of bias in dynamic panel regressions and the role of internal instruments.
+- State the identifying assumption behind difference-in-differences.
+
+**Roadmap.** The chapter introduces panel notation and the main assumptions before presenting fixed-effects and random-effects estimators. It then studies dynamic panels and closes with programme-evaluation methods. Section \@ref(panel-exercises) applies these ideas.
+
 ## Specification and notations
 
-A standard panel situation is as follows: the sample covers a lot of "entities",  indexed by $i \in \{1,\dots,n\}$, with $n$ large, and, for each entity, we observe different variables over a small number of periods $t \in \{1,\dots,T\}$. This is a *longitudinal dataset*.
+A panel dataset follows the same entities across time. Entities are indexed by $i\in\{1,\dots,n\}$ and periods by $t\in\{1,\dots,T\}$. This repeated-observation structure lets us distinguish variation across entities from variation within an entity over time.
 
 The linear panel regression model is:
 \begin{equation}
@@ -13,7 +25,7 @@ When running panel regressions, the usual objective is to estimate $\boldsymbol\
 
 <!-- \includegraphics[width=.95\linewidth]{../../figures/Figure_Panel_simul0.pdf} -->
 
-Figure \@ref(fig:simulPanel) illustrates a panel-data situation. The model is $y_i = \alpha_i + \beta x_{i,t} + \varepsilon_{i,t}$, $t \in \{1,2\}$. On Panel (b), blue dots are for $t=1$, red dots are for $t=2$. The lines relate the dots associated with the same entity $i$. What is remarkable in the simulated model is that, while the unconditional correlation between $y$ and $x$ is negative, the conditional correlation (conditional on $\alpha_i$) is positive. Indeed, the sign of this conditional correlation is the sign of $\beta$, which is positive in th simulated example ($\beta=5$). In other words, if one did not know the panel nature of the data, that would be tempting to say that $\beta<0$, but this is not the case, due to **fixed effects** (the $\alpha_i$'s) that are negatively correlated to the $x_i$'s.
+Figure \@ref(fig:simulPanel) illustrates why that distinction matters. The model is $y_{i,t}=\alpha_i+\beta x_{i,t}+\varepsilon_{i,t}$ for $t\in\{1,2\}$. In Panel (b), blue and red dots represent the two periods, and each line joins observations for the same entity. The pooled correlation between $y$ and $x$ is negative, yet the within-entity relationship is positive because $\beta=5$. The entity effects $\alpha_i$ are negatively correlated with $x_{i,t}$, so ignoring the panel structure would reverse the sign of the relationship of interest.
 
 ```{r simulPanel, fig.cap="The data are the same for both panels. On Panel (b), blue dots are for $t=1$, red dots are for $t=2$. The lines relate the dots associated to the same entity $i$.", fig.asp = .6, out.width = "95%", fig.align = 'left'}
 T <- 2; n <- 12 # 2 periods and 12 entities
@@ -125,6 +137,8 @@ $$
 
 ## Three standard cases
 
+How the individual effect relates to the observed regressors determines the appropriate estimator. The following three cases separate pooled models, fixed effects, and random effects.
+
 There are three typical situations:
 
 * **Pooled regression**: $\bv{z}_i \equiv 1$. This case amounts to the case studied in Chapter \@ref(ChapterLS).
@@ -136,7 +150,9 @@ $$
 where $\alpha = \mathbb{E}(\bv{z}'_{i}\boldsymbol\alpha)$ and $u_i = \bv{z}'_{i}\boldsymbol\alpha - \mathbb{E}(\bv{z}'_{i}\boldsymbol\alpha) \perp \bv{x}_i$. In that case, the OLS is consistent, but not efficient. GLS can be used to gain efficiencies over OLS (see Section \@ref(GLS) for a presentation of the GLS approach).
 
 
-## Estimation of Fixed-Effects Models {#FixedEffect}
+## Estimation of fixed-effects models {#FixedEffect}
+
+When individual effects may be correlated with the regressors, the estimator must remove those effects rather than treat them as part of the disturbance. The fixed-effects approaches below do so through dummy variables, within transformations, or first differences.
 
 
 :::{.hypothesis #FE name="Fixed-effect model"}
@@ -204,31 +220,7 @@ Denoting by $\bv{Z}$ the matrix $[\bv{X} \quad \bv{D}]$, and by $\bv{b}$ and $\b
 = [\bv{Z}'\bv{Z}]^{-1}\bv{Z}'\bv{y}.} (\#eq:bfixedeffects11)
 \end{equation}
 
-The asymptotical distribution of $[\bv{b}',\bv{a}']'$ derives from the standard OLS context: Prop. \@ref(prp:asymptOLS) can be used after having replaced $\bv{X}$ by $\bv{Z}=[\bv{X} \quad \bv{D}]$.
-
-We have:
-\begin{equation}
-\boxed{\sqrt{nT}\left(\left[
-\begin{array}{c}
-\bv{b}\\
-\bv{a}
-\end{array}
-\right]-\left[
-\begin{array}{c}
-\boldsymbol\beta\\
-\boldsymbol\alpha
-\end{array}
-\right]\right) \overset{d}{\rightarrow}
-\mathcal{N}\left(
-\bv{0},
-\sigma^2 Q^{-1}
-\right),}
-\end{equation}
-where
-$$
-Q = \mbox{plim}_{nT \rightarrow \infty} \frac{1}{nT} \bv{Z}'\bv{Z},
-$$
-assuming the previous limit exists.
+When the number of entities $n$ grows while $T$ is fixed, the dimension of $\boldsymbol\alpha$ also grows. Consequently, the usual fixed-dimensional OLS limit theorem cannot be applied to the full vector $[\bv{b}',\bv{a}']'$. Under strict exogeneity, cross-sectional independence, and standard moment and rank conditions, the within estimator $\bv{b}$ of the common slope vector $\boldsymbol\beta$ is consistent and asymptotically normal as $n\rightarrow\infty$ with fixed $T$. By contrast, each individual effect $\alpha_i$ is estimated from only $T$ observations and is generally not consistent when $T$ remains fixed.
 
 In practice, an estimator of the covariance matrix of $[\bv{b}',\bv{a}']'$ is:
 $$
@@ -294,7 +286,7 @@ which are the first-order conditions resulting from the least squares problem (s
 
 One can use different types of fixed effects in the same regression. Typically, one can have time and entity fixed effects. In that case, the model writes:
 $$
-y_{i,t} = \bv{x}_i'\boldsymbol\beta + \alpha_i + \gamma_t + \varepsilon_{i,t}.
+y_{i,t} = \bv{x}_{i,t}'\boldsymbol\beta + \alpha_i + \gamma_t + \varepsilon_{i,t}.
 $$
 
 The LSDV approach (Eq. \@ref(eq:LSDV)) can still be resorted to. It suffices to extend the $\bv{Z}$ matrix with additional columns (then called *time dummies*):
@@ -391,6 +383,8 @@ model_table(eq1_noFE, eq1_FE, eq2_noFE, eq2_FE, column.labels = c("no FE", "with
 
 ## Estimation of random effects models {#RandomEffect}
 
+If the individual effect is uncorrelated with the regressors, it can be incorporated into the covariance structure of a composite error. This additional assumption permits random-effects estimation and can improve efficiency by using both within- and between-entity variation.
+
 Here, the individual effects are assumed to be not correlated to other variables (the $\bv{x}_i$'s). In that context, the OLS estimator is consistent. However, it is not efficient. The GLS approach can be employed to gain efficiency.
 
 **Random-effect models** write:
@@ -438,7 +432,7 @@ where $Id_n$ is the identity matrix of dimension $n \times n$.
 
 If we knew $\boldsymbol\Sigma$, we would apply (feasible) GLS (Eq. \@ref(eq:betaGLS), in Section \@ref(GLS)):
 $$
-\boldsymbol\beta = (\bv{X}'\boldsymbol\Sigma^{-1}\bv{X})^{-1}\bv{X}'\boldsymbol\Sigma^{-1}\bv{y}.
+\bv{b}_{GLS} = (\bv{X}'\boldsymbol\Sigma^{-1}\bv{X})^{-1}\bv{X}'\boldsymbol\Sigma^{-1}\bv{y}.
 $$
 (As explained in Section \@ref(GLS), this amounts to regressing ${\boldsymbol\Sigma^{-1/2}}'\bv{y}$ on ${\boldsymbol\Sigma^{-1/2}}'\bv{X}$.)
 
@@ -456,7 +450,7 @@ What about when $\boldsymbol\Sigma$ is unknown? One can take deviations from gro
 \begin{equation}
 y_{i,t} - \bar{y}_i = [\bv{x}_{i,t} - \bar{\bv{x}}_i]'\boldsymbol\beta + (\varepsilon_{i,t} - \bar{\varepsilon}_i).(\#eq:OLSRUM)
 \end{equation}
-The previous equation can be consistently estimated by OLS. (Although the residuals are correlated across $t$'s for the observations pertaining to a given entity, the OLS remain consistent; see Prop. \@ref(prp:XXX).)
+The previous equation can be estimated consistently by OLS. Although its residuals are correlated across periods for a given entity, this dependence affects the covariance estimator rather than coefficient consistency; see Proposition \@ref(prp:ols-grm-consistency).
 
 We have $\mathbb{E}\left[\sum_{t=1}^{T}(\varepsilon_{i,t}-\bar{\varepsilon}_i)^2\right] = (T-1)\sigma_{\varepsilon}^2$.
 
@@ -472,7 +466,7 @@ $$
 and therefore use $s^2_{pooled} - \hat{\sigma}_e^2$ as an approximation to $\sigma_u^2$.
 
 
-Let us come back to Example \@ref(exm:JSTPanel) (relationship between changes in housing prices and interest rates). In the following, we use the random effect specification; and compare the results with those obtained with the pooled regression and with the fixed-effect model. For that, we use the function `plm` of the package of the same name. (Note that `eq.FE` is similar to `eq1` in Example \@ref(exm:JSTPanel).)
+Let us come back to Example \@ref(exm:JSTPanel), concerning the relationship between changes in housing prices and interest rates. The table below compares pooled, random-effects, and two-way fixed-effects estimates of the same specification.
 
 ```{r JSTpanel2, warning=FALSE,message=FALSE}
 library(plm);library(stargazer)
@@ -494,7 +488,7 @@ One can run an @Hausman_1978 test in order to check whether or not the fixed-eff
 ```{r JSTpanel3}
 phtest(eq.FE,eq.RE)
 ```
-The p-value being high, we do not reject the null hypothesis according to which the covariates and the errors are uncorrelated. We should therefore prefer the random-effect model.
+Because the p-value is high, we do not reject the null hypothesis that the random effect is uncorrelated with the covariates. The random-effects estimator therefore remains compatible with the test and, under its maintained assumptions, is more efficient. Failure to reject is not evidence that the null is true.
 
 
 
@@ -696,7 +690,9 @@ max(abs(airbnb_district_means)) # zero up to numerical precision
 <!-- %\end{frame} -->
 
 
-## Dynamic Panel Regressions {#DynPanel}
+## Dynamic panel regressions {#DynPanel}
+
+The preceding estimators assume that lagged outcomes do not appear among the regressors. Once they do, the transformed lag is mechanically correlated with the transformed error. Dynamic-panel methods address this endogeneity with internal instruments constructed from earlier observations.
 
 In what precedes, it has been assumed that there is no correlation between the observations indexed by $(i,t)$ and those indexed by $(j,s)$ as long as $j \ne i$ or $t \ne s$. If one suspects that the errors $\varepsilon_{i,t}$ are correlated (across entities $i$ for a given date $t$, or across dates for a given entity, or both), then one should employ a robust covariance matrix (see Section \@ref(Clusters)).
 
@@ -718,7 +714,7 @@ The previous equation shows that the *within-group* estimator (LSDV) introduces 
 
 [^footnote1]: Although the bias may vanish for large $T$'s, it does not if $n$ only goes to infinity.
 
-The following simulation illustrate this bias. The $x$-coordinates  of the dots are the fixed effects $\alpha_i$'s, and the $y$-coordinates are their LSDV estimates. The blue line is the 45-degree line.
+The following simulation illustrates this bias. The horizontal coordinates are the fixed effects $\alpha_i$, and the vertical coordinates are their LSDV estimates. The blue line is the 45-degree line.
 
 ```{r setseedPLM, echo=FALSE}
 set.seed(1)
@@ -749,9 +745,9 @@ To address this, one can resort to instrumental-variable regressions. @Anderson_
 \begin{equation}
 \Delta y_{i,t} = \rho \Delta y_{i,t-1} + (\Delta \bv{x}_{i,t})'\boldsymbol\beta + \Delta\varepsilon_{i,t}.(\#eq:paneldynFisrtDiff)
 \end{equation}
-The OLS estimates of the parameters are biased because $\varepsilon_{i,t-1}$ ---which is part of the error $\Delta\varepsilon_{i,t}$--- is correlated to $y_{i,t-1}$ ---which is part of the "explanatory variable", namely $\Delta y_{i,t-1}$. But consistent estimates can be obtained using 2SLS with instrumental variables that are correlated with $\Delta y_{i,t}$ but orthogonal to $\Delta\varepsilon_{i,t}$. One can for instance use $\{y_{i,t-2},\bv{x}_{i,t-2}\}$ as instruments. Note that this approach can be implemented only if there are more than 3 time observations per entity $i$.
+The OLS estimates of the parameters are biased because $\varepsilon_{i,t-1}$ ---which is part of the error $\Delta\varepsilon_{i,t}$--- is correlated to $y_{i,t-1}$ ---which is part of the "explanatory variable", namely $\Delta y_{i,t-1}$. But consistent estimates can be obtained using 2SLS with instrumental variables that are correlated with $\Delta y_{i,t}$ but orthogonal to $\Delta\varepsilon_{i,t}$. One can for instance use $\{y_{i,t-2},\bv{x}_{i,t-2}\}$ as instruments. Note that this approach can be implemented only if there are at least 3 time observations per entity $i$.
 
-If the explanatory variables $\bv{x}_{i,t}$ are assumed to be predetermined (i.e., do not contemporaneous correlate with the errors $\varepsilon_{i,t}$), then $\bv{x}_{i,t-1}$ can be added to the instruments associated with $\Delta y_{i,t}$. Further, if these variables (the $\bv{x}_{i,t}$'s) are exogenous (i.e., do not contemporaneous correlate with any of the errors $\varepsilon_{i,s}$, $\forall s$), then $\bv{x}_{i,t}$ also constitute a valid instrument.
+If the explanatory variables $\bv{x}_{i,t}$ are predetermined, they may correlate with past errors but not with current or future errors; then $\bv{x}_{i,t-1}$ is a valid instrument for the differenced equation at date $t$. If they are strictly exogenous, they are uncorrelated with $\varepsilon_{i,s}$ at every date $s$, and contemporaneous $\bv{x}_{i,t}$ can also be used as instruments.
 
 Using the previous (simulated) example, this approach consists in the following steps:
 
@@ -800,7 +796,7 @@ where the $\widehat{\Delta\boldsymbol\varepsilon_i}$'s are consistent estimates 
 
 If the disturbances are homoskedastic, then it can be shown that an asymptotically equivalent (efficient) GMM estimator can  be obtained by using:
 $$
-W_{1,n} = \left(\frac{1}{n}Z_i'HZ_i\right)^{-1},
+W_{1,n} = \left(\frac{1}{n}\sum_{i=1}^{n}Z_i'HZ_i\right)^{-1},
 $$
 where $H$ is is $(T-2) \times (T-2)$ matrix of the form:
 $$
@@ -815,7 +811,7 @@ $$
 
 It is straightforward to extend these GMM methods to cases where there is more than one lag of the dependent variable on the right-hand side of the equation or in cases where disturbances feature limited moving-average serial correlation.
 
-The `pdynmc` package allows to run these GMM approaches (see @Fritsch_et_al_2019). The following lines of code allow to replicate the results of @Arellano_Bond_1991:
+The `pdynmc` package implements these GMM approaches (see @Fritsch_et_al_2019). The one-step estimates reported below replicate results from @Arellano_Bond_1991.
 
 ```{r dynpanel3, warning=FALSE, message=FALSE}
 library(pdynmc)
@@ -848,7 +844,7 @@ m1 <- pdynmc(dat = dat, # name of the dataset
 panel_table(m1)
 ```
 
-We generate novel results (`m2`) by replacing "`onestep`" with "`twostep`" (in the `estimation` field). The resulting  estimated coefficients are:
+The next table reports two-step estimates of the same specification.
 
 ```{r dynpanel3bis, echo=FALSE}
 m2 <- pdynmc(dat = dat, # name of the dataset
@@ -899,7 +895,7 @@ jtest.fct(m2)
 
 ## Introduction to program evaluation
 
-This section brielfy introduces the econometrics of program evaluation. Program evaluation refer to the analysis of the causal effects of some "treatments" in a broad sense. These treatment can, e.g., correspond to the implementation (or announcement) of policy measures. A comprehensive review is proposed by @Abadie_Cattaneo_2018. A seminal book on the subject is that of @angrist_mostly_2008.
+Panel methods are especially useful when a policy or intervention affects some entities but not others. Program evaluation studies the causal effects of such treatments, including the implementation or announcement of policy measures. This section introduces potential outcomes, randomized controlled trials, and difference-in-differences. See @Abadie_Cattaneo_2018 for a broad review and @angrist_mostly_2008 for a foundational treatment.
 
 
 
@@ -933,6 +929,8 @@ that is easier to estimate. Indeed, a consistent estimate of $\alpha$ is the dif
 
 ### Randomized controlled trials (RCTs)
 
+The fundamental evaluation problem is that each entity reveals only one potential outcome. Random assignment solves the associated selection problem by making treatment independent of the potential outcomes.
+
 In the context of Randomized controlled trials (RCTs), entities are randomly assigned to receive the treatment. As a result, we have $\mathbb{E}(Y_1) = \mathbb{E}(Y_1|W=0) = \mathbb{E}(Y_1|W=1)$ and $\mathbb{E}(Y_0) = \mathbb{E}(Y_0|W=0) = \mathbb{E}(Y_0|W=1)$. Using this into Eqs. \@ref(eq:EY1a) and \@ref(eq:EY0a) yields $ATE = \alpha$.
 
 Therefore, in this context, estimating $\mathbb{E}(Y_1-Y_0)$ amounts to computing the difference between two sample means, namely (a) the sample mean of the subset of $Y_i$'s corresponding to the entities for which $W_i=1$, and (b) the one for which $W_i=0$.
@@ -945,6 +943,8 @@ where $\mathbb{E}(\varepsilon_i|X_i) = 0$ (and $W_i$ is independent from $X_i$ a
 
 ### Difference-in-Difference (DiD) approach
 
+Random assignment is often unavailable. Difference-in-differences instead uses changes over time in a treated group and a comparison group, relying on a parallel-trends assumption to construct the missing counterfactual.
+
 The DiD approach is a popular methodology implemented in cases where $W$ cannot be considered as an independent variable. It exploits two dimensions: entities ($i$), and time ($t$). To simplify the exposition, we consider only two periods here ($t=0$ and $t=1$).
 
 Consider the following model:
@@ -954,16 +954,16 @@ Y_{i,t} = W_{i,t} \beta_1 + \mu_i + \delta_t + \varepsilon_{i,t}(\#eq:DiD)
 
 The parameter of interest is $\beta_{1}$, which is the treatment effect (recall that $W_{i,t} \in \{0,1\}$). Usually, for all entities $i$, we have $W_{i,t=0}=0$. But only some of them are treated on date 1, i.e., $W_{i,1} \in \{0,1\}$.
 
-The disturbance $\varepsilon_{i,t}$ affects the outcome, but we assume that it does not relate to the selection for treatment; therefore, $\mathbb{E}(\varepsilon_{i,t}|W_{i,t})=0$. By contrast, we do not exclude some correlation between $W_{i,t}$ (for $t=1$) and $\mu_i$; hence, $\mu_i$ may constitute a *confounder*. Finally, we suppose that the micro-variables $W_i$ do not affect the time fixed effects $\delta_t$, such that $\mathbb{E}(\delta_t|W_{i,t})=\mathbb{E}(\delta_t)$.
+The treatment indicator may be correlated with the time-invariant effect $\mu_i$, so $\mu_i$ may constitute a *confounder*. DiD removes this fixed difference by comparing changes. Its key identifying assumption is **parallel trends**: in the absence of treatment, the mean change would have been the same in the treated and control groups. In this model, that condition is $\mathbb{E}(\varepsilon_{i,1}-\varepsilon_{i,0}\mid W_{i,1}=1)=\mathbb{E}(\varepsilon_{i,1}-\varepsilon_{i,0}\mid W_{i,1}=0)$. We also assume no anticipation: treatment at date 1 does not affect the date-0 outcome.
 
 We have:
 
 $$
 \begin{array}{cccccccccc}
-\mathbb{E}(Y_{i,1}|W_{i,1}=1) &=& \beta_1 &+& \mathbb{E}(\mu_i|W_{i,1}=1) &+&\mathbb{E}(\delta_1|W_{i,1}=1) &+& \mathbb{E}(\varepsilon_{i,1}) \\
-\mathbb{E}(Y_{i,0}|W_{i,1}=1) &=&  && \mathbb{E}(\mu_i|W_{i,1}=1) &+&\mathbb{E}(\delta_0|W_{i,1}=1) &+& \mathbb{E}(\varepsilon_{i,0}) \\
-\mathbb{E}(Y_{i,1}|W_{i,1}=0) &=& && \mathbb{E}(\mu_i|W_{i,1}=0) &+&\mathbb{E}(\delta_1|W_{i,1}=0) &+& \mathbb{E}(\varepsilon_{i,1}) \\
-\mathbb{E}(Y_{i,0}|W_{i,1}=0) &=&  && \mathbb{E}(\mu_i|W_{i,1}=0) &+&\mathbb{E}(\delta_0|W_{i,1}=0) &+& \mathbb{E}(\varepsilon_{i,0}).
+\mathbb{E}(Y_{i,1}|W_{i,1}=1) &=& \beta_1 &+& \mathbb{E}(\mu_i|W_{i,1}=1) &+&\mathbb{E}(\delta_1|W_{i,1}=1) &+& \mathbb{E}(\varepsilon_{i,1}|W_{i,1}=1) \\
+\mathbb{E}(Y_{i,0}|W_{i,1}=1) &=&  && \mathbb{E}(\mu_i|W_{i,1}=1) &+&\mathbb{E}(\delta_0|W_{i,1}=1) &+& \mathbb{E}(\varepsilon_{i,0}|W_{i,1}=1) \\
+\mathbb{E}(Y_{i,1}|W_{i,1}=0) &=& && \mathbb{E}(\mu_i|W_{i,1}=0) &+&\mathbb{E}(\delta_1|W_{i,1}=0) &+& \mathbb{E}(\varepsilon_{i,1}|W_{i,1}=0) \\
+\mathbb{E}(Y_{i,0}|W_{i,1}=0) &=&  && \mathbb{E}(\mu_i|W_{i,1}=0) &+&\mathbb{E}(\delta_0|W_{i,1}=0) &+& \mathbb{E}(\varepsilon_{i,0}|W_{i,1}=0).
 \end{array}
 $$
 and, under our assumptions, it can be checked that:
@@ -980,7 +980,7 @@ knitr::include_graphics("images/Abadie_et_al_2018.png")
 ```
 
 
-In practice, implementing this approach consists in running a linear regression of the type of Eq. \@ref(eq:DiD). These regressions often use time-invariant characteristics as controls instead of the ixed effects $\mu_i$. As illustrated in the next subsection, the parameter of interest ($\beta_1$) is often associated with an interaction term.
+In practice, the two-period DiD is estimated using group and time indicators and their interaction; the coefficient on the interaction is the DiD estimate. With repeated observations on the same entities, unit and time fixed effects provide the equivalent regression formulation. Observed covariates can improve precision or adjust for compositional differences, but time-invariant controls do not generally replace unit fixed effects or eliminate unobserved time-invariant confounding.
 
 <!-- Diff-in-Diff: [Card and Krueger (1994)](https://towardsdatascience.com/analyze-causal-effect-using-diff-in-diff-model-85e07b17e7b7) -->
 
@@ -996,7 +996,7 @@ knitr::include_graphics("images/Figure_Meyer_et_al.png")
 ```
 
 
-The next lines of codes replicate some of their results. The dependent variable is the logarithm of the duration of benefits. For more information use `?injury`, after having loaded the `wooldridge` library.
+We replicate some of their results. The dependent variable is the logarithm of the duration of benefits. Further details on the data are available in the documentation for the `injury` dataset in the `wooldridge` package.
 
 In the table of results below, the parameter of interest is the one associated with the interaction term `afchnge:highearn`. Columns 2 and 3 correspond to the first two column of Table 6 in @Meyer_Viscusi_Durbin_1995.
 
@@ -1023,5 +1023,15 @@ model_table(eq1,eq2,eq3,omit=c("indust","injtype","Constant"),no.space = TRUE,
                      order = c(1,2,18,3:17,19,20),omit.stat = c("f","ser"))
 ```
 
+```{r panel-exercise-pagebreak, echo=FALSE, results='asis'}
+if (knitr::is_latex_output()) cat("\\clearpage\n")
+```
 
+## Exercises {#panel-exercises}
 
+Attempt each question before class and explain your reasoning, including for the true-or-false statements. **Foundation** exercises apply a result directly; **Standard** exercises require several steps; **Advanced** exercises combine several results or require a longer derivation. Worked solutions and exercise-specific hints are reserved for teaching sessions and are not included in this student edition.
+
+```{r panel-exercise-bank, echo=FALSE, results='asis'}
+source("R/exercises.R")
+render_exercises("panel")
+```

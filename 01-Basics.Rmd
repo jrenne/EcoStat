@@ -12,7 +12,7 @@ Econometrics describes populations, compares groups, and learns about unknown qu
 - Apply iterated expectations and decompose variance into within-group and between-group components.
 - Distinguish bias, variance, mean squared error, and consistency.
 
-The exercises in Section \@ref(basics-exercises) develop these skills through calculations, proofs, and statements to assess. Each exercise links back to the relevant section.
+**Roadmap.** We start with moments and discrete joint distributions, then move to continuous distributions. The laws of iterated expectations and total variance connect conditional and unconditional quantities. The final section introduces the main criteria used to assess estimators. The exercises in Section \@ref(basics-exercises) develop these skills through calculations, proofs, and statements to assess.
 
 ## Random variables and moments {#basics-moments}
 
@@ -155,11 +155,11 @@ F(a) = \int_{-\infty}^{a}f(x)dx.
 $$
 When the relevant integrals exist, moments are calculated by weighting values with the density:
 $$
-\mathbb{E}(X)=\int_{-\infty}^{+infty}x f_X(x)dx,
+\mathbb{E}(X)=\int_{-\infty}^{+\infty}x f_X(x)dx,
 \qquad
 \mathbb{V}ar(X)=\int_{-\infty}^{+\infty}[x-\mathbb{E}(X)]^2f_X(x)dx.
 $$
-Thus, probabilities are sums in the discrete case and areas under a density in the continuous case. This [web interface](https://jrenne.shinyapps.io/density/) illustrates the link between p.d.f. and c.d.f. Nonparametric estimates of p.d.f. are obtained by kernel-based methods (see this [extra material](https://www.dropbox.com/s/lxkllp9yewh98d8/Additional_Kernel.pdf?dl=0)).
+Thus, probabilities are sums in the discrete case and areas under a density in the continuous case. This [web interface](https://jrenne.shinyapps.io/density/) illustrates the link between a p.d.f. and its c.d.f. Density estimation from data is a separate problem; this [extra material](https://www.dropbox.com/s/lxkllp9yewh98d8/Additional_Kernel.pdf?dl=0) introduces nonparametric kernel methods.
 
 ### Joint and conditional densities
 
@@ -372,7 +372,7 @@ $$
 
 
 
-:::{.proposition #condcdf name="Conditional density"}
+:::{.proposition #conditional-density-formula name="Conditional density"}
 We have
 $$
 f_{X|Y}(x,y)=\frac{f_{XY}(x,y)}{f_Y(y)}.
@@ -478,7 +478,7 @@ $$
 B \sim \mbox{Bernoulli}(p),\quad Y_1 \sim \mathcal{N}(\mu_1,\sigma_1^2), \quad \mbox{and}\quad Y_2 \sim \mathcal{N}(\mu_2,\sigma_2^2).
 $$
 
-Figure \@ref(fig:mixtureG) displays the pdfs associated with three different mixtures of Gaussian distributions. (This [web-interface](https://jrenne.shinyapps.io/density/) allows to produce the pdf associated for any other parameterization.)
+Figure \@ref(fig:mixtureG) displays the densities of three Gaussian mixtures. This [web interface](https://jrenne.shinyapps.io/density/) can be used to explore other parameter values.
 
 ```{r mixtureG, fig.cap="Example of pdfs of mixtures of Gaussian distribututions.", fig.asp = .6, out.width = "95%", fig.align = "left",echo=FALSE,warning=FALSE}
 x <- seq(-5,5,by=.1)
@@ -568,7 +568,7 @@ $$
 \mathbb{E}(X)=\mathbb{E}(\mathbb{E}(X|\theta))=\mathbb{E}(\cos(\theta)/2)=\int_{-\pi/2}^{\pi/2}\frac{1}{2}\cos(\theta)\left(\frac{d\theta}{\pi}\right)=\frac{1}{\pi}.
 $$
 
-[This [web-interface](https://jrenne.shinyapps.io/StatEcoII/) allows to simulate the present experiment (select Worksheet "Buffon's needles").]
+This [web interface](https://jrenne.shinyapps.io/StatEcoII/) simulates the experiment (select the worksheet “Buffon's needles”).
 
 :::
 
@@ -679,9 +679,7 @@ $$
 $$
 A small variance means the estimator is concentrated around its own mean; it does not guarantee that this mean is close to the parameter. Exercise \@ref(exr:basics-estimator-properties) derives this decomposition. Consistency concerns a different question: what happens as the sample grows?
 
-The objective of econometrics is to estimate parameters out of data observations (samples). Examples of parameters of interest include, among many others: causal effect of a variable on another, elasticities, parameters defining some distribution of interest, preference parameters (risk aversion)...
-
-Except in degenerate cases, an estimate differs from the "true" (or *population*) value. A good estimator is expected to approach the true value as the sample size increases. This property is called *consistency*.
+Econometric parameters include causal effects, elasticities, distributional parameters, and preference parameters such as risk aversion. Except in degenerate cases, an estimate differs from its population target in any particular sample. **Consistency** requires the estimator to approach that target as the sample size increases.
 
 Denote by $\hat\theta_n$ the estimate of $\theta$ based on a sample of size $n$. We say that $\hat\theta$ is a consistent estimator of $\theta$ if, for any $\varepsilon>0$ (even if very small), the probability that $\hat\theta_n$ is in $[\theta - \varepsilon,\theta + \varepsilon]$ goes to 1 when $n$ goes to $\infty$. Formally:
 $$

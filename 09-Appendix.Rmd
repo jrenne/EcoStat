@@ -1,18 +1,29 @@
 # Appendix {#append}
 
+The appendix collects mathematical and statistical results used throughout the book. It is designed for reference: individual sections can be consulted when a definition, proof, distribution, or table is needed.
+
+**Prerequisites.** The notation introduced in the chapter that refers to the relevant appendix result.
+
+**After consulting the relevant sections, you should be able to:**
+
+- Use principal components to summarize high-dimensional variation.
+- Apply the matrix identities required in regression and likelihood calculations.
+- Recall standard distributions, stochastic convergence results, and Gaussian conditioning formulas.
+- Locate longer proofs and statistical quantiles without interrupting the main exposition.
+
+**Roadmap.** The appendix moves from principal components and linear algebra to statistical definitions and distributions, stochastic convergence, Gaussian results, selected proofs, and statistical tables.
 
 
 
 ## Principal component analysis (PCA) {#PCAapp}
 
-**Principal component analysis (PCA)** is a classical and easy-to-use statistical method to reduce the dimension of large datasets containing variables that are linearly driven by a relatively small number of factors. This approach is widely used in data analysis and image compression.
+**Principal component analysis (PCA)** reduces the dimension of a dataset when much of its variation can be summarized by a small number of linear combinations. The method is widely used in economic data analysis, visualization, and image compression.
 
-Suppose that we have $T$ observations of a $n$-dimensional random vector $x$, denoted by $x_{1},x_{2},\ldots,x_{T}$. We suppose that each component of $x$ is of mean zero.
+Suppose that we observe $T$ realizations $x_1,\ldots,x_T$ of an $n$-dimensional random vector $x$, and that each component has been centered to have mean zero.
 
-Let denote with $X$ the matrix given by $\left[\begin{array}{cccc}
-x_{1} & x_{2} & \ldots & x_{T}\end{array}\right]'$. Denote the $j^{th}$ column of $X$ by $X_{j}$.
+Let $X=[x_1,\ldots,x_T]'$ denote the resulting $T\times n$ data matrix, and denote its $j^{th}$ column by $X_j$.
 
-We want to find the linear combination of the $x_{i}$'s ($x.u$), with $\left\Vert u\right\Vert =1$, with "maximum variance." That is, we want to solve:
+We seek a unit-length vector $u$ such that the linear combination $Xu$ has maximum sample variance. Thus, we solve
 \begin{equation}
 \begin{array}{clll}
 \underset{u}{\arg\max} & u'X'Xu. \\
@@ -20,7 +31,7 @@ We want to find the linear combination of the $x_{i}$'s ($x.u$), with $\left\Ver
 \end{array}(\#eq:PCA11)
 \end{equation}
 
-Since $X'X$ is a positive definite matrix, it admits the following decomposition:
+Since $X'X$ is symmetric and positive semidefinite, it admits the following decomposition:
 \begin{eqnarray*}
 X'X & = & PDP'\\
 & = & P\left[\begin{array}{ccc}
@@ -31,7 +42,7 @@ X'X & = & PDP'\\
 \end{eqnarray*}
 where $P$ is an orthogonal matrix whose columns are the eigenvectors of $X'X$.
 
-We can order the eigenvalues such that $\lambda_{1}\geq\ldots\geq\lambda_{n}$. (Since $X'X$ is positive definite, all these eigenvalues are positive.)
+We can order the eigenvalues such that $\lambda_{1}\geq\ldots\geq\lambda_{n}\geq0$. Some eigenvalues are zero when $X$ does not have full column rank.
 
 Since $P$ is orthogonal, we have $u'X'Xu=u'PDP'u=y'Dy$ where $\left\Vert y\right\Vert =1$. Therefore, we have $y_{i}^{2}\leq 1$ for any $i\leq n$.
 
@@ -66,7 +77,7 @@ By the same token, it is easily seen that the fraction of the variance of the $n
 \frac{\sum_{i}\hat{X}'_{i,j}\hat{X}_{i,j}}{\sum_{i}X_{i}'X_{i}} & = & \frac{\lambda_{j}}{\sum_{i}\lambda_{i}}.
 \end{eqnarray*}
 
-Let us illustrate PCA on the term structure of yields. The term strucutre of yields (or yield curve) is know to be driven by only a small number of factors (e.g., @Litterman_Scheinkman_1991). One can typically employ PCA to recover such factors. The data used in the example below are taken from the [Fred database](https://fred.stlouisfed.org) (tickers: "DGS6MO","DGS1", ...). The second plot shows the factor loardings, that indicate that the first factor is a level factor (loadings = black line), the second factor is a slope factor (loadings = blue line), the third factor is a curvature factor (loadings = red line).
+The term structure of interest rates provides a standard application. Yields at different maturities move together and can often be summarized by a few factors [see @Litterman_Scheinkman_1991]. We apply PCA to data from the [FRED database](https://fred.stlouisfed.org) (series `DGS6MO`, `DGS1`, and related maturities). The estimated loadings can be interpreted as level, slope, and curvature factors.
 
 To run a PCA, one simply has to apply function `prcomp` to a matrix of data:
 
@@ -78,7 +89,7 @@ PCA.yds <- prcomp(yds,center=TRUE,scale. = TRUE)
 ```
 
 
-Let us know visualize some results. The first plot of Figure \@ref(fig:USydsPCA1) shows the share of total variance explained by the different principal components (PCs). The second plot shows the facotr loadings. The two bottom plots show how yields (in black) are fitted by linear combinations of the first two PCs only.
+Figure \@ref(fig:USydsPCA1) summarizes the results. The upper-left panel reports the share of total variance explained by each principal component, and the upper-right panel displays the factor loadings. The lower panels compare observed yields with reconstructions based on only the first two components.
 
 ```{r USydsPCA1, warning=FALSE,message=FALSE, fig.cap="Some PCA results. The dataset contains 8 time series of U.S. interest rates of different maturities.", fig.align = 'left'}
 par(mfrow=c(2,2))
@@ -109,7 +120,9 @@ lines(USyields$date,Y10.hat,col="blue",lty=2,lwd=2)
 
 ## Linear algebra: definitions and results {#LinAlgebra}
 
-:::{.definition #determinant name="Eigenvalues"}
+This section records the matrix definitions and identities used in the regression and estimation chapters. It is organized as a reference rather than a continuous derivation.
+
+:::{.definition #eigenvalues name="Eigenvalues"}
 
 The eigenvalues of of a matrix $M$ are the numbers $\lambda$ for which:
 $$
@@ -138,7 +151,7 @@ iii. $(M M^*)'=M M^*$
 .iv $(M^* M)'=M^* M$.
 :::
 
-:::{.proposition #MoorPenrose name="Properties of the Moore-Penrose inverse"}
+:::{.proposition #MoorPenrose-properties name="Properties of the Moore-Penrose inverse"}
 
 * If $M$ is invertible then $M^* = M^{-1}$.
 * The pseudo-inverse of a zero matrix is its transpose.
@@ -196,7 +209,7 @@ We have:
 
 
 :::{.definition #FOD name="Matrix derivatives"}
-Consider a fonction $f: \mathbb{R}^K \rightarrow \mathbb{R}$. Its first-order derivative is:
+Consider a function $f:\mathbb{R}^K\rightarrow\mathbb{R}$. Its first derivative is
 $$
 \frac{\partial f}{\partial \bv{b}}(\bv{b}) =
 \left[\begin{array}{c}
@@ -216,7 +229,7 @@ $$
 We have:
 
 * If $f(\bv{b}) = A' \bv{b}$ where $A$ is a $K \times 1$ vector then $\frac{\partial f}{\partial \bv{b}}(\bv{b}) = A$.
-* If $f(\bv{b}) = \bv{b}'A\bv{b}$ where $A$ is a $K \times K$ matrix, then $\frac{\partial f}{\partial \bv{b}}(\bv{b}) = 2A\bv{b}$.
+* If $f(\bv{b}) = \bv{b}'A\bv{b}$ where $A$ is a $K \times K$ matrix, then $\frac{\partial f}{\partial \bv{b}}(\bv{b}) = (A+A')\bv{b}$. If $A$ is symmetric, this simplifies to $2A\bv{b}$.
 :::
 
 
@@ -248,6 +261,8 @@ See Appendix 3.A in Hamilton. Idea: Absolute summability implies that there exis
 
 ## Statistical analysis: definitions and results {#variousResults}
 
+The following results collect moment identities, standard distributions, and modes of stochastic convergence used throughout the book.
+
 ### Moments and statistics
 
 :::{.definition #partialcorrel name="Partial correlation"}
@@ -274,11 +289,11 @@ $$
 
 
 :::{.theorem #CauchySchwarz name="Cauchy-Schwarz inequality"}
-We have:
+Assuming $X$ and $Y$ have finite variances, we have:
 $$
 |\mathbb{C}ov(X,Y)| \le \sqrt{\mathbb{V}ar(X)\mathbb{V}ar(Y)}
 $$
-and, if $X \ne =$ and $Y \ne 0$, the equality holds iff $X$ and $Y$ are the same up to an affine transformation.
+If both variances are non-zero, equality holds if and only if the centered variables are linearly dependent almost surely; equivalently, $Y=aX+b$ almost surely for some constants $a$ and $b$.
 :::
 :::{.proof}
 If $\mathbb{V}ar(X)=0$, this is trivial. If this is not the case, then let's define $Z$ as $Z = Y - \frac{\mathbb{C}ov(X,Y)}{\mathbb{V}ar(X)}X$. It is easily seen that $\mathbb{C}ov(X,Z)=0$. Then, the variance of $Y=Z+\frac{\mathbb{C}ov(X,Y)}{\mathbb{V}ar(X)}X$ is equal to the sum of the variance of $Z$ and of the variance of $\frac{\mathbb{C}ov(X,Y)}{\mathbb{V}ar(X)}X$, that is:
@@ -293,7 +308,7 @@ The equality holds iff $\mathbb{V}ar(Z)=0$, i.e. iff $Y = \frac{\mathbb{C}ov(X,Y
 :::{.definition #asmyptlevelAppendix name="Asymptotic level"}
 An asymptotic test with critical region $\Omega_n$ has an asymptotic level equal to $\alpha$ if:
 $$
-\underset{\theta \in \Theta}{\mbox{sup}} \quad \underset{n \rightarrow \infty}{\mbox{lim}} \mathbb{P}_\theta (S_n \in \Omega_n) = \alpha,
+\limsup_{n\rightarrow\infty}\;\sup_{\theta\in\Theta}\mathbb{P}_\theta(S_n\in\Omega_n)=\alpha,
 $$
 where $S_n$ is the test statistic and $\Theta$ is such that the null hypothesis $H_0$ is equivalent to $\theta \in \Theta$.
 :::
@@ -315,7 +330,7 @@ $$
 :::
 
 
-:::{.proposition #Kullback name="Properties of the Kullback discrepancy"}
+:::{.proposition #Kullback-properties name="Properties of the Kullback discrepancy"}
 We have:
 
 i. $I(f,f^*) \ge 0$
@@ -411,11 +426,11 @@ $$
 $$
 :::
 :::{.proof}
-Remark that $\varepsilon^r \mathbb{I}_{\{|X| \ge \varepsilon\}} \le |X|^r$ and take the expectation of both sides.
+Remark that $\varepsilon^r \mathbb{I}_{\{|X-c| \ge \varepsilon\}} \le |X-c|^r$ and take the expectation of both sides.
 :::
 
 :::{.definition #convergenceproba name="Convergence in probability"}
-The random variable sequence $x_n$ converges in probability to a constant $c$ if $\forall \varepsilon$, $\lim_{n \rightarrow \infty} \mathbb{P}(|x_n - c|>\varepsilon) = 0$.
+The random variable sequence $x_n$ converges in probability to a constant $c$ if, for every $\varepsilon>0$, $\lim_{n \rightarrow \infty} \mathbb{P}(|x_n - c|>\varepsilon) = 0$.
 
 It is denoted as: $\mbox{plim } x_n = c$.
 :::
@@ -425,7 +440,7 @@ $x_n$ converges in the $r$-th mean (or in the $L^r$-norm) towards $x$, if $\math
 $$
 \lim_{n \rightarrow \infty} \mathbb{E}(|x_n - x|^r) = 0.
 $$
-It is denoted as: $x_n \overset{L^r}{\rightarrow} c$.
+It is denoted as: $x_n \overset{L^r}{\rightarrow} x$.
 
 For $r=2$, this convergence is called **mean square convergence**.
 :::
@@ -578,12 +593,14 @@ Therefore $\phi_{Y_n}(u) \underset{n \rightarrow \infty}{\rightarrow} \exp \left
 
 ## Some properties of Gaussian variables {#GaussianVar}
 
+Gaussian variables recur in finite-sample regression theory, likelihood calculations, and forecasting. This section gathers the conditioning and truncation formulas needed in those applications.
+
 
 :::{.proposition #bandsindependent}
 If $\bv{A}$ is idempotent and if $\bv{x}$ is Gaussian, $\bv{L}\bv{x}$ and $\bv{x}'\bv{A}\bv{x}$ are independent if $\bv{L}\bv{A}=\bv{0}$.
 :::
 :::{.proof}
-If $\bv{L}\bv{A}=\bv{0}$, then the two Gaussian vectors $\bv{L}\bv{x}$ and  $\bv{A}\bv{x}$ are independent. This implies the independence of any function of $\bv{L}\bv{x}$ and any function of $\bv{A}\bv{x}$. The results then follows from the observation that $\bv{x}'\bv{A}\bv{x}=(\bv{A}\bv{x})'(\bv{A}\bv{x})$, which is a function of $\bv{A}\bv{x}$.
+If $\bv{L}\bv{A}=\bv{0}$, then the Gaussian vectors $\bv{L}\bv{x}$ and $\bv{A}\bv{x}$ are independent, as are any functions of those vectors. The result follows because $\bv{x}'\bv{A}\bv{x}=(\bv{A}\bv{x})'(\bv{A}\bv{x})$ is a function of $\bv{A}\bv{x}$.
 :::
 
 
@@ -670,7 +687,7 @@ lines(x,-dnorm(x)/pnorm(x),lwd=2)
 
 
 :::{.proposition #pdfMultivarGaussian name="p.d.f. of a multivariate Gaussian variable"}
-If $Y \sim \mathcal{N}(\mu,\Omega)$ and if $Y$ is a $n$-dimensional vector, then the density function of $Y$ is:
+If $Y \sim \mathcal{N}(\mu,\Omega)$, $Y$ is an $n$-dimensional vector, and $\Omega$ is positive definite, then the density function of $Y$ is:
 $$
 \frac{1}{(2 \pi)^{n/2}|\Omega|^{1/2}}\exp\left[-\frac{1}{2}\left(Y-\mu\right)'\Omega^{-1}\left(Y-\mu\right)\right].
 $$
@@ -685,6 +702,8 @@ $$
 
 ## Proofs {#AppendixProof}
 
+The proofs below support results stated in the main chapters. They are collected here to keep the exposition there focused on interpretation and application.
+
 **Proof of Proposition \@ref(prp:MLEproperties)**
 
 :::{.proof}
@@ -698,9 +717,9 @@ $$
 \mbox{argmax}_\theta \mathbb{E}_{\boldsymbol\theta_0}(\log f(Y;\boldsymbol\theta)) = \mbox{argmax}_\theta \int_{\mathcal{Y}} \log f(y;\boldsymbol\theta)f(y;\boldsymbol\theta_0) dy.
 $$
 
-The properties of the Kullback information measure (see Prop. \@ref(prp:Kullback)), together with the identifiability assumption (ii), imply that the solution to the limit problem is unique and equal to $\boldsymbol\theta_0$.
+The properties of the Kullback information measure (see Prop. \@ref(prp:Kullback-properties)), together with the identifiability assumption (ii), imply that the solution to the limit problem is unique and equal to $\boldsymbol\theta_0$.
 
-Consider a r.v. sequence $\boldsymbol\theta$ that converges to $\boldsymbol\theta_0$. The Taylor expansion of the score in a neighborood of $\boldsymbol\theta_0$ yields to:
+Consider a random-vector sequence $\boldsymbol\theta$ that converges to $\boldsymbol\theta_0$. A Taylor expansion of the score around $\boldsymbol\theta_0$ gives
 $$
 \frac{\partial \log \mathcal{L}(\boldsymbol\theta;\bv{y})}{\partial \boldsymbol\theta} = \frac{\partial \log \mathcal{L}(\boldsymbol\theta_0;\bv{y})}{\partial \boldsymbol\theta} + \frac{\partial^2 \log \mathcal{L}(\boldsymbol\theta_0;\bv{y})}{\partial \boldsymbol\theta \partial \boldsymbol\theta'}(\boldsymbol\theta - \boldsymbol\theta_0) + o_p(\boldsymbol\theta - \boldsymbol\theta_0)
 $$
@@ -730,9 +749,9 @@ Collecting the preceding results leads to (b). The fact that $\boldsymbol\theta_
 **Proof of Proposition \@ref(prp:Walddistri)**
 
 :::{.proof}
-We have $\sqrt{n}(\hat{\boldsymbol\theta}_{n} - \boldsymbol\theta_{0}) \overset{d}{\rightarrow} \mathcal{N}(0,\mathcal{I}(\boldsymbol\theta_0)^{-1})$ (Eq. \@ref(eq:normMLE)). A Taylor expansion around $\boldsymbol\theta_0$ yields to:
+We have $\sqrt{n}(\hat{\boldsymbol\theta}_{n} - \boldsymbol\theta_{0}) \overset{d}{\rightarrow} \mathcal{N}(0,\mathcal{I}(\boldsymbol\theta_0)^{-1})$ (Eq. \@ref(eq:normMLE)). A Taylor expansion around $\boldsymbol\theta_0$ gives
 \begin{equation}
-\sqrt{n}(h(\hat{\boldsymbol\theta}_{n}) - h(\boldsymbol\theta_{0})) \overset{d}{\rightarrow} \mathcal{N}\left(0,\frac{\partial h(\boldsymbol\theta_{0})}{\partial \boldsymbol\theta'}\mathcal{I}(\boldsymbol\theta_0)^{-1}\frac{\partial h(\boldsymbol\theta_{0})'}{\partial \boldsymbol\theta}\right). (\#eq:XXX)
+\sqrt{n}(h(\hat{\boldsymbol\theta}_{n}) - h(\boldsymbol\theta_{0})) \overset{d}{\rightarrow} \mathcal{N}\left(0,\frac{\partial h(\boldsymbol\theta_{0})}{\partial \boldsymbol\theta'}\mathcal{I}(\boldsymbol\theta_0)^{-1}\frac{\partial h(\boldsymbol\theta_{0})'}{\partial \boldsymbol\theta}\right). (\#eq:wald-delta-limit)
 \end{equation}
 Under $H_0$, $h(\boldsymbol\theta_{0})=0$ therefore:
 \begin{equation}
@@ -751,7 +770,7 @@ n h(\hat{\boldsymbol\theta}_{n})'  \left(
 \right)^{-1} h(\hat{\boldsymbol\theta}_{n}) \overset{d}{\rightarrow} \chi^2(r).
 $$
 
-The fact that the test has asymptotic level $\alpha$ directly stems from what precedes. **Consistency of the test**: Consider $\theta_0 \in \Theta$. Because the MLE is consistent, $h(\hat{\boldsymbol\theta}_{n})$ converges to $h(\boldsymbol\theta_0) \ne 0$. Eq. \@ref(eq:XXX) is still valid. It implies that $\xi^W_n$ converges to $+\infty$ and therefore that $\mathbb{P}_{\boldsymbol\theta}(\xi^W_n \ge \chi^2_{1-\alpha}(r)) \rightarrow 1$.
+The preceding result establishes asymptotic level $\alpha$. For consistency, consider $\theta_0 \in \Theta$ under the alternative. Because the MLE is consistent, $h(\hat{\boldsymbol\theta}_{n})$ converges to $h(\boldsymbol\theta_0) \ne 0$. Equation \@ref(eq:wald-delta-limit) then implies that $\xi^W_n$ diverges to $+\infty$, so $\mathbb{P}_{\boldsymbol\theta}(\xi^W_n \ge \chi^2_{1-\alpha}(r)) \rightarrow 1$.
 :::
 
 
@@ -777,8 +796,7 @@ and:
 Taking the difference and multiplying by $\mathcal{I}(\boldsymbol\theta_0)^{-1}$:
 \begin{equation}
 \sqrt{n}(\hat{\boldsymbol\theta}_n-\hat{\boldsymbol\theta}_n^0) \approx
-\mathcal{I}(\boldsymbol\theta_0)^{-1}\frac{1}{\sqrt{n}}\frac{\partial \log \mathcal{L}(\hat{\boldsymbol\theta}^0_n;\bv{y})}{\partial \boldsymbol\theta}
-\mathcal{I}(\boldsymbol\theta_0).(\#eq:lm2)
+\mathcal{I}(\boldsymbol\theta_0)^{-1}\frac{1}{\sqrt{n}}\frac{\partial \log \mathcal{L}(\hat{\boldsymbol\theta}^0_n;\bv{y})}{\partial \boldsymbol\theta}.(\#eq:lm2)
 \end{equation}
 Eqs. \@ref(eq:lm1) and \@ref(eq:lm2) yield to:
 \begin{equation}
@@ -853,7 +871,7 @@ Using $\dfrac{1}{\sqrt{n}}\frac{\partial \log \mathcal{L}(\boldsymbol\theta_0;\b
 \end{eqnarray*}
 In the second of the three terms in the sum, we replace $(\hat{\boldsymbol\theta}^0_n-\boldsymbol\theta_0)$ by $(\hat{\boldsymbol\theta}^0_n-\hat{\boldsymbol\theta}_n+\hat{\boldsymbol\theta}_n-\boldsymbol\theta_0)$ and we develop the associated product. This leads to:
 \begin{equation}
-\xi_n^{LR} \approx n (\hat{\boldsymbol\theta}^0_n-\hat{\boldsymbol\theta}_n)' \mathcal{I}(\boldsymbol\theta_0)^{-1} (\hat{\boldsymbol\theta}^0_n-\hat{\boldsymbol\theta}_n). (\#eq:lr10)
+\xi_n^{LR} \approx n (\hat{\boldsymbol\theta}^0_n-\hat{\boldsymbol\theta}_n)' \mathcal{I}(\boldsymbol\theta_0) (\hat{\boldsymbol\theta}^0_n-\hat{\boldsymbol\theta}_n). (\#eq:lr10)
 \end{equation}
 The difference between Eqs. \@ref(eq:lm29) and \@ref(eq:lm30) implies:
 $$
@@ -1005,16 +1023,20 @@ The MLE of $\Omega$ is the matrix $\hat{\Omega}$ that maximizes $\Omega\overset{
 \log\mathcal{L}(Y_{T};\hat{\Pi},\Omega) & = & -(Tn/2)\log(2\pi)+(T/2)\log\left|\Omega^{-1}\right| -\frac{1}{2}\sum_{t=1}^{T}\left[\hat{\varepsilon}_{t}'\Omega^{-1}\hat{\varepsilon}_{t}\right].
 \end{eqnarray*}
 
-Matrix $\hat{\Omega}$ is a symmetric positive definite. It is easily checked that the (unrestricted) matrix that maximizes the latter expression is symmetric positive definite matrix. Indeed:
+Let $A=\Omega^{-1}$. Differentiating the log-likelihood with respect to the symmetric precision matrix $A$ gives
 $$
-\frac{\partial \log\mathcal{L}(Y_{T};\hat{\Pi},\Omega)}{\partial\Omega}=\frac{T}{2}\Omega'-\frac{1}{2}\sum_{t=1}^{T}\hat{\varepsilon}_{t}\hat{\varepsilon}'_{t}\Rightarrow\hat{\Omega}'=\frac{1}{T}\sum_{t=1}^{T}\hat{\varepsilon}_{t}\hat{\varepsilon}'_{t},
+\frac{\partial \log\mathcal{L}(Y_{T};\hat{\Pi},A)}{\partial A}=\frac{T}{2}A^{-1}-\frac{1}{2}\sum_{t=1}^{T}\hat{\varepsilon}_{t}\hat{\varepsilon}'_{t}=0.
+$$
+Therefore
+$$
+\hat{\Omega}=\frac{1}{T}\sum_{t=1}^{T}\hat{\varepsilon}_{t}\hat{\varepsilon}'_{t},
 $$
 which leads to the result.
 :::
 
 
 
-## Statistical Tables
+## Statistical tables
 
 ```{r Normal,echo=FALSE}
 columns <- (0:9)/100
@@ -1089,5 +1111,3 @@ colnames(table_F) <- 1:max.n1
 rownames(table_F) <- RowNames
 data_table(table_F, long=TRUE, row_label="df2", caption = "Quantiles of the $\\mathcal{F}$ distribution. The columns and rows correspond to different degrees of freedom (resp. $n_1$ and $n_2$). The different panels correspond to different probabilities ($\\alpha$) The corresponding cell gives $z$ that is s.t. $\\mathbb{P}(X \\le z)=\\alpha$, with $X \\sim \\mathcal{F}(n_1,n_2)$.", digits=3)
 ```
-
-

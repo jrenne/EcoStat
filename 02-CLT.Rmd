@@ -1,6 +1,17 @@
 # Central Limit Theorem {#TCL}
 
-The law of large numbers (LLN) and the central limit theorem (CLT) are two fundamental theorems of probability. The former states that the sample mean converges in probability to the population mean (when it exists). The latter states that the distribution of the sum (or average) of a large number of independent, identically distributed (i.i.d.) variables with finite variance is approximately normal, regardless of the underlying distribution (as long as it features a finite variance).
+The law of large numbers (LLN) and the central limit theorem (CLT) answer two different questions about sample averages. The LLN explains why a sample mean approaches its population counterpart. The CLT describes the remaining estimation error and thereby makes confidence intervals and tests possible. Under the conditions used in this chapter, that error is approximately Gaussian in large samples even when the observations themselves are not.
+
+**Prerequisites.** Expectations and variances, independent random variables, sample means, and convergence in probability.
+
+**After working through this chapter, you should be able to:**
+
+- Explain the distinct roles of the law of large numbers and the central limit theorem.
+- Derive large-sample approximations for sums and sample means.
+- Standardize a statistic and use normal quantiles to approximate probabilities.
+- Compare means from two independent samples.
+
+**Roadmap.** The chapter first establishes why sample averages converge, then studies their large-sample distribution. It concludes by applying these results to differences between independent sample means and to the exercises in Section \@ref(clt-exercises).
 
 
 ## Law of large numbers
@@ -10,7 +21,7 @@ The law of large numbers (LLN) and the central limit theorem (CLT) are two funda
 In statistics, a *sample* refers to a finite set of observations drawn from a *population*.
 :::
 
-Most of the time, it is necessary to use samples for research, because it is impractical to study the whole population. Typically, it is rare to observe the population mean, and we often use instead sample means (or averages). The sample average of $\{x_1,\dots,x_n\}$ is given by:
+Empirical work usually relies on a sample because observing an entire population is impractical. A natural estimator of a population mean is the sample average of $\{x_1,\dots,x_n\}$:
 $$
 \overline{x}_n = \frac{1}{n}\sum_{i=1}^n x_i.
 $$
@@ -18,7 +29,7 @@ This sample mean is an estimator of the true (population) mean $\mathbb{E}(x_i)$
 
 :::{.theorem #LLN name="Law of large numbers"}
 
-If the random variables $x_i$ are i.i.d. and if $\mathbb{E}(x_i)=\mu < \infty$, then the sample mean ($\overline{x}_n$) is a consistent estimator of the population mean ($\mu$). In other words, the sample mean converges in probability to the population mean.
+If the random variables $x_i$ are i.i.d. and $\mathbb{E}(|x_i|)<\infty$, then the sample mean ($\overline{x}_n$) is a consistent estimator of the population mean $\mu=\mathbb{E}(x_i)$. In other words, the sample mean converges in probability to the population mean.
 :::
 :::{.proof}
 See Appendix \@ref(CLTappend).
@@ -46,7 +57,7 @@ data_table(data.frame(Mean=mean(Nb.doct.visits),
 
 :::
 
-How to know whether the sample mean is a good estimate of the true (population) average? In other words, how to measure the accuracy of the estimator?
+Consistency tells us that the approximation improves with the sample size, but it does not yet quantify the error in a given sample. We first obtain a probability bound and then turn to the richer approximation supplied by the CLT.
 
 A first answer is provided by the Chebychev inequality. Assume the $x_i$'s are independently drawn from a distribution of mean $\mu$ and variance $\sigma^2$. We have:
 $$
@@ -75,7 +86,7 @@ $$
 See Appendix \@ref(CLTappend).
 :::
 
-According to the CLT, when $n$ is large and whatever the distribution of the $x_i$'s (as long as it features an average $\mu$ and a variance $\sigma^2$), the error between $\bar{x}_n$ and $\mu$ can be seen as a random variable that is normally distributed; it is of mean zero and its standard deviation is $\sigma/\sqrt{n}$. (We then say that the convergence rate is *in $\sqrt{n}$*.) The knowledge of the quantiles of the normal distribution can then be used to compute approximate confidence intervals for $\mu$ (based on the sample $\{x_1,\dots,x_n\}$).
+According to the CLT, when $n$ is large, the distribution of the error $\bar{x}_n-\mu$ is approximately normal, whatever the distribution of the $x_i$'s, provided that their mean $\mu$ and variance $\sigma^2$ exist. Its approximate mean is zero and its standard deviation is $\sigma/\sqrt{n}$. (We then say that the convergence rate is *in $\sqrt{n}$*.) Quantiles of the normal distribution can therefore be used to compute approximate confidence intervals for $\mu$ from the sample $\{x_1,\dots,x_n\}$.
 
 This [web interface](https://jrenne.shinyapps.io/StatEcoII/) illustrates the CLT with simulations (select the "CLT" block).
 
@@ -101,32 +112,32 @@ $$
 
 ## Comparison of sample means
 
-As said at the beginning of this chapter, the CLT is a key statistical result that has numerous applications. An important one is the statistical comparision of sample means:
+The one-sample CLT extends directly to comparisons between populations. The key object is then the difference between two independent sample means.
 
-Consider two samples $\{m_1,\dots,m_{n_m}\}$ and $\{w_1,\dots,w_{n_w}\}$. Assume that the $m_i$'s (respectively the $w_i$'s) are i.i.d., with mean $\mu_m$ and variance $\sigma^2_m$ and of $w_i$'s (resp. with mean $\mu_w$ and variance $\sigma^2_w$).
+Consider two independent samples $\{m_1,\dots,m_{n_m}\}$ and $\{w_1,\dots,w_{n_w}\}$. Assume that the $m_i$'s are i.i.d. with mean $\mu_m$ and variance $\sigma_m^2$, and that the $w_i$'s are i.i.d. with mean $\mu_w$ and variance $\sigma_w^2$.
 
-If $n$ is large, according to the CLT, we approximately have:
+If $n_m$ and $n_w$ are large, the CLT gives the approximations:
 $$
-\sqrt{n_m}(\bar{m} - \mu_m) \sim \mathcal{N}(0,\sigma^2_m) \quad and \quad \sqrt{n_w}(\bar{w} - \mu_w) \sim \mathcal{N}(0,\sigma^2_w),
+\sqrt{n_m}(\bar{m} - \mu_m) \overset{a}{\sim} \mathcal{N}(0,\sigma^2_m) \quad \mbox{and} \quad \sqrt{n_w}(\bar{w} - \mu_w) \overset{a}{\sim} \mathcal{N}(0,\sigma^2_w),
 $$
 or
 $$
-\bar{m} \sim \mathcal{N}\left(\mu_m,\frac{\sigma^2_m}{n_m}\right) \quad and \quad \bar{w} \sim \mathcal{N}\left(\mu_w,\frac{\sigma^2_w}{n_w}\right).
+\bar{m} \overset{a}{\sim} \mathcal{N}\left(\mu_m,\frac{\sigma^2_m}{n_m}\right) \quad \mbox{and} \quad \bar{w} \overset{a}{\sim} \mathcal{N}\left(\mu_w,\frac{\sigma^2_w}{n_w}\right).
 $$
 
-if the $m_i$'s and the $w_i$'s are independent, then $\bar{m}$ and $\bar{w}$ also are, and we get:
+Since the two samples are independent, $\bar{m}$ and $\bar{w}$ are independent, and we get:
 $$
-\bar{m} - \bar{w} \sim \mathcal{N}\left(\mu_m-\mu_w,\sigma^2\right) \quad with \quad \sigma^2 = \frac{\sigma^2_m}{n_m}+\frac{\sigma^2_w}{n_w}.
+\bar{m} - \bar{w} \overset{a}{\sim} \mathcal{N}\left(\mu_m-\mu_w,\tau^2\right) \quad \mbox{with} \quad \tau^2 = \frac{\sigma^2_m}{n_m}+\frac{\sigma^2_w}{n_w}.
 $$
-This can be used to test the null hypothesis $H_0: \; \mu_m-\mu_w = 0$ (see Section \@ref(Tests)). Indeed under this assumption, the probability that $\bar{m} - \bar{w}$ is in $[-1.96\sigma,1.96\sigma]$ (respectively in $[-2.58\sigma,2.58\sigma]$) is approximately 0.95 (respectively 0.99) [see Table \@ref(tab:Normal)].
+This can be used to test the null hypothesis $H_0: \; \mu_m-\mu_w = 0$ (see Section \@ref(Tests)). In practice, the unknown population variances are replaced by their sample counterparts, giving the estimated standard error $\hat\tau$. Under $H_0$, the probability that $\bar{m}-\bar{w}$ lies in $[-1.96\hat\tau,1.96\hat\tau]$ (respectively $[-2.58\hat\tau,2.58\hat\tau]$) is approximately 0.95 (respectively 0.99) in large samples [see Table \@ref(tab:Normal)].
 
-For instance, if we find, using our sample, that $\bar{m} - \bar{w}$ is not in $[-2.58\sigma,2.58\sigma]$, then we reject the null hypothesis at the 1\% significance level.
+For instance, if $\bar{m}-\bar{w}$ is not in $[-2.58\hat\tau,2.58\hat\tau]$, then we reject the null hypothesis at the 1\% significance level.
 
 :::{.example #comparSmplMeans name="Comparison of sample means"}
 
 Let us use the  [Swiss Household Panel (SHP)](https://forscenter.ch/projects/swiss-household-panel/) dataset to test the equality between men and women incomes, for Swiss people under the age of 35.
 
-The next lines of codes construct two samples of incomes; one for men (`income.m`), and one for women (`income.w`).
+The SHP observations are split into two income samples, one for men and one for women. Observations with negative reported income are excluded.
 
 ```{r RcompMeans0}
 library(AEC);library(logKDE)
@@ -150,7 +161,7 @@ abline(v=mean(income.w),col="black",lty=3,lwd=2)
 legend("topright",c("men yearly income","women"),lty=1,lwd=2,col=c("red","black"))
 ```
 
-Let us compute $\bar{m}$, $\bar{w}$, and $\sigma$:
+Let us compute $\bar{m}$, $\bar{w}$, and the estimated standard error $\hat\tau$:
 
 ```{r RcompMeans2}
 m.bar <- mean(income.m)
@@ -159,7 +170,7 @@ sigma <- sqrt(var(income.m)/length(income.m) + var(income.w)/length(income.w))
 print(c(m.bar,w.bar,sigma))
 ```
 
-Under the "equality assumption", their would a  probability of only 5\% (respectively 1\%) for $\bar{m} - \bar{w}$ not to be in $[$`r -round(1.96*sigma,0)`,`r round(1.96*sigma,0)`$]$ (respectively in $[$`r -round(2.58*sigma,0)`,`r round(2.58*sigma,0)`$]$). Since $\bar{m} - \bar{w}$ is equal to `r format(round(m.bar-w.bar,0),scientific=FALSE)`, we  reject the null hypothesis at the 5\%, and even 1\%, significance levels.
+Under the null hypothesis of equal population means, the difference $\bar{m}-\bar{w}$ would fall outside $[$`r -round(1.96*sigma,0)`,`r round(1.96*sigma,0)`$]$ with probability approximately 5\%, and outside $[$`r -round(2.58*sigma,0)`,`r round(2.58*sigma,0)`$]$ with probability approximately 1\%. The observed difference is `r format(round(m.bar-w.bar,0),scientific=FALSE)`, so we reject equality at both significance levels.
 :::
 
 
@@ -179,6 +190,7 @@ Under the "equality assumption", their would a  probability of only 5\% (respect
 <!-- % -->
 <!-- %\end{footnotesize} -->
 <!-- %\end{frame} -->
+
 
 
 
@@ -204,3 +216,15 @@ Under the "equality assumption", their would a  probability of only 5\% (respect
 <!-- %\end{footnotesize} -->
 <!-- %\end{frame} -->
 
+```{r clt-exercise-pagebreak, echo=FALSE, results='asis'}
+if (knitr::is_latex_output()) cat("\\clearpage\n")
+```
+
+## Exercises {#clt-exercises}
+
+Attempt each question before class and explain your reasoning, including for the true-or-false statements. **Foundation** exercises apply a result directly; **Standard** exercises require several steps; **Advanced** exercises combine several results or require a longer derivation. Worked solutions and exercise-specific hints are reserved for teaching sessions and are not included in this student edition.
+
+```{r clt-exercise-bank, echo=FALSE, results='asis'}
+source("R/exercises.R")
+render_exercises("clt")
+```

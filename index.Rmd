@@ -13,6 +13,15 @@ params:
   show_solutions: false
 # ======================================================================
 
+# ======================================================================
+# SHOW R CODE IN THE PDF? Change only false / true below.
+# false = code is hidden in the PDF; figures, tables, and results remain.
+# true  = code is shown in the PDF.
+# This switch affects ONLY the PDF. Code remains visible in the HTML book.
+# ======================================================================
+  show_code_in_pdf: false
+# ======================================================================
+
 author: "Jean-Paul Renne"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
@@ -23,7 +32,7 @@ bibliography: [book.bib, packages.bib]
 biblio-style: apalike
 link-citations: yes
 github-repo: jrenne/EcoStat
-description: "This course covers various topics in econometrics. Simulations and real-data-based examples are provided."
+description: "A textbook introduction to probability, statistics, econometrics, and time-series analysis, with simulations, applications, and exercises."
 css: "my-style.css"
 ---
 
@@ -31,6 +40,7 @@ css: "my-style.css"
 source("R/instructor-build.R")
 configure_edition(params$show_solutions)
 source("R/setup.R")
+configure_code_display(params$show_code_in_pdf)
 ```
 
 
@@ -41,9 +51,13 @@ source("R/setup.R")
 
 <!-- # Before starting {#intro .unlisted .unnumbered} -->
 
-This course covers various econometric topics, including linear regression models, discrete-choice models, and an introduction to time series analysis. It provides examples or simulations based on R codes. This course has been developed by [Jean-Paul Renne](https://www.jprenne.com).
+This book develops the statistical foundations of econometrics and then uses them to study regression, panel data, parametric estimation, binary-choice models, and time series. Mathematical results are paired with simulations, empirical applications, and exercises. The material has been developed by [Jean-Paul Renne](https://www.jprenne.com).
 
-The R codes use various packages that can be obtained from [CRAN](https://cran.r-project.org). Several pieces of code also involve procedures and data from a companion package (`AEC`). This `AEC` package is available on GitHub. To install it, use the recorded package environment described in the repository README. For a standalone installation, use `remotes`:
+The chapters are cumulative. The first three establish the probability and inference tools used later. The linear-regression chapter develops the central econometric framework; the chapters on panel regressions, estimation methods, and binary-choice models build on it. The time-series chapter introduces time-indexed data and forecasting. The appendix collects supporting results and longer proofs so that the main chapters can retain their narrative flow.
+
+Definitions and propositions state the core results. Examples show how those results operate in data, while practice boxes point to exercises that reinforce the surrounding material. Readers who use the computational examples can inspect the R code in the HTML edition; the PDF can be rendered with or without that code.
+
+The computational material uses various packages available from [CRAN](https://cran.r-project.org), as well as procedures and data from the companion package `AEC`. This package is available on GitHub. Installation instructions and the recorded package environment are described in the repository README.
 
 ```{r installAEC, eval=FALSE}
 install.packages("remotes")
@@ -51,7 +65,7 @@ remotes::install_github("jrenne/AEC@3245789138e77c2d7b591b40e8b6a3405e93cbf1")
 library(AEC)
 ```
 
-**Useful (R) links:**
+**Useful R links:**
 
 * Download R:
 
@@ -63,10 +77,3 @@ library(AEC)
     *	Rstudio: https://dss.princeton.edu/training/RStudio101.pdf (by Oscar Torres-Reyna)
     *	R: https://cran.r-project.org/doc/contrib/Paradis-rdebuts_en.pdf (by Emmanuel Paradis)
     * My own tutorial: https://jrenne.shinyapps.io/Rtuto_publiShiny/
-
-
-
-
-
-
-

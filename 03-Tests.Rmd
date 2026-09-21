@@ -1,19 +1,31 @@
 # Statistical tests {#Tests}
 
-We run a statistical test when we want to know whether some hypothesis about a vector of parameters $\theta$ ---that is imperfectly observed--- is consistent with data that are seen as random, and whose randomness depend on $\theta$.
+**Prerequisites.** Probability distributions, sampling distributions, quantiles, and the central limit theorem.
 
-Typically, assume you observe a sample $\bv{x}=\{x_1,\dots,x_n\}$ where the $x_i$'s are i.i.d., of mean $\mu$ and variance $\sigma^2$ (these two parameters being unobseved). One may want to know whether $\mu=0$ or, maybe, whether $\sigma = 1$.
+**After working through this chapter, you should be able to:**
+
+- Formulate null and alternative hypotheses and define a rejection region.
+- Distinguish size, significance level, power, and the two types of testing error.
+- Compute and interpret a p-value for a specified test.
+- Explain the terminology used for one-tail and two-tail rejection regions.
+- Assess the asymptotic level and consistency of a test.
+
+**Roadmap.** We begin with the logic and possible errors of statistical decisions. We then study rejection regions and p-values, introduce asymptotic properties, and finish with normality tests. Section \@ref(tests-exercises) provides applications to size, power, and distributional testing.
+
+A statistical test asks whether a hypothesis about an unknown parameter is compatible with the observed data. The data are random, and their distribution depends on that parameter, so the answer must account for sampling uncertainty.
+
+For example, suppose that $\bv{x}=\{x_1,\dots,x_n\}$ is an i.i.d. sample with unknown mean $\mu$ and variance $\sigma^2$. We may wish to assess whether $\mu=0$ or whether $\sigma=1$. A test translates either question into a decision rule whose possible errors can be quantified.
 
 The hypothesis the researcher wants to test is called the *null hypothesis*. It is often denoted by $H_0$. It is a conjecture about a given property of a population. Without loss of generality, it can be stated as:
 $$
-H_0:\;\{\theta \in \Theta\}.
+H_0:\;\{\theta \in \Theta_0\},
 $$
-It can also be defined through a function $h$ (say):^[We can relate the previous and the next equation through $\Theta = \{\theta, \,s.t.\,h(\theta)=0\}$.]
+where $\Theta_0$ is the set of parameter values allowed by the null hypothesis. It can also be defined through a function $h$ (say):^[We can relate the two formulations through $\Theta_0 = \{\theta:\,h(\theta)=0\}$.]
 $$
 H_0:\;h(\theta)=0.
 $$
 
-The *alternative hypothesis*, often denoted $H_1$ is then defined by $H_1:\;\{\theta \in \Theta^c\}$.^[Note that researchers may want to find support for the null hypothesis $H_0$ as well as for the alternative hypothesis $H_1$.]
+The *alternative hypothesis*, often denoted $H_1$, is then defined by $H_1:\;\{\theta \in \Theta_1\}$, where $\Theta_1$ contains the parameter values under consideration that are not in $\Theta_0$.^[Note that researchers may want to find support for the null hypothesis $H_0$ as well as for the alternative hypothesis $H_1$.]
 
 The ingredients of a statistical test are:
 
@@ -21,9 +33,9 @@ The ingredients of a statistical test are:
 * a **test statistic**, that is a function of the sample components ($S(\bv{x})$, say), and
 * a **critical region** ($\Omega$, say), defined as a set of implausible values of $S$ under $H_0$.
 
-To implement a test statistic, we need to know the distribution of $S$ under the null hypothesis $H_0$. Equipped, with such a distribution, we compute $S(\bv{x})$ and we look at its location; more specifically, we look whether it lies within the critical region $\Omega$. The latter corresponds to "implausible" regions of this distribution (typically the tails). If $S \in \Omega$, then we reject the null hypothesis. Looselly speaking; it amounts to saying: *if $H_0$ were true, it would have been unlikely to get such a large (or small) draw for $S$*.
+To implement the test, we need the distribution of $S$ under $H_0$. We compute $S(\bv{x})$ and determine whether it lies in the critical region $\Omega$, which contains values judged sufficiently implausible under the null. If $S(\bv{x})\in\Omega$, we reject $H_0$. The reasoning is: *if the null were true, an outcome at least this unfavorable to it would be rare*.
 
-Hence, there are two possible outcomes for a statisitcal test:
+There are two possible outcomes:
 
 * $H_0$ is rejected if $S \in \Omega$;
 * $H_0$ is not rejected if $S \not\in \Omega$.
@@ -34,42 +46,45 @@ This vocabulary is widely used. For instance, the notions of false positive and 
 
 :::{.example #FPFN name="Early Warning Signals"}
 
-These are approaches that aim to detect the occurrence of crises in advance. See, e.g., [ECB (2014)](http://www.ecb.europa.eu/events/pdf/conferences/140623/Vasicek-et-al_Comparing-Different-Early-Warning-Systems.pdf?F96bbb525a26071ecf97f9154fb3cc73), for applications to financial crises.
+Early-warning systems aim to detect crises before they occur. See, for example, [ECB (2014)](http://www.ecb.europa.eu/events/pdf/conferences/140623/Vasicek-et-al_Comparing-Different-Early-Warning-Systems.pdf?F96bbb525a26071ecf97f9154fb3cc73) for applications to financial crises.
 
-To implement such approaches, researchers look for signals/indices forecasting crises. Suppose one index ($W$, say) tends to be large before financial crises; one may define an EWS by predicting a crisis when $W>a$, where $a$ is a given threshold. It is easliy seen that the lower (respectively higeher) $a$, the larger the fraction of FP (resp. of FN).
+Suppose an index $W$ tends to be large before a financial crisis. An early-warning rule predicts a crisis when $W>a$. Lowering $a$ produces more warnings and therefore more false positives; raising $a$ produces fewer warnings and therefore more false negatives. The threshold determines the trade-off between the two errors.
 :::
 
 
-## Size and power of a test
+
+## Size and power of a test {#size-power}
 
 :::{.definition #sizepower name="Size and Power of a test"}
 
-For a given test,
+For a test with rejection region $\Omega$, define its rejection probability at parameter value $\theta$ by $\pi(\theta)=\mathbb{P}_\theta(S\in\Omega)$. Then:
 
-* the probability of type-I errors, denoted by $\alpha$, is called the **size**, or **significance level**, of the test,
-* the **power** of a test is equal to $1 - \beta$, where $\beta$ is the probability of type-II errors.
+* the **size** of the test is $\alpha=\sup_{\theta\in\Theta_0}\pi(\theta)$; a test has significance level $\alpha$ if its size is at most $\alpha$,
+* the **power function** is $\pi(\theta)$ for $\theta\in\Theta_1$; at a particular alternative $\theta$, the probability of a type-II error is $\beta(\theta)=1-\pi(\theta)$.
 :::
 
-Formally, the previous definitions can be written as follows:
+For a *simple* null and a *simple* alternative, each hypothesis specifies a single distribution. In that special case, these definitions reduce to
 \begin{eqnarray}
-\alpha &=& \mathbb{P}(S \in \Omega|H_0) \quad \mbox{(Proba. of a false positive)}\\
-\beta &=& \mathbb{P}(S \not\in \Omega|H_1) \quad \mbox{(Proba. of a false negative)}.
+\alpha &=& \mathbb{P}(S \in \Omega\mid H_0) \quad \mbox{(probability of a false positive)},\\
+\beta &=& \mathbb{P}(S \not\in \Omega\mid H_1) \quad \mbox{(probability of a false negative)}.
 \end{eqnarray}
 
 The power is the probability that the test will lead to the rejection of the null hypothesis if the latter is false. Therefore, for a given size, we prefer tests with high power.
 
-In most cases, there is a trade-off between size and power, whch is easily understood in the EWS context (Example \@ref(exm:FPFN)): increasing the threshold $a$ reduces the fraction of FP (thereby reducing the size of the test), but it increases the fraction of FN (thereby reducing the power of the test).
+In most cases, size and power involve a trade-off. In the early-warning example, increasing $a$ reduces false positives and therefore the size of the rule, but it also increases false negatives and therefore reduces power. The next section shows how a critical region formalizes this choice.
 
 
 
 
-## The different types of statistical tests
+## Critical regions and p-values
 
-How to determine the critical region? Loosely speaking, we want the critical region to be a set of "implausible" values of the test statistic $S$ under the null hypothesis $H_0$. The lower the size of the test ($\alpha$), the more implausible these values. Recall that, by definition of the size of the test, $\alpha = \mathbb{P}(S \in \Omega|H_0)$. That is, if $\alpha$ is small, there is only a small probability that $S$ lies in $\Omega$ under $H_0$.
+The shape of the critical region depends on which values of $S$ contradict the null. Its boundary is calibrated so that $\mathbb{P}_\theta(S\in\Omega)\le\alpha$ for every $\theta\in\Theta_0$, with equality at a least-favourable null value when the test has size exactly $\alpha$. A smaller significance level therefore reserves rejection for more unusual outcomes under $H_0$.
 
-Consider the case where, under $H_0$, the distribution of the test statistic is symmetrical (e.g., normal distribution or Student-t distribution). In this case, the critical region is usually defined by the union of the two tails of the distribution. The test is then said to be a **two-tailed test** or a **two-sided test**. This situation is illustrated by Figures \@ref(fig:Illusttest1) and \@ref(fig:Illusttest2). (Use this [web interface](https://jrenne.shinyapps.io/tests/) to explore alternative situations.)
+In this book, the terms *one-sided* and *two-sided* describe the shape of the rejection region for the chosen test statistic. A two-sided (or two-tailed) test rejects in both tails. This is common when large positive and large negative values of a symmetric statistic both count against $H_0$, as in Figures \@ref(fig:Illusttest1) and \@ref(fig:Illusttest2). This [web interface](https://jrenne.shinyapps.io/tests/) illustrates alternative situations.
 
-Figure \@ref(fig:Illusttest2) also illustrates the notion of *p-value* (in the case of a two-sided test). The p-value can be defined as the value of the size of the test $\alpha$ that is such that the computed test statistic, $S$, is at the "frontier" of the critical region. Given this definition, if the p-value is smaller (respectively larger) than the size of the test, we reject (resp. cannot rejet) the null hypothesis at the $\alpha$ significance level.
+In much of the statistical literature, however, *one-sided* and *two-sided* primarily describe the direction of the alternative hypothesis (for example, $\mu>\mu_0$ versus $\mu\ne\mu_0$). The two usages often agree, but they are not identical. In particular, an upper-tail chi-square or $F$ test has a one-tail rejection region even though the underlying departure from the null need not have a single direction.
+
+Figure \@ref(fig:Illusttest2) also illustrates the notion of *p-value* for a two-sided test. The p-value is the smallest significance level at which the observed statistic would be rejected by the specified family of rejection regions. Thus, if the p-value is at most $\alpha$, we reject $H_0$ at significance level $\alpha$; otherwise, we do not reject it.
 
 
 ```{r Illusttest1, echo=FALSE, fig.cap="Two-sided test. Under $H_0$, $S \\sim t(5)$. $\\alpha$ is the size of the test.", fig.align = 'left'}
@@ -176,7 +191,7 @@ text(x = min.x + .8*(max.x-min.x),y=1.35*max.f,
 ```
 
 
-Figures \@ref(fig:IllusTestOneSided1) and \@ref(fig:IllusTestOneSided2) illustrate the **one-tailed**, or **one-sided** situation. These tests are typically employed when the distribution of the test statistic under the null hypothesis has a support on $\mathbb{R}^+$ (e.g., the chi-square distribution $\chi^2$, see Def. \@ref(def:chi2)). Figure \@ref(fig:IllusTestOneSided2) also illustrates the notion of p-value associated with a one-sided statistical test.
+Figures \@ref(fig:IllusTestOneSided1) and \@ref(fig:IllusTestOneSided2) illustrate a **one-tailed**, or **one-sided**, rejection region in the terminology used in this course. Here only large values of a chi-square statistic count against $H_0$, so the critical region is in the upper tail. A statistic with support on $\mathbb{R}^+$ does not by itself force a one-tail test; the rejection region follows from which values provide evidence against the null. Figure \@ref(fig:IllusTestOneSided2) also illustrates the corresponding p-value.
 
 ```{r IllusTestOneSided1, echo=FALSE, fig.cap="One-sided test. Under $H_0$, $S \\sim \\chi^2(5)$. $\\alpha$ is the size of the test.", fig.align = 'left'}
 
@@ -275,7 +290,7 @@ text(x = min.x + .8*(max.x-min.x),y=1.35*max.f,
 
 Consider a factory that produces metal cylinders whose diameter has to be equal to 1 cm. The tolerance is $a=0.01$ cm. More precisely, more than 90\% of the parts have to satisfy the tolerance for the whole production (say 1.000.000 parts) to be bought by the client.
 
-The production technology is such that a proportion $\theta$ (imperfectly known) of the parts does not satisfy the tolerance. The (population) parameter $\theta$ could be computed by measuring all the parts but this would be costly. Instead, it is decided that $n \ll 1.000.000$ parts will be measured. In this context, the null hypothesis $H_0$ is $\theta < 10\%$. The producing firm would like $H_0$ to be true.
+The production technology is such that a proportion $\theta$ (imperfectly known) of the parts does not satisfy the tolerance. The (population) parameter $\theta$ could be computed by measuring all the parts but this would be costly. Instead, it is decided that $n \ll 1.000.000$ parts will be measured. In this context, the null hypothesis $H_0$ is $\theta \le 10\%$. The producing firm would like $H_0$ to be true.
 
 Let us denote by $d_i$ the binary indicator defined as:
 $$
@@ -289,14 +304,14 @@ $$
 
 We set $x_n=\sum_{i=1}^n d_i$. That is, $x_n$ is the number of measured parts that do not satisfy the tolerance (out of $n$).
 
-The decision rule is: accept $H_0$ if $\dfrac{x_n}{n} \le b$, reject otherwise. A natural choice for $b$ is $b=0.1$. However, this would not be a conservative choice, since it remains likely that $x_n<0.1$ even if $\mathbb{E}(x_n)=\theta>0.1$ (especially if $n$ is small). Hence, if one chooses $b=0.1$, the probability of false negative may be high.
+The decision rule is: do not reject $H_0$ if $\dfrac{x_n}{n} \le b$, and reject it otherwise. A natural choice for $b$ is $b=0.1$. However, this would not be a conservative choice, since it remains likely that $x_n/n\le 0.1$ even when $\mathbb{E}(x_n/n)=\theta>0.1$ (especially if $n$ is small). Hence, if one chooses $b=0.1$, the probability of a false negative may be high.
 
-In this simple example, the size and the power of the test can be computed analytically. The test statistic is $S_n=\frac{x_n}{n}$ and the critical region is $\Omega = [b,1]$. The probability to reject $H_0$ is:
+In this simple example, the size and the power of the test can be computed analytically. The test statistic is $S_n=\frac{x_n}{n}$ and the critical region is $\Omega = (b,1]$. Since $x_n\sim\mathcal{B}(n,\theta)$, the probability of rejecting $H_0$ is:
 \begin{eqnarray*}
-\mathbb{P}_\theta(S_n \in \Omega) = \sum_{i=b \times n+1}^{n}C_{n}^i\theta^i(1-\theta)^{n-i}.
+\mathbb{P}_\theta(S_n \in \Omega) = \sum_{i=\lfloor bn\rfloor+1}^{n}{n\choose i}\theta^i(1-\theta)^{n-i}.
 \end{eqnarray*}
 
-When $\theta<0.1$, the previous expression gives the size of the test, while it gives the power of the test when $\theta>0.1$. Figure \@ref(fig:FactoryR) shows how this probability depends on $\theta$ for two sample sizes: $n=100$ (upper plot) and $n=500$ (lower plot).
+For $\theta\le0.1$, the previous expression is the probability of a type-I error at that particular null value; the size is its supremum over $[0,0.1]$, attained at $\theta=0.1$. For $\theta>0.1$, it is the power at that alternative. Figure \@ref(fig:FactoryR) shows how this probability depends on $\theta$ for two sample sizes: $n=100$ (upper plot) and $n=500$ (lower plot).
 
 ```{r FactoryR, echo=FALSE, fig.cap="Factory example.", fig.align = 'left'}
 size <- function(theta,N,critical){
@@ -377,12 +392,12 @@ for(N in all.N){
 
 ## Asymptotic properties of statistical tests
 
-In some cases, the distribution of the test statistic is known only asymptotically. For instance, it may be the case that the distribution of a given test statistic becomes normal only in large samples (e.g., related to the CLT, see Section \@ref(TCL)). The level of the test is then not know for small sample sizes, but only asymptotically, i.e., when $n$ becomes infinitely large. That defines the asymptotic level of the test:
+The preceding examples use a known finite-sample distribution. More often, the null distribution of a statistic is available only as a large-sample approximation, frequently through the CLT in Chapter \@ref(TCL). The rejection probability may then differ from its target in a finite sample even though it approaches that target as $n$ grows. This motivates the definition of asymptotic size.
 
 :::{.definition #asmyptlevel name="Asymptotic level"}
-An asymptotic test with critical region $\Omega_n$ has an asymptotic level equal to $\alpha$ if:
+An asymptotic test with critical region $\Omega_n$ has asymptotic size equal to $\alpha$ if:
 $$
-\underset{\theta \in \Theta}{\mbox{sup}} \quad \underset{n \rightarrow \infty}{\mbox{lim}} \mathbb{P}_\theta (S_n \in \Omega_n) = \alpha.
+\limsup_{n\rightarrow\infty}\;\sup_{\theta\in\Theta_0}\mathbb{P}_\theta(S_n\in\Omega_n)=\alpha.
 $$
 :::
 
@@ -390,7 +405,7 @@ $$
 
 Let us come back to the factory example (Example \@ref(exm:Factory)). Because $S_n =\bar{d}_n$, and since $\mathbb{E}(d_i)=\theta$ and $\mathbb{V}ar(d_i)=\theta(1-\theta)$, the CLT (Theorem \@ref(thm:LindbergLevyCLT)) leads to:
 $$
-S_n \sim \mathcal{N}\left(\theta,\frac{1}{n}\theta(1-\theta)\right) \quad or \quad \frac{\sqrt{n}(S_n-\theta)}{\sqrt{\theta(1-\theta)}} \sim \mathcal{N}(0,1).
+S_n \overset{a}{\sim} \mathcal{N}\left(\theta,\frac{1}{n}\theta(1-\theta)\right) \quad \mbox{or} \quad \frac{\sqrt{n}(S_n-\theta)}{\sqrt{\theta(1-\theta)}} \overset{a}{\sim} \mathcal{N}(0,1).
 $$
 
 Hence, $\mathbb{P}_\theta (S_n \in \Omega_n)=\mathbb{P}_\theta (S_n > b) \approx 1-\Phi\left(\frac{\sqrt{n}(b-\theta)}{\sqrt{\theta(1-\theta)}}\right)$. Since function $\theta \rightarrow 1-\Phi\left(\frac{\sqrt{n}(b-\theta)}{\sqrt{\theta(1-\theta)}}\right)$ increases w.r.t. $\theta$, we have:
@@ -402,7 +417,7 @@ $$
 Hence, if we set $b_n = 0.1 + 0.3\Phi^{-1}(1-\alpha)/\sqrt{n}$, we have ${\mbox{sup}}_{\theta \in \Theta=[0,0.1]} \quad \mathbb{P}_\theta (S_n > b_n) \approx \alpha$ for large values of $n$.
 :::
 
-Let us now turn to the power of the test. Although it is often difficult to compute the power of the test, it is sometimes feasible to demonstrate that the power of the test converges to one when $n$ goes to $+\infty$. In that case, if $H_0$ is false, the probability to reject it tends to be close to one in large samples.
+Controlling asymptotic size addresses behavior under the null. Under a fixed alternative, we instead want the rejection probability to approach one. A test with this property is consistent.
 
 :::{.definition #asmyptconsisttest name="Asymptotically consistent test"}
 An asymptotic test with critical region $\Omega_n$ is consistent if:
@@ -429,7 +444,7 @@ Therefore, with $b_n=b=0.1$, the test is consistent.
 
 ## Example: Normality tests
 
-Because many statistical results are valid only if the underlying data is normally distributed, researchers often have tu conduct normality tests. Under the null hypothesis, the data at hand ($\bv{y}=\{y_1,\dots,y_n\}$, say) are drawn from a Gaussian distribution. A popular normality test is the Jarque-Bera test. It consists in verifying that the sample skewness and kurtosis of the $y_i$'s are consistent with those of the normal distribution. Let us first define the skewness and kurtosis of a random variable.
+The general ideas above can now be assembled in a concrete test. Gaussian assumptions support many exact finite-sample results, so it is often useful to assess whether a sample is compatible with normality. The Jarque-Bera test compares sample skewness and kurtosis with their Gaussian values. We first define these population and sample moments, then derive the test statistic and study its large-sample behavior.
 
 Let $f$ be the p.d.f. of $Y$. The $k^{th}$ **standardized moment** of $Y$ is defined as:
 $$
@@ -458,7 +473,7 @@ For a centered Gaussian distribution, $(-y)^3f(-y)=-y^3f(y)$. This implies that
 \end{eqnarray*}
 which leads to the skewness result.
 
-Moreover, for a Gaussian distribution, $df(y)/dy=-yf(y)$ and therefore $\frac{d}{dy}(y^3f(y))=3y^2f(y)-y^4f(y)$. Partial integration leads to the kurtosis result.
+For the kurtosis, first standardize the variable. If $Z\sim\mathcal{N}(0,1)$ has density $f$, then $f'(z)=-zf(z)$ and therefore $\frac{d}{dz}(z^3f(z))=3z^2f(z)-z^4f(z)$. Integration over $\mathbb{R}$ gives $\mathbb{E}(Z^4)=3\mathbb{E}(Z^2)=3$, which is also the kurtosis of every non-degenerate Gaussian variable.
 :::
 
 Let us now introduce the sample analog of standardized moments.  The $k^{th}$ **central sample moment** of $Y$ is given by:
@@ -472,7 +487,7 @@ $$
 
 :::{.proposition #conssitCentralMoments name="Consistency of central sample moments"}
 
-If the $k^{th}$ central moment of $Y$, exists and if the $y_i$'s are i.i.d., then the sample central moment $m_k$ is a consistent estimate of the central moment $\mu_k$.
+If the $y_i$'s are i.i.d. and $\mathbb{E}(|Y|^k)<\infty$, then the sample central moment $m_k$ is a consistent estimator of the central moment $\mu_k$.
 :::
 
 
@@ -508,11 +523,11 @@ This directly derives from Proposition \@ref(prp:Asymptg3g4Normal).
 :::
 
 
-:::{.example #JB name="Consistency of the Jarque-Bera normality test"}
+:::{.example #JB-consistency name="Consistency of the Jarque-Bera normality test"}
 
 This example illustrates the consistency of the JB test (see Def. \@ref(def:asmyptconsisttest)).
 
-For each row of matrix `x`, the function `JB` (defined below) computes the Jarque-Bera test statistic. (That is, each row is considered as a given sample.)
+For each simulated sample, we compute the Jarque-Bera statistic defined above.
 
 ```{r JBTest1}
 JB <- function(x){
@@ -547,7 +562,7 @@ for(i in 1:length(all.n)){
 }
 ```
 
-Now, replace `rnorm` with `runif`. The $y_i$'s are then drawn from a uniform distribution. $H_0$ is not satisfied. Figure \@ref(fig:JBTest3) then shows that, when $n$ grows, the distributions of the JB statistic shift to the right. This results in the consistency of the JB test (see Def. \@ref(def:asmyptconsisttest)).
+We next draw the $y_i$'s from a uniform distribution, so $H_0$ is not satisfied. Figure \@ref(fig:JBTest3) shows that, as $n$ grows, the distribution of the JB statistic shifts to the right. This illustrates the consistency of the JB test (see Def. \@ref(def:asmyptconsisttest)).
 
 ```{r JBTest3, fig.cap="Distribution of the JB test statistic when the $y_i$'s are drawn from a uniform distribution (hence $H_0$ is not satisfied).", fig.align = 'left',echo=FALSE}
 y <- matrix(runif(nb.sim*max(all.n)),nb.sim,max(all.n))
@@ -563,3 +578,15 @@ for(i in 1:length(all.n)){
 
 :::
 
+```{r tests-exercise-pagebreak, echo=FALSE, results='asis'}
+if (knitr::is_latex_output()) cat("\\clearpage\n")
+```
+
+## Exercises {#tests-exercises}
+
+Attempt each question before class and explain your reasoning, including for the true-or-false statements. **Foundation** exercises apply a result directly; **Standard** exercises require several steps; **Advanced** exercises combine several results or require a longer derivation. Worked solutions and exercise-specific hints are reserved for teaching sessions and are not included in this student edition.
+
+```{r tests-exercise-bank, echo=FALSE, results='asis'}
+source("R/exercises.R")
+render_exercises("tests")
+```

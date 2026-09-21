@@ -2,7 +2,7 @@
 id: "basics-joint-probabilities"
 title: "Employment, residence, and independence"
 difficulty: "Standard"
-type: "Conceptual / calculation"
+type: "Calculation"
 related: "basics-discrete"
 source_exercise: 6
 ---
@@ -18,11 +18,11 @@ Let $X$ indicate employment status ($0$: employed; $1$: self-employed), and let 
 
 For each statement, decide whether it is true or false and justify your answer.
 
-(a) $\mathbb{E}(X)=0.7$.
-(b) $X$ and $Y$ are not independent.
-(c) $\mathbb{V}ar(X)=\mathbb{V}ar(X\mid Y=0)+\mathbb{V}ar(X\mid Y=1)$.
-(d) $\mathbb{V}ar(X\mid Y=0)=0.24$.
-(e) Bayes' rule implies
+1. $\mathbb{E}(X)=0.7$.
+2. $X$ and $Y$ are not independent.
+3. $\mathbb{V}ar(X)=\mathbb{V}ar(X\mid Y=0)+\mathbb{V}ar(X\mid Y=1)$.
+4. $\mathbb{V}ar(X\mid Y=0)=0.24$.
+5. Bayes' rule implies
 $$
 \begin{gathered}
 \mathbb{P}(X=0\mid Y=0)\\
@@ -30,4 +30,4 @@ $$
 {\mathbb{P}(Y=0\mid X=0)\mathbb{P}(X=0)+\mathbb{P}(Y=0\mid X=1)\mathbb{P}(X=1)}.
 \end{gathered}
 $$
-(f) The correlation between $X$ and $Y$ is strictly positive.
+6. The correlation between $X$ and $Y$ is strictly positive.

@@ -11,5 +11,5 @@ source_exercise: 1
 
 Let $X,Y,V$ have finite second moments, and let $a,b,c$ be constants. Write $\mu_X=\mathbb{E}(X)$ and $\sigma_{XY}=\mathbb{C}ov(X,Y)$.
 
-(a) Show that $\mathbb{C}ov(a+bX+cV,Y)=b\sigma_{XY}+c\sigma_{VY}$.
-(b) Show that $\mathbb{E}(XY)=\mathbb{C}ov(X,Y)+\mathbb{E}(X)\mathbb{E}(Y)$.
+1. Show that $\mathbb{C}ov(a+bX+cV,Y)=b\sigma_{XY}+c\sigma_{VY}$.
+2. Show that $\mathbb{E}(XY)=\mathbb{C}ov(X,Y)+\mathbb{E}(X)\mathbb{E}(Y)$.
