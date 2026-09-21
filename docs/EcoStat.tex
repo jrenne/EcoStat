@@ -788,12 +788,16 @@ That is, \(\hat\theta\) is a consistent estimator if \(\hat\theta_n\) \emph{conv
 
 Assume that \(X_i \sim i.i.d. \mbox{Cauchy}\) with a location parameter of 1 and a scale parameter of 1 (Def. \ref{def:Cauchy}). The sample mean \(\bar{X}_n = \frac{1}{n}\sum_{i=1}^{n} X_i\) does not converge in probability. This is because a Cauchy distribution has no mean; hence the law of large numbers (Theorem \ref{thm:LLN}) does not apply.
 
+The realization below is especially deceptive. For several thousand observations, the sample mean appears to settle near the location parameter 1. But observation 4,495 is approximately 75,073: it moves the sample mean from about 1.01 to 17.71. Increasing the sample size has not protected the sample mean against a new extreme Cauchy draw.
+
 \begin{Shaded}
 \begin{Highlighting}[]
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{7221}\NormalTok{) }\CommentTok{\# Reproducible path with a late extreme observation}
 \NormalTok{N }\OtherTok{\textless{}{-}} \DecValTok{5000}
 \NormalTok{X }\OtherTok{\textless{}{-}} \FunctionTok{rcauchy}\NormalTok{(N, }\AttributeTok{location=}\DecValTok{1}\NormalTok{)}
 \NormalTok{X.bar }\OtherTok{\textless{}{-}} \FunctionTok{cumsum}\NormalTok{(X)}\SpecialCharTok{/}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\NormalTok{N)}
-\FunctionTok{par}\NormalTok{(}\AttributeTok{plt=}\FunctionTok{c}\NormalTok{(.}\DecValTok{1}\NormalTok{,.}\DecValTok{95}\NormalTok{,.}\DecValTok{3}\NormalTok{,.}\DecValTok{85}\NormalTok{),}\AttributeTok{mfrow=}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{))}
+\FunctionTok{par}\NormalTok{(}\AttributeTok{mfrow=}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{), }\AttributeTok{mar=}\FunctionTok{c}\NormalTok{(}\FloatTok{4.2}\NormalTok{,}\FloatTok{5.2}\NormalTok{,}\FloatTok{2.6}\NormalTok{,}\DecValTok{1}\NormalTok{),}
+    \AttributeTok{mgp=}\FunctionTok{c}\NormalTok{(}\FloatTok{2.5}\NormalTok{,.}\DecValTok{8}\NormalTok{,}\DecValTok{0}\NormalTok{), }\AttributeTok{las=}\DecValTok{1}\NormalTok{, }\AttributeTok{cex.axis=}\NormalTok{.}\DecValTok{85}\NormalTok{)}
 \FunctionTok{plot}\NormalTok{(X,}\AttributeTok{type=}\StringTok{"l"}\NormalTok{,}\AttributeTok{xlab=}\StringTok{"sample size (n)"}\NormalTok{,}
      \AttributeTok{ylab=}\StringTok{""}\NormalTok{,}\AttributeTok{main=}\FunctionTok{expression}\NormalTok{(X[n]),}\AttributeTok{lwd=}\DecValTok{2}\NormalTok{)}
 \FunctionTok{plot}\NormalTok{(X.bar,}\AttributeTok{type=}\StringTok{"l"}\NormalTok{,}\AttributeTok{xlab=}\StringTok{"sample size (n)"}\NormalTok{,}
