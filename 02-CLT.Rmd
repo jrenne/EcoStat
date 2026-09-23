@@ -93,13 +93,7 @@ This [web interface](https://jrenne.shinyapps.io/StatEcoII/) illustrates the CLT
 The CL theorem was first postulated by the mathematician Abraham de Moivre. In an article published in 1733, he used the normal distribution to approximate the distribution of the number of heads resulting from many tosses of a fair coin. This finding was nearly forgotten until Pierre-Simon Laplace recalled it in his [Théorie analytique des probabilités](https://archive.org/details/thorieanalytiqu01laplgoog), published in 1812. Laplace expanded De Moivre's finding by approximating the binomial distribution with the normal distribution.
 
 
-:::{.exercise #ExoBuffon}
-Consider Buffon's experiment (Example \@ref(exm:Buffon)). We have seen that $\pi$ can be estimated by counting the fraction of times the needles cross the grooves of the floor.^[More precisely, the expectation of this fraction is equal to $1/\pi$.] Using the CLT, determine the (approximate) minimal number $n$ of needles that one has to throw to get an estimate $\hat\pi$ ($= 1/\bar{X}_n$) of $\pi$ that is such that there is a 95\% chance that $\pi \in [\hat\pi-0.01,\hat\pi+0.01]$?
-:::
-
-:::{.exercise #ExoPileFace}
-Assume you have a lot of time and a coin. How would you approximate the 100 percentiles of the $\mathcal{N}(0,1)$ distribution?
-:::
+**Practice:** Exercises \@ref(exr:clt-buffon-precision) and \@ref(exr:clt-coin-normal-quantiles) use the CLT to design a simulation and to determine its required precision.
 
 The CLT can be extended to the case where each $x_i$ is a vector. (In that case, and if the dimension of $x_i$ is $m$, then $\mathbb{V}ar(x_i)$ is a $m\times m$ matrix.) Here is the multivariate CLT:
 
@@ -220,7 +214,7 @@ Under the null hypothesis of equal population means, the difference $\bar{m}-\ba
 if (knitr::is_latex_output()) cat("\\Needspace{11\\baselineskip}\n")
 ```
 
-## Chapter recap {-}
+## Chapter recap {#clt-recap}
 
 ::: {.recapbox data-latex=""}
 
@@ -238,7 +232,7 @@ if (knitr::is_latex_output()) cat("\\clearpage\n")
 
 ## Exercises {#clt-exercises}
 
-Attempt each question before class and explain your reasoning, including for the true-or-false statements. **Foundation** exercises apply a result directly; **Standard** exercises require several steps; **Advanced** exercises combine several results or require a longer derivation. Worked solutions and exercise-specific hints are reserved for teaching sessions and are not included in this student edition.
+Attempt each question and explain your reasoning, including for true-or-false statements. **Foundation** exercises apply a result directly; **Standard** exercises require several steps or a short proof; **Advanced** exercises combine several results or require a longer derivation. Worked solutions and exercise-specific hints are reserved for teaching sessions and are not included in this student edition.
 
 ```{r clt-exercise-bank, echo=FALSE, results='asis'}
 source("R/exercises.R")

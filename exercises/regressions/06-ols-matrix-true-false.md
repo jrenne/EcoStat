@@ -12,7 +12,7 @@ We assume that the Gauss--Markov assumptions (4.1 to 4.4 from the course) are sa
 \qquad
 \mathbb{V}ar(\varepsilon_i|\mathbf{X})=\sigma^2.$$ The model includes a constant (the first component $x_{i,1}=1$ for all $i$). The dimension of $\mathbf{x}_i$ is $K\times 1$, with $K>1$.
 
-We consider the OLS regression of $y_i$ on $\mathbf{x}_i$. We denote by $\mathbf{b}$ the OLS estimator of $\boldsymbol\beta$. We denote by $\mathbf{e}$ the vector of residuals, $\mathbf{e}=\mathbf{y}-\mathbf{X}\mathbf{b}$, where $\mathbf{X}$ is the $n\times K$ matrix whose $i$th row is $\mathbf{x}_i'$, and $\mathbf{y}=[y_1,\dots,y_n]'$.
+Consider the OLS regression of $y_i$ on $\mathbf{x}_i$. Let $\mathbf{b}$ denote the OLS estimator of $\boldsymbol\beta$ and let $\mathbf{e}$ denote the residual vector, $\mathbf{e}=\mathbf{y}-\mathbf{X}\mathbf{b}$, where $\mathbf{X}$ is the $n\times K$ matrix whose $i$th row is $\mathbf{x}_i'$, and $\mathbf{y}=[y_1,\dots,y_n]'$.
 
 We assume that $n$ is large, that $\{\mathbf{x}_i,\varepsilon_i\}$ are i.i.d. across individuals $i$, and that $\mathbf{X}'\mathbf{X}/n$ converges to an invertible matrix $Q$.
 

@@ -26,6 +26,6 @@ where $\varepsilon_t \sim i.i.d. \mathcal{N}(0, \sigma^2)$.
 
 6.  From (c), (d), and (e) deduce a way to compute $\gamma_0$, $\gamma_1$ and $\gamma_2$.
 
-7.  Assume that you know $\gamma_0$, $\gamma_1$, and $\gamma_2$. How to compute $\gamma_3$?
+7. Given $\gamma_0$, $\gamma_1$, and $\gamma_2$, explain how to compute $\gamma_3$.
 
-8.  How to compute $\gamma_j$?
+8. Explain how to compute $\gamma_j$ for any $j>2$.

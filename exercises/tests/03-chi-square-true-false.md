@@ -8,7 +8,7 @@ source_exercise: 26
 ---
 
 ## Statement
-We consider a test whose test statistic is denoted $z$. Under the null hypothesis ($H_0$), $z$ follows a $\chi^2(7)$ distribution (chi-squared with 7 degrees of freedom; see table below). The rejection region is in the upper tail (a *one-sided test* in the terminology of this course).
+Consider a test with statistic $z$. Under the null hypothesis ($H_0$), $z$ follows a $\chi^2(7)$ distribution (chi-squared with 7 degrees of freedom; see table below). The rejection region is in the upper tail (a *one-sided test* in the terminology of this course).
 
 For each statement, decide whether it is true or false and justify your answer.
 

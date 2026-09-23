@@ -8,7 +8,7 @@ source_exercise: 22
 ---
 
 ## Statement
-We consider a repeated game. The payoff of each round is:
+Consider a repeated game. The payoff of each round is:
 
 -   $-2$ with probability $\dfrac{1}{2}$,
 

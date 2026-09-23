@@ -8,7 +8,7 @@ source_exercise: 33
 ---
 
 ## Statement
-We consider four random variables $v_i$, $w_i$, $z_i$, and $\varepsilon_i$. Each of them is Gaussian with mean zero.
+Consider four random variables $v_i$, $w_i$, $z_i$, and $\varepsilon_i$. Each of them is Gaussian with mean zero.
 
 An additional random variable $y_i$ is defined by $$y_i=\beta_1 v_i+\beta_2 w_i+\varepsilon_i.$$
 

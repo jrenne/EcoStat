@@ -1647,7 +1647,7 @@ predict(cvglmnet, newx = as.matrix(x)[1:5,], s = "lambda.min")
 if (knitr::is_latex_output()) cat("\\Needspace{16\\baselineskip}\n")
 ```
 
-## Chapter recap {-}
+## Chapter recap {#regressions-recap}
 
 ::: {.recapbox data-latex=""}
 
@@ -1667,7 +1667,7 @@ if (knitr::is_latex_output()) cat("\\clearpage\n")
 
 ## Exercises {#regressions-exercises}
 
-Attempt each question before class and explain your reasoning, including for the true-or-false statements. **Foundation** exercises apply a result directly; **Standard** exercises require several steps; **Advanced** exercises combine several results or require a longer derivation. Worked solutions and exercise-specific hints are reserved for teaching sessions and are not included in this student edition.
+Attempt each question and explain your reasoning, including for true-or-false statements. **Foundation** exercises apply a result directly; **Standard** exercises require several steps or a short proof; **Advanced** exercises combine several results or require a longer derivation. Worked solutions and exercise-specific hints are reserved for teaching sessions and are not included in this student edition.
 
 ```{r regressions-exercise-bank, echo=FALSE, results='asis'}
 source("R/exercises.R")

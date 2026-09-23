@@ -20,8 +20,8 @@ We have a sample of $n$ dates and we assume that the observations $(y_i, \Delta 
 
 2.  What can be said about the OLS estimate of $\beta$ (the model above)?
 
-3.  Let us denote by $z_i$ the value a weather index at date $i$. We assume that $\mathbb{E}(\varepsilon_i | z_i) = 0$; how to interpret this? What are the other conditions that $z_i$ should satisfy so as to constitute a valid instrument? In the following, we assume that $z_i$ constitutes a valid instrument. What approach can then be resorted to to estimate $\beta$ (gives the name of the approach only)?
+3. Let $z_i$ be the value of a weather index at date $i$. Interpret the condition $\mathbb{E}(\varepsilon_i\mid z_i)=0$. What additional condition must $z_i$ satisfy to be a valid instrument? Assuming validity, name the method that can be used to estimate $\beta$.
 
-4.  Let us denote by $\mathbf{Z}$ the $n$-dimensional vector whose $i^{th}$ element is $z_i$. We regress $\Delta s_i$ on $z_i$ by OLS. Express the fitted value of $\Delta s_i$ as a function of $\mathbf{Z}$. We denote by $\widehat{\Delta s_i}$ these fitted values.
+4. Let $\mathbf Z$ be the $n$-dimensional vector with $i$th element $z_i$. Regress $\Delta s_i$ on $z_i$ by OLS and express the fitted vector $\widehat{\Delta\mathbf s}$ as a function of $\mathbf Z$.
 
-5.  Show that the OLS regression of $y_i$ on $\widehat{\Delta s_i}$ provides a consistent estimate of $\beta$.
+5. Show that the OLS regression of $y_i$ on the fitted values $\widehat{\Delta s_i}$ provides a consistent estimate of $\beta$.

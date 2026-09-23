@@ -8,7 +8,7 @@ source_exercise: 48
 ---
 
 ## Statement
-Consider a random variable whose observations $y_i$ are independent and drawn from a Bernoulli distribution with parameter $\Phi(\boldsymbol{\theta}'\mathbf{x}_i)$, where $\Phi$ is the CDF of a standard normal distribution $\mathcal{N}(0,1)$.
+Consider a random variable whose observations $y_i$ are independent and drawn from a Bernoulli distribution with parameter $\Phi(\boldsymbol{\theta}'\mathbf{x}_i)$, where $\Phi$ is the c.d.f. of a standard normal distribution $\mathcal{N}(0,1)$.
 
 The explanatory variables $\mathbf{x}_i=[x_{i,1},\dots,x_{i,K}]'$ are regarded as non-random variables. The parameter vector $\boldsymbol{\theta}=[\theta_1,\dots,\theta_K]'$ is estimated by Maximum Likelihood. The number of observations is large.
 

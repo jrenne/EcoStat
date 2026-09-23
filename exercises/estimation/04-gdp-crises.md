@@ -34,7 +34,7 @@ $$H = \left( \frac{\partial^2 \log \mathcal{L}(\hat{\theta}; \mathbf{y})}{\parti
 -0.000020 & 0.004003 & -0.001505 & -0.250204
 \end{bmatrix}$$
 
-4.  How to approximate the asymptotic distribution of $\hat{\theta}$?
+4. Explain how to approximate the asymptotic distribution of $\hat{\theta}$.
 
 5.  Compute a 95% confidence interval for $\gamma$.
 

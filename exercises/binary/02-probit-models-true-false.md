@@ -12,7 +12,7 @@ A binary choice model is estimated. There are $n$ observations of the dependent 
 
 $$\mathbb{P}(y_i = 1 | \mathbf{x}_i; \boldsymbol{\theta}) = \Phi(\boldsymbol{\theta}'\mathbf{x}_i)$$
 
-where $\Phi$ is the cumulative distribution function (CDF) of $\mathcal{N}(0, 1)$. We have $\boldsymbol{\theta} = [\theta_1, \dots, \theta_6]'$.
+where $\Phi$ is the cumulative distribution function (c.d.f.) of $\mathcal{N}(0, 1)$. We have $\boldsymbol{\theta} = [\theta_1, \dots, \theta_6]'$.
 
 Three versions of the model are considered, all estimated by maximum likelihood:
 

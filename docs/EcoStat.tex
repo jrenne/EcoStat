@@ -165,7 +165,7 @@
 
 \title{Econometrics and Statistics}
 \author{Jean-Paul Renne}
-\date{2026-09-21}
+\date{2026-09-23}
 
 \usepackage{amsthm}
 \newtheorem{theorem}{Theorem}[chapter]
@@ -755,8 +755,7 @@ The realization below is especially deceptive. For several thousand observations
 
 \Needspace{12\baselineskip}
 
-\section*{Chapter recap}\label{chapter-recap}
-\addcontentsline{toc}{section}{Chapter recap}
+\section{Chapter recap}\label{basics-recap}
 
 \begin{recapbox}
 
@@ -782,7 +781,7 @@ The realization below is especially deceptive. For several thousand observations
 
 \section{Exercises}\label{basics-exercises}
 
-Attempt each question before class and explain your reasoning, including for the true-or-false statements. \textbf{Foundation} exercises apply a result directly; \textbf{Standard} exercises require several steps or a short proof. Worked solutions and exercise-specific hints are reserved for teaching sessions and are not included in this student edition.
+Attempt each question and explain your reasoning, including for true-or-false statements. \textbf{Foundation} exercises apply a result directly; \textbf{Standard} exercises require several steps or a short proof; \textbf{Advanced} exercises combine several results or require a longer derivation. Worked solutions and exercise-specific hints are reserved for teaching sessions and are not included in this student edition.
 
 \Needspace{28\baselineskip}
 
@@ -1123,13 +1122,7 @@ This \href{https://jrenne.shinyapps.io/StatEcoII/}{web interface} illustrates th
 
 The CL theorem was first postulated by the mathematician Abraham de Moivre. In an article published in 1733, he used the normal distribution to approximate the distribution of the number of heads resulting from many tosses of a fair coin. This finding was nearly forgotten until Pierre-Simon Laplace recalled it in his \href{https://archive.org/details/thorieanalytiqu01laplgoog}{Théorie analytique des probabilités}, published in 1812. Laplace expanded De Moivre's finding by approximating the binomial distribution with the normal distribution.
 
-\begin{exercise}
-\protect\hypertarget{exr:ExoBuffon}{}\label{exr:ExoBuffon}Consider Buffon's experiment (Example \ref{exm:Buffon}). We have seen that \(\pi\) can be estimated by counting the fraction of times the needles cross the grooves of the floor.\footnote{More precisely, the expectation of this fraction is equal to \(1/\pi\).} Using the CLT, determine the (approximate) minimal number \(n\) of needles that one has to throw to get an estimate \(\hat\pi\) (\(= 1/\bar{X}_n\)) of \(\pi\) that is such that there is a 95\% chance that \(\pi \in [\hat\pi-0.01,\hat\pi+0.01]\)?
-\end{exercise}
-
-\begin{exercise}
-\protect\hypertarget{exr:ExoPileFace}{}\label{exr:ExoPileFace}Assume you have a lot of time and a coin. How would you approximate the 100 percentiles of the \(\mathcal{N}(0,1)\) distribution?
-\end{exercise}
+\textbf{Practice:} Exercises \ref{exr:clt-buffon-precision} and \ref{exr:clt-coin-normal-quantiles} use the CLT to design a simulation and to determine its required precision.
 
 The CLT can be extended to the case where each \(x_i\) is a vector. (In that case, and if the dimension of \(x_i\) is \(m\), then \(\mathbb{V}ar(x_i)\) is a \(m\times m\) matrix.) Here is the multivariate CLT:
 
@@ -1188,8 +1181,7 @@ Under the null hypothesis of equal population means, the difference \(\bar{m}-\b
 
 \Needspace{11\baselineskip}
 
-\section*{Chapter recap}\label{chapter-recap-1}
-\addcontentsline{toc}{section}{Chapter recap}
+\section{Chapter recap}\label{clt-recap}
 
 \begin{recapbox}
 
@@ -1213,7 +1205,7 @@ Under the null hypothesis of equal population means, the difference \(\bar{m}-\b
 
 \section{Exercises}\label{clt-exercises}
 
-Attempt each question before class and explain your reasoning, including for the true-or-false statements. \textbf{Foundation} exercises apply a result directly; \textbf{Standard} exercises require several steps; \textbf{Advanced} exercises combine several results or require a longer derivation. Worked solutions and exercise-specific hints are reserved for teaching sessions and are not included in this student edition.
+Attempt each question and explain your reasoning, including for true-or-false statements. \textbf{Foundation} exercises apply a result directly; \textbf{Standard} exercises require several steps or a short proof; \textbf{Advanced} exercises combine several results or require a longer derivation. Worked solutions and exercise-specific hints are reserved for teaching sessions and are not included in this student edition.
 
 \Needspace{28\baselineskip}
 
@@ -1225,14 +1217,14 @@ Attempt each question before class and explain your reasoning, including for the
 \textbf{Advanced \textbar{} Application}\\
 Review Section \ref{TCL}.
 
-We consider a financial asset whose value on day \(i\) is \(S_i\). We set \(s_i = \log(S_i/S_{i-1})\) and we assume that \(s_i = \mu + \sigma Z_i\), where the \(Z_i\) are identically and independently distributed (i.i.d.) and are drawn from a Student distribution with \(\nu\) degrees of freedom (i.e.~\(Z_i \sim \text{i.i.d.}\, t(\nu)\)).\\
-We consider an investor that buys this asset at date \(0\) and keeps it until date \(n\). We denote by \(\bar{s}_n\) the average of \(s_i\) between periods \(0\) and \(n\), that is \(\bar{s}_n = \frac{1}{n} \sum_{i=1}^n s_i\).\\
+Consider a financial asset whose value on day \(i\) is \(S_i\). We set \(s_i = \log(S_i/S_{i-1})\) and we assume that \(s_i = \mu + \sigma Z_i\), where the \(Z_i\) are identically and independently distributed (i.i.d.) and are drawn from a Student distribution with \(\nu\) degrees of freedom (i.e.~\(Z_i \sim \text{i.i.d.}\, t(\nu)\)).\\
+An investor buys the asset at date \(0\) and holds it until date \(n\). We denote by \(\bar{s}_n\) the average of \(s_i\) between periods \(0\) and \(n\), that is \(\bar{s}_n = \frac{1}{n} \sum_{i=1}^n s_i\).\\
 We recall that if \(Z \sim t(\nu)\), then \(\mathbb{E}(Z) = 0\) and \(\mathbb{V}ar(Z) = \frac{\nu}{\nu - 2}\) for \(\nu > 2\).
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \item
-  How to interpret \(s_i\)?
+  Interpret \(s_i\).
 \item
   Express \(S_n\) as a function of \(\bar{s}_n\) and of \(S_0\).
 \item
@@ -1240,7 +1232,7 @@ We recall that if \(Z \sim t(\nu)\), then \(\mathbb{E}(Z) = 0\) and \(\mathbb{V}
 \item
   Show that \(\mathbb{P}(S_n < S_0) = \mathbb{P}(\sqrt{n}\bar{s}_n < 0)\).
 \item
-  Propose an approximation of the probability that the investor loses money by holding the asset between dates 0 and \(n\) (if \(n\) is large)
+  For large \(n\), derive an approximation to the probability that the investor loses money by holding the asset between dates 0 and \(n\).
 \end{enumerate}
 
 \end{exercise}
@@ -1285,7 +1277,7 @@ The pockets of the roulette wheel are numbered from 0 to 36. There are 18 black 
 \textbf{Standard \textbar{} True or false}\\
 Review Section \ref{TCL}.
 
-We consider a repeated game. The payoff of each round is:
+Consider a repeated game. The payoff of each round is:
 
 \begin{itemize}
 \item
@@ -1332,7 +1324,7 @@ For each statement, decide whether it is true or false and justify your answer.
 \textbf{Standard \textbar{} True or false}\\
 Review Section \ref{TCL}.
 
-We have two samples, each of size \(n\) where \(n\) is large. The first sample is \(\{x_1,\dots,x_n\}\) and the second sample is \(\{y_1,\dots,y_n\}\). We assume that all observations are independent (within and across samples). The \(x_i\) are drawn from a distribution with mean \(\mu_x\) and variance \(\sigma_x^2\), and the \(y_i\) are drawn from a distribution with mean \(\mu_y\) and variance \(\sigma_y^2\).
+Consider two samples, each of size \(n\), where \(n\) is large. The first sample is \(\{x_1,\dots,x_n\}\) and the second sample is \(\{y_1,\dots,y_n\}\). We assume that all observations are independent (within and across samples). The \(x_i\) are drawn from a distribution with mean \(\mu_x\) and variance \(\sigma_x^2\), and the \(y_i\) are drawn from a distribution with mean \(\mu_y\) and variance \(\sigma_y^2\).
 
 We denote by \(\bar{x}_n\) and \(\bar{y}_n\) the sample means: \[\bar{x}_n=\frac{1}{n}\sum_{i=1}^n x_i,
 \qquad
@@ -1352,6 +1344,67 @@ For each statement, decide whether it is true or false and justify your answer.
   If \(\sigma_x^2=\sigma_y^2=0.5\), \(\bar{x}_n=1\), \(\bar{y}_n=1.1\), and \(n=900\), a test of mean comparison cannot reject \(H_0:\mu_x=\mu_y\) at the 5\% significance level.
 \item
   \(\bar{x}_n-\bar{y}_n\) is a consistent estimator of \(\mu_x-\mu_y\).
+\end{enumerate}
+
+\end{exercise}
+
+\end{exercisebox}
+
+\Needspace{28\baselineskip}
+
+\begin{exercisebox}
+
+\begin{exercise}[Precision of Buffon's needle estimator]
+\protect\hypertarget{exr:clt-buffon-precision}{}\label{exr:clt-buffon-precision}
+
+\textbf{Advanced \textbar{} Analytical}\\
+Review Section \ref{TCL}.
+
+Return to Buffon's needle experiment in Example \ref{exm:Buffon}. Let \(X_i\) equal one when needle \(i\) crosses a groove and zero otherwise. In the version of the experiment considered there,
+\[
+\mathbb{E}(X_i)=p=\frac{1}{\pi}.
+\]
+After \(n\) independent throws, estimate \(\pi\) by
+\[
+\widehat\pi=\frac{1}{\overline X_n}.
+\]
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Use the CLT to obtain an approximate distribution for \(\overline X_n\).
+\item
+  Apply a first-order approximation to obtain the approximate standard error of \(\widehat\pi\).
+\item
+  Find the smallest integer \(n\) for which the approximate 95\% margin of error for \(\widehat\pi\) is at most \(0.01\). Use the true value of \(\pi\) when planning the required sample size.
+\end{enumerate}
+
+\end{exercise}
+
+\end{exercisebox}
+
+\Needspace{28\baselineskip}
+
+\begin{exercisebox}
+
+\begin{exercise}[Approximating normal quantiles with a coin]
+\protect\hypertarget{exr:clt-coin-normal-quantiles}{}\label{exr:clt-coin-normal-quantiles}
+
+\textbf{Standard \textbar{} Simulation design}\\
+Review Section \ref{TCL}.
+
+Suppose that you have only a fair coin and enough time to repeat an experiment many times.
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Design a simulation that produces observations whose distribution is approximately \(\mathcal{N}(0,1)\). State how many coin tosses constitute one simulated observation and how that observation is standardized.
+\item
+  Explain how repeated observations from this simulation can be used to approximate the 1st through 99th percentiles of the standard normal distribution.
+\item
+  Describe how the accuracy of the approximation changes when you increase (i) the number of tosses per observation and (ii) the number of simulated observations.
 \end{enumerate}
 
 \end{exercise}
@@ -1685,8 +1738,7 @@ We next draw the \(y_i\)'s from a uniform distribution, so \(H_0\) is not satisf
 
 \Needspace{13\baselineskip}
 
-\section*{Chapter recap}\label{chapter-recap-2}
-\addcontentsline{toc}{section}{Chapter recap}
+\section{Chapter recap}\label{tests-recap}
 
 \begin{recapbox}
 
@@ -1712,7 +1764,7 @@ We next draw the \(y_i\)'s from a uniform distribution, so \(H_0\) is not satisf
 
 \section{Exercises}\label{tests-exercises}
 
-Attempt each question before class and explain your reasoning, including for the true-or-false statements. \textbf{Foundation} exercises apply a result directly; \textbf{Standard} exercises require several steps; \textbf{Advanced} exercises combine several results or require a longer derivation. Worked solutions and exercise-specific hints are reserved for teaching sessions and are not included in this student edition.
+Attempt each question and explain your reasoning, including for true-or-false statements. \textbf{Foundation} exercises apply a result directly; \textbf{Standard} exercises require several steps or a short proof; \textbf{Advanced} exercises combine several results or require a longer derivation. Worked solutions and exercise-specific hints are reserved for teaching sessions and are not included in this student edition.
 
 \Needspace{28\baselineskip}
 
@@ -1754,8 +1806,9 @@ Assume that \(Z|Y \sim \mathcal{N}(0, Y^2)\) and that \(Y \sim \mathcal{N}(0, \s
 \textbf{Foundation \textbar{} True or false}\\
 Review Section \ref{Tests}.
 
-Are the following statements True or False? (Provide short explanations.)\\
-We consider a null hypothesis \(H_0\). Under that null hypothesis, the test statistic \(z\) is \(\mathcal{N}(0, 1)\). We use a two-tail rejection region (a \emph{two-sided test} in the terminology of this course) and set its size \(\alpha\) at 5\%.
+For each statement, decide whether it is true or false and justify your answer.
+
+Consider a null hypothesis \(H_0\). Under that null hypothesis, the test statistic \(z\) is \(\mathcal{N}(0, 1)\). We use a two-tail rejection region (a \emph{two-sided test} in the terminology of this course) and set its size \(\alpha\) at 5\%.
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -1783,7 +1836,7 @@ We consider a null hypothesis \(H_0\). Under that null hypothesis, the test stat
 \protect\hypertarget{exr:tests-chi-square-true-false}{}\label{exr:tests-chi-square-true-false}\textbf{Foundation \textbar{} True or false}\\
 Review Section \ref{Tests}.
 
-We consider a test whose test statistic is denoted \(z\). Under the null hypothesis (\(H_0\)), \(z\) follows a \(\chi^2(7)\) distribution (chi-squared with 7 degrees of freedom; see table below). The rejection region is in the upper tail (a \emph{one-sided test} in the terminology of this course).
+Consider a test with statistic \(z\). Under the null hypothesis (\(H_0\)), \(z\) follows a \(\chi^2(7)\) distribution (chi-squared with 7 degrees of freedom; see table below). The rejection region is in the upper tail (a \emph{one-sided test} in the terminology of this course).
 
 For each statement, decide whether it is true or false and justify your answer.
 
@@ -3534,8 +3587,7 @@ The \texttt{glmnet} package (see \href{https://glmnet.stanford.edu/articles/glmn
 
 \Needspace{16\baselineskip}
 
-\section*{Chapter recap}\label{chapter-recap-3}
-\addcontentsline{toc}{section}{Chapter recap}
+\section{Chapter recap}\label{regressions-recap}
 
 \begin{recapbox}
 
@@ -3563,7 +3615,7 @@ The \texttt{glmnet} package (see \href{https://glmnet.stanford.edu/articles/glmn
 
 \section{Exercises}\label{regressions-exercises}
 
-Attempt each question before class and explain your reasoning, including for the true-or-false statements. \textbf{Foundation} exercises apply a result directly; \textbf{Standard} exercises require several steps; \textbf{Advanced} exercises combine several results or require a longer derivation. Worked solutions and exercise-specific hints are reserved for teaching sessions and are not included in this student edition.
+Attempt each question and explain your reasoning, including for true-or-false statements. \textbf{Foundation} exercises apply a result directly; \textbf{Standard} exercises require several steps or a short proof; \textbf{Advanced} exercises combine several results or require a longer derivation. Worked solutions and exercise-specific hints are reserved for teaching sessions and are not included in this student edition.
 
 \Needspace{28\baselineskip}
 
@@ -3575,7 +3627,7 @@ Attempt each question before class and explain your reasoning, including for the
 \textbf{Standard \textbar{} Analytical}\\
 Review Section \ref{LSquares}.
 
-We consider the following linear regression: \[y_i = \beta_1 x_{i,1} + \beta_2 x_{i,2} + \beta_3 x_{i,3} + \varepsilon_i,\] where \(x_{i,1} = 1\) for all \(i\). We observe \((y_i, x_{i,2}, x_{i,3})\), for \(i \in \{1, \dots, n\}\), with \(n = 200\).
+Consider the following linear regression: \[y_i = \beta_1 x_{i,1} + \beta_2 x_{i,2} + \beta_3 x_{i,3} + \varepsilon_i,\] where \(x_{i,1} = 1\) for all \(i\). We observe \((y_i, x_{i,2}, x_{i,3})\), for \(i \in \{1, \dots, n\}\), with \(n = 200\).
 
 In matrix notation, the linear regression writes: \[\mathbf{y} = \boldsymbol{X}\boldsymbol{\beta} + \boldsymbol{\varepsilon}.\] The OLS estimator of \(\boldsymbol{\beta} = [\beta_1, \beta_2, \beta_3]'\) is denoted by \(\mathbf{b}\).\\
 We suppose that the standard full-rank, conditional-mean-zero, homoskedasticity, and no-cross-correlation assumptions hold. We additionally assume normally distributed errors.
@@ -3753,7 +3805,7 @@ We assume that the Gauss--Markov assumptions (4.1 to 4.4 from the course) are sa
 \qquad
 \mathbb{V}ar(\varepsilon_i|\mathbf{X})=\sigma^2.\] The model includes a constant (the first component \(x_{i,1}=1\) for all \(i\)). The dimension of \(\mathbf{x}_i\) is \(K\times 1\), with \(K>1\).
 
-We consider the OLS regression of \(y_i\) on \(\mathbf{x}_i\). We denote by \(\mathbf{b}\) the OLS estimator of \(\boldsymbol\beta\). We denote by \(\mathbf{e}\) the vector of residuals, \(\mathbf{e}=\mathbf{y}-\mathbf{X}\mathbf{b}\), where \(\mathbf{X}\) is the \(n\times K\) matrix whose \(i\)th row is \(\mathbf{x}_i'\), and \(\mathbf{y}=[y_1,\dots,y_n]'\).
+Consider the OLS regression of \(y_i\) on \(\mathbf{x}_i\). Let \(\mathbf{b}\) denote the OLS estimator of \(\boldsymbol\beta\) and let \(\mathbf{e}\) denote the residual vector, \(\mathbf{e}=\mathbf{y}-\mathbf{X}\mathbf{b}\), where \(\mathbf{X}\) is the \(n\times K\) matrix whose \(i\)th row is \(\mathbf{x}_i'\), and \(\mathbf{y}=[y_1,\dots,y_n]'\).
 
 We assume that \(n\) is large, that \(\{\mathbf{x}_i,\varepsilon_i\}\) are i.i.d.~across individuals \(i\), and that \(\mathbf{X}'\mathbf{X}/n\) converges to an invertible matrix \(Q\).
 
@@ -3789,7 +3841,7 @@ For each statement, decide whether it is true or false and justify your answer.
 \textbf{Advanced \textbar{} True or false}\\
 Review Section \ref{IV}.
 
-We consider four random variables \(v_i\), \(w_i\), \(z_i\), and \(\varepsilon_i\). Each of them is Gaussian with mean zero.
+Consider four random variables \(v_i\), \(w_i\), \(z_i\), and \(\varepsilon_i\). Each of them is Gaussian with mean zero.
 
 An additional random variable \(y_i\) is defined by \[y_i=\beta_1 v_i+\beta_2 w_i+\varepsilon_i.\]
 
@@ -3830,10 +3882,10 @@ For each statement, decide whether it is true or false and justify your answer.
 Review Section \ref{CommonPitfalls}.
 
 We denote by \(c_i\) the logarithm of consumption by household \(i\) and by \(y_i^*\) the permanent income of the same household.\\
-We consider a simple consumption function, of the form \[c_i = \beta y_i^* + \varepsilon_i, \quad \varepsilon_i \sim \mathcal{N}(0, \sigma^2),\] where \(\mathbb{E}(\varepsilon_i | y_i^*) = 0.\)\\
+Consider the consumption function \[c_i = \beta y_i^* + \varepsilon_i, \quad \varepsilon_i \sim \mathcal{N}(0, \sigma^2),\] where \(\mathbb{E}(\varepsilon_i | y_i^*) = 0.\)\\
 Permanent income \(y_i^*\) is not observed but we have data on \(y_i\), the current income of household \(i\). Assume that \(y_i = y_i^* + v_i\), where \(v_i \sim \mathcal{N}(0, w^2)\), \(\mathbb{E}(v_i | y_i^*) = 0\) and \(\mathbb{E}(v_i | \varepsilon_i) = 0\).\\
 We have a sample of size \(n\) and use the notation: \(\mathbf{y} = [y_1, \dots, y_n]' \quad \text{and} \quad \mathbf{u} = [u_1, \dots, u_n]'\). We assume further that the \((y_i^*, \varepsilon_i, v_i)\) are independent (across \(i\)).\\
-We consider the linear regression of \(c_i\) on \(y_i\): \(c_i = \beta y_i + u_i\). The residuals of this regression are denoted by \(u_i\).
+Now consider the linear regression of \(c_i\) on \(y_i\): \(c_i = \beta y_i + u_i\). The residuals of this regression are denoted by \(u_i\).
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -3842,7 +3894,7 @@ We consider the linear regression of \(c_i\) on \(y_i\): \(c_i = \beta y_i + u_i
 \item
   Compute the covariance between \(y_i\) and \(u_i\).
 \item
-  We denote by \(\mathbf{b}\) the OLS estimator of \(\beta\) in the regression of \(c_i\) on \(y_i\) (with no constant term). After having expressed \(\mathbf{b}\) as a function of \(\beta\), \(\mathbf{y}\) and \(\mathbf{u}\), give the limit of \(\mathbf{b}\) when \(n \to \infty\) (the formula involves, in particular, \(\mathbb{E}(y_i)\) and \(\mathbb{V}ar(y_i)\)).
+  We denote by \(\mathbf{b}\) the OLS estimator of \(\beta\) in the regression of \(c_i\) on \(y_i\) (with no constant term). After expressing \(\mathbf{b}\) as a function of \(\beta\), \(\mathbf{y}\) and \(\mathbf{u}\), give the limit of \(\mathbf{b}\) when \(n \to \infty\) (the formula involves, in particular, \(\mathbb{E}(y_i)\) and \(\mathbb{V}ar(y_i)\)).
 \end{enumerate}
 
 \end{exercise}
@@ -3874,11 +3926,11 @@ We have a sample of \(n\) dates and we assume that the observations \((y_i, \Del
 \item
   What can be said about the OLS estimate of \(\beta\) (the model above)?
 \item
-  Let us denote by \(z_i\) the value a weather index at date \(i\). We assume that \(\mathbb{E}(\varepsilon_i | z_i) = 0\); how to interpret this? What are the other conditions that \(z_i\) should satisfy so as to constitute a valid instrument? In the following, we assume that \(z_i\) constitutes a valid instrument. What approach can then be resorted to to estimate \(\beta\) (gives the name of the approach only)?
+  Let \(z_i\) be the value of a weather index at date \(i\). Interpret the condition \(\mathbb{E}(\varepsilon_i\mid z_i)=0\). What additional condition must \(z_i\) satisfy to be a valid instrument? Assuming validity, name the method that can be used to estimate \(\beta\).
 \item
-  Let us denote by \(\mathbf{Z}\) the \(n\)-dimensional vector whose \(i^{th}\) element is \(z_i\). We regress \(\Delta s_i\) on \(z_i\) by OLS. Express the fitted value of \(\Delta s_i\) as a function of \(\mathbf{Z}\). We denote by \(\widehat{\Delta s_i}\) these fitted values.
+  Let \(\mathbf Z\) be the \(n\)-dimensional vector with \(i\)th element \(z_i\). Regress \(\Delta s_i\) on \(z_i\) by OLS and express the fitted vector \(\widehat{\Delta\mathbf s}\) as a function of \(\mathbf Z\).
 \item
-  Show that the OLS regression of \(y_i\) on \(\widehat{\Delta s_i}\) provides a consistent estimate of \(\beta\).
+  Show that the OLS regression of \(y_i\) on the fitted values \(\widehat{\Delta s_i}\) provides a consistent estimate of \(\beta\).
 \end{enumerate}
 
 \end{exercise}
@@ -3895,7 +3947,7 @@ We have a sample of \(n\) dates and we assume that the observations \((y_i, \Del
 \textbf{Advanced \textbar{} Analytical}\\
 Review Section \ref{ChapterLS}.
 
-We consider the model:
+Consider the model:
 
 \[y_i = \beta_1 x_{i,1} + \cdots + \beta_K x_{i,K} + \varepsilon_i,\]
 
@@ -5002,8 +5054,7 @@ Adjusted R$^{2}$ & 0.020 & 0.316 & 0.046 \\
 
 \Needspace{15\baselineskip}
 
-\section*{Chapter recap}\label{chapter-recap-4}
-\addcontentsline{toc}{section}{Chapter recap}
+\section{Chapter recap}\label{panel-recap}
 
 \begin{recapbox}
 
@@ -5029,7 +5080,7 @@ Adjusted R$^{2}$ & 0.020 & 0.316 & 0.046 \\
 
 \section{Exercises}\label{panel-exercises}
 
-Attempt each question before class and explain your reasoning, including for the true-or-false statements. \textbf{Foundation} exercises apply a result directly; \textbf{Standard} exercises require several steps; \textbf{Advanced} exercises combine several results or require a longer derivation. Worked solutions and exercise-specific hints are reserved for teaching sessions and are not included in this student edition.
+Attempt each question and explain your reasoning, including for true-or-false statements. \textbf{Foundation} exercises apply a result directly; \textbf{Standard} exercises require several steps or a short proof; \textbf{Advanced} exercises combine several results or require a longer derivation. Worked solutions and exercise-specific hints are reserved for teaching sessions and are not included in this student edition.
 
 \Needspace{28\baselineskip}
 
@@ -5041,17 +5092,17 @@ Attempt each question before class and explain your reasoning, including for the
 \textbf{Advanced \textbar{} Analytical}\\
 Review Section \ref{FixedEffect}.
 
-We consider the following panel regression model: \[y_{i,t} = \beta x_{i,t} + \alpha_i + \varepsilon_{i,t}, \quad i \in \{1, \dots, n\}, \quad t \in \{1, \dots, T\},\] where \(x_{i,t}\) and \(\beta\) are scalars, where the \(\varepsilon_{i,t}\)'s are i.i.d. \(\mathcal{N}(0, \sigma^2)\) and where \(\mathbb{E}(\varepsilon_{i,t}|\mathbf{X}) = 0\), where \(\mathbf{X} = [\mathbf{x}_1', \dots, \mathbf{x}_n']'\) with \(\mathbf{x}_i = [x_{i,1}, \dots, x_{i,T}]'\) (i.e., \(\mathbf{x}_i\) is of dimension \(T \times 1\) and \(\mathbf{X}\) is of dimension \((nT) \times 1\)). The disturbances \(\varepsilon_{i,t}\) and the explanatory variables \(x_{i,t}\) are assumed to be independent across entities \(i\) and across time \(t\). However, in general, the \(\alpha_i\)s may be correlated to the \(x_{i,t}\).
+Consider the following panel regression model: \[y_{i,t} = \beta x_{i,t} + \alpha_i + \varepsilon_{i,t}, \quad i \in \{1, \dots, n\}, \quad t \in \{1, \dots, T\},\] where \(x_{i,t}\) and \(\beta\) are scalars, where the \(\varepsilon_{i,t}\)'s are i.i.d. \(\mathcal{N}(0, \sigma^2)\) and where \(\mathbb{E}(\varepsilon_{i,t}|\mathbf{X}) = 0\), where \(\mathbf{X} = [\mathbf{x}_1', \dots, \mathbf{x}_n']'\) with \(\mathbf{x}_i = [x_{i,1}, \dots, x_{i,T}]'\) (i.e., \(\mathbf{x}_i\) is of dimension \(T \times 1\) and \(\mathbf{X}\) is of dimension \((nT) \times 1\)). The disturbances \(\varepsilon_{i,t}\) and the explanatory variables \(x_{i,t}\) are assumed to be independent across entities \(i\) and across time \(t\). However, in general, the \(\alpha_i\)s may be correlated to the \(x_{i,t}\).
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \item
   What is called this type of model?
 \item
-  Assume (just for this question) that \(\alpha_i = \alpha\). How to estimate the model then?
+  For this question only, assume that \(\alpha_i=\alpha\). Explain how to estimate the model.
 \end{enumerate}
 
-Let us get back to the general case (where \(\alpha_i\) may be different from \(\alpha_j\) if \(i \neq j\)) and let us use the notation \(\nu_{i,t} = \alpha_i - \alpha + \varepsilon_{i,t}\) where \(\alpha\) is defined by \(\alpha = \mathbb{E}(\alpha_i)\). In this case, the model can be written: \[y_{i,t} = \alpha + \beta x_{i,t} + \nu_{i,t}, \quad i \in \{1, \dots, n\}, t \in \{1, \dots, T\}.\]
+Return to the general case (where \(\alpha_i\) may be different from \(\alpha_j\) if \(i \neq j\)) and let us use the notation \(\nu_{i,t} = \alpha_i - \alpha + \varepsilon_{i,t}\) where \(\alpha\) is defined by \(\alpha = \mathbb{E}(\alpha_i)\). In this case, the model can be written: \[y_{i,t} = \alpha + \beta x_{i,t} + \nu_{i,t}, \quad i \in \{1, \dots, n\}, t \in \{1, \dots, T\}.\]
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -5080,7 +5131,7 @@ Let us get back to the general case (where \(\alpha_i\) may be different from \(
 \textbf{Standard \textbar{} True or false}\\
 Review Section \ref{Panel}.
 
-We consider the panel regression model:
+Consider the panel regression model:
 
 \[y_{it} = \mathbf{x}_{it}'\boldsymbol{\beta} + \gamma_t + \alpha_i + \varepsilon_{it}\]
 
@@ -6017,8 +6068,7 @@ Specify the Gaussian priors:
 
 \Needspace{15\baselineskip}
 
-\section*{Chapter recap}\label{chapter-recap-5}
-\addcontentsline{toc}{section}{Chapter recap}
+\section{Chapter recap}\label{estimation-recap}
 
 \begin{recapbox}
 
@@ -6044,7 +6094,7 @@ Specify the Gaussian priors:
 
 \section{Exercises}\label{estimation-exercises}
 
-Attempt each question before class and explain your reasoning, including for the true-or-false statements. \textbf{Foundation} exercises apply a result directly; \textbf{Standard} exercises require several steps; \textbf{Advanced} exercises combine several results or require a longer derivation. Worked solutions and exercise-specific hints are reserved for teaching sessions and are not included in this student edition.
+Attempt each question and explain your reasoning, including for true-or-false statements. \textbf{Foundation} exercises apply a result directly; \textbf{Standard} exercises require several steps or a short proof; \textbf{Advanced} exercises combine several results or require a longer derivation. Worked solutions and exercise-specific hints are reserved for teaching sessions and are not included in this student edition.
 
 \Needspace{28\baselineskip}
 
@@ -6155,7 +6205,7 @@ The log-likelihood is maximized numerically. The value of \(\theta\) for which t
 \def\labelenumi{\arabic{enumi}.}
 \setcounter{enumi}{3}
 \item
-  How to approximate the asymptotic distribution of \(\hat{\theta}\)?
+  Explain how to approximate the asymptotic distribution of \(\hat{\theta}\).
 \item
   Compute a 95\% confidence interval for \(\gamma\).
 \item
@@ -6204,7 +6254,7 @@ Consider the linear model \[y_i = \beta_1 x_{i,1} + \beta_2 x_{i,2} + \cdots + \
 \textbf{Standard \textbar{} Calculation}\\
 Review Section \ref{secMLE}.
 
-We consider the Gaussian linear model of the preceding exercise, with \(K = 4\). We have a sample of size \(n = 8\). We obtain (with the usual notations):
+Consider the Gaussian linear model of the preceding exercise, with \(K = 4\). We have a sample of size \(n = 8\). We obtain (with the usual notations):
 
 \[(\mathbf{X}'\mathbf{X})^{-1} =
 \begin{pmatrix}
@@ -6250,7 +6300,7 @@ We consider the Gaussian linear model of the preceding exercise, with \(K = 4\).
 \textbf{Standard \textbar{} True or false}\\
 Review Section \ref{secMLE}.
 
-We consider a sample of variables \(y_i\), \(i \in \{1,\dots,n\}\), that are independently and identically distributed. The sample length \(n\) is large. The distribution of the \(y_i\)'s depends on three parameters gathered in vector \(\boldsymbol\theta=[\theta_1,\theta_2,\theta_3]'\). The likelihood function is given by \(\mathcal{L}(\boldsymbol\theta;{\bf y})\), where \({\bf y}=[y_1,\dots,y_n]'\).
+Consider a sample of variables \(y_i\), \(i \in \{1,\dots,n\}\), that are independently and identically distributed. The sample length \(n\) is large. The distribution of the \(y_i\)'s depends on three parameters gathered in vector \(\boldsymbol\theta=[\theta_1,\theta_2,\theta_3]'\). The likelihood function is given by \(\mathcal{L}(\boldsymbol\theta;{\bf y})\), where \({\bf y}=[y_1,\dots,y_n]'\).
 
 We denote by \(\boldsymbol\theta_{MLE}=[\theta_{MLE,1},\theta_{MLE,2},\theta_{MLE,3}]'\) the maximum likelihood estimate of \(\boldsymbol\theta\). We obtain \(\boldsymbol\theta_{MLE} = [-2.90,0.82,0.60]'\). The opposite of the inverse of the Hessian matrix of the log-likelihood, evaluated at \(\boldsymbol\theta_{MLE}\), is: \[-\left[\frac{\partial^2\log \mathcal{L}(\boldsymbol\theta_{MLE};{\bf y})}{\partial \boldsymbol\theta \partial \boldsymbol\theta'}\right]^{-1} =
 \left[
@@ -6348,7 +6398,7 @@ Conditional on \(\mu\), let \(Y_1,\dots,Y_n\) be i.i.d. \(\mathcal{N}(\mu,\sigma
 
 \end{exercisebox}
 
-\chapter{Binary-choice models}\label{binary-choice}
+\chapter{Binary-choice models}\label{binary-choice-models}
 
 \textbf{Prerequisites.} Conditional probability, Bernoulli variables, linear regression, and maximum-likelihood estimation.
 
@@ -6837,17 +6887,16 @@ Figure \ref{fig:fishing3} shows the ROC curve associated with the probit model e
 
 \Needspace{14\baselineskip}
 
-\section*{Chapter recap}\label{chapter-recap-6}
-\addcontentsline{toc}{section}{Chapter recap}
+\section{Chapter recap}\label{binary-recap}
 
 \begin{recapbox}
 
 \begin{itemize}
 \tightlist
 \item
-  Chapter \ref{binary-choice} models the conditional probability of a binary outcome rather than an unrestricted conditional mean.
+  Chapter \ref{binary-choice-models} models the conditional probability of a binary outcome rather than an unrestricted conditional mean.
 \item
-  The linear probability model is simple to estimate but can produce probabilities outside \([0,1]\) and requires heteroskedasticity-robust inference.
+  The linear probability model is simple to estimate but can produce probabilities outside \([0,1]\) and requires heteroskedasticity-robust inference; Figure \ref{fig:LPM} illustrates its fit.
 \item
   Section \ref{latent} interprets probit and logit models through a latent index or a difference in utilities.
 \item
@@ -6864,7 +6913,7 @@ Figure \ref{fig:fishing3} shows the ROC curve associated with the probit model e
 
 \section{Exercises}\label{binary-exercises}
 
-Attempt each question before class and explain your reasoning, including for the true-or-false statements. \textbf{Foundation} exercises apply a result directly; \textbf{Standard} exercises require several steps; \textbf{Advanced} exercises combine several results or require a longer derivation. Worked solutions and exercise-specific hints are reserved for teaching sessions and are not included in this student edition.
+Attempt each question and explain your reasoning, including for true-or-false statements. \textbf{Foundation} exercises apply a result directly; \textbf{Standard} exercises require several steps or a short proof; \textbf{Advanced} exercises combine several results or require a longer derivation. Worked solutions and exercise-specific hints are reserved for teaching sessions and are not included in this student edition.
 
 \Needspace{28\baselineskip}
 
@@ -6876,7 +6925,7 @@ Attempt each question before class and explain your reasoning, including for the
 \textbf{Advanced \textbar{} Analytical}\\
 Review Section \ref{latent}.
 
-We consider a situation where a dependent variable \(y_i\) can take \(Z\) different values, that is \(y_i \in \{1, \dots, Z\}\). We consider \(n\) entities, i.e.~\(i \in \{1, \dots, n\}\). Each entity is characterized by a \(K\)-dimensional vector \(\mathbf{x}_i\). If we take two distinct entities, say \(i\) and \(j\) (\(i \neq j\)), we have that \((\mathbf{x}_i, y_i)\) is independent from \((\mathbf{x}_j, y_j)\).
+Let \(y_i\in\{1,\dots,Z\}\) be an ordered outcome observed for entities \(i=1,\dots,n\). Each entity has a \(K\)-dimensional covariate vector \(\mathbf{x}_i\). Assume that \((\mathbf{x}_i,y_i)\) and \((\mathbf{x}_j,y_j)\) are independent whenever \(i\ne j\).
 
 To avoid a redundant location parameter, assume that \(\mathbf{x}_i\) does not contain a constant.
 
@@ -6896,11 +6945,11 @@ where \(\boldsymbol{\beta}\) is a \(K\)-dimensional vector.
   What is the relationship that should be satisfied by \(g_1(x), g_2(x), \dots, g_Z(x)\)?
 \end{enumerate}
 
-Let us introduce a variable \(y_i^*\) defined by:
+Introduce the latent variable \(y_i^*\):
 
 \[y_i^* = \boldsymbol{\beta}'\mathbf{x}_i + \varepsilon_i,\]
 
-where \(\varepsilon_i \sim i.i.d. \mathcal{N}(0,1)\). Let us further introduce \(\alpha_j\), for \(j \in \{1, \dots, Z-1\}\), such that \(\alpha_1 < \alpha_2 < \dots < \alpha_{Z-1}\). We also employ the notation \(\alpha_0 = -\infty\) and \(\alpha_Z = +\infty\). The observed outcome is linked to the latent variable by \(y_i=k\) if and only if \(\alpha_{k-1}<y_i^*\leq\alpha_k\).
+where \(\varepsilon_i \sim i.i.d. \mathcal{N}(0,1)\). Define \(\alpha_j\), for \(j \in \{1, \dots, Z-1\}\), such that \(\alpha_1 < \alpha_2 < \dots < \alpha_{Z-1}\). We also employ the notation \(\alpha_0 = -\infty\) and \(\alpha_Z = +\infty\). The observed outcome is linked to the latent variable by \(y_i=k\) if and only if \(\alpha_{k-1}<y_i^*\leq\alpha_k\).
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -6914,7 +6963,7 @@ where \(\varepsilon_i \sim i.i.d. \mathcal{N}(0,1)\). Let us further introduce \
 
   satisfy the relationship obtained in question 3.
 \item
-  Let us denote by \(\boldsymbol{\theta}\) the vector of parameters defining the model, that is \(\boldsymbol{\theta} = [\boldsymbol{\beta}', \alpha_1, \dots, \alpha_{Z-1}]'\). Using \(\Phi\), express \(f(y_i | \mathbf{x}_i; \boldsymbol{\theta})\), the distribution of \(y_i\) conditional on \(\mathbf{x}_i\). Deduce the expression of the log-likelihood \(\log \mathcal{L}(\boldsymbol{\theta}; \mathbf{y})\) associated with \(\mathbf{y} = \{y_1, \dots, y_n\}\) (conditional on \(\mathbf{x} = \{\mathbf{x}_1, \dots, \mathbf{x}_n\}\)).
+  Let \(\boldsymbol{\theta}\) denote the vector of parameters defining the model, that is \(\boldsymbol{\theta} = [\boldsymbol{\beta}', \alpha_1, \dots, \alpha_{Z-1}]'\). Using \(\Phi\), express \(f(y_i | \mathbf{x}_i; \boldsymbol{\theta})\), the distribution of \(y_i\) conditional on \(\mathbf{x}_i\). Deduce the expression of the log-likelihood \(\log \mathcal{L}(\boldsymbol{\theta}; \mathbf{y})\) associated with \(\mathbf{y} = \{y_1, \dots, y_n\}\) (conditional on \(\mathbf{x} = \{\mathbf{x}_1, \dots, \mathbf{x}_n\}\)).
 \item
   Explain how one could obtain estimates of \(\boldsymbol{\theta}\) (denoted by \(\hat{\boldsymbol{\theta}}\)) and how one could estimate the standard deviations associated with \(\hat{\boldsymbol{\theta}}\).
 \end{enumerate}
@@ -6948,7 +6997,7 @@ A binary choice model is estimated. There are \(n\) observations of the dependen
 
 \[\mathbb{P}(y_i = 1 | \mathbf{x}_i; \boldsymbol{\theta}) = \Phi(\boldsymbol{\theta}'\mathbf{x}_i)\]
 
-where \(\Phi\) is the cumulative distribution function (CDF) of \(\mathcal{N}(0, 1)\). We have \(\boldsymbol{\theta} = [\theta_1, \dots, \theta_6]'\).
+where \(\Phi\) is the cumulative distribution function (c.d.f.) of \(\mathcal{N}(0, 1)\). We have \(\boldsymbol{\theta} = [\theta_1, \dots, \theta_6]'\).
 
 Three versions of the model are considered, all estimated by maximum likelihood:
 
@@ -6991,7 +7040,7 @@ For each statement, decide whether it is true or false and justify your answer.
 \textbf{Advanced \textbar{} True or false}\\
 Review Section \ref{marginalFX}.
 
-Consider a random variable whose observations \(y_i\) are independent and drawn from a Bernoulli distribution with parameter \(\Phi(\boldsymbol{\theta}'\mathbf{x}_i)\), where \(\Phi\) is the CDF of a standard normal distribution \(\mathcal{N}(0,1)\).
+Consider a random variable whose observations \(y_i\) are independent and drawn from a Bernoulli distribution with parameter \(\Phi(\boldsymbol{\theta}'\mathbf{x}_i)\), where \(\Phi\) is the c.d.f. of a standard normal distribution \(\mathcal{N}(0,1)\).
 
 The explanatory variables \(\mathbf{x}_i=[x_{i,1},\dots,x_{i,K}]'\) are regarded as non-random variables. The parameter vector \(\boldsymbol{\theta}=[\theta_1,\dots,\theta_K]'\) is estimated by Maximum Likelihood. The number of observations is large.
 
@@ -7946,8 +7995,7 @@ Again, we do not find that the alternative model (here the VAR(1) model) is bett
 
 \Needspace{16\baselineskip}
 
-\section*{Chapter recap}\label{chapter-recap-7}
-\addcontentsline{toc}{section}{Chapter recap}
+\section{Chapter recap}\label{time-series-recap}
 
 \begin{recapbox}
 
@@ -7975,7 +8023,7 @@ Again, we do not find that the alternative model (here the VAR(1) model) is bett
 
 \section{Exercises}\label{time-series-exercises}
 
-Attempt each question before class and explain your reasoning, including for the true-or-false statements. \textbf{Foundation} exercises apply a result directly; \textbf{Standard} exercises require several steps; \textbf{Advanced} exercises combine several results or require a longer derivation. Worked solutions and exercise-specific hints are reserved for teaching sessions and are not included in this student edition.
+Attempt each question and explain your reasoning, including for true-or-false statements. \textbf{Foundation} exercises apply a result directly; \textbf{Standard} exercises require several steps or a short proof; \textbf{Advanced} exercises combine several results or require a longer derivation. Worked solutions and exercise-specific hints are reserved for teaching sessions and are not included in this student edition.
 
 \Needspace{28\baselineskip}
 
@@ -8034,9 +8082,9 @@ where \(\varepsilon_t \sim i.i.d. \mathcal{N}(0, \sigma^2)\).
 \item
   From (c), (d), and (e) deduce a way to compute \(\gamma_0\), \(\gamma_1\) and \(\gamma_2\).
 \item
-  Assume that you know \(\gamma_0\), \(\gamma_1\), and \(\gamma_2\). How to compute \(\gamma_3\)?
+  Given \(\gamma_0\), \(\gamma_1\), and \(\gamma_2\), explain how to compute \(\gamma_3\).
 \item
-  How to compute \(\gamma_j\)?
+  Explain how to compute \(\gamma_j\) for any \(j>2\).
 \end{enumerate}
 
 \end{exercise}
@@ -8081,7 +8129,7 @@ We denote: \(\mathbb{E}_t(\cdot) = \mathbb{E}(\cdot | y_t, y_{t-1}, \dots)\) and
 \textbf{Advanced \textbar{} True or false}\\
 Review Section \ref{forecasting}.
 
-We consider an AR(2) process defined by \[y_t = \phi_1 y_{t-1} + \phi_2 y_{t-2} + \varepsilon_t,\] where \(\varepsilon_t \sim i.i.d.\,\mathcal{N}(0,\sigma^2)\).
+Consider the AR(2) process \[y_t = \phi_1 y_{t-1} + \phi_2 y_{t-2} + \varepsilon_t,\] where \(\varepsilon_t \sim i.i.d.\,\mathcal{N}(0,\sigma^2)\).
 
 The parameters \(\phi_1\) and \(\phi_2\) are nonzero and such that the process is covariance-stationary.
 

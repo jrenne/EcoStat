@@ -8,7 +8,7 @@ source_exercise: 45
 ---
 
 ## Statement
-We consider a sample of variables $y_i$, $i \in \{1,\dots,n\}$, that are independently and identically distributed. The sample length $n$ is large. The distribution of the $y_i$'s depends on three parameters gathered in vector $\boldsymbol\theta=[\theta_1,\theta_2,\theta_3]'$. The likelihood function is given by $\mathcal{L}(\boldsymbol\theta;{\bf y})$, where ${\bf y}=[y_1,\dots,y_n]'$.
+Consider a sample of variables $y_i$, $i \in \{1,\dots,n\}$, that are independently and identically distributed. The sample length $n$ is large. The distribution of the $y_i$'s depends on three parameters gathered in vector $\boldsymbol\theta=[\theta_1,\theta_2,\theta_3]'$. The likelihood function is given by $\mathcal{L}(\boldsymbol\theta;{\bf y})$, where ${\bf y}=[y_1,\dots,y_n]'$.
 
 We denote by $\boldsymbol\theta_{MLE}=[\theta_{MLE,1},\theta_{MLE,2},\theta_{MLE,3}]'$ the maximum likelihood estimate of $\boldsymbol\theta$. We obtain $\boldsymbol\theta_{MLE} = [-2.90,0.82,0.60]'$. The opposite of the inverse of the Hessian matrix of the log-likelihood, evaluated at $\boldsymbol\theta_{MLE}$, is: $$-\left[\frac{\partial^2\log \mathcal{L}(\boldsymbol\theta_{MLE};{\bf y})}{\partial \boldsymbol\theta \partial \boldsymbol\theta'}\right]^{-1} =
 \left[

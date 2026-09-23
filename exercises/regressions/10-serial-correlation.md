@@ -8,7 +8,7 @@ source_exercise: 36
 ---
 
 ## Statement
-We consider the model:
+Consider the model:
 
 $$y_i = \beta_1 x_{i,1} + \cdots + \beta_K x_{i,K} + \varepsilon_i,$$
 

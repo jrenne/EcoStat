@@ -8,7 +8,7 @@ source_exercise: 52
 ---
 
 ## Statement
-We consider an AR(2) process defined by $$y_t = \phi_1 y_{t-1} + \phi_2 y_{t-2} + \varepsilon_t,$$ where $\varepsilon_t \sim i.i.d.\,\mathcal{N}(0,\sigma^2)$.
+Consider the AR(2) process $$y_t = \phi_1 y_{t-1} + \phi_2 y_{t-2} + \varepsilon_t,$$ where $\varepsilon_t \sim i.i.d.\,\mathcal{N}(0,\sigma^2)$.
 
 The parameters $\phi_1$ and $\phi_2$ are nonzero and such that the process is covariance-stationary.
 

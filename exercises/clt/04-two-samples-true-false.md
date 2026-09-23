@@ -8,7 +8,7 @@ source_exercise: 23
 ---
 
 ## Statement
-We have two samples, each of size $n$ where $n$ is large. The first sample is $\{x_1,\dots,x_n\}$ and the second sample is $\{y_1,\dots,y_n\}$. We assume that all observations are independent (within and across samples). The $x_i$ are drawn from a distribution with mean $\mu_x$ and variance $\sigma_x^2$, and the $y_i$ are drawn from a distribution with mean $\mu_y$ and variance $\sigma_y^2$.
+Consider two samples, each of size $n$, where $n$ is large. The first sample is $\{x_1,\dots,x_n\}$ and the second sample is $\{y_1,\dots,y_n\}$. We assume that all observations are independent (within and across samples). The $x_i$ are drawn from a distribution with mean $\mu_x$ and variance $\sigma_x^2$, and the $y_i$ are drawn from a distribution with mean $\mu_y$ and variance $\sigma_y^2$.
 
 We denote by $\bar{x}_n$ and $\bar{y}_n$ the sample means: $$\bar{x}_n=\frac{1}{n}\sum_{i=1}^n x_i,
 \qquad

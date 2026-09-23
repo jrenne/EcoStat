@@ -8,7 +8,7 @@ source_exercise: 27
 ---
 
 ## Statement
-We consider the following linear regression: $$y_i = \beta_1 x_{i,1} + \beta_2 x_{i,2} + \beta_3 x_{i,3} + \varepsilon_i,$$ where $x_{i,1} = 1$ for all $i$. We observe $(y_i, x_{i,2}, x_{i,3})$, for $i \in \{1, \dots, n\}$, with $n = 200$.
+Consider the following linear regression: $$y_i = \beta_1 x_{i,1} + \beta_2 x_{i,2} + \beta_3 x_{i,3} + \varepsilon_i,$$ where $x_{i,1} = 1$ for all $i$. We observe $(y_i, x_{i,2}, x_{i,3})$, for $i \in \{1, \dots, n\}$, with $n = 200$.
 
 In matrix notation, the linear regression writes: $$\mathbf{y} = \boldsymbol{X}\boldsymbol{\beta} + \boldsymbol{\varepsilon}.$$ The OLS estimator of $\boldsymbol{\beta} = [\beta_1, \beta_2, \beta_3]'$ is denoted by $\mathbf{b}$.\
 We suppose that the standard full-rank, conditional-mean-zero, homoskedasticity, and no-cross-correlation assumptions hold. We additionally assume normally distributed errors.

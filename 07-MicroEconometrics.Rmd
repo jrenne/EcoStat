@@ -1,4 +1,4 @@
-# Binary-choice models {#binary-choice}
+# Binary-choice models {#binary-choice-models}
 
 **Prerequisites.** Conditional probability, Bernoulli variables, linear regression, and maximum-likelihood estimation.
 
@@ -451,12 +451,12 @@ roc(data.reduced$y, predict_model, percent=T,
 if (knitr::is_latex_output()) cat("\\Needspace{14\\baselineskip}\n")
 ```
 
-## Chapter recap {-}
+## Chapter recap {#binary-recap}
 
 ::: {.recapbox data-latex=""}
 
-- Chapter \@ref(binary-choice) models the conditional probability of a binary outcome rather than an unrestricted conditional mean.
-- The linear probability model is simple to estimate but can produce probabilities outside $[0,1]$ and requires heteroskedasticity-robust inference.
+- Chapter \@ref(binary-choice-models) models the conditional probability of a binary outcome rather than an unrestricted conditional mean.
+- The linear probability model is simple to estimate but can produce probabilities outside $[0,1]$ and requires heteroskedasticity-robust inference; Figure \@ref(fig:LPM) illustrates its fit.
 - Section \@ref(latent) interprets probit and logit models through a latent index or a difference in utilities.
 - Section \@ref(Avregressors) accommodates covariates, such as price or travel time, whose values vary across alternatives.
 - Section \@ref(binary-estimation) derives the Bernoulli likelihood; Section \@ref(marginalFX) converts index coefficients into effects on predicted probabilities.
@@ -470,7 +470,7 @@ if (knitr::is_latex_output()) cat("\\clearpage\n")
 
 ## Exercises {#binary-exercises}
 
-Attempt each question before class and explain your reasoning, including for the true-or-false statements. **Foundation** exercises apply a result directly; **Standard** exercises require several steps; **Advanced** exercises combine several results or require a longer derivation. Worked solutions and exercise-specific hints are reserved for teaching sessions and are not included in this student edition.
+Attempt each question and explain your reasoning, including for true-or-false statements. **Foundation** exercises apply a result directly; **Standard** exercises require several steps or a short proof; **Advanced** exercises combine several results or require a longer derivation. Worked solutions and exercise-specific hints are reserved for teaching sessions and are not included in this student edition.
 
 ```{r binary-exercise-bank, echo=FALSE, results='asis'}
 source("R/exercises.R")

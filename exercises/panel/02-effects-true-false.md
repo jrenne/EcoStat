@@ -8,7 +8,7 @@ source_exercise: 38
 ---
 
 ## Statement
-We consider the panel regression model:
+Consider the panel regression model:
 
 $$y_{it} = \mathbf{x}_{it}'\boldsymbol{\beta} + \gamma_t + \alpha_i + \varepsilon_{it}$$
 

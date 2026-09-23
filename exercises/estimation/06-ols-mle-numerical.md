@@ -8,7 +8,7 @@ source_exercise: 44
 ---
 
 ## Statement
-We consider the Gaussian linear model of the preceding exercise, with $K = 4$. We have a sample of size $n = 8$. We obtain (with the usual notations):
+Consider the Gaussian linear model of the preceding exercise, with $K = 4$. We have a sample of size $n = 8$. We obtain (with the usual notations):
 
 $$(\mathbf{X}'\mathbf{X})^{-1} =
 \begin{pmatrix}
