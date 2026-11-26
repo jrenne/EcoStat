@@ -14,8 +14,8 @@ problems <- vapply(names(lock$Packages), function(p) {
   if (utils::packageVersion(p) != package_version(wanted)) paste(p, "is", actual, "but the lockfile requires", wanted) else ""
 }, character(1))
 if (any(nzchar(problems))) stop(paste(c("Restore the recorded environment first (see README):", problems[nzchar(problems)]),collapse="\n"))
-aec_sha <- utils::packageDescription("AEC")$RemoteSha
-if (!identical(aec_sha, lock$Packages$AEC$RemoteSha)) stop("The installed AEC commit differs from renv.lock.")
+source("R/companion-packages.R")
+use_companion_packages()
 # RStudio bundles Pandoc, but command-line R on macOS may not discover it.
 if (!rmarkdown::pandoc_available() && Sys.info()[["sysname"]] == "Darwin") {
   arch <- if (grepl("arm|aarch", Sys.info()[["machine"]])) "aarch64" else "x86_64"
@@ -37,10 +37,10 @@ if (show_solutions) {
   for (path in paths) if (!file.copy(path,stage,recursive=TRUE)) stop("Cannot stage: ",path)
   setwd(stage)
   destination <- file.path(instructor_directory(root),"Textbook")
-  for (format in formats) bookdown::render_book("index.Rmd",output_format=format,output_dir=destination,clean=TRUE)
+  for (format in formats) render_course_format(format, destination)
   setwd(root)
   unlink(stage,recursive=TRUE)
   cat("Private instructor edition: ",destination,"\n",sep="")
 } else {
-  for (format in formats) bookdown::render_book("index.Rmd",output_format=format)
+  for (format in formats) render_course_format(format)
 }

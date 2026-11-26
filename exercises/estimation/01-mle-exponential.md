@@ -22,6 +22,6 @@ with $\lambda > 0$ and $x>0$. Suppose the observed sample is $x_1,\dots,x_n$. De
 
 4.  Compute the second derivative of the log-likelihood function $\log \mathcal{L}(\theta; \mathbf{X})$.
 
-5.  Noting that $\mathbb{E}(X) = \lambda$, compute $\mathbf{I}(\theta_0) = \mathcal{I}_{x_1, \dots, x_n}(\theta_0)$.
+5.  Noting that $\mathbb{E}(X) = \lambda$, compute $\bv{I}(\theta_0) = n\mathcal{I}_X(\theta_0)$.
 
 6.  Find the asymptotic distribution of $\theta_{MLE}$.

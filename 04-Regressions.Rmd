@@ -6,12 +6,15 @@
 
 - Derive the OLS estimator and state the assumptions behind its main properties.
 - Construct confidence intervals and tests for individual and joint restrictions.
+- Distinguish confidence intervals for a conditional mean from prediction intervals for a new outcome.
 - Diagnose multicollinearity, omitted-variable bias, and irrelevant regressors.
 - Explain identification and estimation with instrumental variables.
 - Select covariance estimators under heteroskedasticity, serial correlation, and clustering.
 - Describe the purpose of shrinkage methods.
 
-**Roadmap.** We introduce the linear model and OLS before turning to inference and common specification problems. Instrumental variables address endogenous regressors. The general regression model then accommodates non-spherical disturbances, and the final section introduces shrinkage. Section \@ref(regressions-exercises) collects exercises spanning these topics.
+**Roadmap.** We introduce the linear model and OLS before turning to inference, common specification problems, and the distinction between confidence and prediction intervals. Instrumental variables address endogenous regressors. The general regression model then accommodates non-spherical disturbances, and the final section introduces shrinkage. Section \@ref(regressions-exercises) collects exercises spanning these topics.
+
+The empirical applications address several questions. **Accidents:** how is daily rainfall associated with injury-accident counts in Paris, and how precisely can we estimate the mean count? Zurich monthly counts also illustrate seasonality. **Electricity:** how do housing differences affect an equipment comparison? **Credit cards:** how do correlated balances share explanatory information? **Votations:** how does dependence across cantons and voting days affect inference? **Hydropower:** how can we estimate a production response when price is endogenous? We return to these models as the chapter develops inference and prediction. Appendix \@ref(data-appendix) describes the data; short simulations isolate mechanisms whose true parameters are known.
 
 
 ::: {.definition #essai}
@@ -28,6 +31,45 @@ For entity $i$, the $x_{i,k}$'s, for $k \in \{1,\dots,K\}$, are explanatory vari
 The coefficients $\beta_k$ summarize how the conditional mean of $y_i$ varies with the regressors under the assumptions introduced below. We estimate them from a sample $\{y_i,\bv{x}_{i}\}_{i=1}^n$, where $n$ denotes the sample size.
 
 To have an intercept in the specification \@ref(eq:linearspecif), one has to set $x_{i,1}=1$ for all $i$; $\beta_1$ then corresponds to the intercept.
+
+
+
+```{r regression-intro-space, echo=FALSE, results='asis'}
+if (knitr::is_latex_output()) cat("\\Needspace{8\\baselineskip}\n")
+```
+
+:::{.example #rain-introduction name="Introducing daily accidents and rainfall"}
+
+**Do rainy days have more road accidents?** The data in `AEC::FRaccidents_daily` (Appendix \@ref(data-paris-weather)) let us study this question in Paris, using recorded injury accidents and independently measured rainfall.
+
+```{r paris-rain-data, include=FALSE}
+library(AEC)
+data("FRaccidents_daily",package="AEC")
+rain_reg <- FRaccidents_daily
+rain_reg$rain_10mm <- rain_reg$rain_mm/10
+rain_reg$weekday <- factor(rain_reg$weekday)
+rain_reg$month <- factor(rain_reg$month)
+rain_reg$year <- factor(rain_reg$year)
+```
+
+**One row describes one day in Paris.** The outcome is the number of injury accidents recorded during that day, not the number of people injured. Rainfall is measured in millimetres at the Paris-Montsouris weather station. To match the station's rainfall measurement, each day runs from 06:00 UTC to 06:00 UTC the next morning; the date labels the start of that interval.
+
+```{r paris-rain-rows}
+rain_excerpt <- head(rain_reg,6)
+data_table(data.frame(Date=format(rain_excerpt$date,"%Y-%m-%d"),
+ Weekday=c("Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday")[as.integer(rain_excerpt$weekday)],
+ Accidents=rain_excerpt$injury_accidents,Rain=rain_excerpt$rain_mm),
+ digits=c(0,0,0,1),row.names=FALSE,linesep="",
+ col.names=c("Date","Weekday","Injury accidents","Rainfall (mm)"),
+ caption="Six consecutive observation days in Paris.")
+```
+
+For example, the day labelled 5 January 2011 has 20 recorded injury accidents and 14.7 mm of rain. The complete dataset contains **`r nrow(rain_reg)` consecutive days from 2011 to 2019**, including days with no recorded injury accident. The rainfall series comes from Météo-France; it is observed independently of whether an accident occurs.
+
+We will first fit a line relating the accident count to rainfall, then ask how the comparison changes when we account for the calendar. The outcome is a count, rather than accident risk per journey: rainy weather can change both travel conditions and the amount of traffic.
+
+:::
+
 
 
 
@@ -84,47 +126,79 @@ In Panel (b) (heteroskedasticity):
 $$
 Y_i = 2 + 2X_i + \left(2\mathbb{I}_{\{X_i<0\}}+0.2\mathbb{I}_{\{X_i\ge0\}}\right)\varepsilon^*_i$$.
 
-```{r heteroskedasticity, fig.cap="Homoskedasticity vs heteroskedasticity. See text for the exact specifications.", fig.asp = .6, out.width = "90%", fig.align = 'left'}
+```{r heteroskedasticity, echo=FALSE, fig.pos="H", fig.cap="The same conditional mean with different error variances. Both panels use the same regressor and underlying standard-normal errors; the line is the conditional mean. Only the error scale changes.", fig.width=7, fig.height=3.3, out.width="95%", fig.align="center"}
 N <- 200
 X <- rnorm(N);eps <- rnorm(N)
-par(mfrow=c(1,2),plt=c(.2,.95,.2,.8))
-Y <- 2 + 2*X + eps
-plot(X,Y,pch=19,main="(a) Homoskedasticity",
-     las=1,cex.lab=.8,cex.axis=.8,cex.main=.8,)
-Y <- 2 + 2*X + eps*( (X<0)*2 + (X>=0)*.2 )
-plot(X,Y,pch=19,main="(b) Heteroskedasticity",
-     las=1,cex.lab=.8,cex.axis=.8,cex.main=.8,)
+hyp_y <- cbind(2+2*X+eps,2+2*X+eps*ifelse(X<0,2,.2))
+hyp_par <- par(no.readonly=TRUE)
+par(mfrow=c(1,2),mar=c(4.2,4.2,2,1),family="sans")
+for(j in 1:2) {
+ plot(X,hyp_y[,j],pch=16,col=adjustcolor("#176F91",alpha.f=.65),
+      xlab="Regressor",ylab="Outcome",ylim=range(hyp_y),bty="l",
+      main=c("(a) Constant error variance","(b) Changing error variance")[j],cex.main=.9)
+ abline(a=2,b=2,col="#B44C35",lwd=2)
+}
+par(hyp_par)
 ```
 
 
-Figure \@ref(fig:exmpSalarayPhDSHP) shows a real-data pattern that suggests heteroskedasticity, based on data taken from the [Swiss Household Panel](https://forscenter.ch/projects/swiss-household-panel/). The sample is restricted to persons (i) who are younger than 35 years in 2019, and (ii) who have completed at least 19 years of study. The dispersion of yearly income appears to increase with age, although the graph alone is not a formal test.
-
-```{r exmpSalarayPhDSHP, fig.cap="Income versus age. Data are from the Swiss Household Panel. The sample is restricted to persons that have completed at least 19 years of study. The figure shows that the dispersion of yearly income increases with age.", fig.asp = .6, out.width = "95%", fig.align = "left"}
-library(AEC)
-shp <- haven::zap_labels(AEC::shp) # retain values, remove import-only labels
-table(shp$edyear19)
-shp_higherEd <- subset(shp,(edyear19>18)&age19<35)
-plot(i19wyg/1000~age19,data=shp_higherEd,pch=19,las=1,
-     xlab="Age",ylab="Yearly work income")
-abline(lm(i19wyg/1000~age19,data=shp_higherEd),col="red",lwd=2)
+```{r electricity-heterosk-space, echo=FALSE, results="asis"}
+if (knitr::is_latex_output()) cat("\\Needspace{40\\baselineskip}\n")
 ```
-<!-- x -->
-<!-- ```{r exmpSalarayPhD, fig.cap="Salary versus years after PhD", fig.asp = .6, out.width = "90%", fig.align = 'left'} -->
-<!-- # load data into R -->
-<!-- data(Salaries, package = "carData") -->
-<!-- # first six rows of the data -->
-<!-- head(Salaries) -->
-<!-- # Regression: -->
-<!-- eq <- lm(salary~.,data=Salaries) -->
-<!-- summary(eq) -->
-<!-- par(mfrow=c(1,1)) -->
-<!-- par(plt=c(.2,.95,.2,.95)) -->
-<!-- plot(salary/1000~yrs.since.phd,pch=19,xlab="years since PhD",ylab="Salary",data=Salaries,las=1) -->
-<!-- abline(lm(salary/1000~yrs.since.phd,data=Salaries),col="red",lwd=2) -->
-<!-- ``` -->
+
+:::{.example #electricity-heteroskedasticity name="Different dispersion across residential meters"}
+
+The annual electricity data in `AEC::CHelectricity_annual` (Appendix \@ref(data-electricity)) provide an empirical illustration. We retain **2023 meters with all 365 daily import totals observed**, so each row describes one meter over one complete year. Let $Y_i$ be its average daily electricity drawn from the grid, in kWh/day, and let $D_i$ equal one for a single-family house and zero for an apartment.
+
+With this binary regressor, the conditional-mean model $\mathbb{E}(Y_i\mid D_i)=\alpha+\beta D_i$ allows a separate mean for each group. Homoskedasticity would additionally require the **same variance around those two means**. The two group means need not be equal for the errors to be homoskedastic.
+
+```{r electricity-heterosk-data, include=FALSE}
+data("CHelectricity_annual",package="AEC")
+elec_hetero <- subset(CHelectricity_annual,
+ year==2023 & import_days==days_in_year)
+elec_hetero$type <- factor(elec_hetero$installation_type,
+ levels=c("Apartment","Single-family house"))
+elec_hetero_groups <- split(elec_hetero$import_mean_kwh_day,elec_hetero$type)
+elec_hetero_summary <- data.frame(
+ Type=names(elec_hetero_groups),
+ Meters=vapply(elec_hetero_groups,length,integer(1)),
+ Mean=vapply(elec_hetero_groups,mean,numeric(1)),
+ SD=vapply(elec_hetero_groups,sd,numeric(1)))
+elec_hetero$residual <- elec_hetero$import_mean_kwh_day-
+ ave(elec_hetero$import_mean_kwh_day,elec_hetero$type,FUN=mean)
+```
+
+```{r electricity-heterosk-table}
+data_table(elec_hetero_summary,digits=c(0,0,2,2),row.names=FALSE,
+ col.names=c("Meter type","Meters","Mean (kWh/day)","Within-group SD (kWh/day)"))
+```
+
+The within-group standard deviation is **`r sprintf("%.2f",elec_hetero_summary$SD[1])` kWh/day for apartments** and **`r sprintf("%.2f",elec_hetero_summary$SD[2])` for houses**. Subtracting each group's mean leaves these standard deviations unchanged. Figure \@ref(fig:electricity-heterosk-residuals) displays those centred observations: both groups are centred at zero, but their spreads differ substantially.
+
+```{r electricity-heterosk-residuals, echo=FALSE, fig.pos="H", fig.cap="Electricity imports relative to the meter-type mean, 2023. Each point is one meter with a complete year of readings; horizontal jitter separates overlapping points. The orange bars extend one within-group standard deviation above and below zero. The vertical scale is common to both groups.", fig.width=6.5, fig.height=2.8, out.width="85%", fig.align="center"}
+elec_hetero_par <- par(no.readonly=TRUE)
+par(mar=c(3.6,4.6,.6,.7),family="sans")
+plot(jitter(as.integer(elec_hetero$type),amount=.13),elec_hetero$residual,
+ pch=16,cex=.65,col=adjustcolor("#176F91",alpha.f=.3),
+ xlim=c(.5,2.5),xaxt="n",xlab="",bty="l",
+ ylab="Centred imports (kWh/day)")
+axis(1,at=1:2,labels=c("Apartments","Single-family houses"))
+abline(h=0,col="grey50",lty=2)
+for(j in 1:2){
+ segments(j+.23,-elec_hetero_summary$SD[j],j+.23,elec_hetero_summary$SD[j],
+ col="#B44C35",lwd=3)
+ segments(j+.19,c(-1,1)*elec_hetero_summary$SD[j],j+.27,
+ c(-1,1)*elec_hetero_summary$SD[j],col="#B44C35",lwd=2)
+}
+par(elec_hetero_par)
+```
+
+Differences in dwelling size, equipment and occupancy can contribute to the greater spread among houses. The point here is descriptive: allowing different conditional means does not automatically make the error variance constant. Grid imports measure electricity drawn from the grid; with on-site generation, they do not measure total electricity consumption.
+
+:::
 
 
-The next assumption concerns the correlation of the errors across entities.
+The next assumption concerns the correlation of errors across observations. In the turnout application, this would rule out common unexplained influences across cantons or objects on the same voting day.
 
 ::: {.hypothesis #noncorrelResid name="Uncorrelated errors"}
 $$
@@ -138,16 +212,16 @@ We will often need the conditional covariance matrix of the errors. Proposition 
 ::: {.proposition #Sigma}
 If Hypotheses \@ref(hyp:homoskedasticity) and \@ref(hyp:noncorrelResid) hold, then:
 $$
-\mathbb{V}ar(\boldsymbol\varepsilon|\bv{X})= \sigma^2 Id,
+\mathbb{V}ar(\boldsymbol\varepsilon|\bv{X})= \sigma^2 \mathbf{Id},
 $$
-where $Id$ is the $n \times n$ identity matrix.
+where $\mathbf{Id}$ is the $n \times n$ identity matrix.
 :::
 
 We will sometimes assume that errors are Gaussian---or normal. We will then invoke Hypothesis \@ref(hyp:normality):
 
 ::: {.hypothesis #normality name="Normal distribution"}
 $$
-\boldsymbol\varepsilon\mid\bv{X}\sim\mathcal{N}(\bv{0},\sigma^2Id_n).
+\boldsymbol\varepsilon\mid\bv{X}\sim\mathcal{N}(\bv{0},\sigma^2\mathbf{Id}_n).
 $$
 :::
 
@@ -193,7 +267,7 @@ The estimated residuals are:
 \begin{equation}
 \bv{e} = \bv{y} - \bv{X} (\bv{X}'\bv{X})^{-1} \bv{X}' \bv{y} = \bv{M} \bv{y},(\#eq:Mres)
 \end{equation}
-where $\bv{M} := Id - \bv{X} (\bv{X}'\bv{X})^{-1} \bv{X}'$ is called the **residual maker** matrix. 
+where $\bv{M} := \mathbf{Id} - \bv{X} (\bv{X}'\bv{X})^{-1} \bv{X}'$ is called the **residual maker** matrix.
 
 Moreover, the fitted values $\hat{\bv{y}}$ are given by:
 \begin{equation}
@@ -224,20 +298,20 @@ Consider a bivariate situation, where we regress $y_i$ on a constant and an expl
 
 We have:
 \begin{eqnarray*}
-\bv{X}'\bv{X} &=& 
+\bv{X}'\bv{X} &=&
 \left[\begin{array}{cc}
 n & \sum_i w_i \\
 \sum_i w_i & \sum_i w_i^2
 \end{array}
 \right],\\
-(\bv{X}'\bv{X})^{-1} &=& 
+(\bv{X}'\bv{X})^{-1} &=&
 \frac{1}{n\sum_i w_i^2-(\sum_i w_i)^2}
 \left[\begin{array}{cc}
 \sum_i w_i^2 & -\sum_i w_i \\
 -\sum_i w_i & n
 \end{array}
 \right],\\
-(\bv{X}'\bv{X})^{-1}\bv{X}'\bv{y} &=& 
+(\bv{X}'\bv{X})^{-1}\bv{X}'\bv{y} &=&
 \frac{1}{n\sum_i w_i^2-(\sum_i w_i)^2}
 \left[\begin{array}{c}
 \sum_i w_i^2\sum_i y_i -\sum_i w_i \sum_i w_iy_i \\
@@ -287,7 +361,7 @@ $$
 $$
 By Hypothesis \@ref(hyp:exogeneity), we have $\mathbb{E}[{\boldsymbol\varepsilon}|\bv{X}]=0$. Hence $\mathbb{E}((\bv{X}'\bv{X})^{-1} \bv{X}' {\boldsymbol\varepsilon}) =0$ and result (i) follows.
 ii. $\mathbb{V}ar(\bv{b}|\bv{X}) = (\bv{X}'\bv{X})^{-1} \bv{X}' \mathbb{E}(\boldsymbol\varepsilon\boldsymbol\varepsilon'|\bv{X}) \bv{X} (\bv{X}'\bv{X})^{-1}$.
-By Prop. \@ref(prp:Sigma), if \@ref(hyp:homoskedasticity) and \@ref(hyp:noncorrelResid) hold, then we have $\mathbb{E}(\boldsymbol\varepsilon\boldsymbol\varepsilon'|\bv{X})=\mathbb{V}ar(\boldsymbol\varepsilon|\bv{X})=\sigma^2 Id$.
+By Prop. \@ref(prp:Sigma), if \@ref(hyp:homoskedasticity) and \@ref(hyp:noncorrelResid) hold, then we have $\mathbb{E}(\boldsymbol\varepsilon\boldsymbol\varepsilon'|\bv{X})=\mathbb{V}ar(\boldsymbol\varepsilon|\bv{X})=\sigma^2 \mathbf{Id}$.
 :::
 
 
@@ -298,7 +372,7 @@ Together, Hypotheses \@ref(hyp:fullrank) to \@ref(hyp:noncorrelResid) form the s
 Under Assumptions \@ref(hyp:fullrank) to \@ref(hyp:noncorrelResid), for any vector $w$, the minimum-variance linear unbiased estimator of $w' \boldsymbol\beta$ is $w' \bv{b}$, where $\bv{b}$ is the least squares estimator. (BLUE: Best Linear Unbiased Estimator.)
 :::
 :::{.proof}
-Consider $\bv{b}^* = C \bv{y}$, another linear unbiased estimator of $\boldsymbol\beta$. Since it is unbiased, we must have $\mathbb{E}(C\bv{y}|\bv{X}) = \mathbb{E}(C\bv{X}\boldsymbol\beta + C\boldsymbol\varepsilon|\bv{X}) = \boldsymbol\beta$. We have $\mathbb{E}(C\boldsymbol\varepsilon|\bv{X})=C\mathbb{E}(\boldsymbol\varepsilon|\bv{X})=0$ (by \@ref(hyp:exogeneity)). Therefore, conditional unbiasedness for every $\boldsymbol\beta$ requires $C\bv{X}=Id$. (The matrix $C$ may depend on the observed design matrix $\bv{X}$.) Let us compute $\mathbb{V}ar(\bv{b^*}|\bv{X})$. For this, we introduce $D = C - (\bv{X}'\bv{X})^{-1}\bv{X}'$, which is such that $D\bv{y}=\bv{b}^*-\bv{b}$. The fact that $C\bv{X}=Id$ implies that $D\bv{X} = \bv{0}$. We have $\mathbb{V}ar(\bv{b^*}|\bv{X}) = \mathbb{V}ar(C \bv{y}|\bv{X}) =\mathbb{V}ar(C \boldsymbol\varepsilon|\bv{X}) = \sigma^2CC'$ (by Assumptions \@ref(hyp:homoskedasticity) and \@ref(hyp:noncorrelResid), see Prop. \@ref(prp:Sigma)). Using $C=D+(\bv{X}'\bv{X})^{-1}\bv{X}'$ and exploiting the fact that $D\bv{X} = \bv{0}$ leads to:
+Consider $\bv{b}^* = C \bv{y}$, another linear unbiased estimator of $\boldsymbol\beta$. Since it is unbiased, we must have $\mathbb{E}(C\bv{y}|\bv{X}) = \mathbb{E}(C\bv{X}\boldsymbol\beta + C\boldsymbol\varepsilon|\bv{X}) = \boldsymbol\beta$. We have $\mathbb{E}(C\boldsymbol\varepsilon|\bv{X})=C\mathbb{E}(\boldsymbol\varepsilon|\bv{X})=0$ (by \@ref(hyp:exogeneity)). Therefore, conditional unbiasedness for every $\boldsymbol\beta$ requires $C\bv{X}=\mathbf{Id}$. (The matrix $C$ may depend on the observed design matrix $\bv{X}$.) Let us compute $\mathbb{V}ar(\bv{b^*}|\bv{X})$. For this, we introduce $D = C - (\bv{X}'\bv{X})^{-1}\bv{X}'$, which is such that $D\bv{y}=\bv{b}^*-\bv{b}$. The fact that $C\bv{X}=\mathbf{Id}$ implies that $D\bv{X} = \bv{0}$. We have $\mathbb{V}ar(\bv{b^*}|\bv{X}) = \mathbb{V}ar(C \bv{y}|\bv{X}) =\mathbb{V}ar(C \boldsymbol\varepsilon|\bv{X}) = \sigma^2CC'$ (by Assumptions \@ref(hyp:homoskedasticity) and \@ref(hyp:noncorrelResid), see Prop. \@ref(prp:Sigma)). Using $C=D+(\bv{X}'\bv{X})^{-1}\bv{X}'$ and exploiting the fact that $D\bv{X} = \bv{0}$ leads to:
 $$
 \mathbb{V}ar(\bv{b^*}|\bv{X}) =\sigma^2\left[(D+(\bv{X}'\bv{X})^{-1}\bv{X}')(D+(\bv{X}'\bv{X})^{-1}\bv{X}')'\right] = \mathbb{V}ar(\bv{b}|\bv{X}) + \sigma^2 \bv{D}\bv{D}'.
 $$
@@ -309,10 +383,10 @@ Therefore, we have
 \end{eqnarray*}
 :::
 
-The Frish-Waugh theorem (Theorem \@ref(thm:FW)) reveals the relationship between the OLS estimator and the notion of partial correlation coefficient. Consider the linear least square regression of $\bv{y}$ on $\bv{X}$. We introduce the notations:
+The Frisch-Waugh theorem (Theorem \@ref(thm:FW)) reveals the relationship between the OLS estimator and the notion of partial correlation coefficient. Consider the linear least square regression of $\bv{y}$ on $\bv{X}$. We introduce the notations:
 
 * $\bv{b}^{\bv{y}/\bv{X}}$: OLS estimates of $\boldsymbol\beta$,
-* $\bv{M}^{\bv{X}}$: residual-maker matrix of any regression on $\bv{X}$ (given by $Id - \bv{X} (\bv{X}'\bv{X})^{-1} \bv{X}'$),
+* $\bv{M}^{\bv{X}}$: residual-maker matrix of any regression on $\bv{X}$ (given by $\mathbf{Id} - \bv{X} (\bv{X}'\bv{X})^{-1} \bv{X}'$),
 * $\bv{P}^{\bv{X}}$: projection matrix of any regression on $\bv{X}$ (given by $\bv{X} (\bv{X}'\bv{X})^{-1} \bv{X}'$).
 
 Let us split the set of explanatory variables into two: $\bv{X} = [\bv{X}_1,\bv{X}_2]$. With obvious notations: $\bv{b}^{\bv{y}/\bv{X}}=[\bv{b}_1',\bv{b}_2']'$.
@@ -332,7 +406,7 @@ $$
 $$
 Use the first-row block of equations to solve for $\bv{b}_1$ first; it comes as a function of $\bv{b}_2$. Then use the second set of equations to solve for $\bv{b}_2$, which leads to:
 \begin{eqnarray*}
-\bv{b}_2 &=& [\bv{X}_2'\bv{X}_2 - \bv{X}_2'\bv{X}_1(\bv{X}_1'\bv{X}_1)^{-1}\bv{X}_1'\bv{X}_2]^{-1}\bv{X}_2'(Id - \bv{X}_1(\bv{X}_1'\bv{X}_1)^{-1}\bv{X}_1')\bv{y}\\
+\bv{b}_2 &=& [\bv{X}_2'\bv{X}_2 - \bv{X}_2'\bv{X}_1(\bv{X}_1'\bv{X}_1)^{-1}\bv{X}_1'\bv{X}_2]^{-1}\bv{X}_2'(\mathbf{Id} - \bv{X}_1(\bv{X}_1'\bv{X}_1)^{-1}\bv{X}_1')\bv{y}\\
 &=& [\bv{X}_2' \bv{M}^{\bv{X}_1}\bv{X}_2]^{-1}\bv{X}_2'\bv{M}^{\bv{X}_1}\bv{y}.
 \end{eqnarray*}
 Using the fact that $\bv{M}^{\bv{X}_1}$ is idempotent and symmetric leads to the result.
@@ -341,20 +415,32 @@ Using the fact that $\bv{M}^{\bv{X}_1}$ is idempotent and symmetric leads to the
 This suggests a second way of estimating $\bv{b}_2$:
 
 1. Regress $Y$ on $X_1$, regress $X_2$ on $X_1$.
-2. Regress the residuals associated with the former regression on those associated with the latter regressions.	
+2. Regress the residuals associated with the former regression on those associated with the latter regressions.
 
-This result can be illustrated with regressions involving the number of Google searches for "parapluie" (*umbrella* in French). In the broad specification, we regress it on French precipitation and month dummies. Next, we deseasonalize both the dependent variable and precipitation by regressing them on the month dummies. As stated by Theorem \@ref(thm:FW), regressing deseasonalized Google searches on deseasonalized precipitation gives the same coefficient as in the broad specification.
+:::{.example #accident-seasonality name="A trend after removing seasonality"}
+
+Has the monthly number of injury accidents in Zurich changed over time? Accident counts can also differ systematically between winter and summer. To separate these two patterns, regress the monthly count on a time trend and calendar-month indicators, using the 180 months in `AEC::CHaccidents_monthly` (Appendix \@ref(data-accidents)). The trend is measured in years since January 2011.
+
+The partial-regression calculation has three steps: remove month-of-year means from accident counts; remove them from the trend; then regress the first set of residuals on the second. The theorem says that this gives exactly the trend coefficient from the full regression.
 
 ```{r FW, message=FALSE, warning=FALSE}
-library(AEC)
-dummies <- as.matrix(parapluie[,4:14])
-eq_all <- lm(parapluie~dummies+precip,data=parapluie)
-deseas_parapluie <- lm(parapluie~dummies,data=parapluie)$residuals
-deseas_precip    <- lm(precip~dummies,data=parapluie)$residuals
-eq_frac <- lm(deseas_parapluie~deseas_precip-1)
-model_table(eq_all,eq_frac,omit=c(1:11,"Constant"),omit.stat = c("f","ser"),digits=5,
-                     add.lines=list(c('Monthly dummy','Yes','No')))
+data("CHaccidents_monthly",package="AEC")
+accident_reg <- CHaccidents_monthly
+accident_reg$trend <- (seq_len(nrow(accident_reg))-1)/12
+accident_full <- lm(injury_accidents~trend+factor(month),data=accident_reg)
+accident_y_partial <- residuals(lm(injury_accidents~factor(month),data=accident_reg))
+accident_x_partial <- residuals(lm(trend~factor(month),data=accident_reg))
+accident_partial <- lm(accident_y_partial~accident_x_partial-1)
+data_table(data.frame(Method=c("Full regression","Partial regression"),
+                      Trend_coefficient=c(coef(accident_full)["trend"],coef(accident_partial)[1])),
+           digits=4,row.names=FALSE,col.names=c("Method","Trend coefficient (accidents per year)"))
+stopifnot(isTRUE(all.equal(unname(coef(accident_full)["trend"]),
+                          unname(coef(accident_partial)[1]))))
 ```
+
+The coefficients agree. A one-year increase in the trend is associated with a change of `r round(coef(accident_full)["trend"],2)` in the fitted **monthly** injury-accident count, holding the calendar month fixed. This is a trend in counts, not accident risk per journey. Section \@ref(HAC) examines residual dependence and its consequences for inference.
+
+:::
 
 When $b_2$ is scalar (and then $\bv{X}_2$ is of dimension $n \times 1$), Theorem \@ref(thm:FW) gives the expression of the **partial regression coefficient** $b_2$:
 $$
@@ -447,7 +533,7 @@ Figure \@ref(fig:R2issue), below, illustrates the fact that one can obtain an $R
 set.seed(1)
 ```
 
-```{r R2issue, echo=TRUE, fig.cap="This figure illustrates the monotonous increase in the $R^2$ as a function of the number of explanatory variables. In the true model, there is no explanatory variables, i.e., $y_i = \\varepsilon_i$. We then take (independent) regressors and regress $y$ on the latter, progressively increasing the set of regressors.", fig.asp = .6, out.width = "90%", fig.align = 'left'}
+```{r R2issue, echo=TRUE, fig.cap="In-sample fit with irrelevant regressors: 30 observations and independent noise predictors. Ordinary R-squared cannot decrease when predictors are added. The final model has 29 slopes plus an intercept and fits exactly; its adjusted R-squared is undefined.", fig.width=6.5, fig.height=3.3, out.width="85%", fig.align="center"}
 n <- 30;Y <- rnorm(n);X <- matrix(rnorm(n^2),n,n)
 all_R2 <- NULL;all_adjR2 <- NULL
 for(j in 0:(n-1)){
@@ -455,12 +541,16 @@ for(j in 0:(n-1)){
   all_R2 <- c(all_R2,summary(eq)$r.squared)
   all_adjR2 <- c(all_adjR2,summary(eq)$adj.r.squared)
 }
-par(plt=c(.15,.95,.25,.95))
-plot(all_R2,pch=19,ylim=c(min(all_adjR2,na.rm = TRUE),1),
-     xlab="number of regressors",ylab="R2")
-points(all_adjR2,pch=3);abline(h=0,col="light grey",lwd=2)
-legend("topleft",c("R2","Adjusted R2"),
-       lty=NaN,col=c("black"),pch=c(19,3),lwd=2)
+r2_par <- par(no.readonly=TRUE)
+par(mar=c(4.3,4.4,1,1),family="sans")
+plot(0:(n-1),all_R2,type="b",pch=16,col="#176F91",bty="l",
+ ylim=range(c(all_R2,all_adjR2),na.rm=TRUE),
+ xlab="Number of slopes (intercept excluded)",ylab="Fit measure")
+lines(0:(n-1),all_adjR2,type="b",pch=1,col="#B44C35")
+abline(h=0,col="grey80",lty=3)
+legend("topleft",c("R-squared","Adjusted R-squared"),
+       col=c("#176F91","#B44C35"),lty=1,pch=c(16,1),bty="n")
+par(r2_par)
 ```
 
 In order to address the risk of adding irrelevant explanatory variables, measures of **adjusted $R^2$** have been proposed. Compared to the standard $R^2$, these measures add penalties that depend on the number of covariates employed in the regression. A common adjusted $R^2$ measure, denoted by $\bar{R}^2$, is the following:
@@ -479,7 +569,7 @@ Under the normality assumption (Assumption \@ref(hyp:normality)), we know the di
 \bv{b}|\bv{X} \sim \mathcal{N}(\boldsymbol\beta,\sigma^2(\bv{X}'\bv{X})^{-1}).(\#eq:distriBcondi)
 \end{equation}
 
-Eq. \@ref(eq:distriBcondi) can be used to conduct inference and tests. However, in practice, we do not know $\sigma^2$ (which is a population parameter). The following proposition gives an unbiased estimate of $\sigma^2$.
+Eq. \@ref(eq:distriBcondi) can be used to conduct inference and tests. However, in practice, we do not know $\sigma^2$ (which is a population parameter). The following proposition gives an unbiased estimate of $\sigma^2$. The variance formulas and exact t and F tests below require $n>K$.
 
 :::{.proposition #expects2}
 Under \@ref(hyp:fullrank) to \@ref(hyp:noncorrelResid), an unbiased estimate of $\sigma^2$ is given by:
@@ -494,32 +584,32 @@ We have:
 \mathbb{E}(\bv{e}'\bv{e}|\bv{X})&=&\mathbb{E}(\boldsymbol{\varepsilon}'\bv{M}\boldsymbol{\varepsilon}|\bv{X})=\mathbb{E}(\mbox{Tr}(\boldsymbol{\varepsilon}'\bv{M}\boldsymbol{\varepsilon})|\bv{X}))\\
 &=&\mbox{Tr}(\bv{M}\mathbb{E}(\boldsymbol{\varepsilon}\boldsymbol{\varepsilon}'|\bv{X}))=\sigma^2 \mbox{Tr}(\bv{M}).
 \end{eqnarray*}
-(Note that we have $\mathbb{E}(\boldsymbol{\varepsilon}\boldsymbol{\varepsilon}'|\bv{X})=\sigma^2Id$ by Assumptions \@ref(hyp:homoskedasticity) and \@ref(hyp:noncorrelResid), see Prop. \@ref(prp:Sigma).) Moreover:
+(Note that we have $\mathbb{E}(\boldsymbol{\varepsilon}\boldsymbol{\varepsilon}'|\bv{X})=\sigma^2\mathbf{Id}$ by Assumptions \@ref(hyp:homoskedasticity) and \@ref(hyp:noncorrelResid), see Prop. \@ref(prp:Sigma).) Moreover:
 \begin{eqnarray*}
 \mbox{Tr}(\bv{M})&=&n-\mbox{Tr}(\bv{X}(\bv{X}'\bv{X})^{-1}\bv{X}')\\
-&=&n-\mbox{Tr}((\bv{X}'\bv{X})^{-1}\bv{X}'\bv{X})=n-\mbox{Tr}(Id_{K \times K}),
+&=&n-\mbox{Tr}((\bv{X}'\bv{X})^{-1}\bv{X}'\bv{X})=n-\mbox{Tr}(\mathbf{Id}_{K \times K}),
 \end{eqnarray*}
 which leads to the result.
 :::
 
 Two results will prove important to produce inference:
 
-i. We know the conditional distribution of $s^2$ (Prop. \@ref(prp:s2distri)). 
-ii. $s^2$ and $\bv{b}$ are independent random variables (Prop. \@ref(prp:indeps2b)). 
+i. We know the conditional distribution of $s^2$ (Prop. \@ref(prp:s2distri)).
+ii. Conditional on $\bv{X}$, $s^2$ and $\bv{b}$ are independent random variables (Prop. \@ref(prp:indeps2b)).
 
 ::: {.proposition #s2distri}
 Under \@ref(hyp:fullrank) to \@ref(hyp:normality), we have: $\dfrac{s^2}{\sigma^2} | \bv{X} \sim \frac{1}{n-K}\chi^2(n-K)$.
 :::
 :::{.proof}
-We have $\bv{e}'\bv{e}=\boldsymbol\varepsilon'\bv{M}\boldsymbol\varepsilon$. $\bv{M}$ is an idempotent symmetric matrix. Therefore it can be decomposed as $PDP'$ where $D$ is a diagonal matrix and $P$ is an orthogonal matrix. As a result $\bv{e}'\bv{e} = (P'\boldsymbol\varepsilon)'D(P'\boldsymbol\varepsilon)$, i.e. $\bv{e}'\bv{e}$ is a weighted sum of independent squared Gaussian variables (the entries of $P'\boldsymbol\varepsilon$ are independent because they are Gaussian ---under \@ref(hyp:normality)--- and uncorrelated). The variance of each of these i.i.d. Gaussian variable is $\sigma^2$. Because $\bv{M}$ is an idempotent symmetric matrix, its eigenvalues are either 0 or 1, and its rank equals its trace (see Propositions \@ref(prp:rootsidempotent) and \@ref(prp:chi2idempotent)). Further, its trace is equal to $n-K$ (see proof of Eq. \@ref(eq:s2)). Therefore $D$ has $n-K$ entries equal to 1 and $K$ equal to 0. Hence,  $\bv{e}'\bv{e} = (P'\boldsymbol\varepsilon)'D(P'\boldsymbol\varepsilon)$ is a sum of $n-K$ squared independent Gaussian variables of variance $\sigma^2$. Therefore $\frac{\bv{e}'\bv{e}}{\sigma^2} = (n-K)\frac{s^2}{\sigma^2}$ is a sum of $n-k$ squared i.i.d. standard normal  variables. The result follows by the definition of the chi-square distribution (see Def. \@ref(def:chi2)).
+We have $\bv{e}'\bv{e}=\boldsymbol\varepsilon'\bv{M}\boldsymbol\varepsilon$. $\bv{M}$ is an idempotent symmetric matrix. Therefore it can be decomposed as $PDP'$ where $D$ is a diagonal matrix and $P$ is an orthogonal matrix. As a result $\bv{e}'\bv{e} = (P'\boldsymbol\varepsilon)'D(P'\boldsymbol\varepsilon)$, i.e. $\bv{e}'\bv{e}$ is a weighted sum of independent squared Gaussian variables (the entries of $P'\boldsymbol\varepsilon$ are independent because they are Gaussian ---under \@ref(hyp:normality)--- and uncorrelated). The variance of each of these i.i.d. Gaussian variable is $\sigma^2$. Because $\bv{M}$ is an idempotent symmetric matrix, its eigenvalues are either 0 or 1, and its rank equals its trace (see Propositions \@ref(prp:rootsidempotent) and \@ref(prp:chi2idempotent)). Further, its trace is equal to $n-K$ (see proof of Eq. \@ref(eq:s2)). Therefore $D$ has $n-K$ entries equal to 1 and $K$ equal to 0. Hence,  $\bv{e}'\bv{e} = (P'\boldsymbol\varepsilon)'D(P'\boldsymbol\varepsilon)$ is a sum of $n-K$ squared independent Gaussian variables of variance $\sigma^2$. Therefore $\frac{\bv{e}'\bv{e}}{\sigma^2} = (n-K)\frac{s^2}{\sigma^2}$ is a sum of $n-K$ squared i.i.d. standard normal  variables. The result follows by the definition of the chi-square distribution (see Def. \@ref(def:chi2)).
 :::
 
 
 ::: {.proposition #indeps2b}
-Under Hypotheses \@ref(hyp:fullrank) to \@ref(hyp:normality), $\bv{b}$ and $s^2$ are independent.
+Under Hypotheses \@ref(hyp:fullrank) to \@ref(hyp:normality), $\bv{b}$ and $s^2$ are independent conditional on $\bv{X}$.
 :::
 :::{.proof}
-We have $\bv{b}=\boldsymbol\beta + [\bv{X}'{\bv{X}}]^{-1}\bv{X}'\boldsymbol\varepsilon$ and $s^2 = \boldsymbol\varepsilon' \bv{M} \boldsymbol\varepsilon/(n-K)$. Hence $\bv{b}$ is an affine combination of $\boldsymbol\varepsilon$ and $s^2$ is a quadratic combination of the same Gaussian shocks. One can write $s^2$ as $s^2 = (\bv{M}\boldsymbol\varepsilon)' \bv{M} \boldsymbol\varepsilon/(n-K)$ and $\bv{b}$ as $\boldsymbol\beta + \bv{T}\boldsymbol\varepsilon$. Since $\bv{T}\bv{M}=0$, $\bv{T}\boldsymbol\varepsilon$ and $\bv{M}\boldsymbol\varepsilon$ are independent (because two uncorrelated Gaussian variables are independent), therefore $\bv{b}$ and $s^2$, which are functions of two sets of independent variables, are independent.
+We have $\bv{b}=\boldsymbol\beta + [\bv{X}'{\bv{X}}]^{-1}\bv{X}'\boldsymbol\varepsilon$ and $s^2 = \boldsymbol\varepsilon' \bv{M} \boldsymbol\varepsilon/(n-K)$. Hence $\bv{b}$ is an affine combination of $\boldsymbol\varepsilon$ and $s^2$ is a quadratic combination of the same Gaussian shocks. One can write $s^2$ as $s^2 = (\bv{M}\boldsymbol\varepsilon)' \bv{M} \boldsymbol\varepsilon/(n-K)$ and $\bv{b}$ as $\boldsymbol\beta + \bv{T}\boldsymbol\varepsilon$. Conditional on $\bv{X}$, $\bv{T}\bv{M}=0$ implies that $\bv{T}\boldsymbol\varepsilon$ and $\bv{M}\boldsymbol\varepsilon$ are independent (because two uncorrelated Gaussian variables are independent), therefore $\bv{b}$ and $s^2$ are conditionally independent.
 :::
 
 
@@ -558,18 +648,18 @@ Using the same approach as the one used to derive Eq. \@ref(eq:resultstudentt), 
 \boxed{\frac{\boldsymbol\alpha'\bv{b} - \boldsymbol\alpha'\boldsymbol\beta}{\sqrt{s^2\boldsymbol\alpha'(\bv{X}'\bv{X})^{-1}\boldsymbol\alpha}} \sim t(n-K).}(\#eq:resultstudentt2)
 \end{equation}
 
-```{r chartStudent, echo=FALSE, fig.cap="The higher the degree of freedom, the closer the distribution of $t(\\nu)$ gets to the normal distribution. (Convergence in distribution.)"}
-par(plt=c(.2,.95,.2,.95))
+```{r chartStudent, echo=FALSE, fig.cap="Student distributions approach the standard normal as the degrees of freedom increase. Small degrees of freedom imply heavier tails and larger critical values.", fig.width=6.5, fig.height=3.3, out.width="85%", fig.align="center"}
+student_par <- par(no.readonly=TRUE)
+par(mar=c(4.3,4.3,1,1),family="sans")
 xx <- seq(-3.5,3.5,by=.01)
-plot(xx,dnorm(xx),xlab="X",ylab="",type="l",lwd=2)
-lines(xx,dt(xx,df=3),col="red",lwd=2)
-lines(xx,dt(xx,df=7),col="red",lwd=2,lty=2)
-lines(xx,dt(xx,df=20),col="blue",lwd=3,lty=3)
-legend("topright",
-       c("N(0,1)","t(3)","t(7)","t(20)"),
-       lty=c(1,1,2,3), # gives the legend appropriate symbols (lines)       
-       lwd=c(2,2,2,3), # line width
-       col=c("black","red","red","blue"))
+plot(xx,dnorm(xx),xlab="Standardised statistic",ylab="Density",type="l",
+     col="#243F50",lwd=2,bty="l")
+lines(xx,dt(xx,df=3),col="#B44C35",lwd=2,lty=2)
+lines(xx,dt(xx,df=7),col="#176F91",lwd=2,lty=3)
+lines(xx,dt(xx,df=20),col="#6A7F46",lwd=2,lty=4)
+legend("topright",c("Normal","Student, 3 df","Student, 7 df","Student, 20 df"),
+       lty=1:4,lwd=2,col=c("#243F50","#B44C35","#176F91","#6A7F46"),bty="n",cex=.85)
+par(student_par)
 ```
 
 
@@ -579,22 +669,49 @@ That means for instance that, under the assumption that $\beta_k=0$, it would be
 $$
 H_0: \beta_k=0.
 $$
-Under the null hypothesis, the test statistic follows a Student-t distribution with $n-K$ degrees of freedom. The **t-statistic** is therefore of particular importance, and, as a result, it  is routinely reported in regression outputs (see Example \@ref(exm:SHP0001)). 
+Under the Gaussian model and the null hypothesis, the test statistic follows a Student-t distribution with $n-K$ degrees of freedom. Regression outputs routinely report an estimate divided by its standard error. For empirical applications, the appropriate standard error depends on the variance and dependence assumptions; Section \@ref(HAC) develops alternatives to the conventional formula.
 
-:::{.example #SHP0001 name="Education and income"}
-Consider regression that aims at determining covariates of households' income. This example makes use of data from the [Swiss Household Panel (SHP)](https://forscenter.ch/projects/swiss-household-panel/); `edyear19` is the number of years of education and `age19` is the age of the respondent, as of 2019. 
+:::{.example #rainOLS name="Rainfall and daily accidents"}
 
-```{r shp1,warning=FALSE,message=FALSE}
-library(AEC)
-library(sandwich)
-shp$income <- shp$i19ptotn/1000
-shp$female <- 1*(shp$sex19==2)
-eq <- lm(income ~ edyear19 + age19 + I(age19^2) + female,data=shp)
-data_table(unclass(lmtest::coeftest(eq)), digits=3, row_label="Term")
+Return to the Paris observations in Example \@ref(exm:rain-introduction). We start with a simple regression:
+$$
+\text{Accidents}_d=\alpha+\beta\frac{\text{Rainfall}_d}{10}+\varepsilon_d.
+$$
+The division by ten makes $\beta$ the difference in fitted daily accident counts associated with **10 additional millimetres of rain**.
+
+```{r paris-rain-models, include=FALSE}
+rain_simple <- lm(injury_accidents~rain_10mm,data=rain_reg)
+rain_calendar <- lm(injury_accidents~rain_10mm+weekday+month+year,data=rain_reg)
+rain_focus <- c("(Intercept)","rain_10mm")
+rain_terms <- c("Intercept","Rainfall (per 10 mm)")
 ```
+
+```{r paris-rain-scatter, echo=FALSE, fig.cap="Rainfall and daily injury accidents in Paris, 2011--2019. Each point is one day; overlapping points appear darker. The line is fitted to all 3,287 days.", fig.width=6.5, fig.height=2.8, out.width="85%", fig.align="center"}
+rain_par <- par(no.readonly=TRUE)
+par(mar=c(4.2,4.3,.5,.7),family="sans")
+plot(rain_reg$rain_mm,rain_reg$injury_accidents,pch=16,cex=.65,
+ col=adjustcolor("#176F91",alpha.f=.22),bty="l",
+ xlab="Rainfall (mm)",ylab="Injury accidents per day")
+abline(a=coef(rain_simple)[1],b=coef(rain_simple)[2]/10,
+ col="#B44C35",lwd=2)
+par(rain_par)
+```
+
+```{r paris-rain-ols-table}
+data_table(data.frame(Term=rain_terms,Estimate=unname(coef(rain_simple))),
+ digits=3,row.names=FALSE)
+```
+
+The intercept, **`r sprintf("%.2f",coef(rain_simple)[1])`**, is the fitted number of accidents on a day with no rain. The rainfall slope is **`r sprintf("%.2f",coef(rain_simple)[2])` accidents per 10 mm**. Thus the fitted difference between a day with 20 mm and a day with 10 mm is this slope. The points remain widely dispersed around the line: rainfall alone explains little of the variation across days.
+
+Here we focus on fitting and interpreting the line. Daily observations can be dependent, so we postpone standard errors, tests and confidence intervals for this regression to Example \@ref(exm:HCheterAC).
+
+This first line makes no calendar adjustment. Section \@ref(Omitted) explains the role of controls using a separate electricity application; Example \@ref(exm:HCheterAC) also considers calendar controls for these daily accident counts.
+
 :::
 
-The last two columns of the previous table give the t-statistic and the p-values associated with t-tests, whose size-$\alpha$ critical region is:
+
+Returning to the Gaussian model considered above, the size-$\alpha$ critical region for the exact Student test is:
 $$
 \left]-\infty,-\Phi^{-1}_{t(n-K)}\left(1-\frac{\alpha}{2}\right)\right] \cup \left[\Phi^{-1}_{t(n-K)}\left(1-\frac{\alpha}{2}\right),+\infty\right[.
 $$
@@ -616,15 +733,7 @@ Doing the same for $I_{u,1-\alpha}$, we obtain:
 &&\left[b_k - \Phi^{-1}_{t(n-K)}\left(1-\frac{\alpha}{2}\right)\sqrt{s^2v_k},b_k + \Phi^{-1}_{t(n-K)}\left(1-\frac{\alpha}{2}\right)\sqrt{s^2v_k}\right].
 \end{eqnarray*}
 
-Using the results presented in Example \@ref(exm:SHP0001), we can compute lower and upper bounds of 95\% confidence intervals for the estimated parameters as follows:
 
-```{r shp1bis}
-n <- length(eq$residuals); K <- length(eq$coefficients)
-lower.b <- eq$coefficients + qt(.025,df=n-K)*sqrt(diag(vcov(eq)))
-upper.b <- eq$coefficients + qt(.975,df=n-K)*sqrt(diag(vcov(eq)))
-data_table(cbind("Lower 95%"=lower.b, "Upper 95%"=upper.b),
-           digits=3, row_label="Term")
-```
 
 
 ### Testing a set of linear restrictions {#Ftest}
@@ -637,7 +746,7 @@ r_{1,1} \beta_1 + \dots + r_{1,K} \beta_K &=& q_1\\
 r_{J,1} \beta_1 + \dots + r_{J,K} \beta_K &=& q_J.
 \end{array}
 \end{equation}
-In matrix form, we get:
+Assume that the $J$ restrictions are linearly independent. In matrix form, we get:
 \begin{equation}
 \bv{R}\boldsymbol\beta = \bv{q}.
 \end{equation}
@@ -668,11 +777,11 @@ F = \frac{W}{J}\frac{\sigma^2}{s^2} = \frac{\bv{m}'(\bv{R}(\bv{X}'\bv{X})^{-1}\b
 where $\mathcal{F}$ is the distribution of the F-statistic (see Def. \@ref(def:fstatistics)).
 :::
 :::{.proof}
-According to Eq. \@ref(eq:W1), $W/J \sim \chi^2(J)/J$. Moreover, the denominator ($s^2/\sigma^2$) is $\sim \chi^2(n-K)$. Therefore, $F$ is the ratio of a r.v. distributed as $\chi^2(J)/J$ and another distributed as $\chi^2(n-K)/(n-K)$. It remains to verify that these r.v. are independent. Under $H_0$, we have $\bv{m} =  \bv{R}(\bv{b}-\boldsymbol\beta) = \bv{R}(\bv{X}'\bv{X})^{-1}\bv{X}'\boldsymbol\varepsilon$.
+According to Eq. \@ref(eq:W1), $W/J \sim \chi^2(J)/J$. Moreover, the denominator satisfies $s^2/\sigma^2\sim\chi^2(n-K)/(n-K)$. Therefore, $F$ is the ratio of a r.v. distributed as $\chi^2(J)/J$ and another distributed as $\chi^2(n-K)/(n-K)$. It remains to verify that these r.v. are independent. Under $H_0$, we have $\bv{m} =  \bv{R}(\bv{b}-\boldsymbol\beta) = \bv{R}(\bv{X}'\bv{X})^{-1}\bv{X}'\boldsymbol\varepsilon$.
 Therefore $\bv{m}'(\bv{R}(\bv{X}'\bv{X})^{-1}\bv{R}')^{-1}\bv{m}$ is of the form $\boldsymbol\varepsilon'\bv{T}\boldsymbol\varepsilon$ with $\bv{T}=\bv{D}'\bv{C}\bv{D}$ where $\bv{D}=\bv{R}(\bv{X}'\bv{X})^{-1}\bv{X}'$ and $\bv{C}=(\bv{R}(\bv{X}'\bv{X})^{-1}\bv{R}')^{-1}$. Under Hypotheses \@ref(hyp:fullrank) to \@ref(hyp:noncorrelResid), the covariance between $\bv{T}\boldsymbol\varepsilon$ and $\bv{M}\boldsymbol\varepsilon$ is $\sigma^2\bv{T}\bv{M} = \bv{0}$. Therefore, under \@ref(hyp:normality), these variables are Gaussian variables with 0 covariance. Hence they are independent.
 :::
 
-For large $n-K$, the $\mathcal{F}_{J,n-K}$ distribution converges to $\mathcal{F}_{J,\infty}=\chi^2(J)/J$. This implies that, in large samples, the F-statistic approximately has a $\chi^2$ distribution. In other words, one can approximately employ Eq. \@ref(eq:W1) to perform a Wald test (one just has to replace $\sigma^2$ with $s^2$ when computing $\mathbb{V}ar(\bv{m}|\bv{X})$).
+For large $n-K$, the $\mathcal{F}_{J,n-K}$ distribution converges to $\mathcal{F}_{J,\infty}=\chi^2(J)/J$. Thus $JF$ has an approximate $\chi^2(J)$ distribution in large samples; $F$ itself is approximated by $\chi^2(J)/J$. In other words, one can approximately employ Eq. \@ref(eq:W1) to perform a Wald test (one just has to replace $\sigma^2$ with $s^2$ when computing $\mathbb{V}ar(\bv{m}|\bv{X})$).
 
 The following proposition proposes another equivalent computation of the F-statistic, based on the $R^2$ of the restricted and unrestricted linear models.
 
@@ -685,7 +794,7 @@ where $R_*^2$ is the coef. of determination (Eq. \@ref(eq:RR2)) of the "restrict
 :::
 :::{.proof}
 Let's denote by $\bv{e}_*=\bv{y}-\bv{X}\bv{b}_*$ the vector of residuals associated to the *restricted regression* (i.e. $\bv{R}\bv{b}_*=\bv{q}$).
-We have $\bv{e}_*=\bv{e} - \bv{X}(\bv{b}_*-\bv{b})$. Using $\bv{e}'\bv{X}=0$, we get $\bv{e}_*'\bv{e}_*=\bv{e}'\bv{e} + (\bv{b}_*-\bv{b})'\bv{X}'\bv{X}(\bv{b}_*-\bv{b}) \ge \bv{e}'\bv{e}$. 
+We have $\bv{e}_*=\bv{e} - \bv{X}(\bv{b}_*-\bv{b})$. Using $\bv{e}'\bv{X}=0$, we get $\bv{e}_*'\bv{e}_*=\bv{e}'\bv{e} + (\bv{b}_*-\bv{b})'\bv{X}'\bv{X}(\bv{b}_*-\bv{b}) \ge \bv{e}'\bv{e}$.
 
 By Proposition \@ref(prp:constrainedLS) (in Appendix \@ref(LinAlgebra)), we have: $\bv{b}_*-\bv{b}=-(\bv{X}'\bv{X})^{-1} \bv{R}'\{\bv{R}(\bv{X}'\bv{X})^{-1}\bv{R}'\}^{-1}(\bv{R}\bv{b} - \bv{q})$. Therefore:
 $$
@@ -720,7 +829,7 @@ where $Q$ is positive definite. Then:
 \end{equation}
 :::
 :::{.proof}
-Since $\bv{b} = \boldsymbol\beta + \left( \frac{\bv{X}'\bv{X}}{n}\right)^{-1}\left(\frac{\bv{X}'\boldsymbol\varepsilon}{n}\right)$, we have: $\sqrt{n}(\bv{b} - \boldsymbol\beta) = \left( \frac{\bv{X}'\bv{X}}{n}\right)^{-1} \left(\frac{1}{\sqrt{n}}\right)\bv{X}'\boldsymbol\varepsilon$. Since $f:A \rightarrow A^{-1}$ is a continuous function (for $A \ne \bv{0}$), $\mbox{plim}_{n \rightarrow \infty} \left(\frac{\bv{X}'\bv{X}}{n}\right)^{-1} = \bv{Q}^{-1}$ (see Prop. \@ref(prp:Slutsky)). Let us denote by $V_i$ the vector $\bv{x}_i \varepsilon_i$. Because the $(\bv{x}_i,\varepsilon_i)$'s are independent, the $V_i$'s are independent as well. Their covariance matrix is $\sigma^2\mathbb{E}(\bv{x}_i \bv{x}_i')=\sigma^2Q$. Applying the multivariate central limit theorem on vectors $V_i$ gives $\sqrt{n}\left(\frac{1}{n}\sum_{i=1}^n \bv{x}_i \varepsilon_i\right) = \left(\frac{1}{\sqrt{n}}\right)\bv{X}'\boldsymbol\varepsilon \overset{d}{\rightarrow} \mathcal{N}(0,\sigma^2Q)$. An application of Slutsky's theorem (Prop. \@ref(prp:Slutsky)) then leads to the results.
+Since $\bv{b} = \boldsymbol\beta + \left( \frac{\bv{X}'\bv{X}}{n}\right)^{-1}\left(\frac{\bv{X}'\boldsymbol\varepsilon}{n}\right)$, we have: $\sqrt{n}(\bv{b} - \boldsymbol\beta) = \left( \frac{\bv{X}'\bv{X}}{n}\right)^{-1} \left(\frac{1}{\sqrt{n}}\right)\bv{X}'\boldsymbol\varepsilon$. Since $f:A \rightarrow A^{-1}$ is continuous at every nonsingular matrix, $\mbox{plim}_{n \rightarrow \infty} \left(\frac{\bv{X}'\bv{X}}{n}\right)^{-1} = \bv{Q}^{-1}$ (see Prop. \@ref(prp:Slutsky)). Let us denote by $V_i$ the vector $\bv{x}_i \varepsilon_i$. Because the $(\bv{x}_i,\varepsilon_i)$'s are independent, the $V_i$'s are independent as well. Their covariance matrix is $\sigma^2\mathbb{E}(\bv{x}_i \bv{x}_i')=\sigma^2Q$. Applying the multivariate central limit theorem on vectors $V_i$ gives $\sqrt{n}\left(\frac{1}{n}\sum_{i=1}^n \bv{x}_i \varepsilon_i\right) = \left(\frac{1}{\sqrt{n}}\right)\bv{X}'\boldsymbol\varepsilon \overset{d}{\rightarrow} \mathcal{N}(0,\sigma^2Q)$. An application of Slutsky's theorem (Prop. \@ref(prp:Slutsky)) then leads to the results.
 :::
 
 In practice, $\sigma^2$ is approximated by $s^2=\frac{\bv{e}'\bv{e}}{n-K}$ (Eq. \@ref(eq:s2)) and $\bv{Q}^{-1}$ by $\left(\frac{\bv{X}'\bv{X}}{n}\right)^{-1}$. That is, the covariance matrix of the estimator is approximated by:
@@ -736,7 +845,7 @@ Eqs. \@ref(eq:Qasympt) and \@ref(eq:convgceOLS) respectively correspond to conve
 
 The preceding theory clarifies what OLS delivers when its assumptions hold. The next three cases show how the quality of estimation changes when regressors contain little independent variation, relevant variables are omitted, or irrelevant variables are added.
 
-### Multicollinearity
+### Multicollinearity {#multicollinearity}
 
 Consider the model: $y_i = \beta_1 x_{i,1} + \beta_2 x_{i,2} + \varepsilon_i$, where all variables are zero-mean and $\mathbb{V}ar(\varepsilon_i)=\sigma^2$. We have:
 $$
@@ -752,7 +861,7 @@ therefore:
 -\sum_i x_{i,1} x_{i,2} & \sum_i x_{i,1}^2
 \end{array}\right].
 \end{eqnarray*}
-The inverse of the upper-left parameter of $(\bv{X}'\bv{X})^{-1}$ is:
+The reciprocal of the upper-left entry of $(\bv{X}'\bv{X})^{-1}$ is:
 \begin{equation}
 \sum_i x_{i,1}^2 - \frac{(\sum_i x_{i,1} x_{i,2})^2}{\sum_i x_{i,2}^2} = \sum_i x_{i,1}^2(1 - correl_{1,2}^2),(\#eq:multicollin)
 \end{equation}
@@ -768,58 +877,188 @@ Considering the whole matrix, we have:
 \end{eqnarray*}
 
 
-Hence, the closer to one $correl_{1,2}$, the higher the variance of $b_1$ (recall that the variance of $b_1$ is the upper-left component of $\sigma^2(\bv{X}'\bv{X})^{-1}$). That is, if some of our regressors are close to a linear combination of the other ones, then the confidence intervals will tend to be wide, which typically reduces the power of the t-test (we tend to fail to reject the null hypothesis that the coefficients are different from zero).
+Hence, the closer to one $|correl_{1,2}|$, the higher the variance of $b_1$ (recall that the variance of $b_1$ is the upper-left component of $\sigma^2(\bv{X}'\bv{X})^{-1}$). That is, if some of our regressors are close to a linear combination of the other ones, then the confidence intervals will tend to be wide, which typically reduces the power of the t-test (we more often fail to reject the null hypothesis that a coefficient is zero).
+
+
+**Coefficients as communicating vessels.** Suppose two regressors move almost together, so that $x_{i,2}\approx x_{i,1}$. Then
+$$
+\beta_1x_{i,1}+\beta_2x_{i,2}\approx(\beta_1+\beta_2)x_{i,1}.
+$$
+The data can tell us about their combined contribution while providing much less information about how to divide it between the two coefficients. Increasing $\beta_1$ by $c$ and decreasing $\beta_2$ by $c$ changes the fitted value by only $c(x_{i,1}-x_{i,2})$, which is small when the regressors are close. The two coefficients can compensate for one another, like *communicating vessels* (*vases communicants*). With exact equality of the regressors, their separate coefficients cannot be identified at all.
+
+This also explains the sign of their sampling covariance. Under the homoskedastic, uncorrelated-error assumptions used above, for these two centred regressors,
+$$
+\operatorname{Corr}(b_1,b_2\mid\bv{X})=-correl_{1,2}.
+$$
+Thus highly **positively** correlated regressors produce highly **negatively** correlated coefficient estimates: in repeated samples, an upward estimation error for one coefficient tends to accompany a downward error for the other. With a fixed design, the coefficients themselves are fixed unknown parameters; it is their estimators that are correlated. The negative covariance can keep the estimated sum relatively precise even when each coefficient has a wide confidence interval:
+$$
+\operatorname{Var}(b_1+b_2\mid\bv{X})=
+\operatorname{Var}(b_1\mid\bv{X})+\operatorname{Var}(b_2\mid\bv{X})
++2\operatorname{Cov}(b_1,b_2\mid\bv{X}).
+$$
+The identity $-correl_{1,2}$ need not hold for a heteroskedasticity-robust covariance matrix, but the compensating-coefficient mechanism remains useful. For negatively correlated regressors, the compensating changes instead tend to have the same sign.
+
+```{r credit-collinearity-space, echo=FALSE, results="asis"}
+if (knitr::is_latex_output()) cat("\\Needspace{43\\baselineskip}\n")
+```
+
+:::{.example #credit-collinearity name="Two monthly balances carrying similar information"}
+
+The credit-card data (Appendix \@ref(data-credit)) provide a real example. Each of the 30,000 clients has July and August statement balances and a recorded September payment amount. We relate that payment to the two preceding balances. All amounts are expressed in **thousands of NTD**, so a slope is the change in the fitted September payment for an additional thousand NTD in a regressor.
+
+```{r credit-collinearity-models, include=FALSE}
+data("UCIcredit",package="AEC")
+credit_coll <- data.frame(payment=UCIcredit$PAY_AMT1/1000,
+ august=UCIcredit$BILL_AMT2/1000,july=UCIcredit$BILL_AMT3/1000)
+credit_coll_aug <- lm(payment~august,data=credit_coll)
+credit_coll_jul <- lm(payment~july,data=credit_coll)
+credit_coll_both <- lm(payment~august+july,data=credit_coll)
+credit_coll_r <- cor(credit_coll$august,credit_coll$july)
+# Robust empirical uncertainty; the covariance construction is introduced later.
+credit_coll_v <- sandwich::vcovHC(credit_coll_both,type="HC1")
+credit_coll_r_b <- cov2cor(credit_coll_v)["august","july"]
+credit_coll_rows <- do.call(rbind,lapply(list(
+ list("August alone",credit_coll_aug,"august"),
+ list("July alone",credit_coll_jul,"july"),
+ list("Both: August",credit_coll_both,"august"),
+ list("Both: July",credit_coll_both,"july")),function(z){
+ b <- coef(z[[2]])[z[[3]]]
+ se <- sqrt(sandwich::vcovHC(z[[2]],type="HC1")[z[[3]],z[[3]]])
+ data.frame(Specification=z[[1]],Estimate=b,SE=se,
+ Lower=b-qnorm(.975)*se,Upper=b+qnorm(.975)*se)
+}))
+```
+
+The July and August balances have correlation **`r sprintf("%.3f",credit_coll_r)`**. A client with a large balance in one month usually also has a large balance in the other. Either regressor alone therefore captures much of the same information about the client's balance level.
+
+```{r credit-collinearity-table}
+data_table(credit_coll_rows,digits=3,row.names=FALSE,
+ col.names=c("Specification / coefficient","Estimate","SE","Lower 95%","Upper 95%"))
+```
+
+When only one balance is included, its slope partly represents the information shared by the two months. Including both asks a more demanding question: how does September's fitted payment change with August's balance **holding July's balance fixed**, or vice versa? The separate slopes change substantially, and both standard errors increase almost fourfold. The July slope even changes sign. The coefficients now divide information that either regressor could previously proxy for alone.
+
+```{r credit-collinearity-geometry, echo=FALSE, fig.pos="H", fig.cap="Correlated balances and compensating coefficients. Left: 1,000 clients selected at evenly spaced positions in the source file for display; the correlation and all regressions use all 30,000 clients. Right: approximate joint 95% confidence region for the two slopes, with the point estimate marked. The downward tilt shows the negative covariance of the coefficient estimates.", fig.width=8, fig.height=3.2, out.width="95%", fig.align="center"}
+credit_coll_par <- par(no.readonly=TRUE)
+par(mfrow=c(1,2),mar=c(4.3,4.3,2,.7),family="sans")
+credit_coll_show <- unique(round(seq(1,nrow(credit_coll),length.out=1000)))
+plot(credit_coll$august[credit_coll_show],credit_coll$july[credit_coll_show],
+ pch=16,cex=.55,col=adjustcolor("#176F91",alpha.f=.35),bty="l",
+ xlab="August balance (thousand NTD)",ylab="July balance (thousand NTD)",
+ main="(a) Similar regressor information",cex.main=.85)
+credit_coll_angles <- seq(0,2*pi,length.out=300)
+credit_coll_circle <- rbind(cos(credit_coll_angles),sin(credit_coll_angles))
+credit_coll_center <- coef(credit_coll_both)[c("august","july")]
+credit_coll_ellipse <- sweep(t(chol(credit_coll_v[c("august","july"),c("august","july")])) %*%
+ credit_coll_circle*sqrt(qchisq(.95,2)),1,credit_coll_center,"+")
+plot(t(credit_coll_ellipse),type="n",bty="l",
+ xlab="August coefficient",ylab="July coefficient",
+ main="(b) Compensating coefficient estimates",cex.main=.85)
+polygon(t(credit_coll_ellipse),col=adjustcolor("#176F91",alpha.f=.15),border="#176F91",lwd=2)
+points(credit_coll_center[1],credit_coll_center[2],pch=19,col="#B44C35",cex=1.1)
+par(credit_coll_par)
+```
+
+The estimated correlation between the coefficient estimators is **`r sprintf("%.3f",credit_coll_r_b)`**: a higher August estimate can be offset by a lower July estimate. The large-sample intervals and ellipse allow unequal error variances (Section \@ref(HAC)). They describe payment associations, rather than causal effects of changing a statement balance.
+
+:::
 
 ### Omitted variables {#Omitted}
 
-Consider the following model (the "True model"):
+A regression coefficient depends on **what else is held fixed**. A simple regression of $Y$ on $x$ compares observations with different values of $x$, even when they also differ in other characteristics that matter for $Y$. If those characteristics systematically vary with $x$, the slope combines several relationships. **Controls** are additional regressors introduced to separate these relationships and make the comparison of interest more informative.
+
+For example, meters with electric water heaters may draw more electricity partly because they are more often associated with houses than with apartments. Housing type matters for imports through floor area, occupancy and other equipment. A regression on the water-heater indicator alone can therefore attribute some housing-type differences to that indicator. Controlling for housing type lets us compare equipped and unequipped meters within the same housing category.
+
+**Why omitting a variable changes the slope.** Consider a conditional-mean model with one regressor of interest $x_i$ and one potential control $z_i$:
 $$
-\bv{y} = \underbrace{\bv{X}_1}_{n \times K_1}\underbrace{\boldsymbol\beta_1}_{K_1 \times 1} + \underbrace{\bv{X}_2}_{n\times K_2}\underbrace{\boldsymbol\beta_2}_{K_2 \times 1} + \boldsymbol\varepsilon
+Y_i=\alpha+\beta x_i+\gamma z_i+\varepsilon_i,
+\qquad \mathbb{E}(\varepsilon_i\mid x_i,z_i)=0.
 $$
-If one computes $\bv{b}_1$ by regressing $\bv{y}$ on $\bv{X}_1$ only, one gets:
+The coefficient $\beta$ describes the change in the conditional mean associated with $x_i$, holding $z_i$ fixed. If we omit $z_i$, the population slope of the simple regression becomes
+\begin{equation}
+\beta_{\mathrm{short}}=\beta+\gamma
+\frac{\mathbb{C}ov(x_i,z_i)}{\mathbb{V}ar(x_i)}.(\#eq:omitted-scalar)
+\end{equation}
+Thus omitting $z_i$ distorts the target slope when **both** conditions hold: $z_i$ contributes to the conditional mean ($\gamma\ne0$), and it is correlated with $x_i$. The sign of the distortion depends on both terms. It can exaggerate, attenuate or even reverse the slope. A larger sample estimates $\beta_{\mathrm{short}}$ more precisely; it does not remove its difference from $\beta$.
+
+The same mechanism applies to several omitted variables. Write the full model as
 $$
-\bv{b}_1 = (\bv{X}_1'\bv{X}_1)^{-1}\bv{X}_1'\bv{y} = \boldsymbol\beta_1 + (\bv{X}_1'\bv{X}_1)^{-1}\bv{X}_1'\bv{X}_2\boldsymbol\beta_2 + 
+\bv{y} = \underbrace{\bv{X}_1}_{n \times K_1}\underbrace{\boldsymbol\beta_1}_{K_1 \times 1} + \underbrace{\bv{X}_2}_{n\times K_2}\underbrace{\boldsymbol\beta_2}_{K_2 \times 1} + \boldsymbol\varepsilon,
+\qquad \mathbb{E}(\boldsymbol\varepsilon\mid\bv{X}_1,\bv{X}_2)=\bv{0}.
+$$
+Here $\bv{X}_1$ contains the retained regressors (including an intercept), and $\bv{X}_2$ contains the omitted controls. Regressing $\bv{y}$ on $\bv{X}_1$ alone gives
+$$
+\bv{b}_1 = \boldsymbol\beta_1 + (\bv{X}_1'\bv{X}_1)^{-1}\bv{X}_1'\bv{X}_2\boldsymbol\beta_2 +
 (\bv{X}_1'\bv{X}_1)^{-1}\bv{X}_1'\boldsymbol\varepsilon.
 $$
-
-This results in the omitted-variable formula:
+Consequently, with $\bv{X}=[\bv{X}_1,\bv{X}_2]$,
 $$
-\mathbb{E}(\bv{b}_1|\bv{X}) = \boldsymbol\beta_1 + \underbrace{(\bv{X}_1'\bv{X}_1)^{-1}(\bv{X}_1'\bv{X}_2)}_{K_1 \times K_2}\boldsymbol\beta_2.
+\mathbb{E}(\bv{b}_1\mid\bv{X}) = \boldsymbol\beta_1 + \underbrace{(\bv{X}_1'\bv{X}_1)^{-1}\bv{X}_1'\bv{X}_2}_{K_1 \times K_2}\boldsymbol\beta_2.
 $$
-(Each column of $(\bv{X}_1'\bv{X}_1)^{-1}(\bv{X}_1'\bv{X}_2)$ are the OLS regressors obtained when regressing the columns of $\bv{X}_2$ on $\bv{X}_1$.) Unless the variables included in $\bv{X}_1$ are orthogonal to those in $\bv{X}_2$, we obtain a bias. A way to address this potential pitfall is to introduce "controls" in the specification.
+Each column of the matrix multiplying $\boldsymbol\beta_2$ contains the coefficients from regressing an omitted variable on the retained regressors. The bias therefore combines how the omitted variables vary with the retained regressors and how they contribute to the outcome. It vanishes when the resulting product is zero; with several omitted variables, their contributions can also offset one another.
 
-<!-- XXXXX -->
-<!-- :::{.example #wageeduc} -->
-<!-- Consider the "true model": -->
-<!-- \begin{equation} -->
-<!-- wage_i = \beta_0 +\beta_1 edu_i + \beta_2 ability_i + \varepsilon_i, \quad \varepsilon_i \sim i.i.d.\,\mathcal{N}(0,\sigma_\varepsilon^2) -->
-<!-- \end{equation} -->
-<!-- Further, we assume that the $edu$ variable is correlated to the $ability$. Specifically: -->
-<!-- $$ -->
-<!-- edu_i = \alpha_0 +\alpha_1 ability_i + \eta_i, \quad \eta_i \sim i.i.d.\,\mathcal{N}(0,\sigma_\eta^2). -->
-<!-- $$ -->
-<!-- Assume we mistakingly run the regression omitting the $ability$ variable: -->
-<!-- \begin{equation} -->
-<!-- wage_i = \gamma_0 +\gamma_1 edu_i + \xi_i. -->
-<!-- \end{equation} -->
-<!-- It can be seen that $\xi_i = \varepsilon_i - (\beta_2/\alpha_1) \eta_i \sim i.i.d.\,\mathcal{N}(0,\sigma_\varepsilon^2+(\beta_2/\alpha_1)^2\sigma_\eta^2)$ and that the population regression coefficient is $\gamma_1 = \beta_1 + \beta_2/\alpha_1 \ne \beta_1$. -->
-<!-- ::: -->
+**What a control actually does.** The Frisch--Waugh theorem (Theorem \@ref(thm:FW)) gives a precise interpretation. Remove the linear associations with the controls from both $Y$ and the regressor of interest, then regress the remaining part of $Y$ on the remaining part of $x$. The slope equals that in the full regression. Controls therefore change the variation used to estimate the slope: we compare observations after accounting for their measured differences in the control variables. This does not require finding observations with exactly identical control values; the adjustment relies on the specified regression model.
 
+Controls should be chosen to match the question and the mechanisms linking the variables, rather than simply to increase $R^2$ or obtain a desired p-value. For a causal interpretation, we need controls that make the conditional mean-zero assumption credible. Including a variable that is itself a consequence of the regressor can change the effect being estimated; adding many variables is not a substitute for deciding what should be held fixed.
 
-:::{.example #CASchools}
-
-Let us use the [California Test Score dataset](https://rdrr.io/cran/AER/man/CASchools.html) (in the package `AER`). Assume we want to measure the effect of the students-to-teacher ratio (`str`) on student test scores (`testscr`). The following regressions show that the effect is lower when  controls are added.
-
-```{r #CASchools, message = FALSE,warning=FALSE}
-library(AER); data("CASchools")
-CASchools$str <- CASchools$students/CASchools$teachers
-CASchools$testscr <- .5 * (CASchools$math + CASchools$read)
-eq1 <- lm(testscr~str,data=CASchools)
-eq2 <- lm(testscr~str+lunch,data=CASchools)
-eq3 <- lm(testscr~str+lunch+english,data=CASchools)
-model_table(eq1,eq2,eq3,no.space = TRUE,omit.stat=c("f","ser"))
+```{r electricity-controls-space, echo=FALSE, results="asis"}
+if (knitr::is_latex_output()) cat("\\Needspace{8\\baselineskip}\n")
 ```
+
+:::{.example #electricity-controls name="Electric water heaters: the role of housing type"}
+
+Do meters with an electric water heater draw more electricity from the grid? We use `AEC::CHelectricity_annual` (Appendix \@ref(data-electricity)), keeping **2023 meters with all 365 daily import totals observed and no reported equipment changes**. 
+
+```{r electricity-controls-data, include=FALSE}
+elec_controls <- subset(CHelectricity_annual,
+ year==2023 & import_days==days_in_year & !equipment_changed)
+elec_controls$house <- as.integer(elec_controls$installation_type=="Single-family house")
+elec_controls$heater <- as.integer(elec_controls$has_electric_water_heater)
+elec_controls_simple <- lm(import_mean_kwh_day~heater,data=elec_controls)
+elec_controls_full <- lm(import_mean_kwh_day~heater+house,data=elec_controls)
+elec_controls_cells <- do.call(rbind,lapply(c("Apartment","Single-family house"),function(g){
+ z <- subset(elec_controls,installation_type==g)
+ no <- z$import_mean_kwh_day[z$heater==0]
+ yes <- z$import_mean_kwh_day[z$heater==1]
+ data.frame(Type=g,Without_n=length(no),With_n=length(yes),
+ Without_mean=mean(no),With_mean=mean(yes),Difference=mean(yes)-mean(no))
+}))
+```
+
+**One row is one meter over one year** (`r nrow(elec_controls)` meters). The outcome is mean daily grid imports (kWh/day). Let $H_i$ indicate a water heater and $D_i$ a house rather than an apartment. Compare
+$$
+Y_i=a+bH_i+u_i
+\qquad\text{and}\qquad
+Y_i=\alpha+\beta H_i+\gamma D_i+\varepsilon_i.
+$$
+The first slope pools housing types. The second allows a separate house baseline and estimates the equipment difference **holding housing type fixed**.
+
+```{r electricity-controls-slopes}
+data_table(data.frame(Specification=c("Water-heater indicator only","Controlling for housing type"),
+ Coefficient=c(coef(elec_controls_simple)["heater"],coef(elec_controls_full)["heater"])),
+ digits=2,row.names=FALSE,
+ col.names=c("Specification","Water-heater coefficient (kWh/day)"))
+```
+
+The estimated difference falls from **`r sprintf("%.2f",coef(elec_controls_simple)["heater"])` to `r sprintf("%.2f",coef(elec_controls_full)["heater"])` kWh/day**. Why? Houses have higher average imports for other reasons, and electric water heaters are much more common among houses: **`r sprintf("%.1f",100*mean(elec_controls$heater[elec_controls$house==1]))`\%**, compared with **`r sprintf("%.1f",100*mean(elec_controls$heater[elec_controls$house==0]))`\%** of apartments. The uncontrolled water-heater indicator partly proxies for housing type.
+
+The within-type comparisons reveal what the control changes:
+
+```{r electricity-controls-within}
+data_table(data.frame(Type=elec_controls_cells$Type,
+ Without=sprintf("%.2f (%d)",elec_controls_cells$Without_mean,elec_controls_cells$Without_n),
+ With=sprintf("%.2f (%d)",elec_controls_cells$With_mean,elec_controls_cells$With_n),
+ Difference=elec_controls_cells$Difference),digits=c(0,0,0,2),row.names=FALSE,
+ col.names=c("Meter type","Without: mean (n)","With: mean (n)","Difference"),
+ caption="Mean grid imports in kWh/day; numbers of meters in parentheses.")
+```
+
+Within apartments, the difference is **`r sprintf("%.2f",elec_controls_cells$Difference[1])` kWh/day**; within houses it is **`r sprintf("%.2f",elec_controls_cells$Difference[2])`**. Both are much smaller than the pooled difference. The adjusted regression imposes a common water-heater slope across housing types; its estimate lies between these two within-type differences. The weighting reflects both group size and variation in equipment status within each group.
+
+This is also a redistribution of explanatory roles: housing differences previously attributed partly to the equipment indicator now have their own coefficient. The water-heater estimate still reflects other differences in size, occupancy and equipment; it is an adjusted association, rather than a causal installation effect. The sample excludes five changing-equipment house meters from Example \@ref(exm:electricity-heteroskedasticity).
+
 :::
+
 
 ### Irrelevant variable {#irrelevant}
 
@@ -837,6 +1076,82 @@ The estimates are unbiased. However, adding irrelevant explanatory variables inc
 In other words, the estimator is *inefficient*, i.e., there exists an alternative consistent estimator whose variance is lower. The inefficiency problem can have serious consequences when testing hypotheses such as $H_0: \beta_1 = 0$. Due to the loss of power, we might wrongly infer that the $\bv{X}_1$ variables are not "relevant" (*Type-II error, False Negative*).
 
 
+
+## Confidence and prediction intervals {#regression-prediction-intervals}
+
+A fitted regression can answer two different questions. What is the **mean outcome** at given regressor values? And what outcome might we observe for **one new observation** at those same values? The distinction determines which interval we need.
+
+Let $\bv{x}_0$ be a specified vector of regressor values, including the intercept. Under the linear conditional-mean model,
+$$
+m_0 := \mathbb{E}(Y_0\mid\bv{x}_0)=\bv{x}_0'\boldsymbol\beta,
+\qquad \widehat m_0=\bv{x}_0'\bv{b}.
+$$
+Here the subscript 0 denotes a new observation, rather than an observation used to fit the model.
+
+**A confidence interval for the conditional mean.** The target $m_0$ is an unknown mean. The interval reflects uncertainty about the estimated coefficients. If $\widehat{\bv{V}}_b$ estimates their covariance matrix, the estimated standard error of $\widehat m_0$ is
+\begin{equation}
+\widehat{\operatorname{se}}(\widehat m_0)
+=\sqrt{\bv{x}_0'\widehat{\bv{V}}_b\bv{x}_0}.(\#eq:mean-prediction-se)
+\end{equation}
+A large-sample 95\% confidence interval is therefore
+$$
+\widehat m_0\ \pm\ 1.96\sqrt{\bv{x}_0'\widehat{\bv{V}}_b\bv{x}_0}.
+$$
+Under the classical Gaussian model, using $\widehat{\bv{V}}_b=s^2(\bv{X}'\bv{X})^{-1}$ and replacing 1.96 by $\Phi^{-1}_{t(n-K)}(.975)$ gives an exact conditional interval. With a suitable covariance estimator, the large-sample construction also applies beyond that model. Both constructions require the conditional-mean specification to be correct.
+
+**A prediction interval for a new outcome.** Now the target is the realised value $Y_0=m_0+\varepsilon_0$. Even if we knew the coefficients exactly, the new disturbance would remain unknown. Under the classical Gaussian model, with the new disturbance independent of the estimation sample and having the same variance $\sigma^2$, the prediction-error variance is
+$$
+\operatorname{Var}(Y_0-\widehat m_0\mid\bv{X},\bv{x}_0)
+=\underbrace{\sigma^2}_{\text{new disturbance}}
++\underbrace{\sigma^2\bv{x}_0'(\bv{X}'\bv{X})^{-1}\bv{x}_0}_{\text{coefficient uncertainty}}.
+$$
+An exact 95\% prediction interval under these assumptions is
+\begin{equation}
+\widehat m_0\ \pm\ \Phi^{-1}_{t(n-K)}(.975)\,s
+\sqrt{1+\bv{x}_0'(\bv{X}'\bv{X})^{-1}\bv{x}_0}.(\#eq:regression-prediction-interval)
+\end{equation}
+Compared with the confidence interval for the mean, the additional **1 inside the square root** accounts for the new disturbance. As the estimation sample grows, uncertainty about the mean can shrink, while the dispersion of a new outcome around that mean remains. Thus a narrow confidence interval for the mean does not imply accurate prediction of an individual outcome.
+
+Outside the Gaussian independent-error model, a prediction interval needs additional information about the distribution of the new disturbance and its dependence on the sample. A covariance estimate for the coefficients alone is not sufficient.
+
+:::{.example #rain-mean-interval name="Mean accident counts at a given rainfall level"}
+
+Return to the simple Paris regression in Example \@ref(exm:rainOLS). At rainfall $r$ mm, the regressor vector is $\bv{x}_0=(1,r/10)'$. We estimate the **mean daily accident count at that rainfall level**, using the fitted line as a linear approximation to the conditional mean.
+
+```{r paris-rain-mean-band-data, include=FALSE}
+rain_band_grid <- data.frame(rain_10mm=seq(0,max(rain_reg$rain_10mm),length.out=250))
+rain_band_x <- model.matrix(~rain_10mm,data=rain_band_grid)
+# Daily residuals can be heteroskedastic and serially correlated. Details are
+# deferred to the covariance section; use its seven-lag specification here.
+rain_band_v <- sandwich::NeweyWest(rain_simple,lag=7,prewhite=FALSE,adjust=TRUE)
+rain_band_fit <- as.numeric(rain_band_x %*% coef(rain_simple))
+rain_band_se <- sqrt(rowSums((rain_band_x %*% rain_band_v)*rain_band_x))
+rain_band_lower <- rain_band_fit-qnorm(.975)*rain_band_se
+rain_band_upper <- rain_band_fit+qnorm(.975)*rain_band_se
+```
+
+```{r paris-rain-mean-band, echo=FALSE, fig.cap="Daily injury accidents and rainfall in Paris. The line estimates the conditional mean under the linear specification; the shaded region gives pointwise 95% confidence intervals for that mean. It is not a prediction band for individual days.", fig.width=6.5, fig.height=3.2, out.width="90%", fig.align="center"}
+rain_band_par <- par(no.readonly=TRUE)
+par(mar=c(4.2,4.3,.7,.7),family="sans")
+plot(rain_reg$rain_mm,rain_reg$injury_accidents,type="n",bty="l",
+ xlab="Rainfall (mm)",ylab="Injury accidents per day",
+ ylim=range(c(rain_reg$injury_accidents,rain_band_lower,rain_band_upper)))
+polygon(c(rain_band_grid$rain_10mm*10,rev(rain_band_grid$rain_10mm*10)),
+ c(rain_band_lower,rev(rain_band_upper)),col=adjustcolor("#B44C35",alpha.f=.20),border=NA)
+points(rain_reg$rain_mm,rain_reg$injury_accidents,pch=16,cex=.6,
+ col=adjustcolor("#176F91",alpha.f=.20))
+lines(rain_band_grid$rain_10mm*10,rain_band_fit,col="#B44C35",lwd=2)
+legend("topright",legend=c("Estimated mean","95% CI for mean"),
+ col=c("#B44C35",adjustcolor("#B44C35",alpha.f=.20)),
+ lwd=c(2,8),bty="n",cex=.85)
+par(rain_band_par)
+```
+
+The band is narrow where the data provide precise information about the line and widens at high rainfall levels, where observations are scarce. Many daily counts lie outside it: this is expected, because the band concerns the **mean**, not individual days. The covariance estimate allows for unequal error variances and dependence between successive days; its construction is deferred to Section \@ref(HAC).
+
+These are **pointwise** 95\% intervals: the coverage statement applies at each fixed rainfall level, not jointly to the entire curve. The band quantifies uncertainty about the fitted linear mean; it does not account for a possible failure of the linear specification. We do not draw the classical prediction interval for these count data, since its Gaussian independent-error assumptions are not justified here.
+
+:::
 
 ## Instrumental Variables {#IV}
 
@@ -863,14 +1178,16 @@ $$
 Let us now introduce the notion of instruments.
 
 :::{.definition #instruments name="Instrumental variables"}
-The $L$-dimensional random variable $\bv{z}_i$ is a valid set of instruments if:
+The $L$-dimensional vector $\bv{z}_i$ is a valid instrument vector for the linear model if:
 
-a. $\bv{z}_i$ is correlated to $\bv{x}_i$;
-b. we have $\mathbb{E}(\boldsymbol\varepsilon|\bv{Z})=0$ and
-c. the orthogonal projections of the $\bv{x}_i$'s on the $\bv{z}_i$'s are not multicollinear.
+a. $\operatorname{rank}\mathbb E(\bv{z}_i\bv{x}_i')=K$ (**relevance**);
+b. $\mathbb E(\bv{z}_i\varepsilon_i)=\bv{0}$ (**exogeneity**);
+c. $\mathbb E(\bv{z}_i\bv{z}_i')$ is finite and positive definite.
+
+Included exogenous regressors also enter the instrument vector. The stronger condition $\mathbb E(\varepsilon_i\mid\bv{z}_i)=0$ is sufficient for (b), but the linear IV moment condition itself does not require it.
 :::
 
-Point c implies in particular that the dimension of $\bv{z}_i$ has to be at least as large as that of $\bv{x}_i$. If $\bv{z}_i$ is a valid set of instruments, we have:
+Point (a) implies in particular that the dimension of $\bv{z}_i$ has to be at least as large as that of $\bv{x}_i$. If $\bv{z}_i$ is a valid set of instruments, we have:
 $$
 \mbox{plim}\left( \frac{\bv{Z}'\bv{y}}{n} \right) =\mbox{plim}\left( \frac{\bv{Z}'(\bv{X}\boldsymbol\beta + \boldsymbol\varepsilon)}{n} \right) = \mbox{plim}\left( \frac{\bv{Z}'\bv{X}}{n} \right)\boldsymbol\beta.
 $$
@@ -880,7 +1197,7 @@ If $L = K$, the matrix $\frac{\bv{Z}'\bv{X}}{n}$ is of dimension $K \times K$ an
 $$
 \left[\mbox{plim }\left( \frac{\bv{Z}'\bv{X}}{n} \right)\right]^{-1}\mbox{plim }\left( \frac{\bv{Z}'\bv{y}}{n} \right) = \boldsymbol\beta.
 $$
-By continuity of the inverse function (everywhere but at 0): $\left[\mbox{plim }\left( \frac{\bv{Z}'\bv{X}}{n} \right)\right]^{-1}=\mbox{plim }\left( \frac{\bv{Z}'\bv{X}}{n} \right)^{-1}$.
+By continuity of matrix inversion at a nonsingular limit: $\left[\mbox{plim }\left( \frac{\bv{Z}'\bv{X}}{n} \right)\right]^{-1}=\mbox{plim }\left( \frac{\bv{Z}'\bv{X}}{n} \right)^{-1}$.
 The Slutsky Theorem (Prop. \@ref(prp:Slutsky)) further implies that:
 $$
 \mbox{plim }\left( \frac{\bv{Z}'\bv{X}}{n} \right)^{-1} \mbox{plim }\left( \frac{\bv{Z}'\bv{y}}{n} \right)  = \mbox{plim }\left( \left( \frac{\bv{Z}'\bv{X}}{n} \right)^{-1} \frac{\bv{Z}'\bv{y}}{n} \right).
@@ -892,9 +1209,9 @@ $$
 
 
 :::{.proposition #IV name="Asymptotic distribution of the IV estimator"}
-If $\bv{z}_i$ is a $L$-dimensional random variable that constitutes a valid set of instruments (see Def. \@ref(def:instruments)) and if $L=K$, then the asymptotic distribution of $\bv{b}_{iv}$ is:
+Under valid instruments, the rank and central-limit conditions, and homoskedastic, uncorrelated structural errors with variance $\sigma^2$, for $L=K$ the limiting distribution is:
 $$
-\bv{b}_{iv} \overset{d}{\rightarrow} \mathcal{N}\left(\boldsymbol\beta,\frac{\sigma^2}{n}\left[Q_{xz}Q_{zz}^{-1}Q_{zx}\right]^{-1}\right)
+\sqrt n(\bv{b}_{iv}-\boldsymbol\beta) \overset{d}{\rightarrow} \mathcal{N}\left(\bv{0},\sigma^2\left[Q_{xz}Q_{zz}^{-1}Q_{zx}\right]^{-1}\right)
 $$
 where $\mbox{plim } \bv{Z}'\bv{Z}/n =: \bv{Q}_{zz}$, $\mbox{plim } \bv{Z}'\bv{X}/n =: \bv{Q}_{zx}$, $\mbox{plim } \bv{X}'\bv{Z}/n =: \bv{Q}_{xz}$.
 :::
@@ -921,11 +1238,11 @@ This two-step approach is called **Two-Stage Least Squares (2SLS)**. It results 
 \boxed{\bv{b}_{iv} = [\bv{X}'\bv{Z}(\bv{Z}'\bv{Z})^{-1}\bv{Z}'\bv{X}]^{-1}\bv{X}'\bv{Z}(\bv{Z}'\bv{Z})^{-1}\bv{Z}'\bv{Y}.} (\#eq:IV)
 \end{equation}
 
-In this case, Prop. \@ref(prp:IV) still holds, with $\bv{b}_{iv}$ given by Eq. \@ref(eq:IV).
+Under the same covariance and regularity assumptions, Prop. \@ref(prp:IV) also gives the normal approximation for the 2SLS estimator in Eq. \@ref(eq:IV). Robust inference is discussed in Section \@ref(regression-grm).
 
-If the instruments do not properly satisfy Condition (a) in Def. \@ref(def:instruments) (i.e. if $\bv{x}_i$ and $\bv{z}_i$ are only loosely related), the instruments are said to be **weak** (see, e.g., @stock_yogo_2005, available [here](http://scholar.harvard.edu/files/stock/files/testing_for_weak_instruments_in_linear_iv_regression.pdf) or @Andrews_Stock_Sun_2019). A simple standard way to test for weak instruments consist in looking at the F-statistic associated with the first stage of the estimation. The easier it is to reject the null hypothesis (large test statistic), the less weak ---or the stronger--- the instruments.
+If the instruments do not properly satisfy Condition (a) in Def. \@ref(def:instruments) (i.e. if $\bv{x}_i$ and $\bv{z}_i$ are only loosely related), the instruments are said to be **weak** (see, e.g., @stock_yogo_2005, available [here](http://scholar.harvard.edu/files/stock/files/testing_for_weak_instruments_in_linear_iv_regression.pdf) or @Andrews_Stock_Sun_2019). With one endogenous regressor, a first-stage joint test assesses whether the excluded instruments predict it after the included controls. A large statistic provides evidence of relevance, but a small p-value alone does not ensure reliable IV inference. The appropriate diagnostic and its reference values depend on the error structure and number of instruments. Instrument relevance and the exclusion restriction are separate questions.
 
-The Durbin-Wu-Hausman test (@Durbin_1954, @Wu_1973, @Hausman_1978) can be used to test if IV necessary. (IV techniques are required if  $\mbox{plim}_{n \rightarrow \infty} \bv{X}'\boldsymbol\varepsilon / n \ne 0$.) [Hausman (1978)](http://www.jstor.org/stable/1913827?seq=1\#page_scan_tab_contents) proposes a test of the efficiency of estimators. Under the null hypothesis two estimators, $\bv{b}_0$ and $\bv{b}_1$, are consistent but $\bv{b}_0$ is (asymptotically) efficient relative to $\bv{b}_1$. Under the alternative hypothesis, $\bv{b}_1$ (IV in the present case) remains consistent but not $\bv{b}_0$ (OLS in the present case). That is, when we reject the null hypothesis, it means that the OLS estimator is not consistent, potentially due to endogeneity issue. 
+The Durbin-Wu-Hausman test (@Durbin_1954, @Wu_1973, @Hausman_1978) can be used to test if IV necessary. (IV techniques are required if  $\mbox{plim}_{n \rightarrow \infty} \bv{X}'\boldsymbol\varepsilon / n \ne 0$.) [Hausman (1978)](http://www.jstor.org/stable/1913827?seq=1\#page_scan_tab_contents) proposes a test of the efficiency of estimators. Under the null hypothesis two estimators, $\bv{b}_0$ and $\bv{b}_1$, are consistent but $\bv{b}_0$ is (asymptotically) efficient relative to $\bv{b}_1$. Under the alternative hypothesis, $\bv{b}_1$ (IV in the present case) remains consistent but not $\bv{b}_0$ (OLS in the present case). Under the maintained validity of the instruments and the test's covariance assumptions, rejection provides evidence against the consistency of OLS. It does not validate the instruments; failure to reject does not establish exogeneity.
 
 The test statistic is:
 $$
@@ -933,113 +1250,175 @@ H = (\bv{b}_1 - \bv{b}_0)' MPI(\mathbb{V}ar(\bv{b}_1) - \mathbb{V}ar(\bv{b}_0))(
 $$
 where $MPI$ is the Moore-Penrose pseudo-inverse. Under the null hypothesis, $H \sim \chi^2(q)$, where $q$ is the rank of $\mathbb{V}ar(\bv{b}_1) - \mathbb{V}ar(\bv{b}_0)$.
 
-:::{.example #priceElasticity name="Estimation of price elasticity"}
+:::{.example #priceElasticity name="Using supply shifts to estimate demand"}
 
-See e.g. [WHO and estimation of tobacco price elasticity of demand](http://www.who.int/tobacco/economics/2_2estimatingpriceincomeelasticities.pdf?ua=1).
+Suppose a market clears where supply equals demand. Let $p_t$ and $q_t$ denote log price and log quantity, $w_t$ an income variable, and $z_t$ a favourable supply shifter:
+\[
+ q_t^d=1-p_t+w_t+u_t,\qquad q_t^s=-1+p_t+z_t+v_t.
+\]
+The four shocks $w_t,z_t,u_t,v_t$ are independent standard normal variables. The demand elasticity is therefore $-1$. Equilibrium gives
+\[
+ p_t=\frac{2+w_t-z_t+u_t-v_t}{2}.
+\]
+Price contains the demand shock $u_t$, so regressing quantity on price and income violates exogeneity. By contrast, $z_t$ shifts supply without entering demand or sharing its unobserved shocks. It is a valid excluded instrument by construction. Figure \@ref(fig:figureIV) shows why this distinction matters.
 
-We want to estimate what is the effect on demand of an *exogenous increase* in prices of cigarettes (say).
-
-The model is:
-\begin{eqnarray*}
-\underbrace{q^d_t}_{\mbox{log(demand)}} &=& \alpha_0 + \alpha_1 \underbrace{\times p_t}_{\mbox{log(price)}} + \alpha_2 \underbrace{\times w_t}_{\mbox{income}} + \varepsilon_t^d\\
-\underbrace{q^s_t}_{\mbox{log(supply)}} &=& \gamma_0 + \gamma_1 \times p_t + \gamma_2 \underbrace{\times \bv{y}_t}_{\mbox{cost factors}} + \varepsilon_t^s,
-\end{eqnarray*}
-where $\bv{y}_t$, $w_t$, $\varepsilon_t^s \sim \mathcal{N}(0,\sigma^2_s)$ and $\varepsilon_t^d \sim \mathcal{N}(0,\sigma^2_d)$ are independent.
-
-Equilibrium: $q^d_t = q^s_t$. This implies that prices are **endogenous**:
-$$
-p_t = \frac{\alpha_0 + \alpha_2 w_t + \varepsilon_t^d - \gamma_0 - \gamma_2 \bv{y}_t - \varepsilon_t^s}{\gamma_1 - \alpha_1}.
-$$
-In particular we have $\mathbb{E}(p_t \varepsilon_t^d) = \frac{\sigma^2_d}{\gamma_1 - \alpha_1} \ne 0$ $\Rightarrow$ Regressing by OLS $q_t^d$ on $p_t$ gives biased estimates (see Eq. \@ref(eq:exmIV)).
-
-```{r figureIV, echo=FALSE,fig.cap="This figure illustrates the situation prevailing when estimating a price-elasticity (and the price is endogenous)."}
-nb.points <- 4
-w <- 1 + .4*rnorm(nb.points)
-y <- 1 + .4*rnorm(nb.points)
-alpha.0 <- 1
-gamma.0 <- -1
-alpha.1 <- -1
-gamma.1 <- 1
-alpha.2 <- 1
-gamma.2 <- 1
-vec.p <- seq(0,2,by=.1)
-
-par(mfrow=c(1,1))
-par(plt=c(.15,.95,.2,.95))
-for(i in 1:nb.points){
-  q.d <- alpha.0 + alpha.1 * vec.p + alpha.2 * w[i]
-  q.s <- gamma.0 + gamma.1 * vec.p + gamma.2 * y[i]
-  sol.p <- ((alpha.0 + alpha.2 * w[i])-(gamma.0 + gamma.2 * y[i]))/(gamma.1-alpha.1)
-  sol.q <- alpha.0 + alpha.1 * sol.p + alpha.2 * w[i]
-  if(i==1){
-    plot(vec.p,q.d,lwd=2,type="l",col=i,xlim=c(0,2.5),ylim=c(-.5,3),xlab="log(price)",ylab="log(quantities)")
-  }else{
-    lines(vec.p,q.d,lwd=2,col=i,lty=1)
-  }
-  lines(vec.p,q.s,lwd=2,type="l",col=i,lty=2)
-  points(sol.p,sol.q,pch=19)
-  text(x=2,y=q.s[length(q.s)],paste("Supply",toString(i)),pos=4,col=i)
-  text(x=2,y=q.d[length(q.s)],paste("Demand",toString(i)),pos=4,col=i)
+```{r figureIV, echo=FALSE, fig.width=7, fig.height=3.8, out.width="95%", fig.align="center", fig.cap="Equilibrium movements and identification. Left: exogenous supply shifts trace a fixed demand curve. Right: demand shocks move both price and quantity along a fixed supply curve. Orange dots mark equilibria. Price therefore responds to demand shocks as well as to excluded supply shifters."}
+par(mfrow=c(1,2),mar=c(4.5,4.5,2,1.5),family="sans")
+iv_prices <- seq(0,2,length.out=100)
+plot(iv_prices,1-iv_prices,type="l",col="#176F91",lwd=2,
+     xlab="Log price",ylab="Log quantity",ylim=c(-1,2),
+     main="Supply shifts",cex.main=.95)
+for (z in c(-1,0,1)) {
+ lines(iv_prices,-1+iv_prices+z,col="#8B989E",lty=2)
+ points((2-z)/2,1-(2-z)/2,pch=19,col="#B44C35")
 }
+legend("topright",c("Fixed demand","Shifting supply"),
+ col=c("#176F91","#8B989E"),lty=c(1,2),bty="n",cex=.75)
+plot(iv_prices,-1+iv_prices,type="l",col="#176F91",lwd=2,
+     xlab="Log price",ylab="Log quantity",ylim=c(-1,2),
+     main="Demand shocks",cex.main=.95)
+for (u in c(-1,0,1)) {
+ lines(iv_prices,1-iv_prices+u,col="#8B989E",lty=2)
+ points((2+u)/2,-1+(2+u)/2,pch=19,col="#B44C35")
+}
+legend("topright",c("Fixed supply","Shifting demand"),
+ col=c("#176F91","#8B989E"),lty=c(1,2),bty="n",cex=.75)
+par(mfrow=c(1,1))
 ```
 
-Let us use IV regressions to estimate the price elasticity of cigarette demand. For that purpose, we use the `CigarettesSW` dataset of package `AER` (these data are used by @Stock_Watson_2003). This panel dataset documents cigarette consumption for the 48 continental US States from 1985–1995. The instrument is the real tax on cigarettes arising from the state’s general sales tax. The rationale is that larger general sales tax drives cigarette prices up, but the general tax is not determined by other forces affecting $\varepsilon_t^d$.
+In 5,000 simulated market equilibria, the two estimators give:
 
-```{r #PriceElasticity, message = FALSE,warning=FALSE}
-data("CigarettesSW", package = "AER")
-CigarettesSW$rprice  <- with(CigarettesSW, price/cpi)
-CigarettesSW$rincome <- with(CigarettesSW, income/population/cpi)
-CigarettesSW$tdiff   <- with(CigarettesSW, (taxs - tax)/cpi)
-
-## model 
-eq.IV1 <- ivreg(log(packs) ~ log(rprice) + log(rincome) |
-                  log(rincome) + tdiff + I(tax/cpi),
-                data = CigarettesSW, subset = year == "1995")
-eq.IV2 <- ivreg(log(packs) ~ log(rprice) | tdiff,
-                data = CigarettesSW, subset = year == "1995")
-eq.no.IV <- lm(log(packs) ~ log(rprice) + log(rincome),
-               data = CigarettesSW, subset = year == "1995")
-model_table(eq.no.IV,eq.IV1,eq.IV2,no.space = TRUE,
-                     omit.stat=c("f","ser"))
-data_table(summary(eq.IV1,diagnostics = TRUE)$diagnostics,
-           digits=3, row_label="Diagnostic")
+```{r iv-supply-demand, message=FALSE, warning=FALSE}
+# Simulated illustration, not observations from an AEC dataset.
+library(AER)
+iv_n <- 5000L
+iv_market <- data.frame(income=rnorm(iv_n),supply_shifter=rnorm(iv_n),
+                        demand_shock=rnorm(iv_n),supply_shock=rnorm(iv_n))
+iv_market$price <- with(iv_market,(2+income-supply_shifter+demand_shock-supply_shock)/2)
+iv_market$quantity <- with(iv_market,1-price+income+demand_shock)
+iv_market_ols <- lm(quantity~price+income,data=iv_market)
+iv_market_fit <- ivreg(quantity~price+income | income+supply_shifter,data=iv_market)
+data_table(data.frame(Method=c("OLS","IV"),
+ `Price coefficient`=c(coef(iv_market_ols)["price"],coef(iv_market_fit)["price"]),
+ `True elasticity`=c(-1,-1),check.names=FALSE),digits=3,row.names=FALSE)
 ```
 
-The last three tests are interpreted as follows:
+OLS mixes supply and demand movements: its price coefficient converges to $-1+2/3=-1/3$. IV uses the supply-induced price variation and converges to the demand elasticity $-1$. The simulation makes the identifying assumption transparent because we specified the independent shocks ourselves. With observed data, that assumption needs an economic argument.
 
-* Since the p-value of the first test is small, we reject the null hypothesis according to which the instrument is weak. 
-* The small p-value of the Wu-Hausman test implies that we reject the null hypothesis according to which the OLS estimates are consistent (at the 10\% level only, though).
-* No over-identification (misspecification) is detected by the Sargan test (large p-value).
 
 :::
 
 
 
-:::{.example #IVCollegeDistance name="Education and wage"}
-In this example, we make use of another dataset proposed by @Stock_Watson_2003, namely the `CollegeDistance` dataset.[^FootnoteCollege] the objective is to estimate the effect of education on wages. Education choice is suspected to be an endogenous variable, which calls for an IV strategy. The instrumental variable is the distance to college (see, e.g., @DEE20041697).
 
-[^FootnoteCollege]: Cross-section data from the High School and Beyond survey conducted by the Department of Education in the 80s. The survey includes students from approximately 1,100 high schools.
+:::{.example #IVhydro name="How does Swiss hydropower respond to price?"}
 
-```{r #CollegeDistance, message = FALSE}
-library(sem)
-data("CollegeDistance", package = "AER")
-eq.1st.stage <- lm(education ~ urban + gender + ethnicity + unemp + distance,
-                   data = CollegeDistance)
-CollegeDistance$ed.pred<- predict(eq.1st.stage)
-eq.2nd.stage <- lm(wage ~ urban + gender + ethnicity + unemp + ed.pred,
-                   data = CollegeDistance)
-eqOLS <- lm(wage ~ urban + gender + ethnicity + unemp + education,
-            data=CollegeDistance)
-eq2SLS <- ivreg(wage ~ urban + gender + ethnicity + unemp + education|
-                  urban + gender + ethnicity + unemp + distance,
-                data=CollegeDistance)
-model_table(eq.1st.stage,eq.2nd.stage,eq2SLS,eqOLS,
-                     no.space = TRUE,omit.stat = c("f","ser"))
+A reservoir operator can generate electricity today or keep water for later. A higher current price should encourage generation, other opportunities held fixed. But price and production are jointly determined: abundant water can increase Swiss production and lower the price. OLS can therefore mix a response to price with shifts in supply.
+
+We use 3,288 days of observed Swiss electricity-market data, 2016--2024, from `AEC::CHhydro` (Appendix \@ref(data-hydro)). The outcome $Q_t$ is the **average power generated by reservoir plants that day**, in MW. The explanatory variable $P_t$ is the Swiss wholesale price, measured in units of 10 EUR/MWh. The coefficient $\beta$ in
+\[
+ Q_t=\alpha+\beta P_t+\boldsymbol\gamma'\bv{W}_t+u_t
+\]
+therefore measures the change in generation, in MW, associated with a 10 EUR/MWh increase in price. This is a production decision, distinct from household electricity consumption or electricity used for pumping.
+
+**The instrument.** Let $Z_t$ be German wind generation, in GW. More wind adds supply outside Switzerland. Through the interconnected market it can lower the price available to Swiss producers and the residual demand they face. In the diagram of Example \@ref(exm:priceElasticity), supply shifts identified demand; here an outside-market shift helps trace **Swiss supply**. The proposed chain is
+\[
+ \text{more German wind}\quad\longrightarrow\quad
+ \text{lower Swiss price}\quad\longrightarrow\quad
+ \text{less Swiss reservoir generation}.
+\]
+
+Both stages include the same controls $\bv{W}_t$: month-by-year indicators, weekday indicators, and temperatures and their squares at Sion and Güttingen. They account for market conditions, calendar patterns and temperature-related electricity needs. The two stations are weather proxies; full details are in the appendix. We keep all days, including the six with negative average prices, and estimate the model in levels.
+
+```{r hydro-estimation, message=FALSE, warning=FALSE}
+data(CHhydro,package="AEC")
+hydro <- CHhydro
+hydro$month_year <- factor(format(hydro$date,"%Y-%m"))
+hydro$weekday <- factor(as.POSIXlt(hydro$date,tz="UTC")$wday)
+hydro$price_10 <- hydro$price_eur_mwh/10
+hydro$q_mw <- hydro$reservoir_mw
+hydro$wind_de_gw <- hydro$wind_de_mw/1000
+hydro$offshore_gw <- hydro$wind_offshore_de_mw/1000
+hydro_controls <- paste("month_year+weekday+temperature_sio_c+I(temperature_sio_c^2)",
+                        "+temperature_gut_c+I(temperature_gut_c^2)")
+hydro_ols <- lm(as.formula(paste("q_mw~price_10+",hydro_controls)),hydro)
+hydro_first <- lm(as.formula(paste("price_10~wind_de_gw+",hydro_controls)),hydro)
+hydro_reduced <- lm(as.formula(paste("q_mw~wind_de_gw+",hydro_controls)),hydro)
+hydro_iv <- AER::ivreg(as.formula(paste("q_mw~price_10+",hydro_controls,
+                                       "|wind_de_gw+",hydro_controls)),data=hydro)
+hydro_pi <- unname(coef(hydro_first)["wind_de_gw"])
+hydro_rho <- unname(coef(hydro_reduced)["wind_de_gw"])
+hydro_b_ols <- unname(coef(hydro_ols)["price_10"])
+hydro_b_iv <- unname(coef(hydro_iv)["price_10"])
+stopifnot(nobs(hydro_iv)==3288L,sum(hydro$price_eur_mwh<0)==6L,
+          isTRUE(all.equal(hydro_b_iv,hydro_rho/hydro_pi)))
+data_table(data.frame(Method=c("OLS","IV"),
+ `Generation change for +10 EUR/MWh (MW)`=c(hydro_b_ols,hydro_b_iv),
+ check.names=FALSE),digits=1,row.names=FALSE)
 ```
+
+The IV estimate is approximately **`r round(hydro_b_iv)` MW per 10 EUR/MWh**, compared with `r round(hydro_b_ols)` MW by OLS. To see where it comes from, consider the two regressions on wind. After the controls, an additional GW of German wind predicts a Swiss price change of `r sprintf("%.2f",10*hydro_pi)` EUR/MWh and a generation change of `r sprintf("%.1f",hydro_rho)` MW. Both are negative, so their ratio gives a positive production response to price.
+
+```{r figure-hydro-iv, echo=FALSE, fig.cap="The two comparisons behind the Swiss hydropower IV estimate. Both panels remove the calendar and temperature controls. Grey points are daily observations; coloured points are means within 20 wind bins of approximately equal size. Lines use all 3,288 days. The first-stage and reduced-form slopes are both negative.", fig.height=3.4, fig.width=8.5}
+hydro_resid <- function(variable) resid(lm(as.formula(paste(variable,"~",hydro_controls)),hydro))
+hydro_z <- hydro_resid("wind_de_gw")
+hydro_p <- hydro_resid("price_eur_mwh")
+hydro_q <- hydro_resid("q_mw")
+hydro_bins <- cut(rank(hydro_z,ties.method="first"),breaks=20,labels=FALSE)
+hydro_means <- aggregate(cbind(wind=hydro_z,price=hydro_p,production=hydro_q),
+                          list(bin=hydro_bins),mean)
+hydro_par <- par(no.readonly=TRUE)
+par(mfrow=c(1,2),mar=c(4.4,4.6,2.3,0.8),family="sans",cex=.95)
+for(j in 1:2) {
+ y <- if(j==1) hydro_p else hydro_q
+ colour <- c("#0072B2","#D55E00")[j]
+ plot(hydro_z,y,pch=16,cex=.35,col=adjustcolor("grey40",alpha.f=.18),bty="l",
+      xlab="Adjusted German wind generation (GW)",
+      ylab=c("Adjusted Swiss price (EUR/MWh)","Adjusted reservoir generation (MW)")[j],
+      main=c("(a) Wind and price","(b) Wind and generation")[j])
+ abline(h=0,v=0,col="grey85",lty=3)
+ abline(lm(y~hydro_z),col=colour,lwd=2)
+ points(hydro_means$wind,hydro_means[[c("price","production")[j]]],
+        pch=21,bg=colour,col="white",cex=1)
+}
+par(hydro_par)
+```
+
+**What must we assume?** Conditional on the controls, German wind must affect Swiss reservoir generation through the Swiss price, rather than through other determinants of the production decision. Common weather and water availability can challenge this assumption. Transmission constraints, wind curtailment and expected future prices can matter too: an operator's choice to store water depends on future opportunities. The observed slopes support the proposed mechanism but do not prove exclusion.
+
+The table reports point estimates. Example \@ref(exm:hydro-inference), after the discussion of serial dependence, adds appropriate uncertainty estimates and sensitivity checks. Those checks also show why we should interpret the coefficient as a short-run dispatch response, rather than a universal technological elasticity.
+
+:::
+
+:::{.example #IVmeasurement name="Measurement error and a second measurement"}
+
+A measured regressor can be endogenous even without simultaneous decisions. Suppose the true relationship is $y_i=1+2x_i^*+\varepsilon_i$, but we observe a noisy measurement $x_i=x_i^*+v_i$. Substitution gives $y_i=1+2x_i+(\varepsilon_i-2v_i)$: the observed regressor and the new error share $v_i$.
+
+A second measurement $z_i=x_i^*+u_i$ supplies an instrument if it shares the true signal but not the measurement error. For this simulation, assume $x_i^*,\varepsilon_i,v_i,u_i$ are mutually independent standard normal variables. We compare OLS with IV, then verify the two-stage coefficient directly.
+
+```{r iv-measurement, message=FALSE, warning=FALSE}
+iv_measure <- data.frame(latent=rnorm(5000),noise_x=rnorm(5000),
+                         noise_z=rnorm(5000),error=rnorm(5000))
+iv_measure$x <- with(iv_measure,latent+noise_x)
+iv_measure$z <- with(iv_measure,latent+noise_z)
+iv_measure$y <- with(iv_measure,1+2*latent+error)
+iv_measure_ols <- lm(y~x,data=iv_measure)
+iv_measure_fit <- AER::ivreg(y~x | z,data=iv_measure)
+iv_measure_first <- lm(x~z,data=iv_measure)
+iv_measure$x_hat <- fitted(iv_measure_first)
+iv_measure_manual <- lm(y~x_hat,data=iv_measure)
+data_table(data.frame(Method=c("OLS","Manual two-stage coefficient","2SLS"),
+ Slope=c(coef(iv_measure_ols)["x"],coef(iv_measure_manual)["x_hat"],
+         coef(iv_measure_fit)["x"])),digits=3,row.names=FALSE)
+stopifnot(isTRUE(all.equal(unname(coef(iv_measure_manual)["x_hat"]),
+                          unname(coef(iv_measure_fit)["x"])) ))
+```
+
+Since the latent variable and the measurement noise have unit variance, the OLS slope converges to 1 instead of the true value 2. IV corrects the attenuation under the stated assumptions. The manual second regression reproduces the 2SLS coefficient; its ordinary OLS standard error would be inappropriate. Use the IV covariance estimator for inference.
 :::
 
 
-## General Regression Model (GRM) and robust covariance matrices
+## General Regression Model (GRM) and robust covariance matrices {#regression-grm}
 
 The OLS and IV sections focused primarily on whether coefficients are identified and consistently estimated. Inference introduces a separate issue: the familiar covariance formula assumes homoskedastic, mutually uncorrelated errors. The general regression model allows a richer error covariance structure and leads to appropriate standard errors when those assumptions fail.
 
@@ -1091,7 +1470,7 @@ with
 \begin{equation}
 \varepsilon_i = \rho \varepsilon_{i-1} + v_i, \quad v_i \sim \mathcal{N}(0,\sigma_v^2).(\#eq:usual2)
 \end{equation}
-In this case, we are in the GRM context, with:
+If $|\rho|<1$ and the errors start in their stationary distribution, their covariance matrix is:
 \begin{equation}
 \boldsymbol\Sigma =\frac{ \sigma_v^2}{1 - \rho^2} \left[	\begin{array}{cccc}
 1 & \rho & \dots & \rho^{n-1} \\
@@ -1106,13 +1485,13 @@ In some cases ---in particular when one assumes a parametric formulation for $\b
 
 ### Generalized Least Squares {#GLS}
 
-Assume $\boldsymbol\Sigma$ is known ("feasible GLS"). Because $\boldsymbol\Sigma$ is symmetric positive, it admits a spectral decomposition of the form $\boldsymbol\Sigma = \bv{C} \boldsymbol\Lambda \bv{C}'$, where $\bv{C}$ is an orthogonal matrix (i.e. $\bv{C}\bv{C}'=Id$) and $\boldsymbol\Lambda$ is a diagonal matrix (the diagonal entries are the eigenvalues of $\boldsymbol\Sigma$).
+First suppose $\boldsymbol\Sigma$ is known. Because $\boldsymbol\Sigma$ is symmetric positive, it admits a spectral decomposition of the form $\boldsymbol\Sigma = \bv{C} \boldsymbol\Lambda \bv{C}'$, where $\bv{C}$ is an orthogonal matrix (i.e. $\bv{C}\bv{C}'=\mathbf{Id}$) and $\boldsymbol\Lambda$ is a diagonal matrix (the diagonal entries are the eigenvalues of $\boldsymbol\Sigma$).
 
-We have $\boldsymbol\Sigma = (\bv{P}\bv{P}')^{-1}$ with $\bv{P} = \bv{C}\boldsymbol\Lambda^{-1/2}$. (We also have $\bv{P}=\boldsymbol\Sigma^{-1/2}$.) Consider the transformed model:
+We have $\boldsymbol\Sigma = (\bv{P}\bv{P}')^{-1}$ with $\bv{P} = \bv{C}\boldsymbol\Lambda^{-1/2}$. Consider the transformed model:
 $$
 \bv{P}'\bv{y} = \bv{P}'\bv{X}\boldsymbol\beta + \bv{P}'\boldsymbol\varepsilon \quad \mbox{or} \quad \bv{y}^* = \bv{X}^*\boldsymbol\beta + \boldsymbol\varepsilon^*.
 $$
-The variance of $\boldsymbol\varepsilon^*$ is the identity matrix $Id$. In the transformed model, OLS is BLUE (Gauss-Markow Theorem \@ref(thm:GaussMarkov)).
+The variance of $\boldsymbol\varepsilon^*$ is the identity matrix $\mathbf{Id}$. In the transformed model, OLS is BLUE (Gauss-Markov Theorem \@ref(thm:GaussMarkov)).
 
 The **Generalized least squares** estimator of $\boldsymbol\beta$ is:
 \begin{equation}
@@ -1125,10 +1504,10 @@ $$
 
 However, in general, $\boldsymbol\Sigma$ is unknown. The GLS estimator is then said to be *infeasible*. Some structure is required. Assume $\boldsymbol\Sigma$ admits a parametric form $\boldsymbol\Sigma(\theta)$. The estimation becomes *feasible* (FGLS) if one replaces $\boldsymbol\Sigma(\theta)$ by $\boldsymbol\Sigma(\hat\theta)$, where $\hat\theta$ is a consistent estimator of $\theta$. In that case, the FGLS is asymptotically efficient (see Example \@ref(exm:autocorrelaaa2)).
 
-When $\boldsymbol\Sigma$ has no obvious structure: the OLS (or IV) is the only estimator available. Under regularity assumptions, it remains unbiased, consistent, and asymptotically normally distributed, but not efficient. Standard inference procedures are no longer appropriate.
+When we do not specify a parametric model for $\boldsymbol\Sigma$, we can retain OLS, or IV when valid instruments are needed, and estimate its covariance robustly. The coefficient estimator and the covariance estimator answer different questions: the former determines the fitted relationship; the latter determines the reported uncertainty. Robust standard errors do not repair endogeneity.
 
 :::{.example #autocorrelaaa2 name="GLS in the auto-correlation case"}
-Consider the case presented in Example \@ref(exm:autocorrelaaa). Because the OLS estimate $\bv{b}$ of $\boldsymbol\beta$ is consistent, the estimates $e_i$ of the $\varepsilon_i$'s also are. Consistent estimators of $\rho$ and $\sigma_v$ are then obtained by regressing  the $e_i$'s on  the $e_{i-1}$'s. Using these estimates in Eq. \@ref(eq:SigmaAutocorrel) provides a consistent estimate of $\boldsymbol\Sigma$. Applying these steps recursively gives an efficient estimator of $\boldsymbol\beta$ (@Cochrane_Orcutt_1949).
+Return to the stationary AR(1) errors in Example \@ref(exm:autocorrelaaa). Fit the original regression, then regress its residuals on their one-period lags to estimate $\rho$. Under the model's regularity conditions, the residual regression also estimates the innovation variance. Substituting these estimates into Eq. \@ref(eq:SigmaAutocorrel) gives a feasible GLS procedure. Its efficiency gain depends on the AR(1) covariance specification being appropriate (@Cochrane_Orcutt_1949).
 :::
 
 
@@ -1148,16 +1527,16 @@ Since $\bv{b} = \boldsymbol\beta + \left(\bv{X}'\bv{X}\right)^{-1} \bv{X}'\bolds
 Therefore, the conditional covariance matrix of the OLS estimator is not $\sigma^2 (\bv{X}'\bv{X})^{-1}$ any longer, and using $s^2 (\bv{X}'\bv{X})^{-1}$ for inference may be misleading. Below, we will see how to construct appropriate estimates of the covariance matrix of $\bv{b}$. Before that, let us prove that the OLS estimator remains consistent in the GRM framework.
 
 :::{.proposition #ols-grm-consistency name="Consistency of the OLS estimator in the GRM framework"}
-If $\mbox{plim }(\bv{X}'\bv{X}/n)$ and $\mbox{plim }(\bv{X}'\boldsymbol\Sigma\bv{X}/n)$ are finite positive definite matrices, then $\mbox{plim }(\bv{b})=\boldsymbol\beta$.
+Under the conditional mean-zero assumption, suppose $\bv{X}'\bv{X}/n$ converges in probability to a finite positive definite matrix and $\bv{X}'\boldsymbol\Sigma\bv{X}/n$ converges in probability to a finite matrix. Then $\bv{b}\overset p\longrightarrow\boldsymbol\beta$.
 :::
 :::{.proof}
-We have $\mathbb{V}ar(\bv{b})=\mathbb{E}[\mathbb{V}ar(\bv{b}|\bv{X})]+\mathbb{V}ar[\mathbb{E}(\bv{b}|\bv{X})]$. Since $\mathbb{E}(\bv{b}|\bv{X})=\boldsymbol\beta$, $\mathbb{V}ar[\mathbb{E}(\bv{b}|\bv{X})]=0$. Eq. \@ref(eq:xsx) implies that $\mathbb{V}ar(\bv{b}|\bv{X}) \rightarrow 0$. Hence $\bv{b}$ converges in mean square, and therefore in probability (see Prop. \@ref(prp:implicationsconv)).
+Equation \@ref(eq:xsx) gives a conditional covariance matrix converging to zero in probability. Conditional Chebyshev bounds the probability of any fixed estimation error by a term converging to zero, capped at one. Taking expectations of this bounded term proves convergence in probability. Mean-square convergence would additionally require control of the corresponding unconditional second moments.
 :::
 
 Prop. \@ref(prp:AsymptGRM) gives the asymptotic distribution of the OLS estimator in the GRM framework.
 
 :::{.proposition #AsymptGRM name="Asymptotic distribution of the OLS estimator in the GRM framework"}
-If $Q_{xx}=\mbox{plim }(\bv{X}'\bv{X}/n)$ and $Q_{x\boldsymbol\Sigma x}=\mbox{plim }(\bv{X}'\boldsymbol\Sigma\bv{X}/n)$ are finite positive definite matrices, then:
+In addition to the preceding moment limits, assume a score central limit theorem: $n^{-1/2}\bv{X}'\boldsymbol\varepsilon\overset d\longrightarrow\mathcal N(0,Q_{x\boldsymbol\Sigma x})$. If $Q_{xx}=\mbox{plim }(\bv{X}'\bv{X}/n)$ and $Q_{x\boldsymbol\Sigma x}=\mbox{plim }(\bv{X}'\boldsymbol\Sigma\bv{X}/n)$ are finite positive definite matrices, then:
 $$
 \sqrt{n}(\bv{b}-\boldsymbol\beta) \overset{d}{\rightarrow} \mathcal{N}(0,Q_{xx}^{-1}Q_{x\boldsymbol\Sigma x}Q_{xx}^{-1}).
 $$
@@ -1166,7 +1545,7 @@ $$
 The IV estimator also features a normal asymptotic distribution:
 
 :::{.proposition #AsymptIVGRM name="Asymptotic distribution of the IV estimator in the GRM framework"}
-If regressors and IV variables are "well-behaved", then:
+Assume valid instruments, the stated rank and moment limits, and a central limit theorem for $n^{-1/2}\bv{Z}'\boldsymbol\varepsilon$. Then the large-sample approximation is:
 $$
 \bv{b}_{iv} \overset{a}{\sim} \mathcal{N}(\boldsymbol\beta,\bv{V}_{iv}),
 $$
@@ -1188,7 +1567,7 @@ We have:
 \frac{1}{n}\bv{X}'\boldsymbol\Sigma\bv{X} = \frac{1}{n}\sum_{i=1}^{n}\sum_{j=1}^{n}\sigma_{i,j}\bv{x}_i\bv{x}'_j. (\#eq:GeneralXSigmaX)
 \end{equation}
 
-The so-called **robust covariance matrices** are estimates of the previous matrix. Their computation is based on the fact that if $\bv{b}$ is consistent, then the $e_i$'s are consistent estimators of the $\varepsilon_i$'s. 
+The so-called **robust covariance matrices** are estimates of the previous matrix. Their computation is based on the fact that if $\bv{b}$ is consistent, then the $e_i$'s are consistent estimators of the $\varepsilon_i$'s.
 
 In the following sections (\@ref(HAC) and \@ref(Clusters)), we present two types of robust covariance matrices.
 
@@ -1201,7 +1580,7 @@ When only heteroskedasticity prevails, i.e., when matrix $\boldsymbol\Sigma$ is 
 
 This is the case of Eq. \@ref(eq:heteroskedasticity). We have $\sigma_{i,j}=0$ for $i \ne j$. Hence, in this case, we then need to estimate $\frac{1}{n}\sum_{i=1}^{n}\sigma_{i}^2\bv{x}_i\bv{x}'_i$. @White_1980 has shown that, under general conditions:
 \begin{equation}
-\mbox{plim}\left( \frac{1}{n}\sum_{i=1}^{n}\sigma_{i}^2\bv{x}_i\bv{x}'_i \right) = 
+\mbox{plim}\left( \frac{1}{n}\sum_{i=1}^{n}\sigma_{i}^2\bv{x}_i\bv{x}'_i \right) =
 \mbox{plim}\left( \frac{1}{n}\sum_{i=1}^{n}e_{i}^2\bv{x}_i\bv{x}'_i \right). (\#eq:white)
 \end{equation}
 The estimator of $\frac{1}{n}\bv{X}'\boldsymbol\Sigma\bv{X}$ therefore is:
@@ -1234,19 +1613,23 @@ Here is a simulated sample ($n=200$) of this model:
 n <- 200
 x <- rt(n,df=6)
 y <- x + x*rnorm(n)
-par(plt=c(.1,.95,.1,.95))
-plot(x,y,pch=19)
+hc_plot_par <- par(no.readonly=TRUE)
+par(mar=c(4.3,4.4,1,1),family="sans")
+plot(x,y,pch=16,col=adjustcolor("#176F91",alpha.f=.6),bty="l",
+     xlab="Regressor",ylab="Outcome")
+abline(a=0,b=1,col="#B44C35",lwd=2)
+par(hc_plot_par)
 ```
 
 
-We simulate 1000 samples of the same model with $n=200$. For each sample, we compute the OLS estimate of $\beta$ ($=1$). For each of the 1000 OLS estimations, we employ (a) the standard OLS variance formula ($s^2 (\bv{X}'\bv{X})^{-1}$) and (b) the White formula to estimate the variance of $b$. For each formula, we compute the average of the 1000 resulting standard deviations and compare these with the standard deviation of the 1000 OLS estimate of $\beta$. 
+We simulate 500 independent samples of the same model with $n=200$. For each sample, we compute the OLS estimate of $\beta$ ($=1$). For each of the 500 OLS estimations, we employ (a) the standard OLS variance formula ($s^2 (\bv{X}'\bv{X})^{-1}$) and (b) the White formula to estimate the variance of $b$. We compare the average reported standard error with the empirical standard deviation of the 500 slope estimates.
 
-```{r simulHeterosk2, echo=TRUE, fig.cap="The model is $y_i = x_i + \\varepsilon_i, \\quad \\varepsilon_i \\sim \\mathcal{N}(0,x_i^2)$, where the $x_i$'s are i.i.d. $t(6)$. Comparison between the true distribution (in red) of the OLS estimate of $\\boldsymbol\\beta$ ($=1$) and the one obtained when using the standard formula for the standard deviation of $\\bv{b}$ (in blue).", fig.asp = .6, out.width = "90%", fig.align = "left"}
+```{r simulHeterosk2, echo=TRUE, results="asis"}
 library(sandwich)
 n <- 200 # sample size
 N <- 500 # number of simulated samples
 XX <- matrix(rt(n*N,df=6),n,N)
-YY <- matrix(XX + XX*rnorm(n),n,N)
+YY <- XX + XX*matrix(rnorm(n*N),n,N)
 all_b       <- NULL;all_V_OLS   <- NULL
 all_V_White_HC0 <- NULL;all_V_White_HC1 <- NULL
 for(j in 1:N){
@@ -1262,31 +1645,27 @@ for(j in 1:N){
   all_V_White_HC0 <- c(all_V_White_HC0,V_White_HC0)
   all_V_White_HC1 <- c(all_V_White_HC1,V_White_HC1)
 }
-c(sd(all_b),mean(sqrt(all_V_OLS)),
-  mean(sqrt(all_V_White_HC0)),mean(sqrt(all_V_White_HC1)))
+data_table(data.frame(Quantity=c("Empirical SD across samples","Mean conventional SE","Mean HC0 SE","Mean HC1 SE"),
+ Value=c(sd(all_b),mean(sqrt(all_V_OLS)),mean(sqrt(all_V_White_HC0)),
+         mean(sqrt(all_V_White_HC1)))),digits=3)
 ```
 
 The White formula yields, on average, an estimated standard deviation much closer to the simulation benchmark than the conventional OLS formula, which underestimates the standard deviation of $b$.
 :::
 
-In the following example, we regress GDP growth rates from the @JST_2017 database on a systemic financial crisis dummy. We compute the HC0- and HC1-based standard deviations of the parameter estimate, and compare it to the one based on the standard OLS formula. The adjusted standard deviations are close to the one provided by the non-adjusted OLS formula.
+For the Paris rainfall regression in Example \@ref(exm:rainOLS), the following table compares conventional standard errors with HC0 and HC1 adjustments. The coefficient remains unchanged. HC adjustments allow unequal variances but do not account for dependence between successive days; the HAC calculation in Example \@ref(exm:HCheterAC) addresses both.
 
-```{r JSTcrises1, warning=FALSE}
-library(lmtest)
-library(sandwich)
-nT <- dim(JST)[1]
-JST$growth <- NaN
-JST$growth[2:nT] <- log(JST$rgdpbarro[2:nT]/JST$rgdpbarro[1:(nT-1)])
-JST.red <- subset(JST,year>1950)
-JST.red$iso <- as.factor(JST.red$iso)
-JST.red$year <- as.factor(JST.red$year)
-eq <- lm(growth~crisisJST+iso+year,data=JST.red)
-vcovHC0 <- vcovHC(eq, type = "HC0")
-vcovHC1 <- vcovHC(eq, type = "HC1")
-model_table(eq, eq, eq,column.labels = c("No HC", "HC0","HC1"),
-                     omit = c("iso","year"),no.space = TRUE,keep.stat = "n",
-                     se = list(NULL,sqrt(diag(vcovHC0)),sqrt(diag(vcovHC1))))
+```{r paris-rain-hc}
+rain_v_hc0 <- sandwich::vcovHC(rain_simple,type="HC0")
+rain_v_hc1 <- sandwich::vcovHC(rain_simple,type="HC1")
+data_table(data.frame(Term=rain_terms,Estimate=coef(rain_simple),
+ Conventional_SE=sqrt(diag(vcov(rain_simple))),
+ HC0_SE=sqrt(diag(rain_v_hc0)),HC1_SE=sqrt(diag(rain_v_hc1))),
+ digits=3,row.names=FALSE,
+ col.names=c("Term","Estimate","Conventional SE","HC0 SE","HC1 SE"))
 ```
+
+
 
 :::{.example #HCheterAC name="Heteroskedasticity and Autocorrelation (HAC)"}
 
@@ -1297,7 +1676,7 @@ model_table(eq, eq, eq,column.labels = c("No HC", "HC0","HC1"),
 \frac{1}{n}\sum_{\ell=1}^{L}\sum_{t=\ell+1}^{n}w_\ell e_{t}e_{t-\ell}(\bv{x}_t\bv{x}'_{t-\ell} + \bv{x}_{t-\ell}\bv{x}'_{t})
 \right), \nonumber (\#eq:NW)
 \end{eqnarray}
-where $w_\ell = 1 - \ell/(L+1)$.
+where $w_\ell = 1 - \ell/(L+1)$. A fixed $L$ gives a truncated approximation. Consistency under general weak serial dependence requires $L$ to increase suitably slowly with sample size; Chapter \@ref(TS) develops the long-run-variance argument.
 
 Let us illustrate the influence of autocorrelation using simulations. We consider the following model:
 \begin{equation}
@@ -1309,26 +1688,23 @@ x_i = 0.8 x_{i-1} + u_i \quad and \quad \varepsilon_i = 0.8 \varepsilon_{i-1} + 
 \end{equation}
 where the $u_i$'s and the $v_i$'s are mutually independent i.i.d. $\mathcal{N}(0,1)$ innovations. Thus both $x_i$ and $\varepsilon_i$ are serially correlated, but they are independent of one another; this simulation is designed to illustrate autocorrelation rather than heteroskedasticity.
 
-We simulate 500 samples of the same model with $n=200$. For each sample, we compute the OLS estimate of $\beta$ (=1). For each of the 500 OLS estimations, we employ (a) the standard OLS variance formula ($s^2 (\bv{X}'\bv{X})^{-1}$), (b) the White formula, and (c) the Newey-West formula to estimate the variance of $b$. For each formula, we compute the average of the 500 resulting standard  deviations and compare these with the standard deviation of the 500 OLS estimate of $\beta$. 
+We simulate 500 samples of the same model with $n=200$. For each sample, we compute the OLS estimate of $\beta$ (=1). For each of the 500 OLS estimations, we employ (a) the standard OLS variance formula ($s^2 (\bv{X}'\bv{X})^{-1}$), (b) the White formula, and (c) the Newey-West formula to estimate the variance of $b$. For each formula, we compute the average of the 500 resulting standard  deviations and compare these with the standard deviation of the 500 OLS estimate of $\beta$.
 
 ```{r regressNW}
 library(AEC);library(sandwich)
-n <- 100 # sample length
+n <- 200 # sample length
 nb.sim <- 500 # number of simulated samples
 all.b <- NULL;all.OLS.stdv.b <- NULL
 all.Whi.stdv.b <- NULL;all.NW.stdv.b <- NULL
-for(i in 1:nb.sim){
-  eps <- rnorm(n);x <- rnorm(n)
-  for(i in 2:n){
-    eps[i] <- eps[i] + .8*eps[i-1]
-    x[i]   <- x[i]   + .8*x[i-1]
-  }
+for(replication in 1:nb.sim){
+  eps <- as.numeric(arima.sim(list(ar=.8),n=n))
+  x <- as.numeric(arima.sim(list(ar=.8),n=n))
   y <- x + eps
   eq <- lm(y~x)
   all.b <- c(all.b,eq$coefficients[2])
   all.OLS.stdv.b <- c(all.OLS.stdv.b,summary(eq)$coefficients[2,2])
   White.V <- vcovHC(eq, type="HC1")
-  NWest.V <- NeweyWest(eq)
+  NWest.V <- NeweyWest(eq,lag=8,prewhite=FALSE,adjust=TRUE)
   all.Whi.stdv.b <- c(all.Whi.stdv.b,sqrt(White.V[2,2]))
   all.NW.stdv.b  <- c(all.NW.stdv.b, sqrt(NWest.V[2,2]))
 }
@@ -1337,18 +1713,90 @@ data_table(data.frame("Simulation SD"=sd(all.b),
   "Mean HAC SE"=mean(all.NW.stdv.b), check.names=FALSE), digits=3)
 ```
 
-The Newey-West formula yields, on average, an estimated standard deviation closer to the simulation benchmark than the conventional OLS formula, which underestimates the standard deviation of $b$.
+The empirical SD measures how much the slope varies across independent samples. Compare each reported SE with that benchmark. HC1 permits unequal error variances but ignores serial dependence; the HAC calculation also uses eight lags. In a sample of 200 observations, a HAC estimate need not reproduce the benchmark exactly.
+
+Return to the Paris rainfall regression in Example \@ref(exm:rainOLS). For comparison, we also fit a specification with weekday, month and year indicators, allowing for systematic calendar differences in accident counts. Both specifications use the same consecutive days. We compare conventional, HC1 and Newey--West standard errors for the rainfall slope; the HAC calculation uses seven daily lags, Bartlett weights and no prewhitening.
+
+```{r paris-rain-hac}
+rain_models <- list("Rainfall only"=rain_simple,"Calendar controls"=rain_calendar)
+rain_uncertainty <- do.call(rbind,lapply(names(rain_models),function(nm){
+ m <- rain_models[[nm]]
+ data.frame(Specification=nm,Estimate=coef(m)["rain_10mm"],
+ Conventional_SE=sqrt(vcov(m)["rain_10mm","rain_10mm"]),
+ HC1_SE=sqrt(sandwich::vcovHC(m,type="HC1")["rain_10mm","rain_10mm"]),
+ HAC_SE=sqrt(sandwich::NeweyWest(m,lag=7,prewhite=FALSE,adjust=TRUE)["rain_10mm","rain_10mm"]))
+}))
+data_table(rain_uncertainty,digits=3,row.names=FALSE,
+ col.names=c("Specification","Accidents per 10 mm","Conventional SE","HC1 SE","HAC SE"))
+```
+
+The fitted slopes do not depend on the covariance estimator. Choosing seven lags includes a week of serial covariances; it does not assert that all dependence beyond a week is zero. Longer lags provide a useful sensitivity check.
+
+We can now complete the inference postponed in Example \@ref(exm:rainOLS). The table uses HAC standard errors and a large-sample standard-normal reference distribution. Normality of the individual errors is not required, but suitable weak-dependence conditions are. The final columns give 95\% intervals, $b_k\pm1.96\,\widehat{\operatorname{se}}_{HAC}(b_k)$.
+
+```{r paris-rain-hac-tests}
+rain_v_simple <- sandwich::NeweyWest(rain_simple,lag=7,prewhite=FALSE,adjust=TRUE)
+rain_output <- unclass(lmtest::coeftest(rain_simple,vcov.=rain_v_simple,df=Inf))
+rain_se <- sqrt(diag(rain_v_simple))
+rain_ci <- cbind(coef(rain_simple)-qnorm(.975)*rain_se,
+                 coef(rain_simple)+qnorm(.975)*rain_se)
+rain_inference <- cbind(rain_output,rain_ci)
+rownames(rain_inference) <- rain_terms
+data_table(rain_inference,digits=3,row_label="Term",
+ col.names=c("Term","Estimate","HAC SE","z statistic","p-value","Lower 95%","Upper 95%"))
+```
+
+
 :::
 
 
 
-These results show why autocorrelation-robust inference matters. Before choosing such an adjustment, however, we may want to diagnose serial correlation in the residuals. The Durbin-Watson test, proposed by @Durbin_Watson_1950 and @Durbin_Watson_1951, uses the statistic
+:::{.example #hydro-inference name="Returning to Swiss hydropower: uncertainty and sensitivity"}
+
+The observations in Example \@ref(exm:IVhydro) are successive days. Water conditions and electricity-market shocks can persist, so conventional independent-error standard errors are inappropriate. We keep the same model and use a Newey--West covariance estimate with seven daily lags, allowing a week of serial dependence.
+
+```{r hydro-sensitivity, message=FALSE, warning=FALSE}
+hydro_hac <- function(model) sandwich::NeweyWest(model,lag=7,prewhite=FALSE,adjust=TRUE)
+hydro_first_se <- sqrt(diag(hydro_hac(hydro_first)))["wind_de_gw"]
+hydro_wald <- (hydro_pi/hydro_first_se)^2
+hydro_specs <- list(
+ "Baseline"=list(hydro,hydro_controls,"wind_de_gw"),
+ "Rain and hydrology controls"=list(hydro,paste(hydro_controls,
+   "+river_mw+nuclear_mw+rain_sio_mm+rain_gut_mm+rain_previous7_sio_mm+rain_previous7_gut_mm"),"wind_de_gw"),
+ "Offshore wind only"=list(hydro,hydro_controls,"offshore_gw"),
+ "Without 2022"=list(subset(hydro,format(date,"%Y")!="2022"),hydro_controls,"wind_de_gw"),
+ "2016-2020"=list(subset(hydro,date<as.Date("2021-01-01")),hydro_controls,"wind_de_gw"),
+ "2021-2024"=list(subset(hydro,date>=as.Date("2021-01-01")),hydro_controls,"wind_de_gw"))
+hydro_checks <- do.call(rbind,lapply(names(hydro_specs),function(label) {
+ spec <- hydro_specs[[label]];d <- spec[[1]];controls <- spec[[2]];z <- spec[[3]]
+ model <- AER::ivreg(as.formula(paste("q_mw~price_10+",controls,"|",z,"+",controls)),data=d)
+ first <- lm(as.formula(paste("price_10~",z,"+",controls)),d)
+ data.frame(Specification=label,Days=nobs(model),
+  `Response (MW)`=unname(coef(model)["price_10"]),
+  `HAC SE (MW)`=unname(sqrt(diag(hydro_hac(model)))["price_10"]),
+  first_stage_wald=unname(coef(first)[z]^2/hydro_hac(first)[z,z]),check.names=FALSE)
+}))
+row.names(hydro_checks) <- NULL
+data_table(hydro_checks[,1:4],digits=1)
+hydro_ci <- hydro_b_iv+c(-1,1)*qnorm(.975)*hydro_checks[1,"HAC SE (MW)"]
+```
+
+All responses are in MW per 10 EUR/MWh. For the baseline, the approximate 95% interval is [`r round(hydro_ci[1])`, `r round(hydro_ci[2])`] MW. The first-stage wind coefficient has a squared HAC $t$-statistic of `r sprintf("%.1f",hydro_wald)`, giving evidence of relevance after the controls; this is a one-restriction robust Wald statistic, not a homoskedastic first-stage $F$-statistic.
+
+The additional hydrological controls are Swiss run-of-river and nuclear generation, current rainfall and preceding-seven-day rainfall. Ten incomplete river observations are omitted in that row only. Offshore wind provides a geographically more distant instrument; removing 2022 checks whether the energy crisis alone drives the estimate. The final rows estimate the same specification in two periods.
+
+The positive sign survives these checks, but its magnitude changes considerably between periods. The baseline's interval describes sampling uncertainty **within the specified model**; it does not cover uncertainty about exclusion or stability across regimes. In the row with incomplete river data, the seven HAC lags count successive observed days rather than exactly seven elapsed calendar days. The baseline is exactly identified, so an overidentification test is unavailable.
+
+:::
+
+
+The preceding examples adjust inference for serial dependence. Residual diagnostics provide a complementary check on the covariance assumptions. The Durbin-Watson test, proposed by @Durbin_Watson_1950 and @Durbin_Watson_1951, uses the statistic
 $$
 DW = \frac{\sum_{i=2}^{n}(e_i - e_{i-1})^2}{\sum_{i=1}^{n}e_i^2}= 2(1 - r) - \underbrace{\frac{e_1^2 + e_n^2}{\sum_{i=1}^{n}e_i^2}}_{\overset{p}{\rightarrow} 0},
 $$
-where $r$ is the slope in the regression of the $e_i$'s on the $e_{i-1}$'s, i.e.:
+where $r$ is the lag-one sample residual autocorrelation, with the full residual sum of squares in its denominator:
 $$
-r = \frac{\sum_{i=2}^{n}e_i e_{i-1}}{\sum_{i=1}^{n-1}e_i^2}.
+r = \frac{\sum_{i=2}^{n}e_i e_{i-1}}{\sum_{i=1}^{n}e_i^2}.
 $$
 ($r$ is a consistent estimator of $\mathbb{C}or(\varepsilon_i,\varepsilon_{i-1})$, i.e. $\rho$ in Eq. \@ref(eq:usual2).)
 
@@ -1363,23 +1811,33 @@ $$
 \right.
 $$
 
-:::{.example #DurbinWats name="Durbin-Watson test"}
-We regress the short-term nominal US interest rate on inflation. We then employ the Durbin-Watson test to see whether the residuals are auto-correlated (which is  quite obviously the case).
+:::{.example #DurbinWats name="Serial correlation in monthly accident counts"}
 
-```{r DB}
-library(car)
-data <- subset(JST,iso=="USA");T <- dim(data)[1]
-data$infl <- c(NaN,100*log(data$cpi[2:T]/data$cpi[1:(T-1)]))
-data$infl[(data$infl< -5)|(data$infl>10)] <- NaN
-par(mfrow=c(1,2))
-plot(data$year,data$stir,ylim=c(-10,20),type="l",lwd=2,xlab="",
-     ylab="",main="Nominal rate and inflation")
-lines(data$year,data$infl,col="red",lwd=2)
-eq <- lm(stir~infl,data=data)
-plot(eq$residuals,type="l",col="blue",main="Residuals",xlab="",ylab="")
-durbinWatsonTest(eq)
+Figure \@ref(fig:accidents-residuals) displays the same Zurich model and the autocorrelation of its residuals. The calendar-month indicators absorb regular seasonality; they do not guarantee that the remaining errors are uncorrelated over time.
+
+```{r accidents-residuals, echo=FALSE, fig.width=7, fig.height=3.8, out.width="95%", fig.align="center", fig.cap="Monthly injury accidents in Zurich, 2011–2025. Left: recorded counts and fitted values from the trend-plus-month-indicators model. Right: residual autocorrelations; the zero-lag correlation is omitted. The dashed bounds are the usual approximate white-noise reference bounds."}
+par(mfrow=c(1,2),mar=c(4.5,4.5,2,1.5),family="sans")
+plot(accident_reg$date,accident_reg$injury_accidents,type="l",col="#176F91",
+ xlab="Month",ylab="Injury accidents",main="Counts and fitted values",cex.main=.9)
+lines(accident_reg$date,fitted(accident_full),col="#B44C35",lwd=1.5)
+legend("topleft",c("Recorded","Fitted"),col=c("#176F91","#B44C35"),lty=1,bty="n",cex=.8)
+accident_acf <- acf(residuals(accident_full),lag.max=24,plot=FALSE)
+plot(as.numeric(accident_acf$lag)[-1],as.numeric(accident_acf$acf)[-1],type="h",
+ col="#176F91",lwd=2,xlab="Lag (months)",ylab="Residual autocorrelation",
+ main="Serial dependence",cex.main=.9,ylim=c(-.4,.6))
+abline(h=0,col="#243F50")
+abline(h=c(-1,1)*qnorm(.975)/sqrt(nobs(accident_full)),lty=2,col="#8B989E")
+par(mfrow=c(1,1))
 ```
+
+```{r accidents-dw}
+accident_dw <- lmtest::dwtest(accident_full,alternative="greater")
+data_table(data.frame(DW=unname(accident_dw$statistic),p.value=accident_dw$p.value),digits=4)
+```
+
+The one-sided test rejects zero residual autocorrelation in favour of positive autocorrelation. This supports revisiting the conventional covariance assumption; it does not by itself select a lag length for HAC estimation or establish that the mean specification is complete.
 :::
+
 
 <!-- ## Summary -->
 
@@ -1493,19 +1951,20 @@ $$
 (The last term on the right-hand side must be subtracted in order to avoid double counting.)
 :::
 :::{.proof}
-We have:
-\begin{eqnarray*}
-\Sigma &=& \sum_{g=1}^G\sum_{q=1}^G\sum_{h=1}^H\sum_{k=1}^H \bv{s}_{g,h}\bv{s}_{q,k}'\\
-&=& \sum_{g=1}^G\underbrace{\left(\sum_{h=1}^H\sum_{k=1}^H \bv{s}_{g,h}\bv{s}_{g,k}'\right)}_{=\Sigma_g}+\sum_{h=1}^H\underbrace{\left(\sum_{g=1}^G\sum_{q=1}^G \bv{s}_{g,h}\bv{s}_{q,h}'\right)}_{=\Sigma^*_h}-\sum_{g=1}^G\sum_{h=1}^H \bv{s}_{g,h}\bv{s}_{g,h}',
-\end{eqnarray*}
-which gives the result.
+Scores have mean zero under exogeneity. In the covariance of $\sum_{g,h}\bv{s}_{g,h}$, pairs of cells sharing neither cluster have zero cross-covariance. Summing the remaining pairs gives
+$$
+\Sigma=\sum_g\mathbb E(\bv{s}_{g,\bullet}\bv{s}_{g,\bullet}')+
+\sum_h\mathbb E(\bv{s}_{\bullet,h}\bv{s}_{\bullet,h}')-
+\sum_{g,h}\mathbb E(\bv{s}_{g,h}\bv{s}_{g,h}').
+$$
+The subtraction removes cell contributions counted in both cluster dimensions, yielding the stated formula.
 :::
 
 The asymptotic theory can be based on two different approaches: (i) large number of clusters (common case), and (ii) fixed number of clusters but large number of observations in each cluster (see Subsections 4.1 and 4.2 in @MACKINNON2022). The more variable the $N_g$'s (clusters' sizes are heterogeneous in terms of size), the less reliable asymptotic inference based on Eq. \@ref(eq:AsymptCL), especially when a very few clusters are unusually large, or when the distribution of the data is heavy-tailed. These issues are somehow mitigated when the clusters have an approximate factor structure.
 
 In practice, $\Sigma$ is estimated by:
 $$
-\widehat{\Sigma} = \sum_{g=1}^G \widehat{\bv{s}}_{g,\bullet}\widehat{\bv{s}}_{g,\bullet}' + \sum_{h=1}^H \widehat{\bv{s}}_{\bullet,h}\widehat{\bv{s}}_{\bullet,h} - \sum_{g=1}^G\sum_{h=1}^H \widehat{\bv{s}}_{g,h}\widehat{\bv{s}}_{g,h}',
+\widehat{\Sigma} = \sum_{g=1}^G \widehat{\bv{s}}_{g,\bullet}\widehat{\bv{s}}_{g,\bullet}' + \sum_{h=1}^H \widehat{\bv{s}}_{\bullet,h}\widehat{\bv{s}}_{\bullet,h}' - \sum_{g=1}^G\sum_{h=1}^H \widehat{\bv{s}}_{g,h}\widehat{\bv{s}}_{g,h}',
 $$
 and we use:
 $$
@@ -1516,20 +1975,47 @@ As an alternative to an asymptotic approximation, one can use the bootstrap meth
 
 [^FootWildCluster]: See, e.g., [this tutorial by Alexander Fischer](https://cran.r-project.org/web/packages/fwildclusterboot/vignettes/fwildclusterboot.html).
 
-Let us come back to the analysis of the effect of systemic financial crises on GDP growth. Clustering the data at the country level and, further, at both the country and time levels gives the following:
+:::{.example #votes-cluster-example name="Turnout and two-way clustering"}
 
-```{r JSTcrises2,warning=FALSE}
-eq <- lm(growth~crisisJST+iso+year,data=JST.red)
-vcov1 <- vcovHC(eq, type = "HC1")
-vcov2 <- vcovCL(eq, cluster = JST.red[, c("iso")])
-vcov3 <- vcovCL(eq, cluster = JST.red[, c("iso","year")])
-model_table(eq, eq, eq, eq,column.labels = c("No HAC", "Heterosk.",
-                                       "1-way Clust.","2-way Clust."),
-                     omit = c("iso","year"),no.space = TRUE,keep.stat = "n",
-                     se = list(NULL,sqrt(diag(vcov1)),
-                               sqrt(diag(vcov2)),sqrt(diag(vcov3))))
+Swissvotes (Appendix \@ref(data-votes)) provides a setting with two clustering dimensions. **One row is one federal voting object in one canton.** Several objects may share a voting day, and every canton appears repeatedly. We relate turnout (in percent of eligible voters) to the number of proposals on the day, with canton indicators, procedure indicators and a linear time trend.
+
+```{r votes-regression-data, include=FALSE}
+library(AEC)
+data("CHvotes",package="AEC");data("CHvotes_cantons",package="AEC")
+votes_reg <- merge(CHvotes_cantons,
+ CHvotes[,c("vote_id","procedure","objects_on_day")],by="vote_id")
+votes_reg <- subset(votes_reg,date>=as.Date("1971-01-01") &
+ complete.cases(turnout_pct,procedure,objects_on_day))
+votes_reg$procedure <- droplevels(votes_reg$procedure)
+votes_reg$canton <- factor(votes_reg$canton)
+votes_reg$year_c <- (as.integer(format(votes_reg$date,"%Y"))-2000)/10
+
 ```
 
+```{r votes-cluster-model, include=FALSE}
+votes_model <- lm(turnout_pct~objects_on_day+canton+procedure+year_c,data=votes_reg)
+```
+
+Objects submitted on the same day can share turnout shocks; observations in the same canton can share persistent local influences. Canton indicators allow different mean turnout levels but do not eliminate dependence within cantons. The proposal count varies by voting day, not independently across all rows. Its source definition groups an initiative with its counterproposal and tie-break question as one proposal.
+
+```{r votes-clusters}
+votes_v_hc <- sandwich::vcovHC(votes_model,type="HC1")
+votes_v_day <- sandwich::vcovCL(votes_model,cluster=votes_reg$date,type="HC1")
+votes_v_two <- sandwich::vcovCL(votes_model,
+ cluster=votes_reg[,c("canton","date")],type="HC1")
+votes_target <- "objects_on_day"
+data_table(data.frame(Covariance=c("Conventional","HC1","Voting-day clusters","Canton and day clusters"),
+ Estimate=rep(coef(votes_model)[votes_target],4),
+ SE=sqrt(c(vcov(votes_model)[votes_target,votes_target],
+ votes_v_hc[votes_target,votes_target],votes_v_day[votes_target,votes_target],
+ votes_v_two[votes_target,votes_target]))),digits=3,row.names=FALSE,
+ col.names=c("Covariance estimator","Proposal-count coefficient","SE"))
+```
+
+All four rows use the same `r nrow(votes_reg)` observations and the same coefficient: only the dependence assumption changes. There are `r length(unique(votes_reg$date))` voting-day clusters and `r length(unique(votes_reg$canton))` cantons. The two-way calculation allows dependence among observations sharing either dimension. The limited number of cantons makes the cluster-count qualifications above relevant. The lesson is that changing the dependence assumption changes uncertainty, not the fitted relationship or its causal interpretation.
+
+
+:::
 
 ## Shrinkage methods {#shrinkage}
 
@@ -1561,87 +2047,115 @@ The $\ell_1$ and $\ell_2$ penalties affect estimates differently as the tuning p
 
 Parameter $\lambda$ has to be determined separately from the minimization problem of Eq. \@ref(eq:minLasso). One can combine standard criteria (e.g., BIC or Akaike) for this purpose.
 
-In R, one can use the `glmnet` package to run ridge and lasso regressions. In the following example, we employ this package to model interest rates proposed to debtors, using data extracted from the [Lending Club](https://www.kaggle.com/datasets/ethon0426/lending-club-20072020q1) platform.
+:::{.example #credit-shrinkage name="Predicting credit defaults with many regressors"}
 
-To begin with, let us define the variables we want to consider:
+Can a flexible regression help predict which clients carry the next-month default indicator? We return to `AEC::UCIcredit` (Appendix \@ref(data-credit)), with **one row per client** and a binary outcome: one for a recorded default and zero otherwise. All predictors come from the client characteristics and April--September histories observed before that outcome.
 
-```{r lasso1, warning=FALSE, message=FALSE}
-library(AEC)
+We use age, the credit limit, six statement balances and six payment amounts, together with indicators for sex, education, marital status and the six repayment-status variables. Monetary predictors are transformed to reduce their skewness, preserving negative statement balances. Starting from these 14 numeric predictors, we compare three systematic specifications: a quadratic expansion, that expansion augmented with interactions with commonly observed repayment-status categories, and **all numeric polynomial terms up to degree three**. The cubic terms include cubes, squared-by-linear products and products of three different predictors. They allow curvature and interactions, rather than adding new information about the clients.
+
+Here ridge and lasso minimise the squared-error criterion introduced above, even though the outcome is binary. They produce **linear default scores**. Chapter \@ref(binary-choice-models) introduces logit and probit models that constrain fitted probabilities to lie between zero and one.
+
+```{r credit-shrink-data, include=FALSE, message=FALSE, warning=FALSE}
 library(glmnet)
-credit_lasso <- AEC::credit
-credit_lasso <- credit_lasso[complete.cases(credit_lasso),]
-credit_lasso$owner <- 1*(credit_lasso$home_ownership=="OWN")
-credit_lasso$mortgage <- 1*(credit_lasso$home_ownership=="MORTGAGE")
-credit_lasso$verification_status <- 1*(credit_lasso$verification_status=="Not Verified")
-credit_lasso$emp_length_10 <- 1*(credit_lasso$emp_length_10)
-credit_lasso$log_annual_inc <- log(credit_lasso$annual_inc)
-credit_lasso$log_funded_amnt <- log(credit_lasso$funded_amnt)
-credit_lasso$annual_inc2 <- (credit_lasso$annual_inc)^2
-credit_lasso$funded_amnt2 <- (credit_lasso$funded_amnt)^2
-x <- subset(credit_lasso,
-            select = c(delinq_2yrs,annual_inc,annual_inc2,log_annual_inc,
-                       dti,installment,funded_amnt,
-                       funded_amnt2,log_funded_amnt,pub_rec,emp_length_10,
-                       owner,mortgage,pub_rec_bankruptcies,revol_util,revol_bal))
+data('UCIcredit',package='AEC')
+source('R/credit-shrinkage-design.R')
+set.seed(17828) # Preserve the original 21,000/9,000 split and CV folds.
+shrink_response <- UCIcredit$default_next_month
+shrink_train <- sort(sample.int(nrow(UCIcredit),21000))
+shrink_test <- setdiff(seq_len(nrow(UCIcredit)),shrink_train)
+shrink_folds <- sample(rep(1:5,length.out=length(shrink_train)))
+shrink_features <- credit_shrink_design(UCIcredit,shrink_train,'cubic')
+shrink_compact_features <- credit_shrink_design(UCIcredit,shrink_train,'quadratic')
+shrink_lambda <- exp(seq(log(10),log(.0001),length.out=80))
+shrink_cv_ridge <- cv.glmnet(shrink_features[shrink_train,],shrink_response[shrink_train],
+ alpha=0,family='gaussian',lambda=shrink_lambda,foldid=shrink_folds,standardize=TRUE)
+shrink_cv_lasso <- cv.glmnet(shrink_features[shrink_train,],shrink_response[shrink_train],
+ alpha=1,family='gaussian',lambda=shrink_lambda,foldid=shrink_folds,standardize=TRUE)
+shrink_ols <- lm.fit(cbind(Intercept=1,shrink_features[shrink_train,]),shrink_response[shrink_train])
+shrink_compact_ols <- lm.fit(cbind(Intercept=1,shrink_compact_features[shrink_train,]),shrink_response[shrink_train])
+stopifnot(shrink_ols$rank==ncol(shrink_features)+1L,
+ shrink_compact_ols$rank==ncol(shrink_compact_features)+1L)
+shrink_pred <- cbind(
+ 'Training default share'=rep(mean(shrink_response[shrink_train]),length(shrink_test)),
+ 'Quadratic OLS'=as.numeric(cbind(1,shrink_compact_features[shrink_test,])%*%shrink_compact_ols$coefficients),
+ 'Cubic OLS'=as.numeric(cbind(1,shrink_features[shrink_test,])%*%shrink_ols$coefficients),
+ 'Cubic ridge'=as.numeric(predict(shrink_cv_ridge,newx=shrink_features[shrink_test,],s='lambda.min')),
+ 'Cubic lasso'=as.numeric(predict(shrink_cv_lasso,newx=shrink_features[shrink_test,],s='lambda.min')))
+shrink_mse <- colMeans((shrink_pred-shrink_response[shrink_test])^2)
+shrink_clipped_mse <- colMeans((pmin(pmax(shrink_pred,0),1)-shrink_response[shrink_test])^2)
+shrink_nonzero <- c(0L,ncol(shrink_compact_features),ncol(shrink_features),
+ sum(as.matrix(coef(shrink_cv_ridge,s='lambda.min'))[-1]!=0),
+ sum(as.matrix(coef(shrink_cv_lasso,s='lambda.min'))[-1]!=0))
+shrink_basis_cv <- read.csv('scripts/validation/credit-shrinkage-specifications.csv')
+shrink_basis_cv$Label <- c('Quadratic','Quadratic + status interactions','Cubic')
+shrink_audit <- subset(shrink_basis_cv,Specification=='cubic')
+stopifnot(abs(min(shrink_cv_lasso$cvm)-shrink_audit$Lasso_CV)<1e-7,
+ abs(min(shrink_cv_ridge$cvm)-shrink_audit$Ridge_CV)<1e-7)
 ```
 
-Let us standardize the data:
+We use **21,000 training clients and 9,000 evaluation clients**. Five-fold cross-validation uses only the training clients, with identical folds for all methods. The following training-only comparison records all three specifications considered; a lower mean squared error is better.
 
-```{r lasso2}
-y <- scale(credit_lasso$int_rate)
-x <- scale(x)
-indic_complete_cases <- complete.cases(x)
-y <- y[indic_complete_cases]  # to remove observations with NaN's
-x <- x[indic_complete_cases,] # to remove observations with NaN's
+```{r credit-shrink-specification-cv}
+data_table(shrink_basis_cv[,c("Label","p","OLS_CV","Ridge_CV","Lasso_CV")],
+ digits=c(0,0,4,4,4),row.names=FALSE,
+ col.names=c("Specification","Predictors","OLS CV MSE","Ridge CV MSE","Lasso CV MSE"))
 ```
 
-Next, we define the set of $\lambda$ we will use, and run the ridge and lasso regressions:
+The cubic specification has the lowest lasso validation error, but its advantage over the quadratic specification is small. Its main lesson is the cost of fitting a rich model without regularisation: cubic OLS has substantially higher validation error. We use the **`r ncol(shrink_features)`-predictor cubic design** for the common OLS/ridge/lasso comparison and retain the smaller quadratic OLS model as a benchmark. Thus we do not judge shrinkage solely against an unnecessarily flexible competitor.
 
-```{r lasso3}
-grid.lambda <- seq(0,.2,by=.005)
-result.ridge <- glmnet(x, y, alpha = 0, lambda = grid.lambda)
-result.lasso <- glmnet(x, y, alpha = 1, lambda = grid.lambda)
+Constant or exactly redundant columns are removed using training predictors only. Standardisation is fitted within each training fold. Neither the richer specification nor its penalties is chosen using the 9,000 evaluation outcomes.
+
+
+Figure \@ref(fig:credit-shrink-paths) shows how increasing the penalty shrinks coefficients. For lasso, some coefficients become exactly zero.
+
+```{r credit-shrink-paths, echo=FALSE, fig.pos="H", fig.width=7, fig.height=3.2, out.width="95%", fig.align="center", fig.cap="Coefficient paths for credit-default prediction. Coefficients are expressed per training-sample standard deviation of each predictor for display. Dotted vertical lines mark the minimum-error cross-validation choices. The unpenalised intercept is omitted."}
+shrink_path_par <- par(no.readonly=TRUE)
+par(mfrow=c(1,2),mar=c(4.3,4.4,2,1),family="sans")
+shrink_training_sd <- apply(shrink_features[shrink_train,],2,sd)
+for(method in c("Ridge","Lasso")){
+ cv <- if(method=="Ridge") shrink_cv_ridge else shrink_cv_lasso
+ paths <- sweep(as.matrix(coef(cv$glmnet.fit))[-1,,drop=FALSE],1,shrink_training_sd,"*")
+ matplot(cv$glmnet.fit$lambda,t(paths),type="l",log="x",lty=1,
+ col=adjustcolor("#176F91",alpha.f=.35),xlab=expression(lambda),
+ ylab="Coefficient per predictor SD",main=method,cex.main=.95)
+ abline(v=cv$lambda.min,col="#B44C35",lty=3,lwd=1.5)
+}
+par(shrink_path_par)
 ```
 
-The following figure shows how estimated parameters depend on $\lambda$:
+We choose the penalty separately for ridge and lasso by minimising the mean validation squared error in Figure \@ref(fig:credit-shrink-cv). The error bars show one estimated standard error across the validation folds. A larger penalty can reduce estimation noise, but excessive shrinkage loses useful predictive information.
 
-```{r lasso4}
-variab <- 6
-plot(result.ridge$lambda,coef(result.ridge)[variab,],type="l",
-     ylim=c(min(coef(result.ridge)[variab,],coef(result.lasso)[variab,]),
-            max(coef(result.ridge)[variab,],coef(result.lasso)[variab,])),
-     xlab=expression(lambda),ylab="Estimated parameter",lwd=2)
-lines(result.lasso$lambda,coef(result.lasso)[variab,],col="red",lwd=2)
+```{r credit-shrink-cv, echo=FALSE, fig.pos="H", fig.width=7, fig.height=3.2, out.width="95%", fig.align="center", fig.cap="Five-fold cross-validation on the 21,000 training clients. Orange dashed lines mark the minimum-error penalties; grey dotted lines mark the largest penalties within one estimated standard error of the minimum. The 9,000 held-out clients do not enter these curves."}
+shrink_cv_par <- par(no.readonly=TRUE)
+par(mfrow=c(1,2),mar=c(4.3,4.4,2,1),family="sans")
+for(method in c("Ridge","Lasso")){
+ cv <- if(method=="Ridge") shrink_cv_ridge else shrink_cv_lasso
+ plot(cv$lambda,cv$cvm,type="l",log="x",col="#176F91",lwd=2,
+ ylim=range(pmax(0,cv$cvlo),cv$cvup),xlab=expression(lambda),
+ ylab="Validation mean squared error",main=method,cex.main=.95)
+ segments(cv$lambda,pmax(0,cv$cvlo),cv$lambda,cv$cvup,col="#A8CBD8")
+ lines(cv$lambda,cv$cvm,col="#176F91",lwd=2)
+ abline(v=cv$lambda.min,col="#B44C35",lty=2)
+ abline(v=cv$lambda.1se,col="#8B989E",lty=3)
+}
+par(shrink_cv_par)
 ```
 
-Let us take two values of $\lambda$ and see the associated estimated parameters in the context of lasso regressions:
+Finally, we evaluate the selected models on the reserved clients. Cubic OLS, ridge and lasso use **the same predictors**. The table also retains the default-share benchmark and the smaller quadratic OLS specification. The primary comparison uses the original squared-error criterion; the next column reports a common diagnostic that clips each score to $[0,1]$ before evaluation.
 
-```{r lasso5}
-i <- 20; j <- 40
-data_table(cbind("Lambda i"=result.lasso$lambda[i],
-                 "Lambda j"=result.lasso$lambda[j]), digits=3)
-data_table(cbind("Lambda i"=coef(result.lasso)[,i],
-                 "Lambda j"=coef(result.lasso)[,j]), digits=4, row_label="Term")
-# Compute values of y predicted by the model, for all lambdas:
-pred1 <- predict(result.lasso,as.matrix(x))
-# Compute values of y predicted by the model, for a specific value:
-pred2 <- predict(result.lasso,as.matrix(x),s=0.085)
+```{r credit-shrink-results}
+data_table(data.frame(Method=names(shrink_mse),MSE=unname(shrink_mse),
+ Clipped=unname(shrink_clipped_mse),Nonzero=shrink_nonzero),
+ digits=c(0,4,4,0),row.names=FALSE,
+ col.names=c("Method","Held-out MSE","MSE after clipping","Nonzero slopes"))
 ```
 
-The `glmnet` package (see [Hastie et al. (2021)](https://glmnet.stanford.edu/articles/glmnet.html)) also offers tools to implement cross-validation:
+Lasso retains **`r tail(shrink_nonzero,1)` of the `r ncol(shrink_features)` cubic-design slopes**. Its primary held-out mean squared error is **`r sprintf("%.1f",100*(1-shrink_mse["Cubic lasso"]/shrink_mse["Cubic OLS"]))`\% lower than cubic OLS**. The improvement is smaller after clipping, because part of the gain comes from avoiding extreme linear scores: with clipping the reduction is **`r sprintf("%.1f",100*(1-shrink_clipped_mse["Cubic lasso"]/shrink_clipped_mse["Cubic OLS"]))`\%**. No penalties or features are retuned on these evaluation results.
 
-```{r lasso6}
-# cross validation (cv):
-cvglmnet <- cv.glmnet(as.matrix(x),y)
-plot(cvglmnet)
-# lambda.min: lambda that gives minimum mean cross-validated error
-cvglmnet$lambda.min 
-# lambda.1se: largest lambda s.t. cost within the one-std-dev cv-based band
-cvglmnet$lambda.1se
-coef(cvglmnet, s = "lambda.min") # associated parameters
-# predicted values of y for specific values of x:
-predict(cvglmnet, newx = as.matrix(x)[1:5,], s = "lambda.min") 
-```
+The smaller quadratic OLS model remains competitive and slightly outperforms the penalised cubic models on these clients. The conclusion is therefore specific: **shrinkage protects against the cost of fitting a rich specification; it does not establish that greater complexity improves prediction**. The score comparison concerns other clients from the same collection, rather than outcomes in future calendar months. Chapter \@ref(binary-choice-models) returns to the data with models designed for binary probabilities.
+
+:::
+
 
 ```{r regressions-recap-space, echo=FALSE, results='asis'}
 if (knitr::is_latex_output()) cat("\\Needspace{16\\baselineskip}\n")
@@ -1655,6 +2169,7 @@ if (knitr::is_latex_output()) cat("\\Needspace{16\\baselineskip}\n")
 - Section \@ref(LSquares) derives OLS, and Theorem \@ref(thm:GaussMarkov) identifies its efficiency among linear unbiased estimators under the Gauss-Markov assumptions.
 - Proposition \@ref(prp:Ftest) shows how jointly imposed linear restrictions can be tested by comparing restricted and unrestricted fit.
 - Section \@ref(CommonPitfalls) separates multicollinearity, omitted-variable bias, and the loss of precision caused by irrelevant regressors.
+- Section \@ref(regression-prediction-intervals) distinguishes uncertainty about the conditional mean from the additional dispersion of a new outcome.
 - Definition \@ref(def:instruments) states the relevance and exogeneity requirements for instrumental variables.
 - Definition \@ref(def:GRM) allows heteroskedastic and correlated disturbances; Sections \@ref(HAC) and \@ref(Clusters) develop corresponding covariance estimators.
 - Section \@ref(shrinkage) explains how ridge and lasso estimation trade fit against coefficient magnitude when many covariates are available.

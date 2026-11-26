@@ -9,7 +9,7 @@ source_exercise: 57
 
 ## Statement
 
-Consider the centered linear model $\mathbf y=\mathbf X\boldsymbol\beta+\boldsymbol\varepsilon$, where $\mathbb{E}(\boldsymbol\varepsilon\mid\mathbf X)=\mathbf0$, $\mathbb{V}ar(\boldsymbol\varepsilon\mid\mathbf X)=\sigma^2\mathbf I$, and $\mathbf X'\mathbf X=n\mathbf I_K$. The ridge estimator minimizes
+Consider the centered linear model $\mathbf y=\mathbf X\boldsymbol\beta+\boldsymbol\varepsilon$, where $\mathbb{E}(\boldsymbol\varepsilon\mid\mathbf X)=\mathbf0$, $\mathbb{V}ar(\boldsymbol\varepsilon\mid\mathbf X)=\sigma^2\mathbf{Id}$, and $\mathbf X'\mathbf X=n\mathbf{Id}_K$. The ridge estimator minimizes
 $$
 (\mathbf y-\mathbf X\mathbf b)'(\mathbf y-\mathbf X\mathbf b)+\lambda\mathbf b'\mathbf b,
 \qquad \lambda\ge0.

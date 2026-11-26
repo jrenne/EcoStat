@@ -35,46 +35,75 @@ If the random variables $x_i$ are i.i.d. and $\mathbb{E}(|x_i|)<\infty$, then th
 See Appendix \@ref(CLTappend).
 :::
 
-:::{.example #doctorVisits}
-Suppose one is interested in the average number of doctor consultations over 12 months, for Swiss people. One can get an estimate by computing the sample average of a large dataset, for instance using the [Swiss Household Panel (SHP)](https://forscenter.ch/projects/swiss-household-panel/):
+:::{.example #creditLimits name="Averages of credit limits"}
 
-Figure \@ref(fig:incomeDistri) shows the empirical distribution of the number of doctor visits.
+Consider the credit limits recorded in `UCIcredit`, described in Appendix \@ref(data-credit). A **credit limit** is the maximum amount a client is authorised to borrow through their credit card; it is distinct from actual spending or the outstanding balance. In this dataset, it includes individual and supplementary family credit. For example, a limit of 200 thousand NTD represents an authorised credit line of NTD200,000. Figure \@ref(fig:clt-credit-distribution) shows their distribution, expressed in thousands of New Taiwan dollars (NTD).
 
-```{r incomeDistri, fig.cap="Distribution of the number of doctor visits. Source: Swiss Household Panel.", fig.align = 'left'}
-library(AEC) # to load the shp data-frame.
-shp <- haven::zap_labels(AEC::shp) # retain values, remove import-only labels
-Nb.doct.visits <- shp$p19c15
-Nb.doct.visits <- Nb.doct.visits[Nb.doct.visits>=0] # remove irrelevant observations
-par(plt=c(.15,.95,.2,.95))
-barplot(table(Nb.doct.visits),xlim=c(0,25))
+```{r clt-credit-distribution, fig.cap="Recorded credit limits in UCIcredit. The dashed line marks the mean of the 30,000 recorded values.", fig.width=7, fig.height=3.8, fig.align="center", out.width="95%"}
+data("UCIcredit", package="AEC")
+clt_limits <- UCIcredit$LIMIT_BAL / 1000
+clt_mu <- mean(clt_limits)
+# Population variance uses N = 30,000; var(clt_limits) would use N - 1.
+clt_variance <- mean((clt_limits-clt_mu)^2)
+par(mar=c(4.5,4.5,1,2), family="sans")
+hist(clt_limits, breaks=seq(0,1000,by=50),
+     col="#DCEEF3", border="white", main="",
+     xlab="Credit limit (thousand NTD)", ylab="Number of clients",
+     col.axis="#243F50", col.lab="#243F50")
+abline(v=clt_mu, col="#B44C35", lwd=2, lty=2)
+legend("topright", "Recorded mean", col="#B44C35", lwd=2,
+       lty=2, bty="n")
 ```
-Let us compute the sample mean, variance, and standard deviation:
 
-```{r incomeDistri2}
-data_table(data.frame(Mean=mean(Nb.doct.visits),
-                      Variance=var(Nb.doct.visits), SD=sd(Nb.doct.visits)), digits=3)
+To illustrate the LLN, define a sampling experiment: draw a client uniformly from these 30,000 records, note the credit limit, replace the record, and repeat independently. The fixed dataset is the population for this experiment, so its mean $\mu$ and variance $\sigma^2$ are known. They are not estimates of the corresponding quantities for all cardholders.
+
+```{r clt-credit-moments}
+data_table(data.frame(Clients=length(clt_limits), Mean=clt_mu,
+                      Variance=clt_variance, SD=sqrt(clt_variance)), digits=3,
+           col.names=c("Records","Mean","Variance","SD"))
 ```
 
+The mean and standard deviation are in thousand NTD; the variance is in squared thousand NTD.
+
+```{r clt-credit-running-mean, fig.cap="A running sample mean from 2,000 independent draws with replacement. The horizontal dashed line is the known mean of the recorded credit limits. The LLN concerns convergence, not a monotonic reduction in the error along every path.", fig.width=7, fig.height=3.8, fig.align="center", out.width="95%"}
+clt_draw_n <- 2000L
+clt_draws <- sample(clt_limits, clt_draw_n, replace=TRUE)
+clt_running_mean <- cumsum(clt_draws) / seq_along(clt_draws)
+par(mar=c(4.5,4.5,1,2), family="sans")
+plot(seq_along(clt_draws), clt_running_mean, type="l", col="#176F91",
+     lwd=1.5, xlab="Number of independent draws",
+     ylab="Running mean (thousand NTD)",
+     col.axis="#243F50", col.lab="#243F50")
+abline(h=clt_mu, col="#B44C35", lwd=2, lty=2)
+legend("topright", c("Running mean","Population mean"),
+       col=c("#176F91","#B44C35"), lty=c(1,2), lwd=2, bty="n")
+```
+
+Sampling with replacement makes the draws i.i.d., even though the records themselves need not form a random sample of a wider population. The LLN then applies directly to this experiment.
 :::
 
 Consistency tells us that the approximation improves with the sample size, but it does not yet quantify the error in a given sample. We first obtain a probability bound and then turn to the richer approximation supplied by the CLT.
 
-A first answer is provided by the Chebychev inequality. Assume the $x_i$'s are independently drawn from a distribution of mean $\mu$ and variance $\sigma^2$. We have:
+A first answer is provided by the Chebyshev inequality. Assume the $x_i$'s are independently drawn from a distribution of mean $\mu$ and variance $\sigma^2$. We have:
 $$
 \mathbb{E}(\bar{x}_n) = \mu \quad \mbox{ and } \quad \mathbb{V}ar(\mu - \bar{x}_n) = \frac{1}{n}\sigma^2 \underset{n \rightarrow \infty}{\rightarrow} 0.
 $$
-The Chebychev inequality (Proposition \@ref(prp:chebychev)) states that, for any $\varepsilon > 0$ (even very small), we have:
+The Chebyshev inequality (Proposition \@ref(prp:chebychev)) states that, for any $\varepsilon > 0$ (even very small), we have:
 $$
 \mathbb{P}(|\bar{x}_n-\mu|>\varepsilon) \le \frac{\mathbb{V}ar(\mu - \bar{x}_n)}{\varepsilon^2} = \frac{\sigma^2}{n\varepsilon^2} \underset{n \rightarrow \infty}{\rightarrow} 0.
 $$
-Consider for instance the estimation of the average number of doctor visits (Example \@ref(exm:doctorVisits)). In this example, the sample length is $n=$ `r length(Nb.doct.visits)`, we  have $\bar{x}_n=$ `r round(mean(Nb.doct.visits),2)`, and the variance $\sigma^2$ was approximately equal to `r round(var(Nb.doct.visits),2)`. Therefore, taking $\varepsilon=0.5$, we have that $\mathbb{P}(|\bar{x}_n-\mu|>\varepsilon)$ is lower than $\frac{\sigma^2}{n\varepsilon^2} \approx$
-`r round(var(Nb.doct.visits)/(length(Nb.doct.visits)*0.5^2),3)`.
+For the sampling experiment in Example \@ref(exm:creditLimits), take $n=2{,}000$ independent draws and $\varepsilon=10$, corresponding to NTD10,000. Using the known variance of the recorded values, Chebyshev's inequality gives
+$$
+\mathbb{P}(|\bar{x}_n-\mu|>10)\leq\frac{\sigma^2}{2{,}000\times10^2}
+=\text{`r formatC(clt_variance/(clt_draw_n*10^2), format="f", digits=4)`}.
+$$
+This is a probability over repeated samples from the fixed dataset. It is an exact upper bound, not a normal approximation or a bound obtained by substituting an estimated variance.
 
 However, this only gives bounds for such probabilities. The central limit theorem provides richer information, as it gives the approximate distribution of the estimation error.
 
 ## Central Limit Theorem (CLT)
 
-:::{.theorem #LindbergLevyCLT name="Lindberg-Levy Central limit theorem, CLT"}
+:::{.theorem #LindbergLevyCLT name="Lindeberg–Lévy central limit theorem, CLT"}
 
 If $x_n$ is an i.i.d. sequence of random variables with mean $\mu$ and (finite) variance $\sigma^2$, then:
 $$
@@ -87,6 +116,31 @@ See Appendix \@ref(CLTappend).
 :::
 
 According to the CLT, when $n$ is large, the distribution of the error $\bar{x}_n-\mu$ is approximately normal, whatever the distribution of the $x_i$'s, provided that their mean $\mu$ and variance $\sigma^2$ exist. Its approximate mean is zero and its standard deviation is $\sigma/\sqrt{n}$. (We then say that the convergence rate is *in $\sqrt{n}$*.) Quantiles of the normal distribution can therefore be used to compute approximate confidence intervals for $\mu$ from the sample $\{x_1,\dots,x_n\}$.
+
+:::{.example #creditCLT name="The sampling distribution of a credit-limit average"}
+
+Return to the sampling experiment in Example \@ref(exm:creditLimits). We repeat it 2,000 times, drawing 200 clients with replacement each time. For every sample we compute
+$$
+Z=\frac{\sqrt{n}(\bar{x}_n-\mu)}{\sigma},\qquad n=200,
+$$
+using the known mean and standard deviation of the fixed population. Although the individual credit limits are right-skewed, the distribution of their standardized average is already close to the standard normal density in Figure \@ref(fig:clt-credit-sampling).
+
+```{r clt-credit-sampling, fig.cap="Standardized means of credit limits: 2,000 independent samples of 200 draws with replacement from UCIcredit. The curve is the standard normal density.", fig.width=7, fig.height=3.8, fig.align="center", out.width="95%"}
+clt_sample_n <- 200L
+clt_repetitions <- 2000L
+clt_sample_means <- replicate(clt_repetitions,
+  mean(sample(clt_limits, clt_sample_n, replace=TRUE)))
+clt_z <- sqrt(clt_sample_n)*(clt_sample_means-clt_mu)/sqrt(clt_variance)
+par(mar=c(4.5,4.5,1,2), family="sans")
+hist(clt_z, breaks=30, probability=TRUE, col="#DCEEF3", border="white",
+     main="", xlab="Standardized sample mean", ylab="Density",
+     ylim=c(0,.46), col.axis="#243F50", col.lab="#243F50")
+curve(dnorm(x), add=TRUE, col="#B44C35", lwd=2)
+legend("topright", "Standard normal", col="#B44C35", lwd=2, bty="n")
+```
+
+The number of repetitions determines how smoothly we can display the sampling distribution. The number of draws in each sample determines the quality of the CLT approximation; these are two different quantities.
+:::
 
 This [web interface](https://jrenne.shinyapps.io/StatEcoII/) illustrates the CLT with simulations (select the "CLT" block).
 
@@ -127,45 +181,80 @@ This can be used to test the null hypothesis $H_0: \; \mu_m-\mu_w = 0$ (see Sect
 
 For instance, if $\bar{m}-\bar{w}$ is not in $[-2.58\hat\tau,2.58\hat\tau]$, then we reject the null hypothesis at the 1\% significance level.
 
-:::{.example #comparSmplMeans name="Comparison of sample means"}
+:::{.example #comparSmplMeans name="Comparing default shares across age groups"}
 
-Let us use the  [Swiss Household Panel (SHP)](https://forscenter.ch/projects/swiss-household-panel/) dataset to test the equality between men and women incomes, for Swiss people under the age of 35.
+Do recorded default frequencies differ between clients aged 35 or younger and clients over 35? Use the next-month payment-default indicator $D$ in `UCIcredit` (Appendix \@ref(data-credit)). It equals one for a recorded default and zero otherwise. The mean of a binary variable is its proportion of ones, so the comparison-of-means framework applies directly to default shares.
 
-The SHP observations are split into two income samples, one for men and one for women. Observations with negative reported income are excluded.
+As in the preceding formulas, let $m$ denote the older group and $w$ the younger group. Their means are the corresponding default probabilities: $\mu_m=p_m$ and $\mu_w=p_w$. We estimate them by the observed shares $\widehat p_m$ and $\widehat p_w$.
 
 ```{r RcompMeans0}
-library(AEC);library(logKDE)
-dataset.m <- subset(shp,(sex19==1)&(age19<=35))
-dataset.w <- subset(shp,(sex19==2)&(age19<=35))
-income.m <- dataset.m$i19ptotg
-income.w <- dataset.w$i19ptotg
-income.m <- income.m[income.m>=0] # remove irrelevant data
-income.w <- income.w[income.w>=0] # remove irrelevant data
+clt_younger <- UCIcredit$default_next_month[UCIcredit$AGE<=35]
+clt_older <- UCIcredit$default_next_month[UCIcredit$AGE>35]
+clt_group_summary <- data.frame(
+  Group=c("35 or younger","Over 35"),
+  Clients=c(length(clt_younger),length(clt_older)),
+  Defaults=c(sum(clt_younger),sum(clt_older)),
+  Share=100*c(mean(clt_younger),mean(clt_older)))
+data_table(clt_group_summary, digits=c(0,0,0,2),row.names=FALSE,
+           col.names=c("Age group","Clients","Recorded defaults","Default share (%)"))
 ```
 
-Figure \@ref(fig:RcompMeans) displays the empirical densities of incomes for men and women. Vertical dashed lines indicate sample means:
+We treat the clients as independent observations within and across groups. Unlike the preceding simulation, this is a working sampling assumption about the source data, rather than a property guaranteed by our drawing procedure. The groups can also differ in characteristics other than age.
 
-```{r RcompMeans, fig.cap="Distribution of yearly gross incomes for Swiss residents under the age of 35. Source: SHP. Vertical dashed lines indicates the sample mean.", fig.align = 'left'}
-par(plt=c(.1,.95,.2,.95)) # adjust margins
-plot(logdensity(income.w),lwd=2,xlim=c(0,200000),main="",
-     xlab="Yearly gross income (in CHF)",ylab="") # x and y labels
-lines(logdensity(income.m),col="red",lwd=2)
-abline(v=mean(income.m),col="red",lty=3,lwd=2)
-abline(v=mean(income.w),col="black",lty=3,lwd=2)
-legend("topright",c("men yearly income","women"),lty=1,lwd=2,col=c("red","black"))
-```
-
-Let us compute $\bar{m}$, $\bar{w}$, and the estimated standard error $\hat\tau$:
+Estimate $p_m-p_w$ by $\widehat p_m-\widehat p_w$. The estimated standard error remains
+$$
+\widehat\tau=\sqrt{\frac{s_m^2}{n_m}+\frac{s_w^2}{n_w}}.
+$$
+Here the population variance within group $g$ is $p_g(1-p_g)$; its sample counterpart is $s_g^2=\frac{n_g}{n_g-1}\widehat p_g(1-\widehat p_g)$. We test $H_0:p_m=p_w$ against $H_1:p_m\ne p_w$ using $z=(\widehat p_m-\widehat p_w)/\widehat\tau$.
 
 ```{r RcompMeans2}
-m.bar <- mean(income.m)
-w.bar <- mean(income.w)
-sigma <- sqrt(var(income.m)/length(income.m) + var(income.w)/length(income.w))
-print(c(m.bar,w.bar,sigma))
+clt_mean_difference <- mean(clt_older)-mean(clt_younger)
+clt_difference_se <- sqrt(var(clt_older)/length(clt_older) +
+                          var(clt_younger)/length(clt_younger))
+clt_difference_z <- clt_mean_difference/clt_difference_se
+clt_difference_ci <- clt_mean_difference+c(-1,1)*qnorm(.975)*clt_difference_se
+clt_p_value <- 2*pnorm(-abs(clt_difference_z))
+data_table(data.frame(Difference=100*clt_mean_difference,
+                      SE=100*clt_difference_se, z=clt_difference_z,
+                      Lower=100*clt_difference_ci[1], Upper=100*clt_difference_ci[2],
+                      p.value=clt_p_value), digits=2,row.names=FALSE,
+           col.names=c("Difference (pp)","SE (pp)","z","95% lower (pp)","95% upper (pp)","p-value"))
 ```
 
-Under the null hypothesis of equal population means, the difference $\bar{m}-\bar{w}$ would fall outside $[$`r -round(1.96*sigma,0)`,`r round(1.96*sigma,0)`$]$ with probability approximately 5\%, and outside $[$`r -round(2.58*sigma,0)`,`r round(2.58*sigma,0)`$]$ with probability approximately 1\%. The observed difference is `r format(round(m.bar-w.bar,0),scientific=FALSE)`, so we reject equality at both significance levels.
+The older group's recorded default share is **`r round(100*clt_mean_difference,2)` percentage points higher**, with an estimated standard error of **`r round(100*clt_difference_se,2)` percentage points**. The approximate 95% confidence interval for the difference is **[`r round(100*clt_difference_ci[1],2)`, `r round(100*clt_difference_ci[2],2)`] percentage points**. This is a difference between probabilities, not a percentage change in risk.
+
+The standardized difference is $z=$ `r round(clt_difference_z,2)`, with a two-sided p-value of `r formatC(clt_p_value,format="f",digits=5)`. We reject equality at both the 5% and 1% levels under the independent-sampling model. Figure \@ref(fig:RcompMeans) displays the shares and their difference; the interval for the difference excludes zero.
+
+```{r RcompMeans, echo=FALSE, fig.pos="H", fig.cap="Recorded next-month default shares by age group in UCIcredit (left) and the older-minus-younger difference (right). Horizontal segments are approximate 95\\% confidence intervals under independent sampling. The dashed vertical line marks equal default probabilities.", fig.width=8, fig.height=3.3, fig.align="center", out.width="100%"}
+local({
+  shares <- 100*c(mean(clt_younger),mean(clt_older))
+  share_se <- 100*c(sd(clt_younger)/sqrt(length(clt_younger)),
+                   sd(clt_older)/sqrt(length(clt_older)))
+  colours <- c("#176F91","#B44C35")
+  par(mfrow=c(1,2),mar=c(4.3,6.2,2,1),mgp=c(2.7,.8,0),family="sans")
+  plot(shares,c(2,1),pch=19,col=colours,xlim=c(19,26),ylim=c(.5,2.6),
+       yaxt="n",xlab="Recorded defaults (%)",ylab="",main="Default shares",las=1)
+  axis(2,at=c(2,1),labels=c("35 or younger","Over 35"),las=1,tick=FALSE)
+  arrows(shares-qnorm(.975)*share_se,c(2,1),
+         shares+qnorm(.975)*share_se,c(2,1),
+         angle=90,code=3,length=.035,col=colours,lwd=1.8)
+  points(shares,c(2,1),pch=19,col=colours)
+  text(shares,c(2,1)+.25,sprintf("%.2f%%",shares),cex=.9)
+  par(mar=c(4.3,2,2,1))
+  plot(100*clt_mean_difference,1,pch=19,col="#176F91",xlim=c(-1,3.2),
+       ylim=c(.5,1.6),yaxt="n",xlab="Difference (percentage points)",
+       ylab="",main="Older minus younger",las=1)
+  abline(v=0,col="#94A3B8",lty=2)
+  arrows(100*clt_difference_ci[1],1,100*clt_difference_ci[2],1,
+         angle=90,code=3,length=.035,col="#176F91",lwd=1.8)
+  points(100*clt_mean_difference,1,pch=19,col="#176F91")
+  text(100*clt_mean_difference,1.2,
+       sprintf("%.2f percentage points",100*clt_mean_difference),cex=.9)
+})
+```
 :::
+
+
 
 
 

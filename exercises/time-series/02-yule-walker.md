@@ -8,7 +8,7 @@ source_exercise: 50
 ---
 
 ## Statement
-Consider the following process (assume it is stationary):
+Consider the following process (assume its solution is causal and covariance-stationary):
 
 $$y_t = c + \phi_1 y_{t-1} + \phi_2 y_{t-2} + \varepsilon_t,$$
 

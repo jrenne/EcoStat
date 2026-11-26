@@ -10,3 +10,7 @@ renv/staging/
 
 # Local pilot builds (not the published full book).
 preview/
+
+.course-library/
+renv/library/
+renv/staging/

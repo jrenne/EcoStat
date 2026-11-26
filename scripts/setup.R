@@ -1,0 +1,12 @@
+# Restore CRAN dependencies first, then install the checked companion archive.
+if (!file.exists("renv.lock")) stop("Run from the course directory")
+options(repos = c(CRAN = "https://cloud.r-project.org"))
+if (!requireNamespace("renv", quietly = TRUE)) utils::install.packages("renv")
+library <- file.path(getwd(), "renv", "library")
+dir.create(library, recursive = TRUE, showWarnings = FALSE)
+renv::restore(lockfile = "renv.lock", library = library, prompt = FALSE)
+.libPaths(c(normalizePath(library), .libPaths()))
+source("R/companion-packages.R")
+use_companion_packages()
+check_course_environment()
+cat("Course environment and frozen companion package are ready.\n")

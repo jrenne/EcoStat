@@ -8,6 +8,8 @@ source_exercise: 51
 ---
 
 ## Statement
+Assume that each process is generated recursively, so future shocks are independent of past observations.
+
 We denote: $\mathbb{E}_t(\cdot) = \mathbb{E}(\cdot | y_t, y_{t-1}, \dots)$ and $\mathbb{V}ar_t(\cdot) = \mathbb{V}ar(\cdot | y_t, y_{t-1}, \dots)$.
 
 1.  Consider the processes introduced in the stationarity exercise. For the processes (a) and (b), compute $\mathbb{E}_t(y_{t+2})$ and $\mathbb{V}ar_t(y_{t+2})$.

@@ -19,104 +19,81 @@ The appendix collects mathematical and statistical results used throughout the b
 
 **Principal component analysis (PCA)** reduces the dimension of a dataset when much of its variation can be summarized by a small number of linear combinations. The method is widely used in economic data analysis, visualization, and image compression.
 
-Suppose that we observe $T$ realizations $x_1,\ldots,x_T$ of an $n$-dimensional random vector $x$, and that each component has been centered to have mean zero.
-
-Let $X=[x_1,\ldots,x_T]'$ denote the resulting $T\times n$ data matrix, and denote its $j^{th}$ column by $X_j$.
-
-We seek a unit-length vector $u$ such that the linear combination $Xu$ has maximum sample variance. Thus, we solve
+Suppose we observe $n$ realizations of a $K$-dimensional vector. Let $\bv{X}$ be the centered $n\times K$ data matrix. We seek a unit vector $\bv{u}$ maximizing the sample variance of $\bv{X}\bv{u}$:
 \begin{equation}
-\begin{array}{clll}
-\underset{u}{\arg\max} & u'X'Xu. \\
-\mbox{s.t. } & \left\Vert u \right\Vert =1
-\end{array}(\#eq:PCA11)
+\underset{\|\bv{u}\|=1}{\operatorname{argmax}}\;
+\bv{u}'\bv{X}'\bv{X}\bv{u}. (\#eq:PCA11)
 \end{equation}
+The common variance denominator does not affect the maximizer. Because $\bv{X}'\bv{X}$ is symmetric positive semidefinite, write
+$$
+\bv{X}'\bv{X}=\bv{P}\bv{D}\bv{P}',\qquad
+\bv{P}'\bv{P}=\mathbf{Id}_K,
+$$
+where $\bv{D}=\operatorname{diag}(\lambda_1,\ldots,\lambda_K)$ and $\lambda_1\geq\cdots\geq\lambda_K\geq0$. For $\bv{v}=\bv{P}'\bv{u}$,
+$$
+\bv{u}'\bv{X}'\bv{X}\bv{u}
+=\sum_{j=1}^K\lambda_j v_j^2\leq\lambda_1\sum_{j=1}^Kv_j^2=\lambda_1.
+$$
+The first eigenvector therefore solves the problem. Later eigenvectors maximize the remaining variance subject to orthogonality to earlier directions.
 
-Since $X'X$ is symmetric and positive semidefinite, it admits the following decomposition:
-\begin{eqnarray*}
-X'X & = & PDP'\\
-& = & P\left[\begin{array}{ccc}
-\lambda_{1}\\
-& \ddots\\
-&  & \lambda_{n}
-\end{array}\right]P',
-\end{eqnarray*}
-where $P$ is an orthogonal matrix whose columns are the eigenvectors of $X'X$.
+The **scores** are the columns of the $n\times K$ matrix $\bv{F}=\bv{X}\bv{P}$. They satisfy $\bv{F}'\bv{F}=\bv{D}$, so the components are uncorrelated in the centered sample. The columns of $\bv{P}$ are the **loadings**. The full reconstruction is $\bv{X}=\bv{F}\bv{P}'$; retaining only the first $r$ components gives
+$$
+\widehat{\bv{X}}^{(r)}=\bv{F}_{[:,1:r]}\bv{P}_{[:,1:r]}',
+\qquad
+\text{variance share retained}=\frac{\lambda_1+\cdots+\lambda_r}
+{\lambda_1+\cdots+\lambda_K}.
+$$
+A component's sign is arbitrary: multiplying its scores and loadings by $-1$ leaves its reconstruction unchanged. Standardizing each input column before PCA makes these variance shares refer to standardized variables rather than their original units.
 
-We can order the eigenvalues such that $\lambda_{1}\geq\ldots\geq\lambda_{n}\geq0$. Some eigenvalues are zero when $X$ does not have full column rank.
+:::{.example #credit-pca name="Summarizing six monthly statement balances"}
 
-Since $P$ is orthogonal, we have $u'X'Xu=u'PDP'u=y'Dy$ where $\left\Vert y\right\Vert =1$. Therefore, we have $y_{i}^{2}\leq 1$ for any $i\leq n$.
+Use the six statement-balance variables in `AEC::UCIcredit`, ordered from April to September 2005 (Appendix \@ref(data-credit)). Each row is a client; the six months are six columns describing that same client. We use all 30,000 clients, centering and scaling each column to unit sample variance. Negative balances are retained.
 
-As a consequence:
-\[
-y'Dy=\sum_{i=1}^{n}y_{i}^{2}\lambda_{i}\leq\lambda_{1}\sum_{i=1}^{n}y_{i}^{2}=\lambda_{1}.
-\]
-
-It is easily seen that the maximum is reached for $y=\left[1,0,\cdots,0\right]'$. Therefore, the maximum of the optimization program (Eq. \@ref(eq:PCA11)) is obtained for $u=P\left[1,0,\cdots,0\right]'$. That is, $u$ is the eigenvector of $X'X$ that is associated with its larger eigenvalue (first column of $P$).
-
-Let us denote with $F$ the vector that is given by the matrix product $XP$. The columns of $F$, denoted by $F_{j}$, are called **factors**. We have:
-\[
-F'F=P'X'XP=D.
-\]
-Therefore, in particular, the $F_{j}$'s are orthogonal.
-
-Since $X=FP'$, the $X_{j}$'s are linear combinations of the factors. Let us then denote with $\hat{X}_{i,j}$ the part of $X_{i}$ that is explained by factor $F_{j}$, we have:
-\begin{eqnarray*}
-\hat{X}_{i,j} & = & p_{ij}F_{j}\\
-X_{i} & = & \sum_{j}\hat{X}_{i,j}=\sum_{j}p_{ij}F_{j}.
-\end{eqnarray*}
-
-Consider the share of variance that is explained---through the $n$ variables ($X_{1},\ldots,X_{n}$)---by the first factor $F_{1}$:
-\begin{eqnarray*}
-\frac{\sum_{i}\hat{X}'_{i,1}\hat{X}_{i,1}}{\sum_{i}X_{i}'X_{i}} & = & \frac{\sum_{i}p_{i1}F'_{1}F_{1}p_{i1}}{tr(X'X)} = \frac{\sum_{i}p_{i1}^{2}\lambda_{1}}{tr(X'X)} = \frac{\lambda_{1}}{\sum_{i}\lambda_{i}}.
-\end{eqnarray*}
-
-Intuitively, if the first eigenvalue is large, it means that the first factor captures a large share of the fluctutaions of the $n$ $X_{i}$'s.
-
-By the same token, it is easily seen that the fraction of the variance of the $n$ variables that is explained by factor $j$ is given by:
-\begin{eqnarray*}
-\frac{\sum_{i}\hat{X}'_{i,j}\hat{X}_{i,j}}{\sum_{i}X_{i}'X_{i}} & = & \frac{\lambda_{j}}{\sum_{i}\lambda_{i}}.
-\end{eqnarray*}
-
-The term structure of interest rates provides a standard application. Yields at different maturities move together and can often be summarized by a few factors [see @Litterman_Scheinkman_1991]. We apply PCA to data from the [FRED database](https://fred.stlouisfed.org) (series `DGS6MO`, `DGS1`, and related maturities). The estimated loadings can be interpreted as level, slope, and curvature factors.
-
-To run a PCA, one simply has to apply function `prcomp` to a matrix of data:
-
-```{r USydsPCA0, warning=FALSE,message=FALSE}
-library(AEC)
-USyields <- USyields[complete.cases(USyields),]
-yds <- USyields[c("Y1","Y2","Y3","Y5","Y7","Y10","Y20","Y30")]
-PCA.yds <- prcomp(yds,center=TRUE,scale. = TRUE)
+```{r credit-pca-fit}
+pca_balances <- as.matrix(AEC::UCIcredit[paste0("BILL_AMT",6:1)])
+colnames(pca_balances) <- month.abb[4:9]
+credit_pca <- prcomp(pca_balances,center=TRUE,scale.=TRUE)
+# Choose consistent display signs; scores and loadings must change together.
+for(j in 1:2) {
+  direction <- if(j==1) sign(sum(credit_pca$rotation[,j])) else
+    sign(tail(credit_pca$rotation[,j],1))
+  if(direction==0) direction <- 1
+  credit_pca$rotation[,j] <- direction*credit_pca$rotation[,j]
+  credit_pca$x[,j] <- direction*credit_pca$x[,j]
+}
+pca_share <- credit_pca$sdev^2/sum(credit_pca$sdev^2)
+pca_reconstruction <- credit_pca$x[,1:2,drop=FALSE] %*%
+                      t(credit_pca$rotation[,1:2,drop=FALSE])
+pca_reconstruction <- sweep(sweep(pca_reconstruction,2,credit_pca$scale,"*"),
+                            2,credit_pca$center,"+")
 ```
 
+The first component explains **`r round(100*pca_share[1],1)`\%** of standardized balance variation; the first two together explain **`r round(100*sum(pca_share[1:2]),1)`\%**. Figure \@ref(fig:credit-pca-figure) shows the variance shares, the first two loading profiles, and the two-component reconstructions for April and September. These reconstructions summarize the observed balance histories; they are not forecasts of a future balance or causal effects on default.
 
-Figure \@ref(fig:USydsPCA1) summarizes the results. The upper-left panel reports the share of total variance explained by each principal component, and the upper-right panel displays the factor loadings. The lower panels compare observed yields with reconstructions based on only the first two components.
-
-```{r USydsPCA1, warning=FALSE,message=FALSE, fig.cap="Some PCA results. The dataset contains 8 time series of U.S. interest rates of different maturities.", fig.align = 'left'}
-par(mfrow=c(2,2))
-par(plt=c(.1,.95,.2,.8))
-barplot(PCA.yds$sdev^2/sum(PCA.yds$sdev^2),
-        main="Share of variance expl. by PC's")
-axis(1, at=1:dim(yds)[2], labels=colnames(PCA.yds$x))
-nb.PC <- 2
-plot(-PCA.yds$rotation[,1],type="l",lwd=2,ylim=c(-1,1),
-     main="Factor loadings (1st 3 PCs)",xaxt="n",xlab="")
-axis(1, at=1:dim(yds)[2], labels=colnames(yds))
-lines(PCA.yds$rotation[,2],type="l",lwd=2,col="blue")
-lines(PCA.yds$rotation[,3],type="l",lwd=2,col="red")
-Y1.hat <- PCA.yds$x[,1:nb.PC] %*% PCA.yds$rotation["Y1",1:2]
-Y1.hat <- mean(USyields$Y1) + sd(USyields$Y1) * Y1.hat
-plot(USyields$date,USyields$Y1,type="l",lwd=2,
-     main="Fit of 1-year yields (2 PCs)",
-     ylab="Obs (black) / Fitted by 2PCs (dashed blue)")
-lines(USyields$date,Y1.hat,col="blue",lty=2,lwd=2)
-Y10.hat <- PCA.yds$x[,1:nb.PC] %*% PCA.yds$rotation["Y10",1:2]
-Y10.hat <- mean(USyields$Y10) + sd(USyields$Y10) * Y10.hat
-plot(USyields$date,USyields$Y10,type="l",lwd=2,
-     main="Fit of 10-year yields (2 PCs)",
-     ylab="Obs (black) / Fitted by 2PCs (dashed blue)")
-lines(USyields$date,Y10.hat,col="blue",lty=2,lwd=2)
+```{r credit-pca-figure, echo=FALSE, fig.pos="H", fig.width=8, fig.height=5.8, out.width="100%", fig.cap="PCA of six standardized statement balances. Top: variance shares and loading profiles. Bottom: observed versus two-component reconstructed balances for 1,000 randomly selected clients, in thousands of NTD; PCA itself uses all 30,000 clients. The diagonal marks an exact reconstruction."}
+local({
+  par(mfrow=c(2,2),mar=c(4,4,2,1))
+  barplot(100*pca_share,names.arg=1:6,col="#147D92",
+          xlab="Principal component",ylab="Variance explained (%)",las=1)
+  matplot(1:6,credit_pca$rotation[,1:2],type="b",pch=c(16,17),
+          lty=1:2,col=c("#147D92","#C76D36"),xaxt="n",
+          xlab="Statement month",ylab="Loading",las=1)
+  axis(1,at=1:6,labels=colnames(pca_balances))
+  legend("bottomright",c("PC1","PC2"),col=c("#147D92","#C76D36"),
+         lty=1:2,pch=c(16,17),bty="n",cex=.8)
+  displayed <- sample.int(nrow(pca_balances),1000)
+  for(j in c(1,6)) {
+    actual <- pca_balances[displayed,j]/1000
+    fitted <- pca_reconstruction[displayed,j]/1000
+    bounds <- range(actual,fitted)
+    plot(actual,fitted,pch=16,cex=.5,col=adjustcolor("#147D92",.35),
+         xlim=bounds,ylim=bounds,xlab="Observed balance (thousand NTD)",
+         ylab="Reconstruction (thousand NTD)",main=colnames(pca_balances)[j],las=1)
+    abline(0,1,col="#C76D36",lty=2)
+  }
+})
 ```
-
+:::
 
 ## Linear algebra: definitions and results {#LinAlgebra}
 
@@ -124,9 +101,9 @@ This section records the matrix definitions and identities used in the regressio
 
 :::{.definition #eigenvalues name="Eigenvalues"}
 
-The eigenvalues of of a matrix $M$ are the numbers $\lambda$ for which:
+The eigenvalues of a matrix $M$ are the numbers $\lambda$ for which:
 $$
-|M - \lambda I| = 0,
+|M - \lambda \mathbf{Id}| = 0,
 $$
 where $| \bullet |$ is the determinant operator.
 :::
@@ -138,7 +115,7 @@ We have:
 * $|M^{-1}|=|M|^{-1}$.
 * If $M$ admits the diagonal representation $M=TDT^{-1}$, where $D$ is a diagonal matrix whose diagonal entries are $\{\lambda_i\}_{i=1,\dots,n}$, then:
 $$
-|M - \lambda I |=\prod_{i=1}^n (\lambda_i - \lambda).
+|M - \lambda \mathbf{Id} |=\prod_{i=1}^n (\lambda_i - \lambda).
 $$
 :::
 
@@ -308,17 +285,17 @@ The equality holds iff $\mathbb{V}ar(Z)=0$, i.e. iff $Y = \frac{\mathbb{C}ov(X,Y
 :::{.definition #asmyptlevelAppendix name="Asymptotic level"}
 An asymptotic test with critical region $\Omega_n$ has an asymptotic level equal to $\alpha$ if:
 $$
-\limsup_{n\rightarrow\infty}\;\sup_{\theta\in\Theta}\mathbb{P}_\theta(S_n\in\Omega_n)=\alpha,
+\limsup_{n\rightarrow\infty}\;\sup_{\theta\in\Theta_0}\mathbb{P}_\theta(S_n\in\Omega_n)=\alpha,
 $$
-where $S_n$ is the test statistic and $\Theta$ is such that the null hypothesis $H_0$ is equivalent to $\theta \in \Theta$.
+where $S_n$ is the test statistic and $\Theta_0$ is the null parameter set, as in Definition \@ref(def:asmyptlevel).
 :::
 
 :::{.definition #asmyptconsisttestAppendix name="Asymptotically consistent test"}
 An asymptotic test with critical region $\Omega_n$ is consistent if:
 $$
-\forall \theta \in \Theta^c, \quad \mathbb{P}_\theta (S_n \in \Omega_n) \rightarrow 1,
+\forall \theta \in \Theta_1, \quad \mathbb{P}_\theta (S_n \in \Omega_n) \rightarrow 1,
 $$
-where $S_n$ is the test statistic and $\Theta^c$ is such that the null hypothesis $H_0$ is equivalent to $\theta \notin \Theta^c$.
+where $\Theta_1$ is the alternative parameter set, as in Definition \@ref(def:asmyptconsisttest).
 :::
 
 
@@ -367,7 +344,7 @@ $Z$ follows a Student-t (or $t$) distribution with $\nu$ degrees of freedom (d.f
 $$
 Z = X_0 \bigg/ \sqrt{\frac{\sum_{i=1}^{\nu}X_i^2}{\nu}}, \quad X_i \sim i.i.d. \mathcal{N}(0,1).
 $$
-We have $\mathbb{E}(Z)=0$, and $\mathbb{V}ar(Z)=\frac{\nu}{\nu-2}$ if $\nu>2$. (See Table \@ref(tab:Student) for quantiles.)
+The mean is $\mathbb{E}(Z)=0$ when $\nu>1$, and the variance is $\mathbb{V}ar(Z)=\nu/(\nu-2)$ when $\nu>2$. (See Table \@ref(tab:Student) for quantiles.)
 :::
 
 :::{.definition #chi2 name="Chi-square distribution"}
@@ -376,7 +353,7 @@ We have $\mathbb{E}(Z)=\nu$. (See Table \@ref(tab:Chi2) for quantiles.)
 :::
 
 :::{.definition #Cauchy name="Cauchy distribution"}
-The probability distribution function of the Cauchy distribution defined by a location parameter $\mu$ and a scale parameter $\gamma$ is:
+The probability density function of the Cauchy distribution defined by a location parameter $\mu$ and a scale parameter $\gamma$ is:
 $$
 f(x) = \frac{1}{\pi \gamma \left(1 + \left[\frac{x-\mu}{\gamma}\right]^2\right)}.
 $$
@@ -388,13 +365,13 @@ plot(x,dcauchy(x),type="l",lwd=2,xlab="",ylab="")
 :::
 
 :::{.proposition #waldtypeproduct name="Inner product of a multivariate Gaussian variable"}
-Let $X$ be a $n$-dimensional multivariate Gaussian variable: $X \sim \mathcal{N}(0,\Sigma)$. We have:
+Let $X$ be an $n$-dimensional Gaussian vector with positive definite covariance matrix $\Sigma$: $X\sim\mathcal{N}(\bv{0},\Sigma)$. We have:
 $$
 X' \Sigma^{-1}X \sim \chi^2(n).
 $$
 :::
 :::{.proof}
-Because $\Sigma$ is a symmetrical definite positive matrix, it admits the spectral decomposition $PDP'$ where $P$ is an orthogonal matrix (i.e. $PP'=Id$) and D is a diagonal matrix with non-negative entries. Denoting by $\sqrt{D^{-1}}$ the diagonal matrix whose diagonal entries are the inverse of those of $D$, it is easily checked that the covariance matrix of $Y:=\sqrt{D^{-1}}P'X$ is $Id$. Therefore $Y$ is a vector of uncorrelated Gaussian variables. The properties of Gaussian variables imply that the components of $Y$ are then also independent. Hence $Y'Y=\sum_i Y_i^2 \sim \chi^2(n)$.
+Because $\Sigma$ is a symmetrical definite positive matrix, it admits the spectral decomposition $PDP'$ where $P$ is an orthogonal matrix (i.e. $PP'=\mathbf{Id}$) and D is a diagonal matrix with positive entries. Denoting by $D^{-1/2}$ the diagonal matrix whose entries are the inverse square roots of those of $D$, it is easily checked that the covariance matrix of $Y:=D^{-1/2}P'X$ is $\mathbf{Id}$. Therefore $Y$ is a vector of uncorrelated Gaussian variables. The properties of Gaussian variables imply that the components of $Y$ are then also independent. Hence $Y'Y=\sum_i Y_i^2 \sim \chi^2(n)$.
 
 It remains to note that $Y'Y=X'PD^{-1}P'X=X'\mathbb{V}ar(X)^{-1}X$ to conclude.
 :::
@@ -551,10 +528,10 @@ $$
 ### Central limit theorem {#CLTappend}
 
 :::{.theorem #LLNappendix name="Law of large numbers"}
-The sample mean is a consistent estimator of the population mean.
+For i.i.d. observations with $\mathbb E|X_i|<\infty$, the sample mean converges in probability to $\mathbb E(X_i)$, as in Theorem \@ref(thm:LLN).
 :::
 :::{.proof}
-Let's denote by $\phi_{X_i}$ the characteristic function of a r.v. $X_i$. If the mean of $X_i$ is $\mu$ then the Talyor expansion of the characteristic function is:
+Let's denote by $\phi_{X_i}$ the characteristic function of a r.v. $X_i$. If the mean of $X_i$ is $\mu$ then the Taylor expansion of the characteristic function is:
 $$
 \phi_{X_i}(u) = \mathbb{E}(\exp(iuX)) = 1 + iu\mu + o(u).
 $$
@@ -565,20 +542,25 @@ $$
 The facts that (a) $e^{iu\mu}$ is the characteristic function of the constant $\mu$ and (b) that a characteristic function uniquely characterises a distribution imply that the sample mean converges in distribution to the constant $\mu$, which further implies that it converges in probability to $\mu$.
 :::
 
-:::{.theorem #LindbergLevyCLTAppendix name="Lindberg-Levy Central limit theorem, CLT"}
+:::{.theorem #LindbergLevyCLTAppendix name="Lindeberg–Lévy central limit theorem, CLT"}
 If $x_n$ is an i.i.d. sequence of random variables with mean $\mu$ and variance $\sigma^2$ ($\in ]0,+\infty[$), then:
 $$
 \boxed{\sqrt{n} (\bar{x}_n - \mu) \overset{d}{\rightarrow} \mathcal{N}(0,\sigma^2), \quad \mbox{where} \quad \bar{x}_n = \frac{1}{n} \sum_{i=1}^{n} x_i.}
 $$
 :::
 :::{.proof}
-Let us introduce the r.v. $Y_n:= \sqrt{n}(\bar{X}_n - \mu)$. We have $\phi_{Y_n}(u) = \left[ \mathbb{E}\left( \exp(i \frac{1}{\sqrt{n}} u (X_1 - \mu)) \right) \right]^n$. We have:
-\begin{eqnarray*}
-&&\left[ \mathbb{E}\left( \exp\left(i \frac{1}{\sqrt{n}} u (X_1 - \mu)\right) \right) \right]^n\\
-&=& \left[ \mathbb{E}\left( 1 + i \frac{1}{\sqrt{n}} u (X_1 - \mu) - \frac{1}{2n} u^2 (X_1 - \mu)^2 + o(u^2) \right) \right]^n \\
-&=& \left( 1 - \frac{1}{2n}u^2\sigma^2 + o(u^2)\right)^n.
-\end{eqnarray*}
-Therefore $\phi_{Y_n}(u) \underset{n \rightarrow \infty}{\rightarrow} \exp \left( - \frac{1}{2}u^2\sigma^2 \right)$, which is the characteristic function of $\mathcal{N}(0,\sigma^2)$.
+Write $Z_i=X_i-\mu$. Finite second moments give the expansion
+$$
+\phi_Z(v)=1-\tfrac12\sigma^2v^2+o(v^2),\qquad v\to0.
+$$
+Independence then implies, for every fixed $u$,
+$$
+\phi_{\sqrt n(\bar X_n-\mu)}(u)
+=\big[\phi_Z(u/\sqrt n)\big]^n
+=\left[1-\frac{\sigma^2u^2}{2n}+o(n^{-1})\right]^n
+\longrightarrow \exp(-\sigma^2u^2/2).
+$$
+The limit is the characteristic function of $\mathcal N(0,\sigma^2)$, proving convergence in distribution.
 :::
 
 
@@ -597,11 +579,12 @@ Gaussian variables recur in finite-sample regression theory, likelihood calculat
 
 
 :::{.proposition #bandsindependent}
-If $\bv{A}$ is idempotent and if $\bv{x}$ is Gaussian, $\bv{L}\bv{x}$ and $\bv{x}'\bv{A}\bv{x}$ are independent if $\bv{L}\bv{A}=\bv{0}$.
+Let $\bv{x}\sim\mathcal N(\boldsymbol\mu,\boldsymbol\Sigma)$ and let $\bv{A}$ be symmetric and idempotent. Then $\bv{L}\bv{x}$ and $\bv{x}'\bv{A}\bv{x}$ are independent if $\bv{L}\boldsymbol\Sigma\bv{A}=\bv{0}$. When $\boldsymbol\Sigma=\sigma^2\mathbf{Id}$, it suffices that $\bv{L}\bv{A}=\bv{0}$.
 :::
 :::{.proof}
-If $\bv{L}\bv{A}=\bv{0}$, then the Gaussian vectors $\bv{L}\bv{x}$ and $\bv{A}\bv{x}$ are independent, as are any functions of those vectors. The result follows because $\bv{x}'\bv{A}\bv{x}=(\bv{A}\bv{x})'(\bv{A}\bv{x})$ is a function of $\bv{A}\bv{x}$.
+The Gaussian vectors $\bv{L}\bv{x}$ and $\bv{A}\bv{x}$ have cross-covariance $\bv{L}\boldsymbol\Sigma\bv{A}'=\bv{0}$, so they are independent. Symmetry and idempotence give $\bv{x}'\bv{A}\bv{x}=(\bv{A}\bv{x})'(\bv{A}\bv{x})$, a function of the second vector.
 :::
+
 
 
 :::{.proposition #update name="Bayesian update in a vector of Gaussian variables"}
@@ -645,9 +628,9 @@ g(x) = \frac{f(x)}{F(b)-F(a)}\mathbb{I}_{\{a \le x < b\}},
 $$
 for any $a<b$.
 
-In partiucular, for a Gaussian variable $X \sim \mathcal{N}(\mu,\sigma^2)$, we have
+In particular, for a Gaussian variable $X \sim \mathcal{N}(\mu,\sigma^2)$, we have
 $$
-f(X=x|a\le X<b) = \dfrac{\dfrac{1}{\sigma}\phi\left(\dfrac{x - \mu}{\sigma}\right)}{Z}.
+g(x) = \frac{1}{\sigma Z}\phi\left(\frac{x-\mu}{\sigma}\right)\mathbb I_{\{a\le x<b\}}.
 $$
 with $Z = \Phi(\beta)-\Phi(\alpha)$, where $\alpha = \dfrac{a - \mu}{\sigma}$ and $\beta = \dfrac{b - \mu}{\sigma}$.
 
@@ -673,16 +656,15 @@ with $\lambda(x)=\dfrac{\phi(x)}{\Phi(x)}$ is called the **inverse Mills ratio**
 
 Consider the case where $a \rightarrow - \infty$ (i.e. the conditioning set is $X<b$) and $\mu=0$, $\sigma=1$. Then Eq. \@ref(eq:Etrunc) gives $\mathbb{E}(X|X<b) = - \lambda(b) = - \dfrac{\phi(b)}{\Phi(b)}$, where $\lambda$ is the function computing the inverse Mills ratio.
 
-```{r inverseMills, echo=FALSE, fig.cap="$\\mathbb{E}(X|X<b)$ as a function of $b$ when $X\\sim \\mathcal{N}(0,1)$ (in black).", fig.align = 'left'}
-x <- seq(-10,10,by=.01)
-par(mfrow=c(1,1))
-par(plt=c(.15,.95,.25,.95))
-plot(x,-dnorm(x)/pnorm(x),type="l",lwd=2,
-     xlab="b",ylab="inverse Mills ratio",
-     ylim=c(-10,5))
-lines(c(-20,20),c(-20,20),col="red")
-abline(h=0,col="grey")
-lines(x,-dnorm(x)/pnorm(x),lwd=2)
+```{r inverseMills, echo=FALSE, fig.width=7, fig.height=3.3, out.width="95%", fig.cap="The conditional mean of a standard normal variable given that it is below b. It stays below the truncation threshold and approaches the unconditional mean zero as b increases."}
+local({
+  b <- seq(-4,4,length.out=400)
+  conditional_mean <- -exp(dnorm(b,log=TRUE)-pnorm(b,log.p=TRUE))
+  par(mar=c(4,4,1,1))
+  plot(b,conditional_mean,type="l",lwd=2,col="#147D92",las=1,
+       xlab="Upper truncation threshold b",ylab="Conditional mean")
+  abline(h=0,col="#94A3B8",lty=3)
+})
 ```
 
 
@@ -708,7 +690,7 @@ The proofs below support results stated in the main chapters. They are collected
 
 :::{.proof}
 
-Assumptions (i) and (ii) (in the set of Assumptions \@ref(hyp:MLEregularity)) imply that $\boldsymbol\theta_{MLE}$ exists ($=\mbox{argmax}_\theta (1/n)\log \mathcal{L}(\boldsymbol\theta;\bv{y})$).
+Compactness and continuity, Assumptions (i) and (iii) (in the set of Assumptions \@ref(hyp:MLEregularity)) imply that $\boldsymbol\theta_{MLE}$ exists ($=\mbox{argmax}_\theta (1/n)\log \mathcal{L}(\boldsymbol\theta;\bv{y})$).
 
 $(1/n)\log \mathcal{L}(\boldsymbol\theta;\bv{y})$ can be interpreted as the sample mean of the r.v. $\log f(Y_i;\boldsymbol\theta)$ that are i.i.d. Therefore $(1/n)\log \mathcal{L}(\boldsymbol\theta;\bv{y})$ converges to $\mathbb{E}_{\boldsymbol\theta_0}(\log f(Y;\boldsymbol\theta))$ -- which exists (Assumption iv).
 
@@ -749,24 +731,24 @@ Collecting the preceding results leads to (b). The fact that $\boldsymbol\theta_
 **Proof of Proposition \@ref(prp:Walddistri)**
 
 :::{.proof}
-We have $\sqrt{n}(\hat{\boldsymbol\theta}_{n} - \boldsymbol\theta_{0}) \overset{d}{\rightarrow} \mathcal{N}(0,\mathcal{I}(\boldsymbol\theta_0)^{-1})$ (Eq. \@ref(eq:normMLE)). A Taylor expansion around $\boldsymbol\theta_0$ gives
+We have $\sqrt{n}(\hat{\boldsymbol\theta}_{n} - \boldsymbol\theta_{0}) \overset{d}{\rightarrow} \mathcal{N}(0,\mathcal{I}_Y(\boldsymbol\theta_0)^{-1})$ (Eq. \@ref(eq:normMLE)). A Taylor expansion around $\boldsymbol\theta_0$ gives
 \begin{equation}
-\sqrt{n}(h(\hat{\boldsymbol\theta}_{n}) - h(\boldsymbol\theta_{0})) \overset{d}{\rightarrow} \mathcal{N}\left(0,\frac{\partial h(\boldsymbol\theta_{0})}{\partial \boldsymbol\theta'}\mathcal{I}(\boldsymbol\theta_0)^{-1}\frac{\partial h(\boldsymbol\theta_{0})'}{\partial \boldsymbol\theta}\right). (\#eq:wald-delta-limit)
+\sqrt{n}(h(\hat{\boldsymbol\theta}_{n}) - h(\boldsymbol\theta_{0})) \overset{d}{\rightarrow} \mathcal{N}\left(0,\frac{\partial h(\boldsymbol\theta_{0})}{\partial \boldsymbol\theta'}\mathcal{I}_Y(\boldsymbol\theta_0)^{-1}\frac{\partial h(\boldsymbol\theta_{0})'}{\partial \boldsymbol\theta}\right). (\#eq:wald-delta-limit)
 \end{equation}
 Under $H_0$, $h(\boldsymbol\theta_{0})=0$ therefore:
 \begin{equation}
-\sqrt{n} h(\hat{\boldsymbol\theta}_{n}) \overset{d}{\rightarrow} \mathcal{N}\left(0,\frac{\partial h(\boldsymbol\theta_{0})}{\partial \boldsymbol\theta'}\mathcal{I}(\boldsymbol\theta_0)^{-1}\frac{\partial h(\boldsymbol\theta_{0})'}{\partial \boldsymbol\theta}\right). (\#eq:lm10)
+\sqrt{n} h(\hat{\boldsymbol\theta}_{n}) \overset{d}{\rightarrow} \mathcal{N}\left(0,\frac{\partial h(\boldsymbol\theta_{0})}{\partial \boldsymbol\theta'}\mathcal{I}_Y(\boldsymbol\theta_0)^{-1}\frac{\partial h(\boldsymbol\theta_{0})'}{\partial \boldsymbol\theta}\right). (\#eq:lm10)
 \end{equation}
 Hence
 $$
 \sqrt{n} \left(
-\frac{\partial h(\boldsymbol\theta_{0})}{\partial \boldsymbol\theta'}\mathcal{I}(\boldsymbol\theta_0)^{-1}\frac{\partial h(\boldsymbol\theta_{0})'}{\partial \boldsymbol\theta}
-\right)^{-1/2} h(\hat{\boldsymbol\theta}_{n}) \overset{d}{\rightarrow} \mathcal{N}\left(0,Id\right).
+\frac{\partial h(\boldsymbol\theta_{0})}{\partial \boldsymbol\theta'}\mathcal{I}_Y(\boldsymbol\theta_0)^{-1}\frac{\partial h(\boldsymbol\theta_{0})'}{\partial \boldsymbol\theta}
+\right)^{-1/2} h(\hat{\boldsymbol\theta}_{n}) \overset{d}{\rightarrow} \mathcal{N}\left(0,\mathbf{Id}\right).
 $$
 Taking the quadratic form, we obtain:
 $$
 n h(\hat{\boldsymbol\theta}_{n})'  \left(
-\frac{\partial h(\boldsymbol\theta_{0})}{\partial \boldsymbol\theta'}\mathcal{I}(\boldsymbol\theta_0)^{-1}\frac{\partial h(\boldsymbol\theta_{0})'}{\partial \boldsymbol\theta}
+\frac{\partial h(\boldsymbol\theta_{0})}{\partial \boldsymbol\theta'}\mathcal{I}_Y(\boldsymbol\theta_0)^{-1}\frac{\partial h(\boldsymbol\theta_{0})'}{\partial \boldsymbol\theta}
 \right)^{-1} h(\hat{\boldsymbol\theta}_{n}) \overset{d}{\rightarrow} \chi^2(r).
 $$
 
@@ -786,21 +768,21 @@ We combine the two Taylor expansion: $h(\hat{\boldsymbol\theta}_n) \approx \dfra
 Besides, we have (using the definition of the information matrix):
 \begin{equation}
 \frac{1}{\sqrt{n}}\frac{\partial \log \mathcal{L}(\hat{\boldsymbol\theta}^0_n;\bv{y})}{\partial \boldsymbol\theta} \approx
-\frac{1}{\sqrt{n}}\frac{\partial \log \mathcal{L}(\boldsymbol\theta_0;\bv{y})}{\partial \boldsymbol\theta} - \mathcal{I}(\boldsymbol\theta_0)\sqrt{n}(\hat{\boldsymbol\theta}^0_n-\boldsymbol\theta_0) (\#eq:lm29)
+\frac{1}{\sqrt{n}}\frac{\partial \log \mathcal{L}(\boldsymbol\theta_0;\bv{y})}{\partial \boldsymbol\theta} - \mathcal{I}_Y(\boldsymbol\theta_0)\sqrt{n}(\hat{\boldsymbol\theta}^0_n-\boldsymbol\theta_0) (\#eq:lm29)
 \end{equation}
 and:
 \begin{equation}
 0=\frac{1}{\sqrt{n}}\frac{\partial \log \mathcal{L}(\hat{\boldsymbol\theta}_n;\bv{y})}{\partial \boldsymbol\theta} \approx
-\frac{1}{\sqrt{n}}\frac{\partial \log \mathcal{L}(\boldsymbol\theta_0;\bv{y})}{\partial \boldsymbol\theta} - \mathcal{I}(\boldsymbol\theta_0)\sqrt{n}(\hat{\boldsymbol\theta}_n-\boldsymbol\theta_0).(\#eq:lm30)
+\frac{1}{\sqrt{n}}\frac{\partial \log \mathcal{L}(\boldsymbol\theta_0;\bv{y})}{\partial \boldsymbol\theta} - \mathcal{I}_Y(\boldsymbol\theta_0)\sqrt{n}(\hat{\boldsymbol\theta}_n-\boldsymbol\theta_0).(\#eq:lm30)
 \end{equation}
-Taking the difference and multiplying by $\mathcal{I}(\boldsymbol\theta_0)^{-1}$:
+Taking the difference and multiplying by $\mathcal{I}_Y(\boldsymbol\theta_0)^{-1}$:
 \begin{equation}
 \sqrt{n}(\hat{\boldsymbol\theta}_n-\hat{\boldsymbol\theta}_n^0) \approx
-\mathcal{I}(\boldsymbol\theta_0)^{-1}\frac{1}{\sqrt{n}}\frac{\partial \log \mathcal{L}(\hat{\boldsymbol\theta}^0_n;\bv{y})}{\partial \boldsymbol\theta}.(\#eq:lm2)
+\mathcal{I}_Y(\boldsymbol\theta_0)^{-1}\frac{1}{\sqrt{n}}\frac{\partial \log \mathcal{L}(\hat{\boldsymbol\theta}^0_n;\bv{y})}{\partial \boldsymbol\theta}.(\#eq:lm2)
 \end{equation}
 Eqs. \@ref(eq:lm1) and \@ref(eq:lm2) yield to:
 \begin{equation}
-\sqrt{n}h(\hat{\boldsymbol\theta}_n) \approx \dfrac{\partial h(\boldsymbol\theta_0)}{\partial \boldsymbol\theta'} \mathcal{I}(\boldsymbol\theta_0)^{-1}\frac{1}{\sqrt{n}}\frac{\partial \log \mathcal{L}(\hat{\boldsymbol\theta}^0_n;\bv{y})}{\partial \boldsymbol\theta}.(\#eq:lm3)
+\sqrt{n}h(\hat{\boldsymbol\theta}_n) \approx \dfrac{\partial h(\boldsymbol\theta_0)}{\partial \boldsymbol\theta'} \mathcal{I}_Y(\boldsymbol\theta_0)^{-1}\frac{1}{\sqrt{n}}\frac{\partial \log \mathcal{L}(\hat{\boldsymbol\theta}^0_n;\bv{y})}{\partial \boldsymbol\theta}.(\#eq:lm3)
 \end{equation}
 
 Recall that $\hat{\boldsymbol\theta}^0_n$ is the MLE of $\boldsymbol\theta_0$ under the constraint $h(\boldsymbol\theta)=0$. The vector of Lagrange multipliers $\hat\lambda_n$ associated to this program satisfies:
@@ -810,16 +792,16 @@ Recall that $\hat{\boldsymbol\theta}^0_n$ is the MLE of $\boldsymbol\theta_0$ un
 Substituting the latter equation in Eq. \@ref(eq:lm3) gives:
 \begin{eqnarray*}
 \sqrt{n}h(\hat{\boldsymbol\theta}_n) &\approx&
-- \dfrac{\partial h(\boldsymbol\theta_0)}{\partial \boldsymbol\theta'} \mathcal{I}(\boldsymbol\theta_0)^{-1}
+- \dfrac{\partial h(\boldsymbol\theta_0)}{\partial \boldsymbol\theta'} \mathcal{I}_Y(\boldsymbol\theta_0)^{-1}
 \frac{\partial h'(\hat{\boldsymbol\theta}^0_n;\bv{y})}{\partial \boldsymbol\theta} \frac{\hat\lambda_n}{\sqrt{n}} \\
 &\approx&
-- \dfrac{\partial h(\boldsymbol\theta_0)}{\partial \boldsymbol\theta'} \mathcal{I}(\boldsymbol\theta_0)^{-1}
+- \dfrac{\partial h(\boldsymbol\theta_0)}{\partial \boldsymbol\theta'} \mathcal{I}_Y(\boldsymbol\theta_0)^{-1}
 \frac{\partial h'(\boldsymbol\theta_0;\bv{y})}{\partial \boldsymbol\theta} \frac{\hat\lambda_n}{\sqrt{n}},
 \end{eqnarray*}
 which yields:
 \begin{equation}
 \frac{\hat\lambda_n}{\sqrt{n}} \approx - \left(
-\dfrac{\partial h(\boldsymbol\theta_0)}{\partial \boldsymbol\theta'} \mathcal{I}(\boldsymbol\theta_0)^{-1}
+\dfrac{\partial h(\boldsymbol\theta_0)}{\partial \boldsymbol\theta'} \mathcal{I}_Y(\boldsymbol\theta_0)^{-1}
 \frac{\partial h'(\boldsymbol\theta_0;\bv{y})}{\partial \boldsymbol\theta}
 \right)^{-1}
 \sqrt{n}h(\hat{\boldsymbol\theta}_n).(\#eq:lm20)
@@ -827,13 +809,13 @@ which yields:
 It follows, from Eq. \@ref(eq:lm10), that:
 $$
 \frac{\hat\lambda_n}{\sqrt{n}} \overset{d}{\rightarrow} \mathcal{N}\left(0,\left(
-\dfrac{\partial h(\boldsymbol\theta_0)}{\partial \boldsymbol\theta'} \mathcal{I}(\boldsymbol\theta_0)^{-1}
+\dfrac{\partial h(\boldsymbol\theta_0)}{\partial \boldsymbol\theta'} \mathcal{I}_Y(\boldsymbol\theta_0)^{-1}
 \frac{\partial h'(\boldsymbol\theta_0;\bv{y})}{\partial \boldsymbol\theta}
 \right)^{-1}\right).
 $$
 Taking the quadratic form of the last equation gives:
 $$
-\frac{1}{n}\hat\lambda_n' \dfrac{\partial h(\hat{\boldsymbol\theta}^0_n)}{\partial \boldsymbol\theta'} \mathcal{I}(\hat{\boldsymbol\theta}^0_n)^{-1}
+\frac{1}{n}\hat\lambda_n' \dfrac{\partial h(\hat{\boldsymbol\theta}^0_n)}{\partial \boldsymbol\theta'} \mathcal{I}_Y(\hat{\boldsymbol\theta}^0_n)^{-1}
 \frac{\partial h'(\hat{\boldsymbol\theta}^0_n;\bv{y})}{\partial \boldsymbol\theta} \hat\lambda_n \overset{d}{\rightarrow} \chi^2(r).
 $$
 Using Eq. \@ref(eq:multiplier), it appears that the left-hand side term of the last equation is $\xi^{LM}$ as defined in Eq. \@ref(eq:xiLM). Consistency: see Remark 17.3 in @gourieroux_monfort_1995.
@@ -849,38 +831,38 @@ The second-order Taylor expansions of $\log \mathcal{L}(\hat{\boldsymbol\theta}^
 \begin{eqnarray*}
 \log \mathcal{L}(\hat{\boldsymbol\theta}_n,\bv{y}) &\approx& \log \mathcal{L}(\boldsymbol\theta_0,\bv{y})
 + \frac{\partial \log \mathcal{L}(\boldsymbol\theta_0,\bv{y})}{\partial \boldsymbol\theta'}(\hat{\boldsymbol\theta}_n-\boldsymbol\theta_0) \\
-&& - \frac{n}{2} (\hat{\boldsymbol\theta}_n-\boldsymbol\theta_0)' \mathcal{I}(\boldsymbol\theta_0) (\hat{\boldsymbol\theta}_n-\boldsymbol\theta_0)\\
+&& - \frac{n}{2} (\hat{\boldsymbol\theta}_n-\boldsymbol\theta_0)' \mathcal{I}_Y(\boldsymbol\theta_0) (\hat{\boldsymbol\theta}_n-\boldsymbol\theta_0)\\
 \log \mathcal{L}(\hat{\boldsymbol\theta}^0_n,\bv{y}) &\approx& \log \mathcal{L}(\boldsymbol\theta_0,\bv{y})
 + \frac{\partial \log \mathcal{L}(\boldsymbol\theta_0,\bv{y})}{\partial \boldsymbol\theta'}(\hat{\boldsymbol\theta}^0_n-\boldsymbol\theta_0) \\
-&& - \frac{n}{2} (\hat{\boldsymbol\theta}^0_n-\boldsymbol\theta_0)' \mathcal{I}(\boldsymbol\theta_0) (\hat{\boldsymbol\theta}^0_n-\boldsymbol\theta_0).
+&& - \frac{n}{2} (\hat{\boldsymbol\theta}^0_n-\boldsymbol\theta_0)' \mathcal{I}_Y(\boldsymbol\theta_0) (\hat{\boldsymbol\theta}^0_n-\boldsymbol\theta_0).
 \end{eqnarray*}
 Taking the difference, we obtain:
 \begin{eqnarray*}
 \xi_n^{LR} &\approx& 2\frac{\partial \log \mathcal{L}(\boldsymbol\theta_0,\bv{y})}{\partial \boldsymbol\theta'}
-(\hat{\boldsymbol\theta}_n-\hat{\boldsymbol\theta}^0_n) + n (\hat{\boldsymbol\theta}^0_n-\boldsymbol\theta_0)' \mathcal{I}(\boldsymbol\theta_0) (\hat{\boldsymbol\theta}^0_n-\boldsymbol\theta_0)\\
-&& - n (\hat{\boldsymbol\theta}_n-\boldsymbol\theta_0)' \mathcal{I}(\boldsymbol\theta_0) (\hat{\boldsymbol\theta}_n-\boldsymbol\theta_0).
+(\hat{\boldsymbol\theta}_n-\hat{\boldsymbol\theta}^0_n) + n (\hat{\boldsymbol\theta}^0_n-\boldsymbol\theta_0)' \mathcal{I}_Y(\boldsymbol\theta_0) (\hat{\boldsymbol\theta}^0_n-\boldsymbol\theta_0)\\
+&& - n (\hat{\boldsymbol\theta}_n-\boldsymbol\theta_0)' \mathcal{I}_Y(\boldsymbol\theta_0) (\hat{\boldsymbol\theta}_n-\boldsymbol\theta_0).
 \end{eqnarray*}
 Using $\dfrac{1}{\sqrt{n}}\frac{\partial \log \mathcal{L}(\boldsymbol\theta_0;\bv{y})}{\partial \boldsymbol\theta} \approx
-\mathcal{I}(\boldsymbol\theta_0)\sqrt{n}(\hat{\boldsymbol\theta}_n-\boldsymbol\theta_0)$ (Eq. \@ref(eq:lm30)), we have:
+\mathcal{I}_Y(\boldsymbol\theta_0)\sqrt{n}(\hat{\boldsymbol\theta}_n-\boldsymbol\theta_0)$ (Eq. \@ref(eq:lm30)), we have:
 \begin{eqnarray*}
 \xi_n^{LR} &\approx&
-2n(\hat{\boldsymbol\theta}_n-\boldsymbol\theta_0)'\mathcal{I}(\boldsymbol\theta_0)
+2n(\hat{\boldsymbol\theta}_n-\boldsymbol\theta_0)'\mathcal{I}_Y(\boldsymbol\theta_0)
 (\hat{\boldsymbol\theta}_n-\hat{\boldsymbol\theta}^0_n)
-+ n (\hat{\boldsymbol\theta}^0_n-\boldsymbol\theta_0)' \mathcal{I}(\boldsymbol\theta_0) (\hat{\boldsymbol\theta}^0_n-\boldsymbol\theta_0) \\
-&& - n (\hat{\boldsymbol\theta}_n-\boldsymbol\theta_0)' \mathcal{I}(\boldsymbol\theta_0) (\hat{\boldsymbol\theta}_n-\boldsymbol\theta_0).
++ n (\hat{\boldsymbol\theta}^0_n-\boldsymbol\theta_0)' \mathcal{I}_Y(\boldsymbol\theta_0) (\hat{\boldsymbol\theta}^0_n-\boldsymbol\theta_0) \\
+&& - n (\hat{\boldsymbol\theta}_n-\boldsymbol\theta_0)' \mathcal{I}_Y(\boldsymbol\theta_0) (\hat{\boldsymbol\theta}_n-\boldsymbol\theta_0).
 \end{eqnarray*}
 In the second of the three terms in the sum, we replace $(\hat{\boldsymbol\theta}^0_n-\boldsymbol\theta_0)$ by $(\hat{\boldsymbol\theta}^0_n-\hat{\boldsymbol\theta}_n+\hat{\boldsymbol\theta}_n-\boldsymbol\theta_0)$ and we develop the associated product. This leads to:
 \begin{equation}
-\xi_n^{LR} \approx n (\hat{\boldsymbol\theta}^0_n-\hat{\boldsymbol\theta}_n)' \mathcal{I}(\boldsymbol\theta_0) (\hat{\boldsymbol\theta}^0_n-\hat{\boldsymbol\theta}_n). (\#eq:lr10)
+\xi_n^{LR} \approx n (\hat{\boldsymbol\theta}^0_n-\hat{\boldsymbol\theta}_n)' \mathcal{I}_Y(\boldsymbol\theta_0) (\hat{\boldsymbol\theta}^0_n-\hat{\boldsymbol\theta}_n). (\#eq:lr10)
 \end{equation}
 The difference between Eqs. \@ref(eq:lm29) and \@ref(eq:lm30) implies:
 $$
 \frac{1}{\sqrt{n}}\frac{\partial \log \mathcal{L}(\hat{\boldsymbol\theta}^0_n;\bv{y})}{\partial \boldsymbol\theta} \approx
-\mathcal{I}(\boldsymbol\theta_0)\sqrt{n}(\hat{\boldsymbol\theta}_n-\hat{\boldsymbol\theta}^0_n),
+\mathcal{I}_Y(\boldsymbol\theta_0)\sqrt{n}(\hat{\boldsymbol\theta}_n-\hat{\boldsymbol\theta}^0_n),
 $$
 which, associated to Eq. \@ref(eq:lr10), gives:
 $$
-\xi_n^{LR} \approx \frac{1}{n} \frac{\partial \log \mathcal{L}(\hat{\boldsymbol\theta}^0_n;\bv{y})}{\partial \boldsymbol\theta'} \mathcal{I}(\boldsymbol\theta_0)^{-1} \frac{\partial \log \mathcal{L}(\hat{\boldsymbol\theta}^0_n;\bv{y})}{\partial \boldsymbol\theta} \approx \xi_n^{LM}.
+\xi_n^{LR} \approx \frac{1}{n} \frac{\partial \log \mathcal{L}(\hat{\boldsymbol\theta}^0_n;\bv{y})}{\partial \boldsymbol\theta'} \mathcal{I}_Y(\boldsymbol\theta_0)^{-1} \frac{\partial \log \mathcal{L}(\hat{\boldsymbol\theta}^0_n;\bv{y})}{\partial \boldsymbol\theta} \approx \xi_n^{LM}.
 $$
 Hence $\xi_n^{LR}$ has the same asymptotic distribution as $\xi_n^{LM}$.
 
@@ -897,13 +879,13 @@ Let us now demonstrate the equivalence of $\xi^{LM} and \xi^{W}$.
 
 We have (using Eq. \@ref(eq:multiplier)):
 $$
-\xi^{LM}_n = \frac{1}{n}\hat\lambda_n' \dfrac{\partial h(\hat{\boldsymbol\theta}^0_n)}{\partial \boldsymbol\theta'} \mathcal{I}(\hat{\boldsymbol\theta}^0_n)^{-1}
+\xi^{LM}_n = \frac{1}{n}\hat\lambda_n' \dfrac{\partial h(\hat{\boldsymbol\theta}^0_n)}{\partial \boldsymbol\theta'} \mathcal{I}_Y(\hat{\boldsymbol\theta}^0_n)^{-1}
 \frac{\partial h'(\hat{\boldsymbol\theta}^0_n;\bv{y})}{\partial \boldsymbol\theta} \hat\lambda_n.
 $$
 Since, under $H_0$, $\hat{\boldsymbol\theta}_n^0\approx\hat{\boldsymbol\theta}_n \approx {\boldsymbol\theta}_0$, Eq. \@ref(eq:lm20) therefore implies that:
 $$
 \xi^{LM} \approx n h(\hat{\boldsymbol\theta}_n)' \left(
-\dfrac{\partial h(\hat{\boldsymbol\theta}_n)}{\partial \boldsymbol\theta'} \mathcal{I}(\hat{\boldsymbol\theta}_n)^{-1}
+\dfrac{\partial h(\hat{\boldsymbol\theta}_n)}{\partial \boldsymbol\theta'} \mathcal{I}_Y(\hat{\boldsymbol\theta}_n)^{-1}
 \frac{\partial h'(\hat{\boldsymbol\theta}_n;\bv{y})}{\partial \boldsymbol\theta}
 \right)^{-1}
 h(\hat{\boldsymbol\theta}_n) = \xi^{W},

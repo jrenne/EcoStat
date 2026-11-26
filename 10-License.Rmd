@@ -1,0 +1,9 @@
+# Copyright and licence {-}
+
+© 2026 Jean-Paul Renne.
+
+Except where otherwise indicated, the original text, exercises, figures, and code in this edition of the course are licensed under the [Creative Commons Attribution 4.0 International licence (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/). Reuse and adaptation are permitted provided that appropriate credit is given, a link to the licence is supplied, and any changes are indicated.
+
+Earlier versions released under CC0 remain available under CC0; that dedication is not revoked by the licence applied to this edition and to subsequent original contributions.
+
+Third-party datasets, figures, quotations, software, and other materials remain subject to their respective licences and terms of use. Their inclusion in this course does not place them under CC BY 4.0.

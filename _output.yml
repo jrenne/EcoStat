@@ -6,6 +6,7 @@ bookdown::gitbook:
       before: |
         <li><a href="./">Econometrics and Statistics</a></li>
       after: |
+        <li class="book-license">© 2026 Jean-Paul Renne — <a href="https://creativecommons.org/licenses/by/4.0/" target="blank">CC BY 4.0</a></li>
         <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
     edit: https://github.com/jrenne/EcoStat/edit/main/%s
     download: ["pdf"]

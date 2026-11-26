@@ -13,8 +13,11 @@ source("R/instructor-build.R")
 show_solutions <- edition_setting()
 stage <- if (show_solutions) private_build_stage(root) else tempfile("basics-pilot-")
 if (!dir.exists(stage)) dir.create(stage)
-for (path in c("R", "exercises", "images", "style.css", "preamble.tex", "pdf-modern.tex", "pdf-boxes.tex",
-               "01-Basics.Rmd")) {
+source("R/companion-packages.R")
+use_companion_packages()
+show_code_in_pdf <- isTRUE(rmarkdown::yaml_front_matter("index.Rmd")$params$show_code_in_pdf)
+for (path in c("R", "packages", "exercises", "images", "style.css", "preamble.tex", "pdf-modern.tex", "pdf-boxes.tex",
+               "01-Basics.Rmd", "09-Data.Rmd")) {
   if (!file.copy(file.path(root,path), stage, recursive=TRUE)) stop("Cannot copy ", path)
 }
 # The standalone preview has reference notes in place of the full appendix.
@@ -24,10 +27,12 @@ writeLines(chapter, file.path(stage,"01-Basics.Rmd"))
 writeLines(c('---', 'title: "Econometrics and Statistics"',
              paste0('subtitle: "Basic Statistical Results: ', if (show_solutions) 'instructor pilot - private' else 'student pilot', '"'),
              'params:', paste0('  show_solutions: ',tolower(show_solutions)),
+             paste0('  show_code_in_pdf: ',tolower(show_code_in_pdf)),
              'author: "Jean-Paul Renne"', 'documentclass: book', 'fontsize: 11pt', 'classoption: oneside',
              '---', '', '```{r pilot-setup, include=FALSE}',
              'source("R/instructor-build.R")', 'configure_edition(params$show_solutions)',
-             'source("R/setup.R")', '```', '', '\\newcommand{\\bv}[1]{\\mathbf{#1}}', '',
+             'source("R/setup.R")', 'configure_code_display(params$show_code_in_pdf)',
+             '```', '', '\\newcommand{\\bv}[1]{\\mathbf{#1}}', '',
              '# About this pilot {-}', '',
              if (show_solutions) 'Private instructor edition: includes hints and solutions after each exercise.' else 'This preview combines the opening textbook chapter with seven end-of-chapter exercises. Solutions and exercise-specific hints are reserved for teaching sessions.', '',
              'The reference notes reproduce the definitions and theorem from elsewhere in the textbook that this chapter cites.'),
@@ -49,7 +54,7 @@ refs <- c(refs, extract_block("02-CLT.Rmd","LLN"))
 writeLines(refs,file.path(stage,"08-ReferenceNotes.Rmd"))
 writeLines(c('book_filename: "Basic-Statistical-Results"', 'output_dir: "output"',
              'delete_merged_file: true', 'rmd_files:', '  - index.Rmd',
-             '  - 01-Basics.Rmd', '  - 08-ReferenceNotes.Rmd'),
+             '  - 01-Basics.Rmd', '  - 08-ReferenceNotes.Rmd', '  - 09-Data.Rmd'),
            file.path(stage,"_bookdown.yml"))
 writeLines(c('bookdown::gitbook:', '  css: style.css', '  code_folding: hide',
              '  config:', '    download: ["pdf"]',

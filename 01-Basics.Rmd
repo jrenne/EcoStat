@@ -40,11 +40,27 @@ $$
 for constants $a,b,c$. Independence is not required for this property. If $X$ and $Y$ are independent, their covariance is zero; the converse does not hold in general.
 
 :::{.example #bernoulli-moments name="Bernoulli variable"}
-Let $D$ equal one when an individual is employed and zero otherwise, and suppose that $\mathbb{P}(D=1)=p$. Then
+Let $D$ equal one when a credit-card client has a recorded default payment in the following month and zero otherwise, and suppose that $\mathbb{P}(D=1)=p$. Then
 $$
 \mathbb{E}(D)=p,\qquad \mathbb{V}ar(D)=p(1-p).
 $$
-Although each realization is either zero or one, the expectation $p$ is the population employment rate.
+Although each realization is either zero or one, the expectation $p$ is the probability of default.
+
+We use the payment-default indicator from `UCIcredit`, described in Appendix \@ref(data-credit).
+
+```{r basics-credit-bernoulli}
+data("UCIcredit", package="AEC")
+credit_basics <- UCIcredit
+D <- credit_basics$default_next_month
+p_recorded <- mean(D)
+# Population variance uses n; var(D) would use n - 1.
+data_table(data.frame(Clients=length(D), Defaults=sum(D),
+                      Default_share=p_recorded,
+                      Empirical_variance=mean((D-p_recorded)^2)), digits=4,
+           col.names=c("Clients","Defaults","Default share","Variance"))
+```
+
+If we draw one client uniformly from these recorded clients, the probability of a default is exactly `r round(p_recorded,4)`. The variance of this finite distribution is $p(1-p)=$ `r round(p_recorded*(1-p_recorded),4)`. This calculation describes the recorded clients; interpreting their default share as the risk of a different borrower population requires additional assumptions.
 :::
 
 ::: {.practicebox data-latex=""}
@@ -354,9 +370,46 @@ which implies that
 &&+ \mathbb{P}(X\le x,Y\le y).
 \end{eqnarray*}
 
-```{r figFXYdecompo, fig.align = 'center', out.width = "80%", fig.cap = "Area $B+C+D+E$ encompasses the points with coordinates $(X,Y)$ such that $X\\le x+\\varepsilon$ and $Y \\le y + \\varepsilon$. Area $D+E$ encompasses the points with coordinates $(X,Y)$ such that $X\\le x+\\varepsilon$ and $Y \\le y$. Area $C+E$ encompasses the points with coordinates $(X,Y)$ such that $X\\le x$ and $Y \\le y + \\varepsilon$.", echo=FALSE}
-knitr::include_graphics("images/tikzplot.png")
+```{r figFXYdecompo, fig.align="center", fig.width=7, fig.height=4.8, out.width="95%", fig.cap="Recovering a rectangle probability from the joint CDF. The highlighted region B is obtained by subtracting C + E and D + E from B + C + D + E, then adding E back because it was subtracted twice. Regions C and E continue indefinitely to the left; D and E continue indefinitely downwards.", echo=FALSE}
+par(mar=c(.5,.5,.5,.5), family="sans")
+plot.new()
+plot.window(xlim=c(-1.45,3.65), ylim=c(-1.05,3.15), asp=1)
+ink <- "#243F50"
+blue <- "#176F91"
+accent <- "#B44C35"
+x_cut <- 2
+y_cut <- 1.6
+eps <- .75
+left <- -.65
+bottom <- -.65
+# The left and lower edges are drawing limits, not bounds on the variables.
+rect(left,bottom,x_cut,y_cut,col="#F5F3ED",border=NA)
+rect(left,y_cut,x_cut,y_cut+eps,col="#DCEEF3",border=NA)
+rect(x_cut,bottom,x_cut+eps,y_cut,col="#DCEEF3",border=NA)
+rect(x_cut,y_cut,x_cut+eps,y_cut+eps,col="#F2D9D1",border=accent,lwd=2)
+segments(c(x_cut,x_cut+eps),bottom,c(x_cut,x_cut+eps),y_cut+eps,
+         col=c(blue,ink),lty=c(2,1),lwd=1.2)
+segments(left,c(y_cut,y_cut+eps),x_cut+eps,c(y_cut,y_cut+eps),
+         col=c(blue,ink),lty=c(2,1),lwd=1.2)
+# Coordinate axes and the four thresholds.
+arrows(left-.12,0,3.3,0,length=.08,angle=25,col=ink,lwd=1.3)
+arrows(0,bottom-.12,0,2.9,length=.08,angle=25,col=ink,lwd=1.3)
+text(3.45,0,expression(X),col=ink,cex=1.1)
+text(0,3.04,expression(Y),col=ink,cex=1.1)
+segments(c(x_cut,x_cut+eps),-.055,c(x_cut,x_cut+eps),.055,col=ink)
+text(c(x_cut,x_cut+eps),bottom-.23,
+     c(expression(x),expression(x+epsilon)),col=ink,cex=1.05)
+segments(-.055,c(y_cut,y_cut+eps),.055,c(y_cut,y_cut+eps),col=ink)
+text(left-.12,c(y_cut,y_cut+eps),
+     c(expression(y),expression(y+epsilon)),pos=2,col=ink,cex=1.05)
+# Region letters match the inclusion-exclusion identity in the text.
+text(x_cut+eps/2,y_cut+eps/2,"B",font=2,col=accent,cex=1.5)
+text(.95,y_cut+eps/2,"C",col=ink,cex=1.4)
+text(x_cut+eps/2,.75,"D",col=ink,cex=1.4)
+text(.95,.75,"E",col=ink,cex=1.4)
+
 ```
+
 
 
 :::{.definition #condcdf name="Conditional probability density function"}
@@ -480,7 +533,7 @@ $$
 
 Figure \@ref(fig:mixtureG) displays the densities of three Gaussian mixtures. This [web interface](https://jrenne.shinyapps.io/density/) can be used to explore other parameter values.
 
-```{r mixtureG, fig.cap="Example of pdfs of mixtures of Gaussian distribututions.", fig.asp = .6, out.width = "95%", fig.align = "left",echo=FALSE,warning=FALSE}
+```{r mixtureG, fig.cap="Example of pdfs of mixtures of Gaussian distributions.", fig.asp = .6, out.width = "95%", fig.align = "left",echo=FALSE,warning=FALSE}
 x <- seq(-5,5,by=.1)
 par(mfrow=c(1,3))
 par(plt=c(.1,.9,.1,.8))
@@ -541,27 +594,52 @@ X = \left\{
 \end{array}
 \right.
 $$
-Conditionally on $\theta$, it can be seen that we have $\mathbb{E}(X|\theta)=\cos(\theta)/2$ (see Figure \@ref(fig:Buffon)).
+Let $d$ be the distance from the needle's left endpoint to the groove on its left, and let $\theta$ be the angle with the horizontal, oriented towards the right. Conditional on $\theta$, the needle's horizontal projection has length $\ell\cos(\theta)$, where $\ell=1/2$. It crosses the right groove when $d+\ell\cos(\theta)\geq w$. Since $d$ is uniform on $[0,w]$ and independent of $\theta$,
+$$
+\mathbb{E}(X\mid\theta)=\mathbb{P}(X=1\mid\theta)=\frac{\ell\cos(\theta)}{w}=\frac{\cos(\theta)}{2}.
+$$
+Figure \@ref(fig:Buffon) shows the geometry and the interval of endpoint positions that yield a crossing.
 
-```{r Buffon, fig.cap="Schematic representation of the problem.", fig.asp = .6, out.width = "95%", fig.align = "left",echo=FALSE,warning=FALSE}
-par(mfrow=c(1,1))
-par(plt=c(.25,.75,.1,.8))
-plot(0,0,col="white",xlim=c(-.1,1.1),ylim=c(-.1,0.6),xlab="",ylab="",xaxt="n",yaxt="n")
-abline(v=0,lwd=3,col="brown")
-abline(v=1,lwd=2,col="brown")
+```{r Buffon, fig.cap="Buffon's needle: geometry of a crossing. The shaded strip marks the positions of the left endpoint for which the needle crosses the right groove, at the illustrated angle. Its width is the horizontal projection of the needle, so the crossing probability is this width divided by the strip width w.", fig.width=7, fig.height=4.4, out.width="95%", fig.align="center", echo=FALSE, warning=FALSE}
+par(mar=c(.5,.5,.5,.5), family="sans")
+plot.new()
+plot.window(xlim=c(-.13,1.3), ylim=c(-.22,.84), asp=1)
+ink <- "#243F50"
+blue <- "#176F91"
+needle_colour <- "#B44C35"
 theta <- pi/5
-x0=.2
-y0=.2
-lines(c(x0,x0+cos(theta)/2),c(y0,y0+sin(theta)/2),col="red",lwd=3)
-abline(h=y0,col="grey")
-text(x0+.1,y0+.05,expression(paste("angle ",theta,sep="")),pos=4)
-arrows(x0=0, y0=y0, x1 = x0, y1 = y0, length = 0.1, angle = 30,
-       code = 3,lwd=2)
-text(x0/2,y0+.02,"d")
-arrows(x0=0, y0=0, x1 = 1, y1 = 0, length = 0.1, angle = 30,
-       code = 3,lwd=2)
-text(1/2,0+.02,"w=1")
+ell <- .5
+projection <- ell*cos(theta)
+d <- .72
+y <- .32
+# The endpoint can start anywhere in [0,w]; only the shaded interval crosses.
+rect(0,0,1,.77,col="#F5F3ED",border=NA)
+rect(1-projection,0,1,.77,col="#DCEEF3",border=NA)
+segments(c(0,1),0,c(0,1),.77,col=ink,lwd=2.5)
+segments(1-projection,0,1-projection,.77,col=blue,lty=3,lwd=1.2)
+text(c(0,1),.81,c("Left groove","Right groove"),col=ink,cex=.9)
+# Needle, angle arc, and horizontal reference through the left endpoint.
+segments(d,y,d+projection,y,col="#8B989E",lty=2)
+segments(d,y,d+projection,y+ell*sin(theta),col=needle_colour,lwd=4)
+points(d,y,pch=21,bg=needle_colour,col="white",cex=1.1)
+arc <- seq(0,theta,length.out=80)
+lines(d+.13*cos(arc),y+.13*sin(arc),col=ink,lwd=1.2)
+text(d+.19*cos(theta/2),y+.19*sin(theta/2),expression(theta),col=ink)
+text(d+projection/2-.045,y+ell*sin(theta)/2+.075,
+     expression(italic(l)==1/2),col=needle_colour,cex=1.05)
+# Distances are separated from the needle so arrowheads and labels stay clear.
+arrows(0,.22,d,.22,code=3,angle=25,length=.07,col=ink,lwd=1.1)
+text(d/2,.265,expression(d),col=ink)
+segments(c(d,d+projection),.04,c(d,d+projection),c(y,y+ell*sin(theta)),col="#8B989E",lty=3)
+arrows(d,.075,d+projection,.075,code=3,angle=25,length=.07,col=needle_colour,lwd=1.2)
+text(d+projection/2,.015,expression(italic(l)~cos(theta)),col=needle_colour,cex=.95)
+arrows(0,-.12,1,-.12,code=3,angle=25,length=.08,col=ink,lwd=1.2)
+text(.5,-.18,expression(w==1),col=ink)
+# The same projection determines the width of the crossing interval.
+arrows(1-projection,.69,1,.69,code=3,angle=25,length=.07,col=blue,lwd=1.2)
+text(1-projection/2,.735,expression(italic(l)~cos(theta)),col=blue,cex=.95)
 ```
+
 
 It is reasonable to assume that $\theta$ is uniformly distributed on $[-\pi/2,\pi/2]$, therefore:
 $$
@@ -636,6 +714,42 @@ $$
 =0.1225.
 $$
 The total variance is $0.505+0.1225=0.6275$. This decomposition is often useful in economics because it separates heterogeneity within observable groups from differences in their average outcomes.
+
+:::{.example #credit-total-variance name="Default probabilities across age groups"}
+
+Return to the credit-card clients of Example \@ref(exm:bernoulli-moments). Let $D$ denote the recorded payment-default indicator and let $G$ identify three age groups. We continue to treat a uniformly drawn recorded client as our probability experiment.
+
+```{r basics-credit-groups}
+credit_basics$age_group <- cut(credit_basics$AGE,
+                              breaks=c(-Inf,35,50,Inf),
+                              labels=c("35 or younger","36 to 50","Over 50"))
+credit_groups <- do.call(rbind, lapply(split(D,credit_basics$age_group),
+  function(z) data.frame(Clients=length(z), Default_share=mean(z))))
+credit_groups$Weight <- credit_groups$Clients / length(D)
+data_table(credit_groups, digits=4, row_label="Age group",
+           col.names=c("Age group","Clients","Default share","Weight"))
+```
+
+Within group $g$, $D$ is Bernoulli with default probability $p_g$. Iterated expectations gives $p=\sum_g w_gp_g$, where $w_g$ is the group's share of clients. Total variance then gives
+$$
+p(1-p)=\underbrace{\sum_g w_gp_g(1-p_g)}_{\mathbb{E}[\mathbb{V}ar(D\mid G)]\;\text{(within groups)}}
++\underbrace{\sum_g w_g(p_g-p)^2}_{\mathbb{V}ar[\mathbb{E}(D\mid G)]\;\text{(between groups)}}.
+$$
+
+```{r basics-credit-decomposition}
+w <- credit_groups$Weight
+p_g <- credit_groups$Default_share
+within_credit <- sum(w*p_g*(1-p_g))
+between_credit <- sum(w*(p_g-p_recorded)^2)
+data_table(data.frame(Weighted_default_share=sum(w*p_g),
+                      Within=within_credit, Between=between_credit,
+                      Sum=within_credit+between_credit,
+                      Direct_variance=p_recorded*(1-p_recorded)), digits=5,
+           col.names=c("Default share","Within","Between","Sum","Direct variance"))
+```
+
+The first term averages the conditional variances across age groups: it is the expectation of a variance. The second term measures how the conditional means vary across age groups: it is the variance of an expectation. In the table, these are labelled Within and Between, respectively. The two calculations of total variance agree because they describe the same finite distribution. Differences between these age groups are descriptive; they do not establish that changing a client's age would change their default risk by the observed difference.
+:::
 
 
 :::{.example #mixture2 name="Mixture of Gaussian distributions (cont'd)"}

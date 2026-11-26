@@ -1,3 +1,6 @@
+source("R/companion-packages.R")
+use_companion_packages()
+
 source("R/table-format.R")
 
 # Apply the PDF code-display switch after chunk-specific options have been

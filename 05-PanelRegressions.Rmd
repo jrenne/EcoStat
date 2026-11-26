@@ -10,9 +10,9 @@
 - Identify the source of bias in dynamic panel regressions and the role of internal instruments.
 - State the identifying assumption behind difference-in-differences.
 
-**Roadmap.** The chapter introduces panel notation and the main assumptions before presenting fixed-effects and random-effects estimators. It then studies dynamic panels and closes with programme-evaluation methods. Section \@ref(panel-exercises) applies these ideas.
+**Roadmap.** The chapter introduces panel notation and the main assumptions before presenting fixed-effects and random-effects estimators. It then studies dynamic panels and closes with programme-evaluation methods. The running application follows Swiss electricity meters: we compare weekend and weekday imports for the same installation. Simulations isolate the assumptions behind random effects and dynamic panels; a French speed-camera application illustrates difference-in-differences with later-treated comparison sites. Section \@ref(panel-exercises) applies these ideas.
 
-## Specification and notations
+## Specification and notation
 
 A panel dataset follows the same entities across time. Entities are indexed by $i\in\{1,\dots,n\}$ and periods by $t\in\{1,\dots,T\}$. This repeated-observation structure lets us distinguish variation across entities from variation within an entity over time.
 
@@ -23,41 +23,47 @@ y_{i,t} = \bv{x}'_{i,t}\underbrace{\boldsymbol\beta}_{K \times 1} + \underbrace{
 
 When running panel regressions, the usual objective is to estimate $\boldsymbol\beta$.
 
-<!-- \includegraphics[width=.95\linewidth]{../../figures/Figure_Panel_simul0.pdf} -->
+Figure \@ref(fig:simulPanel) illustrates why that distinction matters. Each entity is observed twice. In the simulation, $y_{i,t}=\alpha_i+x_{i,t}+\varepsilon_{i,t}$, so the true slope is **one**. Entities with larger $x$ tend to have lower $\alpha_i$. Pooling the observations hides this heterogeneity and produces a negative slope; joining each entity's observations reveals the positive within-entity relationship.
 
-Figure \@ref(fig:simulPanel) illustrates why that distinction matters. The model is $y_{i,t}=\alpha_i+\beta x_{i,t}+\varepsilon_{i,t}$ for $t\in\{1,2\}$. In Panel (b), blue and red dots represent the two periods, and each line joins observations for the same entity. The pooled correlation between $y$ and $x$ is negative, yet the within-entity relationship is positive because $\beta=5$. The entity effects $\alpha_i$ are negatively correlated with $x_{i,t}$, so ignoring the panel structure would reverse the sign of the relationship of interest.
-
-```{r simulPanel, fig.cap="The data are the same for both panels. On Panel (b), blue dots are for $t=1$, red dots are for $t=2$. The lines relate the dots associated to the same entity $i$.", fig.asp = .6, out.width = "95%", fig.align = 'left'}
-T <- 2; n <- 12 # 2 periods and 12 entities
-alpha <- 5*rnorm(n) # draw fixed effects
-x.1 <- rnorm(n) - .5*alpha # note: x_i's correlate to alpha_i's
-x.2 <- rnorm(n) - .5*alpha
-beta <- 5; sigma <- .3
-y.1 <- alpha + x.1 + sigma*rnorm(n);y.2 <- alpha + x.2 + sigma*rnorm(n)
-x <- c(x.1,x.2) # pooled x
-y <- c(y.1,y.2) # pooled y
-par(mfrow=c(1,2))
-plot(x,y,col="black",pch=19,xlab="x",ylab="y",main="(a)")
-plot(x,y,col="black",pch=19,xlab="x",ylab="y",main="(b)")
-points(x.1,y.1,col="blue",pch=19);points(x.2,y.2,col="red",pch=19)
-for(i in 1:n){lines(c(x.1[i],x.2[i]),c(y.1[i],y.2[i]))}
+```{r simulPanel, fig.width=7, fig.height=3.4, out.width="95%", fig.align='center', fig.cap="Between-entity differences can conceal a positive within-entity relationship. Both panels show the same simulated observations. Grey segments join each entity's two periods; the blue line in panel (a) is pooled OLS."}
+n_panel <- 12
+alpha_panel <- 5*rnorm(n_panel)
+x_panel <- cbind(rnorm(n_panel),rnorm(n_panel))-.5*alpha_panel
+y_panel <- alpha_panel+x_panel+.15*matrix(rnorm(2*n_panel),n_panel,2)
+sim_panel <- data.frame(id=rep(seq_len(n_panel),2),
+                        x=c(x_panel),y=c(y_panel))
+panel_par <- par(mfrow=c(1,2),mar=c(4,4,2,1))
+plot(y~x,sim_panel,pch=19,col="#245A81",main="(a) Pooled observations")
+abline(lm(y~x,sim_panel),col="#245A81",lwd=2)
+plot(range(x_panel),range(y_panel),type="n",xlab="x",ylab="y",
+     main="(b) Follow each entity")
+segments(x_panel[,1],y_panel[,1],x_panel[,2],y_panel[,2],col="grey60")
+points(x_panel[,1],y_panel[,1],pch=19,col="#245A81")
+points(x_panel[,2],y_panel[,2],pch=17,col="#B65C28")
+legend("topright",c("Period 1","Period 2"),pch=c(19,17),
+       col=c("#245A81","#B65C28"),bty="n",cex=.9)
+par(panel_par)
 ```
 
-Figure \@ref(fig:cigarettes) presents the same type of plot based on the Cigarette Consumption Panel dataset (`CigarettesSW` dataset, used in @Stock_Watson_2003). This dataset documents the average consumption of cigarettes in 48 continental US states for two dates (1985 and 1995).
+**Running data: electricity imports at Swiss meters.** `AEC::CHelectricity` records daily grid imports and exports in 2023--2024. We use the 30 apartment and 30 single-family-house meters in its compact panel and retain only complete daily import totals (Appendix \@ref(data-electricity)). Our outcome is electricity **drawn from the grid**, in kWh per day. It is not total electricity use: on-site generation consumed directly is not measured by imports.
 
-```{r cigarettes, fig.align = 'left', out.width = "95%", fig.cap = "Cigarette consumption versus real price in the CigarettesSW panel dataset.", echo=FALSE}
-data("CigarettesSW", package = "AER")
-CigarettesSW$rprice  <- with(CigarettesSW, price/cpi) # compute real price
-par(plt=c(.15,.95,.2,.95))
-plot(packs~rprice,data=CigarettesSW,xlim=c(70,170),ylim=c(50,200),
-     subset = year == 1985,pch=19,col="blue",xlab="real price",ylab="# of packs")
-points(packs~rprice,data=CigarettesSW,subset = year == 1995,pch=19,col="red")
-states <- levels(CigarettesSW$state)
-for(i in 1:length(states)){
-  lines(packs~rprice,data=CigarettesSW,subset = state == states[i])
-}
+The question is simple: **does a given installation draw more or less electricity from the grid on weekends?** Meter effects absorb stable differences in equipment, building size and occupancy. Month--year effects absorb common seasonal and annual movements. Neither effect absorbs day-to-day weather or changes in occupancy, so we interpret the result as a calendar association.
+
+```{r electricity-panel-data, message=FALSE, warning=FALSE}
+data(CHelectricity,package="AEC")
+data(CHelectricity_meters,package="AEC")
+elec_meters <- subset(CHelectricity_meters,selected_daily &
+                       installation_type %in% c("Apartment","Single-family house"))
+elec_panel <- subset(CHelectricity,meter_id %in% elec_meters$meter_id &
+                       !is.na(import_kwh))
+elec_panel$meter <- factor(elec_panel$meter_id)
+elec_panel$month_year <- factor(format(elec_panel$date,"%Y-%m"))
+elec_panel$weekend <- as.integer(elec_panel$weekday>=6)
+elec_days <- table(elec_panel$meter)
+stopifnot(!anyDuplicated(elec_panel[c("meter_id","date")]))
 ```
 
+There are **`r format(nrow(elec_panel),big.mark=",")` meter--day observations** from **`r nlevels(elec_panel$meter)` meters**. A meter contributes between `r min(elec_days)` and `r max(elec_days)` days. Missing readings are not zero imports, and we do not fill them in. The resulting panel is **unbalanced**. The formulas below use a common $T$ for clarity; for an unbalanced panel, means and observation counts use the available periods $T_i$ for each entity. Selective missingness can still affect the estimates.
 
 We will make use of the following notations:
 $$
@@ -121,7 +127,7 @@ $$
 \vdots\\
 \tilde{\bv{x}}_{n}
 \end{array}\right], \quad
-\tilde{\bv{Y}} =
+\tilde{\bv{y}} =
 \left[
 \begin{array}{c}
 \tilde{\bv{y}}_{1}\\
@@ -147,7 +153,7 @@ There are three typical situations:
 $$
 y_{i,t} = \bv{x}'_{i,t}\boldsymbol\beta + \alpha +  \underbrace{{\color{blue}u_i + \varepsilon_{i,t}}}_{\mbox{compound error}},
 $$
-where $\alpha = \mathbb{E}(\bv{z}'_{i}\boldsymbol\alpha)$ and $u_i = \bv{z}'_{i}\boldsymbol\alpha - \mathbb{E}(\bv{z}'_{i}\boldsymbol\alpha) \perp \bv{x}_i$. In that case, the OLS is consistent, but not efficient. GLS can be used to gain efficiencies over OLS (see Section \@ref(GLS) for a presentation of the GLS approach).
+where $\alpha = \mathbb{E}(\bv{z}'_{i}\boldsymbol\alpha)$ and $u_i = \bv{z}'_{i}\boldsymbol\alpha - \mathbb{E}(\bv{z}'_{i}\boldsymbol\alpha)$, with $\mathbb{E}(u_i\mid\bv{x}_i)=0$. In that case, the OLS is consistent, but not efficient. GLS can be used to gain efficiencies over OLS (see Section \@ref(GLS) for a presentation of the GLS approach).
 
 
 ## Estimation of fixed-effects models {#FixedEffect}
@@ -159,11 +165,11 @@ When individual effects may be correlated with the regressors, the estimator mus
 
 We assume that:
 
-i. There is no perfect multicollinearity among the regressors.
-ii. $\mathbb{E}(\varepsilon_{i,t}|\bv{X})=0$, for all $i,t$.
+i. The time-varying regressors retain full column rank after removing entity means; a common intercept and time-invariant regressors are absorbed by the entity effects.
+ii. $\mathbb{E}(\varepsilon_{i,t}|\bv{X},\boldsymbol\alpha)=0$, for all $i,t$ (strict exogeneity conditional on the entity effects).
 iii. We have:
 $$
-\mathbb{E}(\varepsilon_{i,t}\varepsilon_{j,s}|\bv{X}) =
+\mathbb{E}(\varepsilon_{i,t}\varepsilon_{j,s}|\bv{X},\boldsymbol\alpha) =
 \left\{
 \begin{array}{cl}
 \sigma^2 & \mbox{if $i=j$ and $s=t$},\\
@@ -228,9 +234,9 @@ s^2 \left( \bv{Z}'\bv{Z}\right)^{-1} \quad with \quad s^2 = \frac{\bv{e}'\bv{e}}
 $$
 where $\bv{e}$ is the $(nT) \times 1$ vector of OLS residuals.
 
-There is an alternative way of expressing the LSDV estimators. It involves the residual-maker matrix matrix $\bv{M_D}=Id - \bv{D}(\bv{D}'\bv{D})^{-1}\bv{D}'$ (see Eq. \@ref(eq:Mres)), which acts as an operator that removes entity-specific means, i.e.:
+There is an alternative way of expressing the LSDV estimators. It involves the residual-maker matrix $\bv{M_D}=\mathbf{Id} - \bv{D}(\bv{D}'\bv{D})^{-1}\bv{D}'$ (see Eq. \@ref(eq:Mres)), which acts as an operator that removes entity-specific means, i.e.:
 $$
-\tilde{\bv{Y}} = \bv{M_D}\bv{Y}, \quad \tilde{\bv{X}} = \bv{M_D}\bv{X} \quad and \quad \tilde{\boldsymbol\varepsilon} = \bv{M_D}\boldsymbol\varepsilon.
+\tilde{\bv{y}} = \bv{M_D}\bv{y}, \quad \tilde{\bv{X}} = \bv{M_D}\bv{X} \quad and \quad \tilde{\boldsymbol\varepsilon} = \bv{M_D}\boldsymbol\varepsilon.
 $$
 
 With these notations, using the Frisch-Waugh theorem (Theorem \@ref(thm:FW)), we get another expression for the estimator $\bv{b}$ appearing in Eq. \@ref(eq:bfixedeffects11):
@@ -238,7 +244,7 @@ With these notations, using the Frisch-Waugh theorem (Theorem \@ref(thm:FW)), we
 \boxed{\bv{b} = [\bv{X}'\bv{M_D}\bv{X}]^{-1}\bv{X}'\bv{M_D}\bv{y}.}(\#eq:bfixedeffects)
 \end{equation}
 
-This amounts to regressing the $\tilde{y}_{i,t}$'s ($= y_{i,t} - \bar{y}_i$) on the $\tilde{\bv{x}}_{i,t}$'s ($=\bv{x}_{i,t} - \bar{\bv{x}}_i$).
+This amounts to regressing the $\tilde{y}_{i,t}$'s ($= y_{i,t} - \bar{y}_i$) on the $\tilde{\bv{x}}_{i,t}$'s ($=\bv{x}_{i,t} - \bar{\bv{x}}_i$). Each observation is compared with its own entity mean. Stable differences between entities disappear, including time-invariant observed characteristics. Strict exogeneity is still needed: demeaning does not remove time-varying confounding. Assumption (iii) gives the conventional covariance formula; clustered covariance estimates relax its error restrictions without changing the within coefficients.
 
 The estimate of $\boldsymbol\alpha$ is given by:
 \begin{equation}
@@ -258,8 +264,8 @@ $$
 \end{array}\right] =
 \left[
 \begin{array}{c}
-\bv{X}'\bv{Y}\\
-\bv{D}'\bv{Y}
+\bv{X}'\bv{y}\\
+\bv{D}'\bv{y}
 \end{array}\right],
 $$
 which are the first-order conditions resulting from the least squares problem (see Eq. \@ref(eq:OLSFOC)).
@@ -268,21 +274,11 @@ which are the first-order conditions resulting from the least squares problem (s
 
 
 
-<!-- %\begin{frame}{} -->
-<!-- %\begin{scriptsize} -->
-<!-- %Look at: -->
-<!-- %http://www.princeton.edu/~otorres/Panel101R.pdf -->
-<!-- % -->
-<!-- %Nice chart with OLS versus LSDV. -->
-<!-- % -->
-<!-- %Use also Grunfeld data: -->
-<!-- % -->
-<!-- %https://vincentarelbundock.github.io/Rdatasets/doc/plm/Grunfeld.html -->
-<!-- % -->
-<!-- %===> Use Applied Econometrics with R 3.6: If $u_i$ exogen, then random effects more efficient. Hausman test. -->
-<!-- % -->
-<!-- %\end{scriptsize} -->
-<!-- %\end{frame} -->
+**First differences provide another way to remove entity effects.** Subtract the previous observation from the current one:
+$$
+\Delta y_{i,t}=(\Delta\bv{x}_{i,t})'\boldsymbol\beta+\Delta\varepsilon_{i,t}.
+$$
+The time-invariant $\alpha_i$ cancels. With two periods, this gives the same slope as the within estimator; with more periods, the estimators generally differ. Even independent level errors generate dependence between adjacent differenced errors because they share an innovation. The covariance estimator must account for that transformation.
 
 One can use different types of fixed effects in the same regression. Typically, one can have time and entity fixed effects. In that case, the model writes:
 $$
@@ -314,78 +310,77 @@ $$
 [0,\dots,0,\underbrace{1}_{\mbox{t$^{th}$ entry}},0,\dots,0]'.
 $$
 
-Using state and year fixed effects in the `CigarettesSW` panel dataset yields the following results:
+The interpretation of these effects is particularly concrete in our running application.
 
-```{r cigarettes2,warning=FALSE, message=FALSE}
-data("CigarettesSW", package = "AER")
-CigarettesSW$rprice  <- with(CigarettesSW, price/cpi) # compute real price
-CigarettesSW$rincome <- with(CigarettesSW, income/population/cpi)
-eq.pooled <- lm(log(packs)~log(rprice)+log(rincome),data=CigarettesSW)
-eq.LSDV <- lm(log(packs)~log(rprice)+log(rincome)+state,
-              data=CigarettesSW)
-CigarettesSW$year <- as.factor(CigarettesSW$year)
-eq.LSDV2 <- lm(log(packs)~log(rprice)+log(rincome)+state+year,
-               data=CigarettesSW)
-model_table(eq.pooled,eq.LSDV,eq.LSDV2,no.space = TRUE,
-                     omit=c("state","year"),
-                     add.lines=list(c('State FE','No','Yes','Yes'),
-                                    c('Year FE','No','No','Yes')),
-                     omit.stat=c("f","ser"))
+:::{.example #electricity-panel name="Weekends at the same electricity meter"}
+
+We estimate
+$$
+imports_{i,t}=\beta\,weekend_t+\alpha_i+\gamma_{m(t)}+\varepsilon_{i,t},
+$$
+where $m(t)$ denotes the month--year containing day $t$. The coefficient $\beta$ measures the fitted weekend--weekday difference, in **kWh per day**, after allowing each meter its own baseline and each month--year a common shift.
+
+```{r electricity-panel-fit, message=FALSE, warning=FALSE}
+elec_pooled <- lm(import_kwh~weekend+month_year,data=elec_panel)
+elec_fe <- lm(import_kwh~weekend+meter+month_year,data=elec_panel)
+# Frisch--Waugh: remove both sets of fixed effects from outcome and regressor.
+elec_y_within <- residuals(lm(import_kwh~meter+month_year,data=elec_panel))
+elec_w_within <- residuals(lm(weekend~meter+month_year,data=elec_panel))
+elec_within <- sum(elec_w_within*elec_y_within)/sum(elec_w_within^2)
+stopifnot(isTRUE(all.equal(unname(coef(elec_fe)["weekend"]),elec_within)))
+elec_fit_results <- data.frame(
+  Model=c("Month--year effects","Meter + month--year effects","Partial regression"),
+  Difference=c(coef(elec_pooled)["weekend"],coef(elec_fe)["weekend"],elec_within),
+  row.names=NULL)
+data_table(elec_fit_results,digits=3,row.names=FALSE,
+           col.names=c("Model","Weekend difference (kWh/day)"))
 ```
 
+The fixed-effects estimate is **`r sprintf("%.2f",coef(elec_fe)["weekend"])` additional kWh per weekend day** for the same meter, after month--year adjustment. This is a difference in levels, not a percentage. The pooled and fixed-effects estimates are close: removing meter baselines need not change a slope substantially when nearly the same calendar variation is observed for each meter.
 
+The last row verifies the within logic numerically. First remove the meter and month--year effects from both imports and the weekend indicator; then regress the residual imports on the residual indicator. The resulting slope exactly equals the dummy-variable estimate. With an unbalanced panel and two sets of effects, subtracting the meter mean and time mean once is not generally equivalent to this partial regression.
 
-:::{.example #JSTPanel name="Housing prices and interest rates"}
+Figure \@ref(fig:electricity-meter-differences) shows the unadjusted comparison for each meter. The spread of the points shows why the common coefficient should be read as a summary: individual installations have different weekend patterns.
 
-In this example, we want to estimate the effect of short and long-term interest rate on housing prices. The data come from the @JST_2017 dataset ([see this website](https://www.macrohistory.net)).
-
-```{r JSTpanel, warning=FALSE, message=FALSE}
-library(AEC);library(sandwich)
-data(JST); JST <- subset(JST,year>1950);N <- dim(JST)[1]
-JST$hpreal <- JST$hpnom/JST$cpi # real house price index
-JST$dhpreal <- 100*log(JST$hpreal/c(NaN,JST$hpreal[1:(N-1)]))
-# Put NA's when change in country:
-JST$dhpreal[c(0,JST$iso[2:N]!=JST$iso[1:(N-1)])] <- NaN
-JST$dhpreal[abs(JST$dhpreal)>30] <- NaN # remove extreme price change
-JST$YEAR <- as.factor(JST$year) # to have time fixed effects
-eq1_noFE <- lm(dhpreal ~ stir + ltrate,data=JST)
-eq1_FE   <- lm(dhpreal ~ stir + ltrate + iso + YEAR,data=JST)
-eq2_noFE <- lm(dhpreal ~ I(ltrate-stir),data=JST)
-eq2_FE <- lm(dhpreal ~ I(ltrate-stir) + iso + YEAR,data=JST)
-model_table(eq1_noFE, eq1_FE, eq2_noFE, eq2_FE, column.labels = c("no FE", "with FE", "no FE","with FE"),
-                     omit = c("iso","YEAR","Constant"),keep.stat = "n",
-                     add.lines=list(c('Country FE','No','Yes','No','Yes'),
-                                    c('Year FE','No','Yes','No','Yes')))
+```{r electricity-meter-differences, fig.width=7, fig.height=3.5, out.width="95%", fig.align='center', fig.cap="Weekend minus weekday mean grid imports for each of the 60 meters, in 2023--2024. Each point is one meter. These raw differences are descriptive; the regression also adjusts for month--year effects."}
+elec_means <- aggregate(import_kwh~meter_id+weekend,elec_panel,mean)
+elec_weekday <- subset(elec_means,weekend==0)
+elec_weekend <- subset(elec_means,weekend==1)
+elec_difference <- merge(elec_weekday,elec_weekend,by="meter_id",
+                         suffixes=c("_weekday","_weekend"))
+elec_difference$change <- elec_difference$import_kwh_weekend-
+                          elec_difference$import_kwh_weekday
+elec_difference$type <- elec_meters$installation_type[
+  match(elec_difference$meter_id,elec_meters$meter_id)]
+elec_plot_par <- par(mar=c(4.5,4,1,1))
+plot(range(elec_difference$change),c(.7,2.3),type="n",yaxt="n",
+     xlab="Weekend minus weekday imports (kWh/day)",ylab="")
+abline(v=0,col="grey65",lty=2)
+for(j in 1:2){
+  group <- c("Apartment","Single-family house")[j]
+  values <- sort(elec_difference$change[elec_difference$type==group])
+  points(values,j+seq(-.15,.15,length.out=length(values)),pch=19,
+         col=adjustcolor(c("#245A81","#B65C28")[j],.8))
+}
+axis(2,at=1:2,labels=c("Apartment","House"),las=1)
+par(elec_plot_par)
 ```
 
-If we suspect heteroskedasticity and autocorrelation (HAC) in the residuals, we can apply cluster corrections (see Section \@ref(Clusters)):
+Meter effects cannot identify coefficients on characteristics that never change within a meter, such as its recorded installation type. Conversely, **daily** date effects would absorb the weekend indicator, which is common to all meters on a given date. Month--year effects leave weekend--weekday variation within each month available for estimation.
 
-```{r JSTpanel20, warning=FALSE, message=FALSE}
-vcov_cluster1_noFE <- vcovCL(eq1_noFE, cluster = JST[, c("iso","YEAR")])
-vcov_cluster1_FE   <- vcovCL(eq1_FE, cluster = JST[, c("iso","YEAR")])
-vcov_cluster2_noFE <- vcovCL(eq2_noFE, cluster = JST[, c("iso","YEAR")])
-vcov_cluster2_FE   <- vcovCL(eq2_FE, cluster = JST[, c("iso","YEAR")])
-robust_se_FE1_noFE <- sqrt(diag(vcov_cluster1_noFE))
-robust_se_FE1_FE   <- sqrt(diag(vcov_cluster1_FE))
-robust_se_FE2_noFE <- sqrt(diag(vcov_cluster2_noFE))
-robust_se_FE2_FE   <- sqrt(diag(vcov_cluster2_FE))
-model_table(eq1_noFE, eq1_FE, eq2_noFE, eq2_FE, column.labels = c("no FE", "with FE", "no FE","with FE"),
-                     omit = c("iso","YEAR","Constant"),keep.stat = "n",
-                     add.lines=list(c('Country FE','No','Yes','No','Yes'),
-                                    c('Year FE','No','Yes','No','Yes')),
-                     se = list(robust_se_FE1_noFE,robust_se_FE1_FE,
-                               robust_se_FE2_noFE,robust_se_FE2_FE))
-```
+These are associations for the sampled installations, not a representative estimate for Swiss households. We return to uncertainty in Example \@ref(exm:electricity-panel-inference).
 
 :::
-
-
 
 ## Estimation of random effects models {#RandomEffect}
 
 If the individual effect is uncorrelated with the regressors, it can be incorporated into the covariance structure of a composite error. This additional assumption permits random-effects estimation and can improve efficiency by using both within- and between-entity variation.
 
 Here, the individual effects are assumed to be not correlated to other variables (the $\bv{x}_i$'s). In that context, the OLS estimator is consistent. However, it is not efficient. The GLS approach can be employed to gain efficiency.
+
+```{r panel-random-definition-space, echo=FALSE, results='asis'}
+if (knitr::is_latex_output()) cat("\\Needspace{18\\baselineskip}\n")
+```
 
 **Random-effect models** write:
 $$
@@ -419,26 +414,26 @@ $$
 \vdots && \ddots && \vdots \\
 \sigma_u^2 & \sigma_u^2 & \sigma_u^2 & \dots & \sigma_\varepsilon^2+\sigma_u^2\\
 \end{array}
-\right] = \sigma_\varepsilon^2Id_T + \sigma_u^2\bv{1}_T\bv{1}_T',
+\right] = \sigma_\varepsilon^2\mathbf{Id}_T + \sigma_u^2\bv{1}_T\bv{1}_T',
 $$
-where $Id_T$ is the identity matrix of dimension $T \times T$, and $\bv{1}_T$ is a $T$-dimensional vector of ones.
+where $\mathbf{Id}_T$ is the identity matrix of dimension $T \times T$, and $\bv{1}_T$ is a $T$-dimensional vector of ones.
 
 Denoting by $\boldsymbol\Sigma$ the covariance matrix of $\boldsymbol\eta = [\boldsymbol\eta_1',\dots,\boldsymbol\eta_n']'$, we have:
 $$
-\boldsymbol\Sigma = Id_n \otimes \boldsymbol\Gamma.
+\boldsymbol\Sigma = \mathbf{Id}_n \otimes \boldsymbol\Gamma.
 $$
 
-where $Id_n$ is the identity matrix of dimension $n \times n$.
+Here $\mathbf{Id}_n$ is the identity matrix of dimension $n \times n$. In the GLS formula below, the design matrix includes a column for the common intercept.
 
-If we knew $\boldsymbol\Sigma$, we would apply (feasible) GLS (Eq. \@ref(eq:betaGLS), in Section \@ref(GLS)):
+If we knew $\boldsymbol\Sigma$, we would apply GLS (Eq. \@ref(eq:betaGLS), in Section \@ref(GLS)):
 $$
 \bv{b}_{GLS} = (\bv{X}'\boldsymbol\Sigma^{-1}\bv{X})^{-1}\bv{X}'\boldsymbol\Sigma^{-1}\bv{y}.
 $$
 (As explained in Section \@ref(GLS), this amounts to regressing ${\boldsymbol\Sigma^{-1/2}}'\bv{y}$ on ${\boldsymbol\Sigma^{-1/2}}'\bv{X}$.)
 
-It can be checked that $\boldsymbol\Sigma^{-1/2} = Id_n \otimes (\boldsymbol\Gamma^{-1/2})$ where
+It can be checked that $\boldsymbol\Sigma^{-1/2} = \mathbf{Id}_n \otimes (\boldsymbol\Gamma^{-1/2})$ where
 $$
-\boldsymbol\Gamma^{-1/2} = \frac{1}{\sigma_\varepsilon}\left( Id_T - \frac{\theta}{T}\bv{1}_T\bv{1}_T'\right),\quad \mbox{with}\quad\theta = 1 - \frac{\sigma_\varepsilon}{\sqrt{\sigma_\varepsilon^2+T\sigma_u^2}}.
+\boldsymbol\Gamma^{-1/2} = \frac{1}{\sigma_\varepsilon}\left( \mathbf{Id}_T - \frac{\theta}{T}\bv{1}_T\bv{1}_T'\right),\quad \mbox{with}\quad\theta = 1 - \frac{\sigma_\varepsilon}{\sqrt{\sigma_\varepsilon^2+T\sigma_u^2}}.
 $$
 
 Hence, if we knew $\boldsymbol\Sigma$, we would transform the data as follows:
@@ -456,239 +451,73 @@ We have $\mathbb{E}\left[\sum_{t=1}^{T}(\varepsilon_{i,t}-\bar{\varepsilon}_i)^2
 
 The $\varepsilon_{i,t}$'s are not observed but $\bv{b}$, the OLS estimator of $\boldsymbol\beta$ in Eq. \@ref(eq:OLSRUM), is a consistent estimator of $\boldsymbol\beta$. Using an adjustment for the degrees of freedom, we can approximate their variance with:
 $$
-\hat{\sigma}_e^2 = \frac{1}{nT-n-K}\sum_{i=1}^{n}\sum_{t=1}^{T}(e_{i,t} - \bar{e}_i)^2.
+\hat{\sigma}_\varepsilon^2 = \frac{1}{nT-n-K}\sum_{i=1}^{n}\sum_{t=1}^{T}(e_{i,t} - \bar{e}_i)^2.
 $$
 
 What about $\sigma_u^2$? We can exploit the fact that OLS are consistent in the pooled regression:
 $$
 \mbox{plim }s^2_{pooled} = \mbox{plim }\frac{\bv{e}'\bv{e}}{nT-K-1} = \sigma_u^2 + \sigma_\varepsilon^2,
 $$
-and therefore use $s^2_{pooled} - \hat{\sigma}_e^2$ as an approximation to $\sigma_u^2$.
+and therefore use $\max(0,s^2_{pooled} - \hat{\sigma}_\varepsilon^2)$ as an approximation to $\sigma_u^2$. Estimating these components and inserting them in $\theta$ gives feasible GLS. Random effects quasi-demeans the data: $y_{i,t}-\hat\theta\bar y_i$ is regressed on the similarly transformed regressors, including the transformed intercept. At $\theta=0$ this is pooling; as $\theta$ approaches one, it approaches the within transformation.
 
 
-Let us come back to Example \@ref(exm:JSTPanel), concerning the relationship between changes in housing prices and interest rates. The table below compares pooled, random-effects, and two-way fixed-effects estimates of the same specification.
+:::{.example #panel-random-simulation name="When can random effects use between-entity information?"}
 
-```{r JSTpanel2, warning=FALSE,message=FALSE}
-library(plm);library(stargazer)
-eq.RE <- plm(dhpreal ~ stir + ltrate,data=JST,index=c("iso","YEAR"),
-             model="random",effect="twoways")
-eq.FE <- plm(dhpreal ~ stir + ltrate,data=JST,index=c("iso","YEAR"),
-             model="within",effect="twoways")
-eq0   <- plm(dhpreal ~ stir + ltrate,data=JST,index=c("iso","YEAR"),
-             model="pooling") 
-model_table(eq0, eq.RE, eq.FE, no.space = TRUE,
-                     column.labels=c("Pooled","Random Effect","Fixed Effects"),
-                     add.lines=list(c('State FE','No','Yes','Yes'),
-                                    c('Year FE','No','Yes','Yes')),
-                     omit.stat=c("f","ser"))
-```
+Consider $y_{i,t}=2+x_{i,t}+u_i+\varepsilon_{i,t}$, with independent standard-normal $u_i$, $\varepsilon_{i,t}$ and $v_{i,t}$. The true slope is one. We simulate 400 entities over six periods and change just one assumption: in the first case $x_{i,t}=v_{i,t}$; in the second $x_{i,t}=0.8u_i+v_{i,t}$. The second case makes persistent heterogeneity part of the regressor.
 
-One can run an @Hausman_1978 test in order to check whether or not the fixed-effect model is needed. Indeed, if this is not the case (i.e., if the covariates are not correlated to the disturbances), then it is preferable to use the random-effect estimation as the latter is more efficient.
-
-```{r JSTpanel3}
-phtest(eq.FE,eq.RE)
-```
-Because the p-value is high, we do not reject the null hypothesis that the random effect is uncorrelated with the covariates. The random-effects estimator therefore remains compatible with the test and, under its maintained assumptions, is more efficient. Failure to reject is not evidence that the null is true.
-
-
-
-:::{.example #airbnb name="Airbnb prices: district effects and clustered uncertainty"}
-
-Why do Airbnb prices differ across Zurich? We use the historical snapshot of 22 June 2017 collected from [Tom Slee's website](http://tomslee.net/airbnb-data-collection-get-the-data) and distributed with `AEC`. This is a cross-section of listings, not a panel tracking the same listings over time. Districts provide the groups for our fixed effects. The supplied sample contains entire-home/apartment listings; it should not be interpreted as a representative sample of all accommodation or of today's market. We retain prices in the units recorded in the dataset.
-
-We compare listings with different numbers of bedrooms and accommodation capacities, first across the city and then within districts. Location, quality, and other unobserved attributes can affect both prices and these covariates, so the coefficients describe conditional associations rather than causal effects.
-
-```{r airbnb-data, message=FALSE}
-library(AEC)
-library(sp) # plotting methods for the supplied district polygons
-
-# Keep a separate analysis dataset and use the same sample in both models.
-airbnb_data <- AEC::airbnb
-analysis_vars <- c("price", "bedrooms", "accommodates", "neighborhood")
-airbnb_data <- airbnb_data[complete.cases(airbnb_data[analysis_vars]), ]
-airbnb_data$neighborhood <- factor(airbnb_data$neighborhood)
-n_districts <- nlevels(airbnb_data$neighborhood)
-
-# Use one area scale for all maps (magnitude is price or absolute residual).
-airbnb_map <- function(magnitude, colour, title="") {
-  plot(AEC::zurich_districts, col="grey90", border="white", main=title)
-  points(airbnb_data$longitude, airbnb_data$latitude, pch=21,
-         cex=1.5*sqrt(magnitude/100),
-         col=adjustcolor(colour, alpha.f=.55),
-         bg=adjustcolor(colour, alpha.f=.2))
-}
-```
-
-Our analysis uses `r nrow(airbnb_data)` listings in `r n_districts` districts. Figure \@ref(fig:airbnb) shows their locations and prices. Circle area is proportional to price; the white boundaries delineate districts.
-
-```{r airbnb, message=FALSE, fig.align='center', fig.width=7, fig.height=5, out.width="95%", fig.cap="Airbnb prices in Zurich, 22 June 2017. Circle area is proportional to the recorded price; white lines delineate districts.", echo=knitr::is_html_output()}
-local({
-  old_par <- par(mar=c(0, 0, 1, 0))
-  on.exit(par(old_par))
-  airbnb_map(airbnb_data$price, "#245A81")
-  legend("bottomleft", legend=c("50", "100", "200"), title="Price",
-         pch=21, pt.cex=1.5*sqrt(c(50, 100, 200)/100),
-         col="#245A81", pt.bg="#245A8120", bty="n", cex=.85)
+```{r panel-random-simulation, warning=FALSE, message=FALSE}
+library(plm)
+n_re <- 400; T_re <- 6
+u_re <- rep(rnorm(n_re),each=T_re)
+v_re <- rnorm(n_re*T_re)
+e_re <- rnorm(n_re*T_re)
+re_results <- lapply(c(0,.8),function(correlation){
+  d <- data.frame(id=rep(seq_len(n_re),each=T_re),
+                  time=rep(seq_len(T_re),n_re),x=correlation*u_re+v_re)
+  d$y <- 2+d$x+u_re+e_re
+  pooled <- plm(y~x,d,index=c("id","time"),model="pooling")
+  fixed <- plm(y~x,d,index=c("id","time"),model="within")
+  random <- plm(y~x,d,index=c("id","time"),model="random")
+  data.frame(Case=if(correlation==0) "Uncorrelated effects" else "Correlated effects",
+             Pooled=unname(coef(pooled)["x"]),
+             FE=unname(coef(fixed)["x"]),
+             RE=unname(coef(random)["x"]),
+             p_value=plm::phtest(fixed,random)$p.value)
 })
+re_results <- do.call(rbind,re_results)
+data_table(re_results,digits=3,row.names=FALSE,
+           col.names=c("Case","Pooled","FE","RE","Hausman p-value"))
 ```
 
-**District effects and standard errors answer different questions.** District dummies allow the conditional mean price to differ across districts. Clustering allows disturbances to be correlated across listings in the same district. Adding fixed effects does not, by itself, remove all within-district dependence.
+With uncorrelated effects, all three estimates are near one. Random effects can use between-entity information without importing a correlation between $x$ and $u$. With correlated effects, pooling and random effects are pulled away from one; fixed effects removes $u_i$ and uses the same within-entity variation in both cases. These are individual simulated estimates, not a demonstration of relative efficiency.
 
-We estimate $price_{ig} = \alpha_g + \beta_1 bedrooms_{ig} + \beta_2 accommodates_{ig} + \varepsilon_{ig}$, where $g$ denotes the district. Without district effects, we replace $\alpha_g$ by a common intercept.
-
-```{r airbnb2}
-airbnb_noFE <- lm(price ~ bedrooms + accommodates, data=airbnb_data)
-airbnb_FE <- lm(price ~ bedrooms + accommodates + neighborhood,
-                data=airbnb_data)
-
-# Compare three covariance estimators, using explicit corrections.
-airbnb_se_table <- function(model, label) {
-  terms <- c("bedrooms", "accommodates")
-  V <- list(
-    Conventional=vcov(model),
-    HC1=sandwich::vcovHC(model, type="HC1"),
-    District=sandwich::vcovCL(model, cluster=~neighborhood,
-                             type="HC1", cadjust=TRUE))
-  se <- sapply(V, function(v) sqrt(diag(v))[terms])
-  data.frame(Model=label, Variable=terms,
-             Estimate=unname(coef(model)[terms]), se, row.names=NULL)
-}
-airbnb_results <- rbind(
-  airbnb_se_table(airbnb_noFE, "No district FE"),
-  airbnb_se_table(airbnb_FE, "District FE"))
-data_table(airbnb_results, digits=2, row.names=FALSE,
-             col.names=c("Model", "Variable", "Estimate",
-                         "SE: conventional", "SE: HC1", "SE: district"))
-```
-
-Within each model, the coefficient estimates are identical whichever covariance estimator we use; only the reported uncertainty changes. Conventional standard errors assume homoskedastic, uncorrelated disturbances. HC1 allows heteroskedasticity. The district-clustered estimator additionally allows arbitrary dependence within districts, while requiring independence across districts. It need not produce larger standard errors. Here `type="HC1"` specifies the observation/parameter-count adjustment and `cadjust=TRUE` applies the $G/(G-1)$ cluster adjustment, with $G$ districts. See the [sandwich documentation](https://sandwich.r-forge.r-project.org/reference/vcovCL.html).
-
-**Only `r n_districts` clusters.** These corrections do not guarantee reliable inference with so few districts. We therefore report standard errors without automatic significance stars. For hypothesis tests, investigate a small-sample procedure such as CR2 with Satterthwaite degrees of freedom (see the [clubSandwich worked example](https://jepusto.github.io/clubSandwich/articles/panel-data-CRVE.html)). Also consider whether district boundaries plausibly separate independent disturbances: nearby listings across a boundary, or listings sharing a host, may remain dependent.
-
-**What do the fixed effects absorb?** Figure \@ref(fig:airbnb3) compares residuals using identical symbol scales in both panels. Blue indicates a positive residual (a price above the model's fitted value), and orange a negative residual. Circle area is proportional to the absolute residual.
-
-```{r airbnb3, echo=knitr::is_html_output(), message=FALSE, fig.align='center', fig.width=10, fig.height=5.5, out.width="100%", fig.cap="Airbnb price residuals without and with district effects. Blue: observed price above fitted price; orange: below. Both panels use the same area scale for absolute residuals."}
-local({
-  old_par <- par(mfrow=c(1, 2), mar=c(0, 0, 3, 0), oma=c(3, 0, 0, 0))
-  on.exit(par(old_par))
-  residual_sets <- list(residuals(airbnb_noFE), residuals(airbnb_FE))
-  titles <- c("(a) No district effects", "(b) District effects")
-  for (j in seq_along(residual_sets)) {
-    e <- residual_sets[[j]]
-    airbnb_map(abs(e), ifelse(e >= 0, "#2166AC", "#B35806"), titles[j])
-    legend("bottomleft", legend=c("25", "100", "200"),
-           title="Absolute residual", pch=21,
-           pt.cex=1.5*sqrt(c(25, 100, 200)/100), bty="n", cex=.8)
-  }
-  mtext("Blue: above fitted price     Orange: below fitted price",
-        side=1, outer=TRUE, line=1, cex=.9)
-})
-```
-
-OLS with district dummies forces the residuals to sum to zero within each district. This is an algebraic property of the fitted model, not evidence that omitted variables or spatial dependence have disappeared. We can check the property directly:
-
-```{r airbnb-residual-check}
-airbnb_district_means <- tapply(residuals(airbnb_FE),
-                                 airbnb_data$neighborhood, mean)
-max(abs(airbnb_district_means)) # zero up to numerical precision
-```
-
+The @Hausman_1978 test compares the fixed- and random-effects slope estimates. Under the classical random-effects assumptions, both are consistent and random effects is efficient; systematic differences therefore count against those assumptions. A large p-value does not establish that the entity effect is uncorrelated with the regressors. The standard test used here relies on the simulated homoskedastic, independent-error structure; it should not be applied mechanically to dependent empirical panels.
 
 :::
 
-<!-- %\begin{frame}{} -->
-<!-- %\begin{scriptsize} -->
-<!-- %\begin{itemize} -->
-<!-- %	\item Breusch and Pagan LM test of $H_0: \quad \sigma_u^2=0$ (13.4.3 in Greene) -->
-<!-- %	\item Hausman's specification test 13.4.4. -->
-<!-- %	\item Cluster-robust standard errors (\href{http://cameron.econ.ucdavis.edu/research/Cameron_Miller_Cluster_Robust_October152013.pdf}{nice paper}) + \href{http://www.cemfi.es/~arellano/obes_1987.pdf}{Arellano (1987)} -->
-<!-- %	\item Random versus Fixed effects: uncorrelated errors / LSDV: lose a lot of degrees of freedom. -->
-<!-- %	\item \href{http://econweb.tamu.edu/keli/Hausman\%201978.pdf}{Hausman (1978)} test: $H_0:$ no correlation of random effects and regressors. -->
-<!-- %\end{itemize} -->
-<!-- %\end{scriptsize} -->
-<!-- %\end{frame} -->
+:::{.example #electricity-panel-inference name="Returning to electricity: effects and uncertainty"}
 
-<!-- %\begin{frame}{} -->
-<!-- %Instrumental Variable estimation of the random effect model -->
-<!-- %\begin{scriptsize} -->
-<!-- %\begin{itemize} -->
-<!-- %	\item Objective: have a specification where the model can contain time-invariant characteristics. Specification: -->
-<!-- %	$$ -->
-<!-- %	y_{i,t} = 	\underbrace{\bv{x}'_{1,i,t} \boldsymbol\beta_1}_{\perp u_i} + -->
-<!-- %			\underbrace{\bv{x}'_{2,i,t} \boldsymbol\beta_2}_{\not\perp u_i} + -->
-<!-- %			\underbrace{\bv{z}'_{1,i} \boldsymbol\alpha_1}_{\perp u_i} + -->
-<!-- %			\underbrace{\bv{z}'_{2,i} \boldsymbol\alpha_2}_{\not\perp u_i} + \varepsilon_{i,t}. -->
-<!-- %	$$ -->
-<!-- %	\item Assumptions: -->
-<!-- %	\begin{eqnarray*} -->
-<!-- %	E(u_i) = E(u_i|\bv{x}_{1,i,t},\bv{z}_{1,i,t}) &=& 0\\ -->
-<!-- %	E(u_i|\bv{x}_{2,i,t},\bv{z}_{2,i,t}) &\ne& 0\\ -->
-<!-- %	\mbox{Var}(u_i|\bv{x}_{1,i,t},\bv{z}_{1,i,t},\bv{x}_{2,i,t},\bv{z}_{2,i,t})&=& \sigma_u^2\\ -->
-<!-- %	\mbox{Cov}(u_i,\varepsilon_{i,t}|\bv{x}_{1,i,t},\bv{z}_{1,i,t},\bv{x}_{2,i,t},\bv{z}_{2,i,t})&=& 0\\ -->
-<!-- %	\mbox{Var}(u_i + \varepsilon_{i,t}|\bv{x}_{1,i,t},\bv{z}_{1,i,t},\bv{x}_{2,i,t},\bv{z}_{2,i,t})&=& \sigma^2 = \sigma_u^2 + \sigma_\varepsilon^2\\ -->
-<!-- %	\mbox{Corr}(u_i + \varepsilon_{i,t},u_i + \varepsilon_{i,s}|\bv{x}_{1,i,t},\bv{z}_{1,i,t},\bv{x}_{2,i,t},\bv{z}_{2,i,t})&=& \rho = \sigma_u^2/\sigma^2 -->
-<!-- %	\end{eqnarray*}	 -->
-<!-- %\end{itemize} -->
-<!-- %\end{scriptsize} -->
-<!-- %\end{frame} -->
-<!-- % -->
-<!-- %\begin{frame}{} -->
-<!-- %\begin{scriptsize} -->
-<!-- %\begin{itemize} -->
-<!-- %	\item OLS and GLS inconsistent. -->
-<!-- %	\item \href{http://web.mit.edu/14.33/www/hausman.pdf}{Hausman and Taylor, 1981}. Example cited in the plm package by Baltagi (2001) (with data in the plm package). -->
-<!-- %	\item First: -->
-<!-- %	\begin{equation}\label{eq:13.36} -->
-<!-- %	y_{i,t} - \bar{y}_i = [\bv{x}_{1,i,t} - \bar{\bv{x}}_{1,i}]'\boldsymbol\beta_1 + [\bv{x}_{2,i,t} - \bar{\bv{x}}_{2,i}]'\boldsymbol\beta_2 + (\varepsilon_{i,t} - \bar{\varepsilon}_i) -->
-<!-- %	\end{equation} -->
-<!-- %	\item[$\Rightarrow$] $\boldsymbol\beta$ can consistently be estimated by LS. -->
-<!-- %	\item[Step 1] LSDV of $\boldsymbol\beta$ (Eq. \ref{eq:13.36})  -->
-<!-- %	\item[Step 2] residuals of step 1: $e_{i,t}$. Regress $e_{i}$ on $(\bv{z}_1',\bv{z}_2')'$ with IV $\bv{z}_1$ and $\bv{x}_1$ (assuming $K_1\ge L_2$). NB: time-invariant data are repeated $T$ times. $\Rightarrow$ consistent estimate of $\boldsymbol\alpha$. -->
-<!-- %	\item[Step 3] The residual variance in Step 2 = consistent estimator of $\sigma_u^2 + \sigma^2_\varepsilon/T$. From and from the estimator of $\sigma^2_\varepsilon$ from Step 1, estimator of $\sigma^2_u$. This leads to an estimate $\hat{\theta}$ of: -->
-<!-- %	$$ -->
-<!-- %	\theta = \sqrt{\frac{\sigma^2_\varepsilon}{\sigma^2_\varepsilon + T\sigma^2_u}} -->
-<!-- %	$$ -->
-<!-- %	that can  be used in Feasible GLS. -->
-<!-- %\end{itemize} -->
-<!-- %\end{scriptsize} -->
-<!-- %\end{frame} -->
-<!-- % -->
-<!-- %\begin{frame}{} -->
-<!-- %\begin{scriptsize} -->
-<!-- %\begin{itemize} -->
-<!-- %	\item[Step 4] Define $\bv{w}_{i,t} = [\bv{x}_{1,i,t}',\bv{x}_{2,i,t}',\bv{z}_{1,i,t}',\bv{z}_{2,i,t}']$, -->
-<!-- %	$$ -->
-<!-- %	\bv{w}_{i,t}^* = \bv{w}_{i,t} - (1 - \hat{\theta})\bv{w}_i \quad \mbox{and} \quad y_{i,t}^* = y_{i,t} - (1 - \hat\theta) y_i. -->
-<!-- %	$$ -->
-<!-- %	The IVs are: -->
-<!-- %	$$ -->
-<!-- %	\bv{v}_{i,t} = [(\bv{x}_{1,i,t}-\bv{x}_{1,i})',(\bv{x}_{2,i,t}-\bv{x}_{2,i})',\bv{z}_{1,i}',\bv{x}_{1,i}']. -->
-<!-- %	$$ -->
-<!-- %	Finally: -->
-<!-- %	\begin{equation} -->
-<!-- %	(\bv{b}_{iv}',\bv{a}_{iv}')' = [({\bv{W}^*}'\bv{V})(\bv{V}'\bv{V})^{-1}(\bv{V}'{\bv{W}^*})][({\bv{W}^*}'\bv{V})(\bv{V}'\bv{V})^{-1}(\bv{V}'{\bv{y}^*})] -->
-<!-- %	\end{equation} -->
-<!-- %	\item No Asymp Var??? -->
-<!-- %\end{itemize} -->
-<!-- %\end{scriptsize} -->
-<!-- %\end{frame} -->
-<!-- % -->
-<!-- %\begin{frame}{} -->
-<!-- %\begin{scriptsize} -->
-<!-- %\begin{itemize} -->
-<!-- %	\item GMM estimation \href{http://people.stern.nyu.edu/wgreene/Econometrics/Arellano-Bond.pdf}{Arellano and Bond (1991)}. plm package does it; see Greene 13.6. -->
-<!-- %\end{itemize} -->
-<!-- %\end{scriptsize} -->
-<!-- %\end{frame} -->
-<!-- % -->
-<!-- %\begin{frame}{} -->
-<!-- %\begin{scriptsize} -->
-<!-- %\begin{itemize} -->
-<!-- %	\item XXX -->
-<!-- %\end{itemize} -->
-<!-- %\end{scriptsize} -->
-<!-- %\end{frame} -->
+The meter and month--year effects specify the **conditional mean**. They do not make the remaining daily disturbances independent. Imports at one meter may be persistent; weather and other common shocks can affect several meters on the same day. We keep the fitted model from Example \@ref(exm:electricity-panel) and change only its covariance estimator.
 
+```{r electricity-panel-inference, warning=FALSE, message=FALSE}
+elec_covariances <- list(
+  Conventional=vcov(elec_fe),
+  HC1=sandwich::vcovHC(elec_fe,type="HC1"),
+  Meter=sandwich::vcovCL(elec_fe,cluster=~meter,type="HC1",cadjust=TRUE),
+  Meter_day=sandwich::vcovCL(elec_fe,cluster=~meter+date,type="HC1",cadjust=TRUE))
+elec_uncertainty <- data.frame(
+  Method=c("Conventional","Heteroskedasticity robust","Cluster: meter","Cluster: meter + day"),
+  Estimate=rep(unname(coef(elec_fe)["weekend"]),4),
+  SE=vapply(elec_covariances,function(V) sqrt(V["weekend","weekend"]),numeric(1)))
+data_table(elec_uncertainty,digits=3,row.names=FALSE,
+           col.names=c("Uncertainty estimator","Weekend difference","Standard error"))
+```
+
+The coefficient stays at **`r sprintf("%.2f",coef(elec_fe)["weekend"])` kWh/day** in every row. Conventional uncertainty assumes homoskedastic, uncorrelated errors. HC1 allows unequal variances; meter clustering also permits dependence through time within a meter. Two-way clustering permits both within-meter dependence and same-day dependence across meters (Section \@ref(Clusters)). Its standard error is **`r sprintf("%.2f",tail(elec_uncertainty$SE,1))` kWh/day**.
+
+Clustering changes our assessment of precision; it does not remove weather-related omitted variables. The two-way calculation also rules out dependence between different meters on different days. Persistent common weather shocks or meters belonging to the same building can violate that restriction. The data identify meters but not buildings, so the table illustrates the role of covariance assumptions rather than establishing a causal weekend effect. With only 60 meter clusters, finite-sample uncertainty also deserves care.
+
+:::
 
 ## Dynamic panel regressions {#DynPanel}
 
@@ -714,91 +543,81 @@ The previous equation shows that the *within-group* estimator (LSDV) introduces 
 
 [^footnote1]: Although the bias may vanish for large $T$'s, it does not if $n$ only goes to infinity.
 
-The following simulation illustrates this bias. The horizontal coordinates are the fixed effects $\alpha_i$, and the vertical coordinates are their LSDV estimates. The blue line is the 45-degree line.
+:::{.example #panel-dynamic-simulation name="Persistence in a short panel"}
 
-```{r setseedPLM, echo=FALSE}
-set.seed(1)
-```
+Suppose $y_{i,t}=\alpha_i+0.6y_{i,t-1}+\varepsilon_{i,t}$. We simulate 1,000 independent entities, eight transitions per entity, and independent standard-normal effects and innovations. Initial observations are drawn from the stationary distribution conditional on each effect: mean $\alpha_i/(1-0.6)$ and variance $1/(1-0.6^2)$.
 
-```{r dynpanel1, fig.align = 'left', out.width = "95%", fig.cap = "illustration of the bias pertianing to the LSDV estimation approach in the presence of auto-correlation of the depend variable."}
-n <- 400;T <- 10
-rho <- 0.8;sigma <- .5
-alpha <- rnorm(n)
-y <- alpha /(1-rho) + sigma^2/(1 - rho^2) * rnorm(n)
-all_y <- y
-for(t in 2:T){
-  y <- rho * y + alpha + sigma * rnorm(n)
-  all_y <- rbind(all_y,y)
+```{r panel-dynamic-data, message=FALSE, warning=FALSE}
+library(plm)
+n_dyn <- 1000; T_dyn <- 8; rho_dyn <- .6
+alpha_dyn <- rnorm(n_dyn)
+Y_dyn <- matrix(NA_real_,T_dyn+1,n_dyn)
+Y_dyn[1,] <- alpha_dyn/(1-rho_dyn)+rnorm(n_dyn)/sqrt(1-rho_dyn^2)
+for(tt in 2:(T_dyn+1)){
+  Y_dyn[tt,] <- alpha_dyn+rho_dyn*Y_dyn[tt-1,]+rnorm(n_dyn)
 }
-y   <- c(all_y[2:T,]);y_1 <- c(all_y[1:(T-1),])
-D <- diag(n) %x% rep(1,T-1)
-Z <- cbind(c(y_1),D)
-b <- solve(t(Z) %*% Z) %*% t(Z) %*% y
-a <- b[2:(n+1)]
-plot(alpha,a)
-lines(c(-10,10),c(-10,10),col="blue")
+dynamic_panel <- data.frame(id=rep(seq_len(n_dyn),each=T_dyn+1),
+  time=rep(0:T_dyn,n_dyn),y=c(Y_dyn))
+dynamic_panel$lag_y <- c(rbind(NA,Y_dyn[-nrow(Y_dyn),]))
+dyn_reg <- subset(dynamic_panel,time>0)
+dyn_pooled <- lm(y~lag_y,data=dyn_reg)
+dyn_within <- plm(y~lag_y,data=dyn_reg,index=c("id","time"),model="within")
 ```
 
-In the previous example, the estimate of $\rho$ (whose true value is `r rho`) is `r round(b[1],3)`.
+Pooled OLS estimates persistence at **`r sprintf("%.3f",coef(dyn_pooled)["lag_y"])`**, because a high previous outcome also signals a high persistent entity effect. Removing entity means gives **`r sprintf("%.3f",coef(dyn_within)["lag_y"])`**, below the true **0.600**: the transformed lag and transformed disturbance share past innovations. Fixed effects solves the first problem but creates the second in a short dynamic panel.
+
+:::
 
 To address this, one can resort to instrumental-variable regressions. @Anderson_Hsiao_1982 have, in particular, proposed a first-differenced Two Stage Least Squares (2SLS) estimator (see Eq. \@ref(eq:IV) in Section \@ref(IV)). This estimation is based on the following transformation of the model:
 \begin{equation}
 \Delta y_{i,t} = \rho \Delta y_{i,t-1} + (\Delta \bv{x}_{i,t})'\boldsymbol\beta + \Delta\varepsilon_{i,t}.(\#eq:paneldynFisrtDiff)
 \end{equation}
-The OLS estimates of the parameters are biased because $\varepsilon_{i,t-1}$ ---which is part of the error $\Delta\varepsilon_{i,t}$--- is correlated to $y_{i,t-1}$ ---which is part of the "explanatory variable", namely $\Delta y_{i,t-1}$. But consistent estimates can be obtained using 2SLS with instrumental variables that are correlated with $\Delta y_{i,t}$ but orthogonal to $\Delta\varepsilon_{i,t}$. One can for instance use $\{y_{i,t-2},\bv{x}_{i,t-2}\}$ as instruments. Note that this approach can be implemented only if there are at least 3 time observations per entity $i$.
+The OLS estimates of the parameters are biased because $\varepsilon_{i,t-1}$ ---which is part of the error $\Delta\varepsilon_{i,t}$--- is correlated to $y_{i,t-1}$ ---which is part of the "explanatory variable", namely $\Delta y_{i,t-1}$. But consistent estimates can be obtained using 2SLS with instrumental variables that are correlated with the endogenous regressor $\Delta y_{i,t-1}$ but orthogonal to $\Delta\varepsilon_{i,t}$. If level innovations are serially uncorrelated and initial conditions are independent of future innovations, $y_{i,t-2}$ is orthogonal to $\Delta\varepsilon_{i,t}$. It is useful as an instrument only if it also predicts $\Delta y_{i,t-1}$. Valid instruments for the covariates require their own exogeneity assumptions. Note that this approach can be implemented only if there are at least 3 time observations per entity $i$.
 
 If the explanatory variables $\bv{x}_{i,t}$ are predetermined, they may correlate with past errors but not with current or future errors; then $\bv{x}_{i,t-1}$ is a valid instrument for the differenced equation at date $t$. If they are strictly exogenous, they are uncorrelated with $\varepsilon_{i,s}$ at every date $s$, and contemporaneous $\bv{x}_{i,t}$ can also be used as instruments.
 
-Using the previous (simulated) example, this approach consists in the following steps:
+Returning to Example \@ref(exm:panel-dynamic-simulation), first differencing removes $\alpha_i$. We use the level two periods earlier to instrument the lagged change. There are seven usable differenced observations per entity.
 
-```{r dynpanel2}
-Dy   <- c(all_y[3:T,]) - c(all_y[2:(T-1),])
-Dy_1 <- c(all_y[2:(T-1),]) - c(all_y[1:(T-2),])
-y_2  <- c(all_y[1:(T-2),])
-Z <- matrix(y_2,ncol=1)
-Pz <- Z %*% solve(t(Z) %*% Z) %*% t(Z)
-Dy_1hat <- Pz %*% Dy_1
-rho_2SLS <- solve(t(Dy_1hat) %*% Dy_1hat) %*% t(Dy_1hat) %*% Dy
+```{r panel-dynamic-iv, message=FALSE, warning=FALSE}
+dyn_differences <- data.frame(
+  dy=c(Y_dyn[3:(T_dyn+1),]-Y_dyn[2:T_dyn,]),
+  dlag=c(Y_dyn[2:T_dyn,]-Y_dyn[1:(T_dyn-1),]),
+  z=c(Y_dyn[1:(T_dyn-1),]))
+dyn_iv <- AER::ivreg(dy~dlag-1|z-1,data=dyn_differences)
+dyn_iv_estimate <- unname(coef(dyn_iv)["dlag"])
 ```
 
-While the OLS estimate of $\rho$ (whose true value is `r rho`) was `r round(b[1],3)`, we obtain here `rho_2SLS` $=$ `r round(rho_2SLS,3)`.
+The IV estimate is **`r sprintf("%.3f",dyn_iv_estimate)`**, compared with a true persistence of **0.600**. The assumptions are satisfied by construction here; in an empirical application they must be defended. In particular, serial correlation in the level innovations may invalidate the lag instrument, and high persistence can make lagged levels weak predictors of changes.
 
-Let us come back to the general case (with covariates $\bv{x}_{i,k}$'s). For $t=3$, $y_{i,1}$ (and $\bv{x}_{i,1}$) is the only possible instrument. However, for $t=4$, one could use $y_{i,2}$ and $y_{i,1}$ (as well as $\bv{x}_{i,2}$ and $\bv{x}_{i,1}$). More generally, defining matrix $Z_i$ as follows:
+For a given differenced equation, all sufficiently old levels may provide instruments. At $t=3$, the available level is $y_{i,1}$; at $t=4$, it is possible to use $y_{i,1}$ and $y_{i,2}$. For the scalar model without covariates and with five observed dates, the full instrument matrix is
 $$
-Z_i = \left[
-\begin{array}{ccccccccccccccccc}
-\bv{z}_{i,1}' & 0 & \dots \\
-0 & \bv{z}_{i,1}' & \bv{z}_{i,2}' & 0 & \dots \\
-0 &0 &0 & \bv{z}_{i,1} & \bv{z}_{i,2}' & \bv{z}_{i,3}' & 0 & \dots \\
-\vdots \\
-0 & \dots &&&&&& 0 & \bv{z}_{i,1}' &  \dots &   \bv{z}_{i,T-2}'
-\end{array}
-\right],
+Z_i=\begin{bmatrix}
+y_{i,1}&0&0&0&0&0\\
+0&y_{i,1}&y_{i,2}&0&0&0\\
+0&0&0&y_{i,1}&y_{i,2}&y_{i,3}
+\end{bmatrix}.
 $$
-where $\bv{z}_{i,t} = [y_{i,t},\bv{x}_{i,t}']'$, we have the moment conditions:[^footnote2]
+Each row corresponds to one equation, at $t=3,4,5$; separate columns distinguish instruments used at different dates. With $\Delta\boldsymbol\varepsilon_i=[\Delta\varepsilon_{i,3},\ldots,\Delta\varepsilon_{i,T}]'$, the moment conditions are
 $$
-\mathbb{E}(Z_i'\Delta  {\boldsymbol\varepsilon}_i)=0,
+\mathbb{E}(Z_i'\Delta\boldsymbol\varepsilon_i)=0.
 $$
-
-with $\Delta{\boldsymbol\varepsilon}_i = [ \Delta \varepsilon_{i,3},\dots,\Delta \varepsilon_{i,T}]'$.
-
-[^footnote2]: If $\bv{x}_{i,t}$ is predetermined (exogenous), we can use $\bv{z}_{i,t} = [y_{i,t},\bv{x}_{i,t+1},\bv{x}_{i,t}']'$ (respectively $\bv{z}_{i,t} = [y_{i,t},\bv{x}_{i,t+2},\bv{x}_{i,t+1},\bv{x}_{i,t}']'$).
+Covariates can contribute additional instruments when their timing assumptions justify them. The instrument count can grow quickly with $T$; using every available moment is not compulsory.
 
 These restrictions are used in the GMM approach employed by @Arellano_Bond_1991. Specifically, a GMM estimator of the model parameters is given by:
 $$
-\mbox{argmin}\;\left(\frac{1}{n} \sum_{i=1}^n Z_i' \Delta \boldsymbol\varepsilon_i\right)'W_n\left(\frac{1}{n} \sum_{i=1}^n Z_i' \Delta \boldsymbol\varepsilon_i\right),
+\underset{\rho,\boldsymbol\beta}{\operatorname{argmin}}\;\left(\frac{1}{n} \sum_{i=1}^n Z_i' \Delta \boldsymbol\varepsilon_i\right)'W_n\left(\frac{1}{n} \sum_{i=1}^n Z_i' \Delta \boldsymbol\varepsilon_i\right),
 $$
-using the weighting matrix
+where the differenced residuals depend on the candidate parameters $(\rho,\boldsymbol\beta)$. A two-step procedure uses the weighting matrix
 $$
 W_n = \left(\frac{1}{n}\sum_{i=1}^n Z_i'\widehat{\Delta\boldsymbol\varepsilon_i}\widehat{\Delta\boldsymbol\varepsilon_i}'Z_i\right)^{-1},
 $$
-where the $\widehat{\Delta\boldsymbol\varepsilon_i}$'s are consistent estimates of the $\Delta\boldsymbol\varepsilon_i$'s that result from a preliminary estimation. In this sense, this estimator is a two-step GMM one.
+where the $\widehat{\Delta\boldsymbol\varepsilon_i}$'s are residual vectors from a preliminary consistent parameter estimate. In this sense, this estimator is a two-step GMM one.
 
-If the disturbances are homoskedastic, then it can be shown that an asymptotically equivalent (efficient) GMM estimator can  be obtained by using:
+If the level disturbances are homoskedastic and serially uncorrelated, then it can be shown that an asymptotically equivalent (efficient) GMM estimator can  be obtained by using:
 $$
 W_{1,n} = \left(\frac{1}{n}\sum_{i=1}^{n}Z_i'HZ_i\right)^{-1},
 $$
-where $H$ is is $(T-2) \times (T-2)$ matrix of the form:
+where $H$ is the $(T-2) \times (T-2)$ matrix of the form:
 $$
 H = \left[\begin{array}{ccccccc}
 2 & -1 & 0 & \dots &0 \\
@@ -811,87 +630,45 @@ $$
 
 It is straightforward to extend these GMM methods to cases where there is more than one lag of the dependent variable on the right-hand side of the equation or in cases where disturbances feature limited moving-average serial correlation.
 
-The `pdynmc` package implements these GMM approaches (see @Fritsch_et_al_2019). The one-step estimates reported below replicate results from @Arellano_Bond_1991.
+:::{.example #panel-dynamic-gmm name="Using a few additional lag instruments"}
 
-```{r dynpanel3, warning=FALSE, message=FALSE}
-library(pdynmc)
-data(EmplUK, package = "plm")
-dat <- EmplUK
-dat[,c(4:7)]         <- log(dat[,c(4:7)])
-m1 <- pdynmc(dat = dat, # name of the dataset
-             varname.i = "firm", # name of the cross-section identifier
-             varname.t = "year", # name of the time-series identifiers
-             use.mc.diff = TRUE, # use moment conditions from equations in differences? (i.e. instruments in levels) 
-             use.mc.lev = FALSE, # use moment conditions from equations in levels? (i.e. instruments in differences)
-             use.mc.nonlin = FALSE, # use nonlinear (quadratic) moment conditions?
-             include.y = TRUE, # instruments should be derived from the lags of the dependent variable?
-             varname.y = "emp", # name of the dependent variable in the dataset
-             lagTerms.y = 2, # number of lags of the dependent variable
-             fur.con = TRUE, # further control variables (covariates) are included?
-             fur.con.diff = TRUE, # include further control variables in equations from differences ?
-             fur.con.lev = FALSE, # include further control variables in equations from level?
-             varname.reg.fur = c("wage", "capital", "output"), # covariate(s) -in the dataset- to treat as further controls
-             lagTerms.reg.fur = c(1,2,2), # number of lags of the further controls
-             include.dum = TRUE, # A logical variable indicating whether dummy variables for the time periods are included (defaults to 'FALSE').
-             dum.diff = TRUE, # A logical variable indicating whether dummy variables are included in the equations in first differences (defaults to 'NULL').
-             dum.lev = FALSE, # A logical variable indicating whether dummy variables are included in the equations in levels (defaults to 'NULL').
-             varname.dum = "year",
-             w.mat = "iid.err", # One of the character strings c('"iid.err"', '"identity"', '"zero.cov"') indicating the type of weighting matrix to use (defaults to '"iid.err"')
-             std.err = "corrected",
-             estimation = "onestep", # One of the character strings c('"onestep"', '"twostep"', '"iterative"'). Denotes the number of iterations of the parameter procedure (defaults to '"twostep"').
-             opt.meth = "none" # numerical optimization procedure. When no nonlinear moment conditions are employed in estimation, closed form estimates can be computed by setting the argument to '"none"
-)
-panel_table(m1)
+We keep the simulated panel from Example \@ref(exm:panel-dynamic-simulation). Difference GMM uses the levels two and three dates earlier when available. We combine each lag's moments across dates, giving just **two instrument columns**, rather than an instrument for every lag--date combination. This deliberately keeps the instrument set small.
+
+```{r panel-dynamic-gmm, message=FALSE, warning=FALSE}
+dyn_gmm1 <- pgmm(y~lag(y,1)|lag(y,2:3),data=dynamic_panel,
+  index=c("id","time"),effect="individual",model="onestep",
+  transformation="d",collapse=TRUE)
+dyn_gmm2 <- update(dyn_gmm1,model="twosteps")
+dyn_results <- data.frame(
+  Method=c("Pooled OLS","Within","Differenced IV","Difference GMM: one step",
+           "Difference GMM: two steps"),
+  Persistence=c(coef(dyn_pooled)["lag_y"],coef(dyn_within)["lag_y"],
+                dyn_iv_estimate,coef(dyn_gmm1),coef(dyn_gmm2)),
+  Observations=c(nobs(dyn_pooled),nobs(dyn_within),nobs(dyn_iv),
+                 nobs(dyn_gmm1),nobs(dyn_gmm2)),row.names=NULL)
+data_table(dyn_results,digits=c(0,3,0),row.names=FALSE)
+dyn_gmm_se <- sqrt(diag(plm::vcovHC(dyn_gmm2)))[1]
 ```
 
-The next table reports two-step estimates of the same specification.
+The true persistence is **0.600**. The two GMM estimates are similar here, and the two-step estimate has an entity-robust, finite-sample-corrected standard error of **`r sprintf("%.3f",dyn_gmm_se)`**. This is one realization of a known model; it does not imply that two-step GMM is always closer to the truth or that adding instruments always improves estimation.
 
-```{r dynpanel3bis, echo=FALSE}
-m2 <- pdynmc(dat = dat, # name of the dataset
-             varname.i = "firm", # name of the cross-section identifier
-             varname.t = "year", # name of the time-series identifiers
-             use.mc.diff = TRUE, # use moment conditions from equations in differences? (i.e. instruments in levels) 
-             use.mc.lev = FALSE, # use moment conditions from equations in levels? (i.e. instruments in differences)
-             use.mc.nonlin = FALSE, # use nonlinear (quadratic) moment conditions?
-             include.y = TRUE, # instruments should be derived from the lags of the dependent variable?
-             varname.y = "emp", # name of the dependent variable in the dataset
-             lagTerms.y = 2, # number of lags of the dependent variable
-             fur.con = TRUE, # further control variables (covariates) are included?
-             fur.con.diff = TRUE, # include further control variables in equations from differences ?
-             fur.con.lev = FALSE, # include further control variables in equations from level?
-             varname.reg.fur = c("wage", "capital", "output"), # covariate(s) -in the dataset- to treat as further controls
-             lagTerms.reg.fur = c(1,2,2), # number of lags of the further controls
-             include.dum = TRUE, # A logical variable indicating whether dummy variables for the time periods are included (defaults to 'FALSE').
-             dum.diff = TRUE, # A logical variable indicating whether dummy variables are included in the equations in first differences (defaults to 'NULL').
-             dum.lev = FALSE, # A logical variable indicating whether dummy variables are included in the equations in levels (defaults to 'NULL').
-             varname.dum = "year",
-             w.mat = "iid.err", # One of the character strings c('"iid.err"', '"identity"', '"zero.cov"') indicating the type of weighting matrix to use (defaults to '"iid.err"')
-             std.err = "corrected",
-             estimation = "twostep", # One of the character strings c('"onestep"', '"twostep"', '"iterative"'). Denotes the number of iterations of the parameter procedure (defaults to '"twostep"').
-             opt.meth = "none" # numerical optimization procedure. When no nonlinear moment conditions are employed in estimation, closed form estimates can be computed by setting the argument to '"none"
-)
-data_table(data.frame(Term=names(coef(m2)), Estimate=unname(coef(m2))), digits=3)
+**What should the differenced residuals look like?** Even when level innovations are independent, adjacent differences share one innovation with opposite signs. First-order residual autocorrelation is therefore expected. Second-order autocorrelation would cast doubt on the lag-two instruments. We report both Arellano--Bond tests, along with the two-step overidentification test.
+
+```{r panel-dynamic-diagnostics, message=FALSE, warning=FALSE}
+dyn_tests <- list(
+  "AR(1) in differenced residuals"=plm::mtest(dyn_gmm2,order=1,vcov=plm::vcovHC),
+  "AR(2) in differenced residuals"=plm::mtest(dyn_gmm2,order=2,vcov=plm::vcovHC),
+  "Overidentification (two-step J)"=plm::sargan(dyn_gmm2,weights="twosteps"))
+dyn_diagnostics <- data.frame(Test=names(dyn_tests),
+  Statistic=vapply(dyn_tests,function(test) unname(test$statistic),numeric(1)),
+  p_value=vapply(dyn_tests,function(test) test$p.value,numeric(1)))
+data_table(dyn_diagnostics,digits=3,row.names=FALSE,
+           col.names=c("Test","Statistic","p-value"))
 ```
 
+The AR tests use a standard-normal reference distribution; the J test has one overidentifying restriction and a chi-squared reference distribution. The pattern is compatible with the model used to generate the data: strong first-order dependence after differencing, without rejection at order two or in the joint moment test. Non-rejection is not proof of valid instruments. In applications, instrument proliferation can weaken these diagnostics; restricting the lag range and combining moments limits that problem.
 
-@Arellano_Bond_1991 have proposed a specification test. If the model is correctly specified, then the errors of Eq. \@ref(eq:paneldynFisrtDiff) ---that is the first-difference equation--- should feature non-zero first-order auto-correlations, but zero higher-order autocorrelations. 
-
-Function `mtest.fct` of package `pdynmc` implements this test. Here is its result in the present case:
-
-```{r dynpanel4, warning=FALSE, message=FALSE}
-mtest.fct(m1,order=3)
-```
-
-One can also implement the Hansen J-test of the over-identifying restrictions (see Section \@ref(overidentif)):
-
-```{r dynpanel5, warning=FALSE, message=FALSE}
-jtest.fct(m1)
-jtest.fct(m2)
-```
-
-
-
-
+:::
 
 ## Introduction to program evaluation {#program-evaluation}
 
@@ -901,13 +678,13 @@ Panel methods are especially useful when a policy or intervention affects some e
 
 ### Presentation of the problem
 
-To begin with, let us consider a single entity. To simplify notations, we drop the entity index ($i$). Let us denote by $Y$ the outcome variable (for the variable of interest), by $W$ is a binary variable indicating whether the considered entity has received treatment ($W=1$) or not ($W=0$), and by $X$ a vector of covariates, assumed to be predetermined relative to the treatment. That is, $W$ and $X$ could be correlated, but the values of $X$ have been determined before that of $W$ (in such a way that the realization of $W$ does not affect $X$). Typcally, $X$ contains characteristics of the considered entity.
+For one entity, let $Y$ be the outcome and $W$ indicate treatment: $W=1$ if the entity is treated and $W=0$ otherwise. Let $X$ contain characteristics measured before treatment. Assignment may depend on $X$, but treatment cannot change these pre-treatment measurements. We suppress the entity index temporarily.
 
 We are interested in the effect of the treatment, that is:
 $$
 Y_1 - Y_0,
 $$
-where $Y_1$ correspond to the outcome obtained under treatment, while $Y_0$ is the outcome obtained without it. Notice that we have:
+where $Y_1$ corresponds to the outcome obtained under treatment, while $Y_0$ is the outcome obtained without it. Notice that we have:
 $$
 Y = (1-W) Y_0 + W Y_1.
 $$
@@ -917,15 +694,18 @@ $$
 ATE = \mathbb{E}(Y_1 - Y_0).
 $$
 
-Importantly, $ATE$ is different from the following quantity:
+In general, $ATE$ need not equal the observed difference between groups:
 $$
 \alpha = \underbrace{\mathbb{E}(Y|W=1)}_{=\mathbb{E}(Y_1|W=1)} - \underbrace{\mathbb{E}(Y|W=0)}_{=\mathbb{E}(Y_0|W=0)},
 $$
 that is easier to estimate. Indeed, a consistent estimate of $\alpha$ is the difference between the means of the outcome variables in two sub-samples: one containing only the treated entities (this gives an estimate of $\mathbb{E}(Y_1|W=1)$) and the other containing only the non-treated entities (this gives an estimate of $\mathbb{E}(Y_0|W=0)$). Coming back to $ATE$, the problem is that we won't have direct information regarding $\mathbb{E}(Y_0|W=1)$ and $\mathbb{E}(Y_1|W=0)$. However, these two conditional expectations are part of $ATE$. Indeed, $ATE = \mathbb{E}(Y_1) - \mathbb{E}(Y_0)$, and:
-\begin{eqnarray}
-\mathbb{E}(Y_1) &=& \mathbb{E}(Y_1|W=0)\mathbb{P}(W=0)+\mathbb{E}(Y_1|W=1)\mathbb{P}(W=1) (\#eq:EY1a) \\
-\mathbb{E}(Y_0) &=& \mathbb{E}(Y_0|W=0)\mathbb{P}(W=0)+\mathbb{E}(Y_0|W=1)\mathbb{P}(W=1). (\#eq:EY0a)
-\end{eqnarray}
+\begin{equation}
+\mathbb{E}(Y_1) = \mathbb{E}(Y_1|W=0)\mathbb{P}(W=0)+\mathbb{E}(Y_1|W=1)\mathbb{P}(W=1) (\#eq:EY1a)
+\end{equation}
+
+\begin{equation}
+\mathbb{E}(Y_0) = \mathbb{E}(Y_0|W=0)\mathbb{P}(W=0)+\mathbb{E}(Y_0|W=1)\mathbb{P}(W=1). (\#eq:EY0a)
+\end{equation}
 
 ### Randomized controlled trials (RCTs)
 
@@ -935,7 +715,7 @@ In the context of Randomized controlled trials (RCTs), entities are randomly ass
 
 Therefore, in this context, estimating $\mathbb{E}(Y_1-Y_0)$ amounts to computing the difference between two sample means, namely (a) the sample mean of the subset of $Y_i$'s corresponding to the entities for which $W_i=1$, and (b) the one for which $W_i=0$.
 
-More accurate estimates can be obtained through regressions. Assume that the model reads:
+Pre-treatment covariates can improve precision when they predict the outcome. For example, suppose the model is:
 $$
 Y_{i} = W_{i} \beta_{1} + X_i'\boldsymbol\beta_z + \varepsilon_i,
 $$
@@ -945,7 +725,7 @@ where $\mathbb{E}(\varepsilon_i|X_i) = 0$ (and $W_i$ is independent from $X_i$ a
 
 Random assignment is often unavailable. Difference-in-differences instead uses changes over time in a treated group and a comparison group, relying on a parallel-trends assumption to construct the missing counterfactual.
 
-The DiD approach is a popular methodology implemented in cases where $W$ cannot be considered as an independent variable. It exploits two dimensions: entities ($i$), and time ($t$). To simplify the exposition, we consider only two periods here ($t=0$ and $t=1$).
+DiD does not require random treatment assignment. It exploits two dimensions: entities ($i$) and time ($t$). To simplify the exposition, we consider only two periods here ($t=0$ and $t=1$).
 
 Consider the following model:
 \begin{equation}
@@ -956,72 +736,143 @@ The parameter of interest is $\beta_{1}$, which is the treatment effect (recall 
 
 The treatment indicator may be correlated with the time-invariant effect $\mu_i$, so $\mu_i$ may constitute a *confounder*. DiD removes this fixed difference by comparing changes. Its key identifying assumption is **parallel trends**: in the absence of treatment, the mean change would have been the same in the treated and control groups. In this model, that condition is $\mathbb{E}(\varepsilon_{i,1}-\varepsilon_{i,0}\mid W_{i,1}=1)=\mathbb{E}(\varepsilon_{i,1}-\varepsilon_{i,0}\mid W_{i,1}=0)$. We also assume no anticipation: treatment at date 1 does not affect the date-0 outcome.
 
-We have:
-
+Let $D_i=W_{i,1}$ indicate membership of the treated group. Taking first differences removes $\mu_i$:
 $$
-\begin{array}{cccccccccc}
-\mathbb{E}(Y_{i,1}|W_{i,1}=1) &=& \beta_1 &+& \mathbb{E}(\mu_i|W_{i,1}=1) &+&\mathbb{E}(\delta_1|W_{i,1}=1) &+& \mathbb{E}(\varepsilon_{i,1}|W_{i,1}=1) \\
-\mathbb{E}(Y_{i,0}|W_{i,1}=1) &=&  && \mathbb{E}(\mu_i|W_{i,1}=1) &+&\mathbb{E}(\delta_0|W_{i,1}=1) &+& \mathbb{E}(\varepsilon_{i,0}|W_{i,1}=1) \\
-\mathbb{E}(Y_{i,1}|W_{i,1}=0) &=& && \mathbb{E}(\mu_i|W_{i,1}=0) &+&\mathbb{E}(\delta_1|W_{i,1}=0) &+& \mathbb{E}(\varepsilon_{i,1}|W_{i,1}=0) \\
-\mathbb{E}(Y_{i,0}|W_{i,1}=0) &=&  && \mathbb{E}(\mu_i|W_{i,1}=0) &+&\mathbb{E}(\delta_0|W_{i,1}=0) &+& \mathbb{E}(\varepsilon_{i,0}|W_{i,1}=0).
-\end{array}
+\Delta Y_{i,1}=\beta_1 D_i+(\delta_1-\delta_0)+\Delta\varepsilon_{i,1}.
 $$
-and, under our assumptions, it can be checked that:
-
+The two groups share the common time change $\delta_1-\delta_0$. Under parallel trends, they also have the same mean disturbance change. Subtracting their mean changes therefore leaves only the treatment effect:
 $$
-\beta_1 = \mathbb{E}(\Delta Y_{i,1}|W_{i,1}=1) - \mathbb{E}(\Delta Y_{i,1}|W_{i,1}=0),
+\boxed{\beta_1=\mathbb{E}(\Delta Y_{i,1}\mid D_i=1)
+                   -\mathbb{E}(\Delta Y_{i,1}\mid D_i=0),}
 $$
-where $\Delta Y_{i,1}=Y_{i,1}-Y_{i,0}$. Therefore, in this context, the treatment effect appears to be a difference (of two conditionnal expectations) of difference (of the outcome variable, through time).
+where $\Delta Y_{i,1}=Y_{i,1}-Y_{i,0}$. The first difference is over time; the second is between groups. The constant-effect model writes this as $\beta_1$. With heterogeneous effects, the analogous two-period design identifies the average effect on the treated group under parallel trends and no anticipation.
 
-This is illustrated by Figure \@ref(fig:figAbadie), which represents the generic DiD framework.
+In practice, estimate the two-period DiD with a treated-group indicator, an after-period indicator, and their interaction. The interaction coefficient is the DiD estimate. Unit and time fixed effects give the equivalent formulation when the same entities are observed in both periods. Time-invariant controls do not replace unit effects, and controlling for variables changed by treatment can obscure the effect of interest.
 
-```{r figAbadie, fig.align = 'center', out.width = "95%", fig.cap = "Source: Abadie et al., (1998).", echo=FALSE}
-knitr::include_graphics("images/Abadie_et_al_2018.png")
+```{r panel-did-heading-space, echo=FALSE, results='asis'}
+if (knitr::is_latex_output()) cat("\\Needspace{10\\baselineskip}\n")
 ```
 
+### Application: speed cameras and injury crashes in France
 
-In practice, the two-period DiD is estimated using group and time indicators and their interaction; the coefficient on the interaction is the DiD estimate. With repeated observations on the same entities, unit and time fixed effects provide the equivalent regression formulation. Observed covariates can improve precision or adjust for compositional differences, but time-invariant controls do not generally replace unit fixed effects or eliminate unobserved time-invariant confounding.
+:::{.example #panel-did-radars name="What happens after a speed camera is installed?"}
 
-<!-- Diff-in-Diff: [Card and Krueger (1994)](https://towardsdatascience.com/analyze-causal-effect-using-diff-in-diff-model-85e07b17e7b7) -->
+Does installing a fixed speed camera reduce injury crashes nearby? @Renne_2026_cameras studies this question using French accident records and camera installation histories. A before--after comparison is insufficient: road safety changes over time, and cameras may be installed in response to unusually high accident counts. Comparing equipped roads with arbitrary unequipped roads can also confuse the camera effect with differences in road risk.
 
+The comparison group therefore consists of **similar sites that receive a camera later**. For each newly equipped site, we compare the twelve months before installation with the twelve months after it, omitting the installation month. Controls are observed over **exactly the same calendar months**, and remain unequipped throughout that post period. They share the treated site's road class and recorded speed limit. This gives a two-period DiD at each installation date; averaging those comparisons accommodates the different installation dates.
 
-### Application of the DiD approach
+`AEC::FRradars` retains the paper's main sample: **406 treated-site comparisons**, using **639 distinct sites**. Crashes are counted near the monitored road, extending two kilometres along it in each direction and at most 100 metres to either side. The paper's geographic and nearby-camera exclusions are retained in the compact data (Appendix \@ref(data-radars)). We simplify the presentation, not the principal comparison sample.
 
-This example is based on the data used in @Meyer_Viscusi_Durbin_1995. This dataset is part of the `wooldridge` package. This paper examines the effect of workers' compensation for injury on time out of work. It exploits a **natural experiment** approach of comparing individuals injured before and after increases in the maximum weekly benefit amount. Specifically, in 1980, the cap on weekly earnings covered by worker’s compensation was increased in Kentucky and Michigan. This can be exploited to check whether this new policy was followed by an increase in the amount of time workers spent unemployed (for example, higher compensation may reduce workers' incentives to avoid injury).
+**Start with the four means.** Each row of `FRradars` is a site appearing in one treated site's comparison set. The stored outcomes are annual counts. We divide by twelve to obtain monthly means and report them per **100 site-months**, so the small numbers are easier to read. We first average the controls within each comparison, then give each of the 406 comparisons equal weight.
 
-As shown in Figure \@ref(fig:figMeyer), the measure has only affected high-earning workers. The idea exploited by @Meyer_Viscusi_Durbin_1995 was to compare the increase in time out of work before-after 1980 for higher-earnings workers on the one hand (entities who received the treatment) and low-earnings workers on the other hand (control group).
-
-```{r figMeyer, fig.align = 'center', out.width = "90%", fig.cap = "Source: Meyer et al., (1995).", echo=FALSE}
-knitr::include_graphics("images/Figure_Meyer_et_al.png")
+```{r panel-radar-means, message=FALSE, warning=FALSE}
+data(FRradars,package="AEC")
+radar_blocks <- split(FRradars,FRradars$stack_id)
+radar_fields <- c("accidents_earlier","accidents_pre","accidents_post")
+radar_treated_means <- t(vapply(radar_blocks,function(d) {
+  as.numeric(d[d$treated,radar_fields])/12
+},numeric(3)))
+radar_control_means <- t(vapply(radar_blocks,function(d) {
+  colMeans(d[!d$treated,radar_fields])/12
+},numeric(3)))
+radar_means <- 100*rbind(colMeans(radar_treated_means),
+                         colMeans(radar_control_means))
+radar_table <- data.frame(Group=c("Newly equipped","Equipped later"),
+                         Before=radar_means[,2],After=radar_means[,3])
+radar_table$Change <- radar_table$After-radar_table$Before
+radar_effect <- radar_table$Change[1]-radar_table$Change[2]
+radar_counterfactual <- radar_table$Before[1]+radar_table$Change[2]
+data_table(radar_table,digits=2,row.names=FALSE)
 ```
 
+The newly equipped sites go from **`r sprintf("%.2f",radar_table$Before[1])`** to **`r sprintf("%.2f",radar_table$After[1])`** injury crashes per 100 site-months. At their comparison sites, crashes instead rise from **`r sprintf("%.2f",radar_table$Before[2])`** to **`r sprintf("%.2f",radar_table$After[2])`**. If the treated sites had experienced that same increase, their after-period mean would have been **`r sprintf("%.2f",radar_counterfactual)`**. The DiD estimate is therefore
+$$
+\widehat\tau=
+(`r sprintf("%.2f",radar_table$After[1])`-`r sprintf("%.2f",radar_table$Before[1])`)
+-(`r sprintf("%.2f",radar_table$After[2])`-`r sprintf("%.2f",radar_table$Before[2])`)
+\simeq\boxed{`r sprintf("%.2f",radar_effect)`}.
+$$
+This is about **`r sprintf("%.2f",abs(radar_effect))` fewer injury crashes per 100 site-months**, or `r sprintf("%.4f",abs(radar_effect)/100)` per site-month. It is equivalent to about `r round(100*abs(radar_effect)/radar_table$Before[1])`% of the treated sites' pre-installation mean. It is not a change in crash risk per journey: the outcome has no traffic denominator.
 
-We replicate some of their results. The dependent variable is the logarithm of the duration of benefits. Further details on the data are available in the documentation for the `injury` dataset in the `wooldridge` package.
-
-In the table of results below, the parameter of interest is the one associated with the interaction term `afchnge:highearn`. Columns 2 and 3 correspond to the first two column of Table 6 in @Meyer_Viscusi_Durbin_1995.
-
-<!-- See [this page](https://evalf20.classes.andrewheiss.com/example/diff-in-diff/) -->
-
-
-```{r DiD1,warning=FALSE,message=FALSE}
-library(wooldridge)
-data(injury)
-injury <- subset(injury,ky==1)
-injury$indust <- as.factor(injury$indust)
-injury$injtype <- as.factor(injury$injtype)
-#names(injury)
-eq1 <- lm(log(durat) ~ afchnge + highearn + afchnge*highearn,data=injury)
-eq2 <- lm(log(durat) ~ afchnge + highearn + afchnge*highearn +
-            lprewage*highearn + male + married + lage + ltotmed + hosp +
-            indust + injtype,data=injury)
-eq3 <- lm(log(durat) ~ afchnge + highearn + afchnge*highearn +
-            lprewage*highearn + male + married + lage + indust +
-            injtype,data=injury)
-model_table(eq1,eq2,eq3,omit=c("indust","injtype","Constant"),no.space = TRUE,
-                     add.lines = list(c("industry dummy","no","yes","yes"),
-                                      c("injury dummy","no","yes","yes")),
-                     order = c(1,2,18,3:17,19,20),omit.stat = c("f","ser"))
+```{r panel-radar-did-figure, fig.width=7, fig.height=3.8, out.width="95%", fig.align='center', fig.cap="The speed-camera comparison. Solid lines show observed means; the dashed line adds the comparison sites' increase to the treated sites' baseline. The vertical gap is the DiD estimate. Means use the same calendar windows within each comparison and equal weights across treated sites."}
+radar_plot_par <- par(mar=c(4,4.5,1,1))
+plot(c(0,1),unlist(radar_table[1,c("Before","After")]),type="o",pch=19,
+     lwd=2,col="#245A81",xlim=c(-.1,1.65),ylim=c(2.8,5.8),xaxt="n",
+     xlab="Window around installation",ylab="Injury crashes per 100 site-months")
+axis(1,at=0:1,labels=c("12 months before","12 months after"))
+lines(0:1,unlist(radar_table[2,c("Before","After")]),type="o",pch=17,
+      lwd=2,col="#B65C28")
+segments(0,radar_table$Before[1],1,radar_counterfactual,
+         col="#245A81",lwd=2,lty=2)
+points(1,radar_counterfactual,pch=1,col="#245A81",cex=1.1)
+segments(1.1,radar_table$After[1],1.1,radar_counterfactual,col="#245A81",lwd=2)
+segments(1.06,c(radar_table$After[1],radar_counterfactual),
+         1.14,c(radar_table$After[1],radar_counterfactual),col="#245A81")
+text(1.18,mean(c(radar_table$After[1],radar_counterfactual)),
+     sprintf("%.2f",radar_effect),pos=4,col="#245A81")
+legend("topleft",c("Newly equipped","Equipped later","No-camera counterfactual"),
+       col=c("#245A81","#B65C28","#245A81"),lty=c(1,1,2),
+       pch=c(19,17,NA),bty="n",cex=.9)
+par(radar_plot_par)
 ```
+
+**Why does this remain a DiD?** Let $g_i$ be the installation month at treated site $i$, and let $C_i$ be its eligible comparison sites. Write $\Delta_i$ for its after-minus-before change, in crashes per 100 site-months, and $\Delta_{j;g_i}$ for control $j$'s change in the same units over those same months. The estimator is simply
+$$
+\widehat\tau=\frac{1}{406}\sum_{i=1}^{406}
+\left[\Delta_i-\frac{1}{|C_i|}\sum_{j\in C_i}\Delta_{j;g_i}\right].
+$$
+Every bracket is the familiar difference of two changes. A site can act as a control before its own installation and later become treated; it never acts as an already-treated control. The weighted four-mean table reproduces this average exactly. Pooling all control appearances equally would change the weights and would no longer reproduce the paper's estimate.
+
+**What must we assume?** Without installation, each treated site's mean change would have matched that of its eligible controls. Comparing similar future camera sites helps address persistent differences, but it does not guarantee parallel trends. A temporary pre-installation spike followed by regression to the mean, differential roadworks or local traffic changes could still bias the estimate. We also need no anticipation and no relevant spillovers. The spatial exclusions help separate the measured crash areas, without proving that drivers' responses stop at their boundaries.
+
+**Check the earlier year, and account for reused sites.** The compact data include months $-24$ to $-13$, giving one pre-treatment DiD: compare the final pre-installation year with the preceding year at both groups. This is a diagnostic, not a second treatment effect. For uncertainty, we bootstrap the 639 physical sites, applying each resampled site's weight to every appearance as treated or control and re-normalizing the control means within each comparison. Resampling table rows or treating the 406 comparisons as independent would miss shared-site dependence.
+
+```{r panel-radar-bootstrap, message=FALSE, warning=FALSE}
+radar_ids <- unique(FRradars$site_id)
+radar_stack_ids <- as.integer(names(radar_blocks))
+radar_index <- cbind(match(FRradars$stack_id,radar_stack_ids),
+                     match(FRradars$site_id,radar_ids))
+radar_is_control <- !FRradars$treated
+radar_membership <- matrix(0,length(radar_blocks),length(radar_ids))
+radar_membership[radar_index[radar_is_control,,drop=FALSE]] <- 1
+radar_treated_ids <- vapply(radar_blocks,function(d) d$site_id[d$treated],character(1))
+radar_site_weights <- replicate(1999,tabulate(
+  sample.int(length(radar_ids),length(radar_ids),replace=TRUE),
+  nbins=length(radar_ids)))
+radar_control_denominator <- radar_membership %*% radar_site_weights
+radar_treated_weights <- radar_site_weights[match(radar_treated_ids,radar_ids),]
+radar_treated_weights[radar_control_denominator==0] <- 0
+radar_bootstrap_change <- function(from,to) {
+  change <- (FRradars[[to]]-FRradars[[from]])/12
+  controls <- radar_membership*0
+  controls[radar_index[radar_is_control,,drop=FALSE]] <- change[radar_is_control]
+  control_mean <- (controls %*% radar_site_weights)/radar_control_denominator
+  treated_change <- vapply(radar_blocks,function(d) {
+    (d[[to]][d$treated]-d[[from]][d$treated])/12
+  },numeric(1))
+  contrasts <- treated_change-control_mean
+  contrasts[radar_control_denominator==0] <- 0
+  100*colSums(contrasts*radar_treated_weights)/colSums(radar_treated_weights)
+}
+radar_boot_after <- radar_bootstrap_change("accidents_pre","accidents_post")
+radar_boot_pre <- radar_bootstrap_change("accidents_earlier","accidents_pre")
+radar_placebo <- 100*mean((radar_treated_means[,2]-radar_treated_means[,1])-
+                         (radar_control_means[,2]-radar_control_means[,1]))
+radar_se <- c(sd(radar_boot_after),sd(radar_boot_pre))
+radar_inference <- data.frame(
+  Contrast=c("After vs before","Before vs earlier year"),
+  Estimate=c(radar_effect,radar_placebo),SE=radar_se)
+radar_inference$Lower <- radar_inference$Estimate-qnorm(.975)*radar_se
+radar_inference$Upper <- radar_inference$Estimate+qnorm(.975)*radar_se
+data_table(radar_inference,digits=2,row.names=FALSE,
+           col.names=c("DiD contrast","Estimate","Bootstrap SE","95% lower","95% upper"))
+```
+
+The first-year interval is approximately **[`r sprintf("%.2f",radar_inference$Lower[1])`, `r sprintf("%.2f",radar_inference$Upper[1])`] injury crashes per 100 site-months**. The pre-period contrast is `r sprintf("%.2f",radar_placebo)` and its interval includes zero. This earlier comparison is imprecise; non-rejection does not establish parallel trends. The classroom bootstrap resamples the retained sites and need not reproduce the paper's archived confidence bounds exactly. As in a site-level bootstrap, dependence between distinct sites must be sufficiently weak. The paper also examines finer pre-treatment periods, spatial definitions and other sensitivity checks.
+
+The result concerns local injury-crash counts at these retained camera sites during their first post-installation year. It does not establish an effect for every road, an effect per vehicle, or an effect on total crashes across the road network.
+
+:::
 
 ```{r panel-recap-space, echo=FALSE, results='asis'}
 if (knitr::is_latex_output()) cat("\\Needspace{15\\baselineskip}\n")
@@ -1034,9 +885,9 @@ if (knitr::is_latex_output()) cat("\\Needspace{15\\baselineskip}\n")
 - Section \@ref(panel-cases) distinguishes pooled, fixed-effects, and random-effects models according to the role of unobserved individual heterogeneity.
 - Hypothesis \@ref(hyp:FE) permits individual effects to be correlated with regressors; Section \@ref(FixedEffect) removes those effects using dummy variables, within transformations, or first differences.
 - Section \@ref(RandomEffect) gains efficiency by assuming that individual effects are uncorrelated with the regressors and incorporating them into the error covariance structure.
-- Example \@ref(exm:airbnb) shows why effect estimates and uncertainty estimates answer different questions in panel applications.
+- Examples \@ref(exm:electricity-panel) and \@ref(exm:electricity-panel-inference) separate the within-meter weekend association from assumptions used to estimate its uncertainty.
 - Section \@ref(DynPanel) explains why lagged dependent variables become endogenous after fixed-effect transformations and how earlier observations provide instruments.
-- Section \@ref(program-evaluation) introduces potential outcomes and randomized assignment; Section \@ref(did) develops difference-in-differences under a parallel-trends assumption.
+- Section \@ref(program-evaluation) introduces potential outcomes and randomized assignment; Section \@ref(did) develops difference-in-differences under parallel trends. Example \@ref(exm:panel-did-radars) applies it to French speed cameras, using sites equipped later as controls.
 
 :::
 

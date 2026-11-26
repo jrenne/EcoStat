@@ -26,8 +26,10 @@ render_exercises <- function(topic) {
     ids <- vapply(entries, `[[`, character(1), "id")
     if (any(!ids %in% names(answers))) stop("Missing private solutions: ", paste(setdiff(ids,names(answers)),collapse=", "))
   }
+  # Reserve room for the heading and opening text; boxes can split if needed.
+  # A blanket 28-line reservation pushed short statements onto near-empty pages.
   output <- vapply(entries, function(x) paste0(
-    if (knitr::is_latex_output()) "\\Needspace{28\\baselineskip}\n\n" else "",
+    if (knitr::is_latex_output()) "\\Needspace{16\\baselineskip}\n\n" else "",
     ":::: {.exercisebox data-latex=\"\"}\n\n",
     "::: {.exercise #", x$id, " name=\"", x$title, "\"}\n\n",
     "**", x$difficulty, " | ", x$type, "**  \n",

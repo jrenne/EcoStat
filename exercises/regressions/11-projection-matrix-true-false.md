@@ -20,4 +20,4 @@ For each statement, decide whether it is true or false and justify your answer.
 
 4. The fact that $\mathbf{X}$ is orthogonal to $\mathbf{e}$ $(\mathbf{X}'\mathbf{e} = \mathbf{0})$ suggests that our OLS estimator is unbiased.
 
-5. $\boldsymbol\varepsilon = \mathbf{My}$, where $\mathbf{M} = \mathbf{I} - \mathbf{X}(\mathbf{X'X})^{-1}\mathbf{X'}$.
+5. $\boldsymbol\varepsilon = \mathbf{My}$, where $\mathbf{M} = \mathbf{Id} - \mathbf{X}(\mathbf{X'X})^{-1}\mathbf{X'}$.

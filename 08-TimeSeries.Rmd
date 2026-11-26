@@ -15,6 +15,8 @@
 
 ## Introduction to time series
 
+Our running application is the monthly number of recorded injury accidents in Zurich. Chapter 4 separated a time trend from calendar-month effects; here we study dependence between successive months and use past observations to forecast new ones. Appendix \@ref(data-accidents) describes the data.
+
 A time series is a sequence of random variables indexed by time: $\{y_t\}_{t=-\infty}^{+\infty}=\{\dots,y_{-1},y_0,y_1,\dots\}$, with $y_t\in\mathbb{R}^k$. In practice, we observe only a finite stretch, typically $\{y_1,\dots,y_T\}$. Unlike a random sample, these observations may be dependent across dates, so the order in which they occur contains information.
 
 Time-series models describe current observations in terms of past information and new **shocks**, usually denoted by $\varepsilon_t$. Although shocks are sometimes assumed i.i.d., many results need only weaker restrictions. We begin with white noise and martingale differences, then introduce the lag operator and stationarity.
@@ -28,7 +30,7 @@ c. for all $s\ne t$, $\mathbb{E}(\varepsilon_t \varepsilon_s)=0$.
 :::
 
 
-Another type of shocks that are commonly used are Martingale Difference Sequences:
+A stronger restriction concerns what can be predicted from past information:
 
 :::{.definition #MDS name="Martingale Difference Sequence"}
 The process $\{\varepsilon_t\}_{t = -\infty}^{+\infty}$ is a martingale difference sequence (MDS) if $\mathbb{E}(|\varepsilon_{t}|)<\infty$ and if, for all $t$,
@@ -36,6 +38,8 @@ $$
 \underbrace{\mathbb{E}_{t-1}(\varepsilon_{t})}_{\mbox{Expectation conditional on the past}}=0.
 $$
 :::
+
+Here the information set must be specified; unless stated otherwise, it contains the history of the process. An MDS with constant finite unconditional variance is white noise, but its conditional variance can change over time.
 
 By definition, if $y_t$ is a martingale, then $y_{t}-y_{t-1}$ is a MDS.
 
@@ -52,7 +56,7 @@ A (weak) white noise process is not necessarily a MDS. This is for instance the 
 $$
 \varepsilon_{t} = z_t + z_{t-1}z_{t-2},
 $$
-where $z_t \sim i.i.d.\mathcal{N}(0,1)$.
+where $z_t \sim i.i.d.\mathcal{N}(0,1)$. Its autocovariances vanish at nonzero lags, yet $\mathbb{E}(\varepsilon_t\varepsilon_{t-1}\varepsilon_{t-2})=1$. It therefore cannot have zero conditional mean given its own past.
 :::
 
 In the following, to simplify the exposition, we will essentially consider **strong white noises**. A strong white noise is a particular case of white noise where the $\varepsilon_{t}$'s are serially independent. Using the law of iterated expectation, it can be shown that a strong white noise is a martingale difference sequence. Indeed, when the $\varepsilon_{t}$'s are serially independent, we have that $\mathbb{E}(\varepsilon_{t}|\varepsilon_{t-1},\varepsilon_{t-2},\dots)=\mathbb{E}(\varepsilon_{t})=0$.
@@ -66,12 +70,10 @@ L: \{y_t\}_{t=-\infty}^{+\infty} \rightarrow \{w_t\}_{t=-\infty}^{+\infty} \quad
 
 We have: $L^2 y_t = y_{t-2}$ and, more generally, $L^k y_t = y_{t-k}$.
 
-Consider a time series $y_t$ defined by $y_t = \mu + \phi y_{t-1} + \varepsilon_t$, where the $\varepsilon_t$'s are i.i.d. $\mathcal{N}(0,\sigma^2)$. Using the lag operator, the dynamics of $y_t$ can be expressed as follows:
+Consider a time series $y_t$ defined by $y_t = c + \phi y_{t-1} + \varepsilon_t$, where the $\varepsilon_t$'s are i.i.d. $\mathcal{N}(0,\sigma^2)$. Using the lag operator, the dynamics of $y_t$ can be expressed as follows:
 $$
-(1-\phi L) y_t = \mu + \varepsilon_t.
+(1-\phi L) y_t = c + \varepsilon_t.
 $$
-
-It is easily checked that we have $L^2 y_t = y_{t-2}$ and, generally, $L^k y_t = y_{t-k}$.
 
 If it exists, the **unconditional (or marginal) mean** of the random variable $y_t$ is given by:
 $$
@@ -84,13 +86,12 @@ $$
 
 :::{.definition #autocov name="Autocovariance"}
 
-The $j^{th}$ autocovariance of $y_t$ is given by:
-\begin{eqnarray*}
-\gamma_{j,t} &:=& \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} \dots \int_{-\infty}^{\infty} [y_t - \mathbb{E}(y_t)][y_{t-j} - \mathbb{E}(y_{t-j})] \times\\
-&& f_{Y_t,Y_{t-1},\dots,Y_{t-j}}(y_t,y_{t-1},\dots,y_{t-j}) dy_t dy_{t-1} \dots dy_{t-j} \\
-&=& \mathbb{E}([y_t - \mathbb{E}(y_t)][y_{t-j} - \mathbb{E}(y_{t-j})]),
-\end{eqnarray*}
-where $f_{Y_t,Y_{t-1},\dots,Y_{t-j}}(y_t,y_{t-1},\dots,y_{t-j})$ is the joint distribution of $y_t,y_{t-1},\dots,y_{t-j}$.
+The lag-$j$ autocovariance is
+$$
+\gamma_{j,t}=\mathbb{C}ov(y_t,y_{t-j})
+=\mathbb{E}\big[(y_t-\mathbb{E}y_t)(y_{t-j}-\mathbb{E}y_{t-j})\big].
+$$
+It measures linear dependence between observations $j$ periods apart. Unlike a correlation, it retains the squared units of the variable.
 :::
 
 In particular, $\gamma_{0,t} = \mathbb{V}ar(y_t)$.
@@ -104,11 +105,16 @@ $$
 
 Figure \@ref(fig:nonstat1) displays the simulation of a process that is not covariance stationary. This process follows $y_t = 0.1t + \varepsilon_t$, where $\varepsilon_t \sim\,i.i.d.\,\mathcal{N}(0,1)$. Indeed, for such a process, we have: $\mathbb{E}(y_t)=0.1t$, which depends on $t$.
 
-```{r nonstat1, echo=FALSE, fig.cap="Example of a process that is not covariance stationary ($y_t = 0.1t + \\varepsilon_t$, where $\\varepsilon_t \\sim \\mathcal{N}(0,1)$).", fig.asp = .6, out.width = "95%", fig.align = 'left'}
-T <- 200
-y <- 0.1*(1:T) + rnorm(T)
-par(plt=c(.1,.95,.1,.95))
-plot(y,xlab="",ylab="",type="l")
+```{r nonstat1, echo=FALSE, fig.cap="A deterministic trend makes the mean change with time. The dashed line is the generating mean, $0.1t$.", fig.width=7, fig.height=3.3, out.width="95%"}
+local({
+  time <- 1:200
+  y <- .1*time + rnorm(200)
+  par(mar=c(4,4,1,1))
+  plot(time,y,type="l",col="#334155",xlab="Time",ylab="Outcome",las=1)
+  lines(time,.1*time,col="#C76D36",lty=2,lwd=2)
+  legend("topleft",c("Observed path","Time-varying mean"),
+         col=c("#334155","#C76D36"),lty=1:2,lwd=c(1,2),bty="n",cex=.9)
+})
 ```
 
 
@@ -122,14 +128,18 @@ y_t = \mathbb{I}_{\{t<1000\}}\varepsilon_{1,t}+\mathbb{I}_{\{t\ge1000\}}\varepsi
 $$
 where $\{\varepsilon_{1,t}\}$ and $\{\varepsilon_{2,t}\}$ are independent i.i.d. sequences, $\varepsilon_{1,t} \sim \mathcal{N}(0,1)$, $\varepsilon_{2,t} \sim \sqrt{\frac{\nu - 2}{\nu}} t(\nu)$, and $\nu = 4$. Both regimes have mean zero and variance one, but their marginal distributions differ.
 
-```{r nonstat2, echo=FALSE, fig.cap="Example of a process that is covariance stationary but not strictly stationary. The red lines delineate the 99\\% confidence interval of the standard normal distribution ($\\pm 2.58$).", fig.asp = .6, out.width = "95%", fig.align = 'left'}
-T <- 2000
-y <- rnorm(T)
-y[(T/2):T] <- rt(n = T/2 + 1,df=4)
-par(plt=c(.1,.95,.15,.95))
-plot(y,xlab="",ylab="",type="l")
-abline(h=-2.58,col="red")
-abline(h=2.58,col="red")
+```{r nonstat2, echo=FALSE, fig.cap="Equal means and variances do not imply equal distributions. From date 1,000, standardized Student shocks replace normal shocks. Dashed lines mark the central 99\\% range of a standard normal variable, not a confidence interval for a mean.", fig.width=7, fig.height=3.4, out.width="95%"}
+local({
+  time <- 1:2000
+  y <- rnorm(2000)
+  y[time>=1000] <- sqrt((4-2)/4)*rt(sum(time>=1000),df=4)
+  par(mar=c(4,4,1,1))
+  plot(time,y,type="l",col="#334155",xlab="Time",ylab="Outcome",las=1)
+  abline(v=1000,col="#147D92",lty=3)
+  abline(h=qnorm(c(.005,.995)),col="#C76D36",lty=2)
+  text(c(500,1500),rep(max(y)*.9,2),
+       c("Normal shocks","Standardized Student shocks"),cex=.85)
+})
 ```
 
 
@@ -150,39 +160,52 @@ $$
 :::
 
 
-Consider a long historical time series of the Swiss GDP growth, taken from the @JST_2017 dataset.[^FootnoteJST] 
+:::{.example #zurich-time-patterns name="Seasonality and dependence in Zurich accidents"}
 
-[^FootnoteJST]: Version 6 of the dataset, available on [this website](https://www.macrohistory.net).
+The packaged series `AEC::CHaccidents_monthly` contains all 180 months from January 2011 to December 2025. We study **accidents involving injury**, including fatal accidents, rather than counts of injured people. Total accident counts include property-only incidents, whose reporting definition changed in 2015; we do not use that total here.
 
-```{r autocov, echo=FALSE, fig.cap="Annual growth rate of Swiss GDP, based on the Jorda-Schularick-Taylor Macrohistory Database.", fig.asp = .6, out.width = "95%", fig.align = 'left'}
-library(AEC)
-data(JST)
-data <- subset(JST,iso=="CHE")
-par(plt=c(.1,.95,.1,.95))
-T <- dim(data)[1]
-data$growth <- c(NaN,log(data$gdp[2:T]/data$gdp[1:(T-1)]))
-plot(data$year,data$growth,type="l",xlab="",ylab="",lwd=2)
-abline(h=mean(data$growth,na.rm = TRUE),col="blue",lty=2,xlab="",ylab="")
+We initially use only January 2011--December 2022 (144 months) and reserve 2023--2025 for forecast evaluation. Figure \@ref(fig:autocov) shows the initial sample and its calendar-month averages. There is a marked annual pattern; a constant-mean stationary model for the unadjusted counts would miss it.
+
+```{r zurich-time-sample}
+zurich_ts <- AEC::CHaccidents_monthly
+z_initial <- which(zurich_ts$year <= 2022)
+z_counts <- zurich_ts$injury_accidents
+z_monthly_mean <- as.numeric(tapply(z_counts[z_initial],zurich_ts$month[z_initial],mean))
+z_deviation <- z_counts[z_initial] - z_monthly_mean[zurich_ts$month[z_initial]]
 ```
 
-
-
-
-```{r autocov2, echo=FALSE, fig.cap="For order $j$, the slope of the blue line is, approximately, $\\hat{\\gamma}_j/\\widehat{\\mathbb{V}ar}(y_t)$, where hats indicate sample moments.", fig.asp = .6, out.width = "95%", fig.align = 'left'}
-y <- data$growth
-j <- 1;y_1 <- c(rep(NaN,j),y[1:(T-j)])
-j <- 2;y_2 <- c(rep(NaN,j),y[1:(T-j)])
-j <- 3;y_3 <- c(rep(NaN,j),y[1:(T-j)])
-par(mfrow=c(1,2))
-plot(y_1,y,xlim=c(-.3,.3),ylim=c(-.3,.3),main="(a) order: one",
-     xlab=expression(y[t-1]),ylab=expression(y[t]))
-grid()
-abline(lm(y~y_1),col="blue")
-plot(y_3,y,xlim=c(-.3,.3),ylim=c(-.3,.3),main="(b) order: three",
-     xlab=expression(y[t-3]),ylab=expression(y[t]))
-grid()
-abline(lm(y~y_3),col="blue")
+```{r autocov, echo=FALSE, fig.cap="Initial sample, 2011--2022. Left: monthly recorded injury accidents in Zurich. Right: averages for each calendar month, computed from these same 12 years.", fig.width=8, fig.height=3.5, out.width="100%"}
+local({
+  par(mfrow=c(1,2),mar=c(4,4,2,1))
+  plot(zurich_ts$date[z_initial],z_counts[z_initial],type="l",col="#147D92",
+       xlab="Year",ylab="Injury accidents",main="Monthly observations",las=1)
+  plot(1:12,z_monthly_mean,type="b",pch=19,col="#147D92",xaxt="n",
+       xlab="Calendar month",ylab="Average injury accidents",main="Seasonal profile",las=1)
+  axis(1,at=c(1,3,5,7,9,11),labels=month.abb[c(1,3,5,7,9,11)])
+})
 ```
+
+To examine dependence beyond this regular pattern, define the **seasonal deviation**
+$$
+u_t=y_t-\widehat m_{s(t)},
+$$
+where $s(t)$ is the calendar month and $\widehat m_s$ its average in the initial sample. This is a simple seasonal adjustment, not proof that the remaining series is stationary. The scatterplots in Figure \@ref(fig:autocov2) compare deviations at different lags: a positive deviation tends to follow another positive deviation, particularly at lag one.
+
+```{r autocov2, echo=FALSE, fig.cap="Seasonal deviations in the initial sample. Each point pairs two months one or three periods apart. The fitted line describes their sample association; its slope need not equal the sample ACF exactly because the endpoint samples differ.", fig.width=8, fig.height=3.5, out.width="100%"}
+local({
+  par(mfrow=c(1,2),mar=c(4,4,2,1))
+  for (lag in c(1,3)) {
+    current <- z_deviation[(lag+1):length(z_deviation)]
+    previous <- head(z_deviation,-lag)
+    plot(previous,current,pch=16,col=adjustcolor("#147D92",.5),
+         xlab=paste("Deviation",lag,"month(s) earlier"),ylab="Current deviation",
+         main=paste("Lag",lag),las=1)
+    abline(h=0,v=0,col="#CBD5E1",lty=3)
+    abline(lm(current~previous),col="#C76D36",lwd=2)
+  }
+})
+```
+:::
 
 :::{.definition #ergodicity name="Mean ergodicity"}
 The covariance-stationary process $y_t$ is ergodic for the mean if:
@@ -203,10 +226,13 @@ It should be noted that ergodicity and stationarity are different properties. Ty
 :::{.theorem #CLTcovstat name="Sample mean of a weakly dependent stationary process"}
 
 If process $y_t$ is covariance stationary and the series of autocovariances is absolutely summable ($\sum_{j=-\infty}^{+\infty} |\gamma_j| <\infty$), then:
-\begin{eqnarray}
-\bar{y}_T \overset{m.s.}{\rightarrow} \mu &=& \mathbb{E}(y_t) (\#eq:TCL20)\\
-\mbox{lim}_{T \rightarrow +\infty} T \mathbb{E}\left[(\bar{y}_T - \mu)^2\right] &=& \sum_{j=-\infty}^{+\infty} \gamma_j. (\#eq:TCL2)
-\end{eqnarray}
+\begin{equation}
+\bar{y}_T \overset{m.s.}{\rightarrow} \mu = \mathbb{E}(y_t) (\#eq:TCL20)
+\end{equation}
+
+\begin{equation}
+\mbox{lim}_{T \rightarrow +\infty} T \mathbb{E}\left[(\bar{y}_T - \mu)^2\right] = \sum_{j=-\infty}^{+\infty} \gamma_j. (\#eq:TCL2)
+\end{equation}
 
 Covariance stationarity and summable autocovariances alone do **not** imply asymptotic normality. If the process additionally satisfies a suitable central-limit condition---for example, standard strong-mixing and moment conditions---then
 \begin{equation}
@@ -217,7 +243,7 @@ Covariance stationarity and summable autocovariances alone do **not** imply asym
 :::
 
 :::{.proof}
-By Proposition \@ref(prp:absMs), Eq. \@ref(eq:TCL2) implies Eq. \@ref(eq:TCL20). For Eq. \@ref(eq:TCL2), see Appendix \@ref(AppendixProof). Equation \@ref(eq:TCL4ts) follows only after imposing an appropriate central-limit condition.
+If $T\mathbb E[(\bar y_T-\mu)^2]$ has a finite limit, then the mean squared error tends to zero, proving Eq. \@ref(eq:TCL20). For Eq. \@ref(eq:TCL2), see Appendix \@ref(AppendixProof). Equation \@ref(eq:TCL4ts) follows only after imposing an appropriate central-limit condition.
 :::
 
 :::{.definition #LRV name="Long-run variance"}
@@ -240,32 +266,24 @@ S^{NW}=\hat\gamma_0 + 2 \sum_{\nu=1}^{q}\left(1-\frac{\nu}{q+1}\right) \hat\gamm
 \end{equation}
 For consistency, the bandwidth $q=q_T$ must be chosen together with the sample size; standard sufficient conditions include $q_T\rightarrow\infty$ and $q_T/T\rightarrow0$, along with moment and weak-dependence conditions.
 
-Theorem \@ref(thm:CLTcovstat) implies that persistence reduces the precision of a sample mean for a given sample size. Figure \@ref(fig:TVTCL) illustrates this point with three processes that have the same marginal variance but autocorrelations of 0\%, 70\%, and 99.9\%. As persistence rises, the sample mean (dashed red line) can remain farther from the population mean (solid red line).
+Theorem \@ref(thm:CLTcovstat) implies that positive serial correlation reduces the precision of a sample mean for a given sample size. Figure \@ref(fig:TVTCL) illustrates this point with three processes that have the same marginal variance but autocorrelations of 0\%, 70\%, and 99.9\%. As persistence rises, the sample mean (dashed orange line) can remain farther from the population mean (solid orange line).
 
-The same type of simulations can be performed using [this ShinyApp](https://jrenne.shinyapps.io/MacroEc/) (use panel "AR(1) Simulation").
+For a stationary AR(1) with marginal variance one, the long-run variance is $(1+\rho)/(1-\rho)$. With $\rho=0.7$, it is about 5.67: asymptotically, the variance of the sample mean is about 5.67 times the independent-observation value.
 
-```{r TVTCL, echo=FALSE, fig.cap="The three samples have been simulated using the following data generating process: $x_t = \\mu + \\rho (x_{t-1}-\\mu) + \\sqrt{1-\\rho^2}\\varepsilon_t$, where $\\varepsilon_t \\sim \\mathcal{N}(0,1)$. Case A: $\\rho = 0$;  Case B: $\\rho = 0.7$;  Case C: $\\rho = 0.999$. In the three cases, $\\mathbb{E}(x_t)=\\mu=2$ and $\\mathbb{V}ar(x_t)=1$.", fig.asp = .6, out.width = "100%", fig.align = 'left'}
-all.rho <- c(0,.7,.999)
-par(plt=c(0.1,0.95,0.2,0.75))
-par(mfrow=c(3,1))
-count <- 0
-for(rho in all.rho){
-  count <- count + 1
-  if(count==1){main.t <- "Case A"}
-  if(count==2){main.t <- "Case B"}
-  if(count==3){main.t <- "Case C"}
-  N <- 200
-  X <- NULL
-  mu <- 2
-  X <- 2.5
-  sigma <- sqrt(1-rho^2)
-  for(i in 2:N){
-    X <- c(X,mu + rho*(X[length(X)]-mu) + sigma*rnorm(1))
+```{r TVTCL, echo=FALSE, fig.pos="H", fig.cap="Persistence and sample means. Each stationary AR(1) has mean two and variance one, with its first observation drawn from the stationary distribution. Solid orange lines mark the population mean; dashed orange lines mark each sample mean. At very high persistence, 200 observations can cover little of the stationary distribution.", fig.width=7, fig.height=5.8, out.width="95%"}
+local({
+  par(mfrow=c(3,1),mar=c(3,4,2,1))
+  initial <- rnorm(1,mean=2)
+  innovations <- rnorm(200)
+  for (rho in c(0,.7,.999)) {
+    y <- numeric(200); y[1] <- initial
+    for(t in 2:200) y[t] <- 2+rho*(y[t-1]-2)+sqrt(1-rho^2)*innovations[t]
+    plot(y,type="l",col="#147D92",xlab="Time",ylab="Outcome",ylim=c(-1,5),
+         main=paste("Autoregressive coefficient =",rho),las=1)
+    abline(h=2,col="#C76D36",lwd=2)
+    abline(h=mean(y),col="#C76D36",lty=2,lwd=2)
   }
-  plot(X,type="l",main=main.t,xlab="",ylab="",lwd=2)
-  abline(h=mu,col="red")
-  abline(h=mean(X),col="red",lty=2)
-}
+})
 ```
 
 
@@ -306,7 +324,7 @@ $$
 \right.
 $$
 
-Notice that process $y_t$ defined through:
+For $\theta\ne0$, the process $y_t$ defined through:
 $$
 y_t = \mu + \varepsilon_t +\theta \varepsilon_{t-1}, 
 $$
@@ -314,7 +332,7 @@ where $\mathbb{V}ar(\varepsilon_t)=\sigma^2$, has the same mean and autocovarian
 $$
 y_t = \mu + \varepsilon^*_t +\frac{1}{\theta}\varepsilon^*_{t-1},
 $$
-where $\mathbb{V}ar(\varepsilon^*_t)=\theta^2\sigma^2$. That is, even if we perfectly know the mean and auto-covariances of this process, it is not possible to identify which specification is the one that has been used to generate the data. Only one of these two specifications is said to be *fundamental*, that is the one that satisfies $|\theta_1|<1$.
+where $\mathbb{V}ar(\varepsilon^*_t)=\theta^2\sigma^2$. That is, even if we perfectly know the mean and auto-covariances of this process, it is not possible to identify which specification is the one that has been used to generate the data. For $\theta\ne0$ and $|\theta|\ne1$, exactly one representation satisfies $|\theta|<1$. This **invertible** representation allows shocks to be recovered as a convergent linear function of present and past observations. At $|\theta|=1$, neither reciprocal representation is invertible.
 
 :::{.definition #MAq name="MA(q) process"}
 A $q^{th}$ order Moving Average process is defined through:
@@ -343,28 +361,20 @@ The unconditional expectation of $y_t$ does not depend on time, since  $\mathbb{
 Then use the fact that $\mathbb{E}(\varepsilon_t\varepsilon_s)=0$ if $t \ne s$ (because $\{\varepsilon_t\}_{t = -\infty}^{+\infty}$ is a white noise process).
 :::
 
-Figure \@ref(fig:simMA) displays simulated paths of two MA processes (an MA(1) and an MA(4)). Such simulations can be produced by using panel "ARMA(p,q)" of [this web interface](https://jrenne.shinyapps.io/MacroEc/).
+Figure \@ref(fig:simMA) illustrates two finite MA models. In the MA(4), a shock affects five successive observations, but no observation beyond that range.
 
-
-```{r simMA, echo=TRUE, fig.cap="Simulation of MA processes.", fig.asp = .6, out.width = "95%", fig.align = 'left'}
-library(AEC)
-T <- 100;nb.sim <- 1
-y.0 <- c(0)
-c <- 1;phi <- c(0);sigma <- 1
-theta <- c(1,1) # MA(1) specification
-y.sim <- sim.arma(c,phi,theta,sigma,T,y.0,nb.sim)
-par(mfrow=c(1,2))
-par(plt=c(.2,.9,.2,.85))
-plot(y.sim[,1],xlab="",ylab="",type="l",lwd=2,
-     main=expression(paste(theta[0],"=1, ",theta[1],"=1",sep="")))
-abline(h=c)
-theta <- c(1,1,1,1,1) # MA(4) specification
-y.sim <- sim.arma(c,phi,theta,sigma,T,y.0,nb.sim)
-plot(y.sim[,1],xlab="",ylab="",type="l",lwd=2,
-     main=expression(paste(theta[0],"=...=",theta[4],"=1",sep="")))
-abline(h=c)
+```{r simMA, fig.cap="Simulated moving averages with mean one and unit-variance shocks. Left: MA(1), coefficient 0.6. Right: MA(4), coefficients 0.5, 0.3, 0.2, 0.1.", fig.width=8, fig.height=3.4, out.width="100%"}
+local({
+  par(mfrow=c(1,2),mar=c(4,4,2,1))
+  specifications <- list(c(.6),c(.5,.3,.2,.1))
+  for(j in 1:2) {
+    y <- 1+arima.sim(model=list(ma=specifications[[j]]),n=150)
+    plot(y,type="l",col="#147D92",xlab="Time",ylab="Outcome",
+         main=c("MA(1)","MA(4)")[j],las=1)
+    abline(h=1,col="#C76D36",lty=2)
+  }
+})
 ```
-
 
 What if the order $q$ of an MA(q) process gets infinite? The notion of **infinite-order Moving Average process** exists and is important in time series analysis. The (infinite) sequence of $\theta_j$ has to satisfy some conditions for such a process to be well-defined (see Theorem \@ref(thm:infMA) below). These conditions relate to the "summability" of $\{\theta_{i}\}_{i\in\mathbb{N}}$ (see Definition \@ref(def:summability)).
 
@@ -382,7 +392,7 @@ $$
 defines a well-behaved [covariance-stationary] process, called infinite-order MA process (MA($\infty$)).
 :::
 :::{.proof}
-See Appendix 3.A in Hamilton. "Well behaved" means that $\Sigma_{i=0}^{T} \theta_{t-i} \varepsilon_{t-i}$ converges in mean square (Def. \@ref(def:convergenceLr)) to some random variable $Z_t$. The proof makes use of the fact that:
+See Appendix 3.A in Hamilton. "Well behaved" means that $\sum_{i=0}^{N} \theta_i \varepsilon_{t-i}$ converges in mean square (Def. \@ref(def:convergenceLr)) to some random variable $Z_t$. The proof makes use of the fact that:
 $$
 \mathbb{E}\left[\left(\sum_{i=N}^{M}\theta_{i} \varepsilon_{t-i}\right)^2\right] = \sum_{i=N}^{M}|\theta_{i}|^2 \sigma^2,
 $$
@@ -399,7 +409,7 @@ i. $y_t = \mu + \sum_{i=0}^{+\infty} \theta_{i} \varepsilon_{t-i}$ exists (Theor
 \gamma_0 = \mathbb{E}([y_t-\mu]^2) &=& \sigma^2(\theta_0^2 +\theta_1^2 + \dots)\\
 \gamma_j = \mathbb{E}([y_t-\mu][y_{t-j}-\mu]) &=& \sigma^2(\theta_0\theta_j + \theta_{1}\theta_{j+1} + \dots).
 \end{eqnarray*}
-ii. Process $y_t$ has absolutely summable auto-covariances, which implies that the results of Theorem \@ref(thm:CLTcovstat) (Central Limit) apply.
+ii. Process $y_t$ has absolutely summable auto-covariances, so the mean-square and long-run-variance conclusions of Theorem \@ref(thm:CLTcovstat) apply. Asymptotic normality additionally needs a central-limit condition; independent identically distributed shocks with finite variance are sufficient for this absolutely summable linear process.
 :::
 
 :::{.proof}
@@ -418,17 +428,16 @@ y_t = c + \phi y_{t-1} + \varepsilon_t.
 $$
 :::
 
-That kind of process can be simulated by using panel "AR(1) Simulation" of [this web interface](https://jrenne.shinyapps.io/MacroEc/).
-
-If $|\phi|\ge1$, $y_t$ is not stationary. Indeed, we have:
+We study **causal** solutions, built from current and past shocks, with $\sigma^2>0$. Iterating the equation gives
 $$
-y_{t+k} = c + \varepsilon_{t+k} + \phi  ( c + \varepsilon_{t+k-1})+ \phi^2  ( c + \varepsilon_{t+k-2})+ \dots + \phi^{k-1}  ( c + \varepsilon_{t+1}) + \phi^k y_t.
+y_{t+k}=\phi^k y_t+c\sum_{j=0}^{k-1}\phi^j+
+\sum_{j=0}^{k-1}\phi^j\varepsilon_{t+k-j}.
 $$
-Therefore, the conditional variance
+The future shocks are uncorrelated with the causal history. Their contribution to the forecast-error variance is
 $$
-\mathbb{V}ar_t(y_{t+k}) = \sigma^2(1 + \phi^2 + \phi^4 + \dots + \phi^{2(k-1)})
+\sigma^2\sum_{j=0}^{k-1}\phi^{2j}.
 $$
-does not converge for large $k$'s. This implies that $\mathbb{V}ar(y_{t})$ does not exist.
+If $|\phi|\ge1$, this grows without bound, ruling out a causal covariance-stationary solution. This statement concerns causal solutions; allowing dependence on future shocks changes the question.
 
 By contrast, if $|\phi| < 1$, one can see that:
 $$
@@ -566,10 +575,10 @@ The eigenvalues of $F$ (defined by Eq. \@ref(eq:F)) are the solutions of:
 :::
 
 
-:::{.proposition #stability name="Covariance-stationarity of an AR(p) process"}
+:::{.proposition #stability name="Causal stability of an AR(p) process"}
 These four statements are equivalent:
 
-i. Process $\{y_t\}$, defined in Def. \@ref(def:ARp), is covariance-stationary.
+i. The AR(p) equation in Def. \@ref(def:ARp), with $\sigma^2>0$, admits a causal covariance-stationary solution.
 ii. The eigenvalues of $F$ (as defined Eq. \@ref(eq:F)) lie strictly within the unit circle.
 iii. The roots of Eq. \@ref(eq:outside) (below) lie strictly outside the unit circle.
 \begin{equation}
@@ -581,17 +590,11 @@ iv. The roots of Eq. \@ref(eq:inside) (below) lie strictly inside the unit circl
 \end{equation}
 :::
 :::{.proof}
-We consider the case where the eigenvalues of $F$ are distinct; Jordan decomposition can be used in the general case. When the eigenvalues of $F$ are distinct, $F$ admits the following spectral decomposition: $F = PDP^{-1}$, where $D$ is diagonal. Using the notations introduced in Eq. \@ref(eq:F), we have:
+When all eigenvalues have modulus below one, powers of $F$ decay sufficiently fast for
 $$
-\bv{y}_{t} = \bv{c} + F \bv{y}_{t-1} + \boldsymbol\xi_{t}.
+\bv{y}_t-\boldsymbol\mu=\sum_{j=0}^{\infty}F^j\boldsymbol\xi_{t-j}
 $$
-Let's introduce $\bv{d} = P^{-1}\bv{c}$, $\bv{z}_t = P^{-1}\bv{y}_t$ and $\boldsymbol\eta_t = P^{-1}\boldsymbol\xi_t$. We have:
-$$
-\bv{z}_{t} = \bv{d} + D \bv{z}_{t-1} + \boldsymbol\eta_{t}.
-$$
-Because $D$ is diagonal, the different component of $\bv{z}_t$, denoted by $z_{i,t}$, follow AR(1) processes. The (scalar) autoregressive parameters of these AR(1) processes are the diagonal entries of $D$ --which also are the eigenvalues of $F$-- that we denote by $\lambda_i$.
-
-Process $y_t$ is covariance-stationary iff $\bv{y}_{t}$ also is covariance-stationary, which is the case iff all $z_{i,t}$, $i \in [1,p]$, are covariance-stationary. By Prop. \@ref(prp:statioAR1), process $z_{i,t}$ is covariance-stationary iff $|\lambda_i|<1$. This proves that (i) is equivalent to (ii). Prop. \@ref(prp:Feigen) further proves that (ii) is equivalent to (iv). Finally, it is easily seen that (iii) is equivalent to (iv) (as long as $\phi_p \ne 0$).
+to converge in mean square. This constructs the causal stationary solution. Conversely, iterating a causal stationary solution gives a bounded innovation-variance sum. For the companion matrix in Eq. \@ref(eq:F), with positive shock variance, this requires all eigenvalues to have modulus below one. This establishes (i)--(ii). Proposition \@ref(prp:Feigen) gives (ii)--(iv); taking reciprocal roots gives (iii)--(iv).
 :::
 
 
@@ -605,7 +608,7 @@ Process $y_t$ is covariance-stationary iff $\bv{y}_{t}$ also is covariance-stati
 <!-- \end{equation} -->
 
 
-Using the lag operator (see Eq \@ref(eq:lagOp)), if $y_t$ is a covariance-stationary AR(p) process (Def. \@ref(def:ARp)), we can write:
+Using the lag operator (see Eq \@ref(eq:lagOp)), if $y_t$ is a stable causal AR(p) process (Def. \@ref(def:ARp)), we can write:
 $$
 y_t = \mu + \psi(L)\varepsilon_t,
 $$
@@ -639,7 +642,7 @@ lambda_z <- eigen(F)$values
 data_table(rbind(x=lambda_x, y=lambda_y, w=lambda_w, z=lambda_z),
            col.names=c("Process", "Eigenvalue 1", "Eigenvalue 2"), digits=3, row_label="Process")
 ```
-The absolute values of the eigenvalues associated with process $w_t$ are both equal to `r round(abs(lambda_w),3)[1]`. Therefore, according to Proposition \@ref(prp:stability), processes $x_t$, $y_t$, and $w_t$ are covariance-stationary, but not $z_t$ (because the absolute value of one of the eigenvalues of the $F$ matrix associated with this process is larger than 1).
+The absolute values of the eigenvalues associated with process $w_t$ are both equal to `r round(abs(lambda_w),3)[1]`. Therefore, according to Proposition \@ref(prp:stability), the equations for $x_t$, $y_t$, and $w_t$ admit causal covariance-stationary solutions, whereas the equation for $z_t$ does not (because the absolute value of one of the eigenvalues of the $F$ matrix associated with this process is larger than 1).
 
 The computation of the autocovariances of $y_t$ is based on the so-called **Yule-Walker equations** (Eq. \@ref(eq:gammas)). Let's rewrite Eq. \@ref(eq:AR):
 $$
@@ -685,47 +688,55 @@ The residuals of the latter regressions ($\varepsilon_{t+h}$) are uncorrelated t
 
 Besides, it can be shown that $\phi_{p,p}=\phi_p$. Hence  $\phi_{p,p}=\phi_p$ but  $\phi_{h,h}=0$ for $h>p$. This can be used to determine the order of an AR process. By contrast (importantly) if $y_t$ follows an MA(q) process, then $\phi_{k,k}$ asymptotically approaches zero instead of cutting off abruptly.
 
-Figure \@ref(fig:pacf) illustrates the ACF/PACF approach using a simulated MA process in the left column and a simulated AR process in the right column.
+Population cutoffs are guides, not exact rules for estimated correlations: a sample ACF or PACF fluctuates around its population value. Figure \@ref(fig:pacf) makes this distinction visible for an MA(1) and an AR(1).
 
-```{r pacf, echo=TRUE, fig.cap="ACF/PACF analysis of two processes (MA process on the left, AR on the right).", fig.asp = .6, out.width = "100%", fig.align = 'left'}
-library(AEC)
-par(mfrow=c(3,2))
-par(plt=c(.2,.9,.2,.95))
-theta <- c(1,2,1);phi=0
-y.sim <- sim.arma(c=0,phi,theta,sigma=1,T=1000,y.0=0,nb.sim=1)
-par(mfg=c(1,1));plot(y.sim,type="l",lwd=2)
-par(mfg=c(2,1));acf(y.sim)
-par(mfg=c(3,1));pacf(y.sim)
-theta <- c(1);phi=0.9
-y.sim <- sim.arma(c=0,phi,theta,sigma=1,T=1000,y.0=0,nb.sim=1)
-par(mfg=c(1,2));plot(y.sim,type="l",lwd=2)
-par(mfg=c(2,2));acf(y.sim)
-par(mfg=c(3,2));pacf(y.sim)
+```{r pacf, fig.pos="H", fig.cap="Sample correlations (grey bars, 400 observations) and population correlations (teal dots). For the MA(1), the ACF cuts off after lag one; for the AR(1), the PACF does. Sampling variation prevents exact sample cutoffs.", fig.width=8, fig.height=5.5, out.width="100%"}
+local({
+  models <- list(list(ma=.6),list(ar=.7))
+  paths <- lapply(models,function(m) arima.sim(model=m,n=400))
+  par(mfrow=c(2,2),mar=c(3.8,3.8,2,1))
+  for(partial in c(FALSE,TRUE)) for(j in 1:2) {
+    sample_values <- if(partial) as.numeric(pacf(paths[[j]],lag.max=12,plot=FALSE)$acf) else
+      as.numeric(acf(paths[[j]],lag.max=12,plot=FALSE)$acf)[-1]
+    theoretical <- do.call(ARMAacf,c(models[[j]],list(lag.max=12,pacf=partial)))
+    if(!partial) theoretical <- theoretical[-1]
+    plot(1:12,sample_values,type="h",lwd=2,col="#94A3B8",ylim=c(-.35,1),
+         xlab="Lag",ylab=if(partial) "Partial autocorrelation" else "Autocorrelation",
+         main=paste(if(partial) "PACF:" else "ACF:",c("MA(1)","AR(1)")[j]),las=1)
+    abline(h=0,col="#CBD5E1")
+    points(1:12,theoretical,pch=19,col="#147D92",cex=.75)
+  }
+})
 ```
 
+:::{.example #zurich-ar-fit name="An AR(1) for seasonal deviations"}
 
+For the initial Zurich sample, fit
+$$
+u_t=a+\phi u_{t-1}+\varepsilon_t.
+$$
+First estimate the seasonal profile, then fit an AR(1) to the deviations to separate seasonality from short-run persistence.
 
+```{r zurich-ar-fit}
+z_ar_data <- data.frame(current=tail(z_deviation,-1),previous=head(z_deviation,-1))
+z_ar <- lm(current~previous,data=z_ar_data)
+data_table(data.frame(Parameter=c("Intercept a","Persistence phi"),
+                      Estimate=unname(coef(z_ar))), digits=3,row.names=FALSE,
+           caption="AR(1) fitted to seasonal deviations, 2011--2022.")
+```
 
+The estimate $\widehat\phi=$ `r round(coef(z_ar)[2],2)` means that a deviation ten accidents higher predicts a deviation about `r round(10*coef(z_ar)[2],1)` accidents higher next month. This predictive association motivates a simple approximation, rather than establishing that an AR(1) is the true process.
+:::
 
 ## Forecasting {#forecasting}
 
 The models above describe temporal dependence. Forecasting uses that dependence to construct the best prediction available from current information, quantify its uncertainty, and compare competing specifications out of sample.
 
-Forecasting has always been an important part of the time series field (@DEGOOIJER2006443). Macroeconomic forecasts are done in many places: Public Administration (notably Treasuries), Central Banks, International Institutions (e.g. IMF, OECD), banks, big firms. These institutions are interested in the **point estimates** ($\sim$ most likely value) of the variable of interest. They also sometimes need to measure the **uncertainty** ($\sim$ dispersion of likely outcomes) associated to the point estimates.[^FootnoteFamChart]
-
-[^FootnoteFamChart]: In its inflation report, the Bank of England displays charts showing the conditional distribution of future inflation, called fan charts. This fan charts show the uncertainty associated with future inflation. See  [this page](https://www.bankofengland.co.uk/quarterly-bulletin/1998/q1/the-inflation-report-projections-understanding-the-fan-chart).
-
-Forecasts produced by professional forecasters are available on these web pages:
-
-* [Philly Fed Survey of Professional Forecasters](https://www.philadelphiafed.org/research-and-data/real-time-center/survey-of-professional-forecasters/).
-* [ECB Survey of Professional Forecasters](http://www.ecb.europa.eu/stats/prices/indic/forecast/html/index.en.html).
-* [IMF World Economic Outlook](https://www.imf.org/en/Publications/WEO).
-* [OECD Global Economic Outlook](http://www.oecd.org/eco/economicoutlook.htm).
-* [European Commission Economic Forecasts](http://ec.europa.eu/economy_finance/eu/forecasts/index_en.htm).
+A point forecast summarizes a future outcome, while a prediction interval describes its uncertainty. Under squared-error loss, the optimal point forecast is a conditional mean, which need not be the most likely value. We first derive this result and then apply it to the Zurich series.
 
 How to formalize the forecasting problem? Assume the current date is $t$. We want to forecast the value that variable $y_t$ will take on date $t+1$ (i.e., $y_{t+1}$) based on the observation of a set of variables gathered in vector $x_t$ ($x_t$ may contain lagged values of $y_t$).
 
-The forecaster aims at minimizing (a function of) the forecast error. It is usal to consider the following (quadratic) loss function:
+The forecaster aims at minimizing (a function of) the forecast error. It is usual to consider the following (quadratic) loss function:
 $$
 \underbrace{\mathbb{E}([y_{t+1} - y^*_{t+1}]^2)}_{\mbox{Mean square error (MSE)}}
 $$
@@ -738,7 +749,7 @@ The smallest MSE is obtained with the expectation of $y_{t+1}$ conditional on $x
 See Appendix \@ref(AppendixProof).
 :::
 
-:::{.proposition #smallestMSElinear names="Smallest MSE for linear forecasts"}
+:::{.proposition #smallestMSElinear name="Smallest MSE for linear forecasts"}
 Among the class of linear forecasts, the smallest MSE is obtained with the linear projection of $y_{t+1}$ on $x_t$.
 This projection, denoted by $\hat{P}(y_{t+1}|x_t):=\boldsymbol\alpha'x_t$, satisfies:
 \begin{equation}
@@ -769,7 +780,7 @@ Consider the regression $y_{t+1} = \boldsymbol\beta'\bv{x}_t + \varepsilon_{t+1}
 $$
 \bv{b} = \left[ \underbrace{ \frac{1}{T-1} \sum_{t=1}^{T-1} \bv{x}_t\bv{x}_t'}_{\bv{m}_1} \right]^{-1}\left[  \underbrace{ \frac{1}{T-1} \sum_{t=1}^{T-1} \bv{x}_t y_{t+1}}_{\bv{m}_2} \right].
 $$
-If $\{x_t,y_t\}$ is covariance-stationary and ergodic for the second moments then the sample moments ($\bv{m}_1$ and $\bv{m}_2$) converges in probability to the associated population moments and $\bv{b} \overset{p}{\rightarrow} \boldsymbol\alpha$ (where $\boldsymbol\alpha$ is defined in Eq. \@ref(eq:linproj)).
+If $\{x_t,y_t\}$ is covariance-stationary and ergodic for the second moments then the sample moments ($\bv{m}_1$ and $\bv{m}_2$) converge in probability to the associated population moments and $\bv{b} \overset{p}{\rightarrow} \boldsymbol\alpha$ (where $\boldsymbol\alpha$ is defined in Eq. \@ref(eq:linproj)).
 
 :::{.example #fcstMAq name="Forecasting an MA(q) process"}
 
@@ -777,7 +788,7 @@ Consider the MA(q) process:
 $$
 y_t = \mu + \varepsilon_t + \theta_1 \varepsilon_{t-1} + \dots + \theta_q \varepsilon_{t-q},
 $$
-where $\{\varepsilon_t\}$ is a white noise sequence (Def. \@ref(def:whitenoise)).
+where the shocks are independent and identically distributed with mean zero and variance $\sigma^2$. With merely uncorrelated white noise, the same formulas describe linear projections and their error variances, rather than necessarily conditional means and variances.
 
 We have:^[The present reasoning relies on the assumption that the $\varepsilon_t$'s are observed. But this is generally not the case in practice, where the $\varepsilon_t$'s generally have to be estimated.]
 \begin{eqnarray*}
@@ -803,11 +814,11 @@ and
 
 :::{.example #fcstARp name="Forecasting an AR(p) process"}
 
-(See [this web  interface](https://jrenne.shinyapps.io/ARpFcst).) Consider the AR(p) process:
+Consider a stable causal specification of the AR(p) process:
 $$
 y_t = c + \phi_1 y_{t-1} + \phi_2 y_{t-2} + \dots + \phi_p y_{t-p} + \varepsilon_t,
 $$
-where $\{\varepsilon_t\}$ is a white noise sequence (Def. \@ref(def:whitenoise)).
+where the shocks are independent and identically distributed with mean zero and variance $\sigma^2$. With merely uncorrelated white noise, the same formulas describe linear projections and their error variances, rather than necessarily conditional means and variances.
 
 Using the notation of Eq. \@ref(eq:F), we have:
 $$
@@ -850,16 +861,45 @@ The recursion begins with $\mathbb{E}(y_{t-k}|y_{t},y_{t-1},\dots)=y_{t-k}$ (for
 :::
 
 
-**Assessing the performances of a forecasting model**
+:::{.example #zurich-multistep name="Forecast horizon and uncertainty"}
+
+Freeze the seasonal profile and AR(1) estimates at December 2022. For horizon $h$, the deviation forecast and its error variance are
+$$
+\widehat u_{T+h\mid T}=\widehat a\frac{1-\widehat\phi^h}{1-\widehat\phi}
++\widehat\phi^h u_T,
+\qquad
+\widehat V_h=\widehat\sigma^2\sum_{j=0}^{h-1}\widehat\phi^{2j}.
+$$
+Add the target month's seasonal average to obtain the count forecast. Table \@ref(tab:zurich-multistep) applies these formulas; the forecast standard deviation is $\sqrt{\widehat V_h}$.
+
+```{r zurich-multistep}
+z_horizons <- c(1L,3L,6L,12L)
+z_phi <- unname(coef(z_ar)[2]); z_intercept <- unname(coef(z_ar)[1])
+z_sigma2 <- summary(z_ar)$sigma^2
+z_u_forecast <- z_intercept*(1-z_phi^z_horizons)/(1-z_phi) +
+                z_phi^z_horizons*tail(z_deviation,1)
+z_multistep <- data.frame(
+  Horizon=z_horizons,
+  `Count forecast`=unname(z_monthly_mean[z_horizons]+z_u_forecast),
+  `Forecast SD`=sqrt(z_sigma2*(1-z_phi^(2*z_horizons))/(1-z_phi^2)),
+  check.names=FALSE)
+data_table(z_multistep,digits=c(0,1,1),row.names=FALSE,
+           caption="Forecasts made in December 2022. Counts and standard deviations are in accidents per month.")
+```
+
+The deviation forecast approaches its fitted long-run mean, while count forecasts retain the calendar pattern. Uncertainty grows towards a finite limit because $|\widehat\phi|<1$. These plug-in calculations condition on the estimated seasonal profile and coefficients; they omit estimation uncertainty. Fractional count forecasts are legitimate conditional-mean predictions.
+:::
+
+### Evaluating forecasts {#forecast-evaluation}
 
 Once one has fitted a model on a given dataset (of length $T$, say), one can compute its mean squared error (MSE). This is an **in-sample** measure. If the model is estimated by OLS, adding covariates cannot increase the in-sample residual sum of squares (see Props. \@ref(prp:chgeR2) and \@ref(prp:chgeInR2)). Irrelevant regressors generally increase estimation variance and can worsen **out-of-sample** MSE, although this is not a deterministic result in every realized sample.
 
 Therefore, it is important to analyse **out-of-sample** performances of the forecasting model:
 
 a. Estimate a model on a sample of reduced size ($1,\dots,T^*$, with $T^*<T$)
-b. Use the remaining available periods ($T^*+1,\dots,T$) to compute **out-of-sample** forecasting errors (and compute their MSE). In an out-of-sample exercise, it is important to make sure that the data used to produce a forecasts (as of date $T^*$) where indeed available on date $T^*$.
+b. Use the remaining available periods ($T^*+1,\dots,T$) to compute **out-of-sample** forecasting errors (and compute their MSE). In an out-of-sample exercise, all inputs must have been available at the forecast origin. Preprocessing, such as estimating a seasonal profile, must also use only those past observations. Unlike the random split in Chapter \@ref(binary-choice-models), a forecasting split preserves chronological order.
 
-**Diebold-Mariano test**
+### Comparing forecast losses {#forecast-losses}
 
 How to compare different forecasting approaches? @Diebold_Mariano_1995 have proposed a simple test to address this question.
 
@@ -880,56 +920,94 @@ Hence, assuming that $\hat{\sigma}^2$ is a consistent estimate of $\sum_{j=-\inf
 $$
 DM_T := \sqrt{T}\frac{\bar{d}_T}{\sqrt{\hat{\sigma}^2}} \overset{d}{\rightarrow}  \mathcal{N}(0,1).
 $$
-$DM_T$ is the test statistics. For a test of size $\alpha$, the critical region is:[^FootnoteShinyApptest]
+$DM_T$ is the test statistic. For a test with asymptotic size $\alpha$, the critical region is:[^FootnoteShinyApptest]
 $$
 ]-\infty,-\Phi^{-1}(1-\alpha/2)] \cup [\Phi^{-1}(1-\alpha/2),+\infty[,
 $$
 where $\Phi$ is the c.d.f. of the standard normal distribution.
 
-[^FootnoteShinyApptest]: This [ShinyApp application](https://jrenne.shinyapps.io/tests/) illustrates the notion of statistical test (illustrating the p-value and the cirtical region, in particular).
+[^FootnoteShinyApptest]: This [ShinyApp application](https://jrenne.shinyapps.io/tests/) illustrates the notion of statistical test (illustrating the p-value and the critical region, in particular).
 
 
 
-:::{.example #SwissOutOfSample name="Forecasting Swiss GDP growth"}
+:::{.example #SwissOutOfSample name="Forecasting injury accidents in Zurich"}
 
-We use a long historical time series of the Swiss GDP growth taken from the @JST_2017 dataset.^[See [this website](https://www.macrohistory.net/database/).]
+We predict **next month's count** at each month-end from December 2022 to November 2025. At each origin, all previous months are used, and all three methods predict the same next month:
 
-We want to forecast this GDP growth. We envision two specifications : an AR(1) specification (the one advocated by the AIC criteria), and an ARMA(2,2) specification. We are interested in 2-year-ahead forecasts (i.e., $h=2$ since the data are yearly).
+1. **Seasonal naive:** use the count in the same month of the previous year.
+2. **Seasonal mean:** average all past counts for the target calendar month.
+3. **Seasonal mean + AR(1):** add a forecast of the current seasonal deviation, $\widehat a+\widehat\phi u_t$, to that target-month average.
 
-```{r fcstARMA, warning=FALSE, fig.cap="Comparison of expanding-window forecasts of Swiss GDP growth.", fig.asp = .6, out.width = "95%", fig.align = 'left'}
-library(AEC)
-library(forecast)
-data <- subset(JST,iso=="CHE")
-T <- dim(data)[1]
-y <- c(NaN,log(data$gdp[2:T]/data$gdp[1:(T-1)]))
-first.date <- T-50
-e1 <- NULL; e2 <- NULL;h<-2
-for(T.star in first.date:(T-h)){
-  estim.model.1 <- arima(y[1:T.star],order=c(1,0,0))
-  estim.model.2 <- arima(y[1:T.star],order=c(2,0,2))
-  e1 <- c(e1,y[T.star+h] - predict(estim.model.1,n.ahead=h)$pred[h])
-  e2 <- c(e2,y[T.star+h] - predict(estim.model.2,n.ahead=h)$pred[h])
+The first method repeats one observation; the second averages across years; the third also exploits recent deviations. These specifications are fixed before inspecting the reserved outcomes. At every origin, we recompute the seasonal profile and the AR(1) using only information then available. Later evaluation months can enter the expanding estimation window once they have occurred.
+
+```{r zurich-expanding-forecasts}
+z_origins <- max(z_initial):(nrow(zurich_ts)-1)
+z_predictions <- matrix(NA_real_,length(z_origins),3,
+  dimnames=list(NULL,c("Seasonal naive","Seasonal mean","Seasonal mean + AR(1)")))
+for(k in seq_along(z_origins)) {
+  origin <- z_origins[k]
+  past <- seq_len(origin)
+  profile <- as.numeric(tapply(z_counts[past],zurich_ts$month[past],mean))
+  deviation <- z_counts[past]-profile[zurich_ts$month[past]]
+  pairs <- data.frame(current=tail(deviation,-1),previous=head(deviation,-1))
+  model <- lm(current~previous,data=pairs)
+  seasonal <- unname(profile[zurich_ts$month[origin+1]])
+  z_predictions[k,] <- c(z_counts[origin+1-12],seasonal,
+    seasonal+predict(model,data.frame(previous=tail(deviation,1))))
 }
-res.DM <- dm.test(e1,e2,h = h,alternative = "greater")
-res.DM
+z_targets <- z_origins+1L
+z_errors <- z_counts[z_targets]-z_predictions
+z_accuracy <- data.frame(Method=colnames(z_predictions),
+  RMSE=sqrt(colMeans(z_errors^2)),MAE=colMeans(abs(z_errors)))
+data_table(z_accuracy,digits=2,row.names=FALSE,
+           caption="Expanding-window one-month-ahead forecasts, January 2023--December 2025 (36 forecasts per method). Errors are in accidents per month.")
 ```
-With `alternative = "greater"` The alternative hypothesis is that method 2 is more accurate than method 1. Since we do not reject the null (the p-value being of `r round(res.DM$p.value,3)`), we are not led to use the more sophisticated model (ARMA(2,2)) and we keep the simple AR(1) model.
 
-Assume now that we want to compare the AR(1) process to a multivariate (VAR) model. We consider a bivariate VAR, where GDP growth is complemented with CPI-based inflation rate.
+Root mean squared error (RMSE) penalizes large misses more heavily than mean absolute error (MAE). Here the seasonal mean has the lowest error under both measures. Adding the AR(1) does not improve on it in this evaluation period, despite the positive persistence estimate in the initial sample. Better in-sample fit need not translate into better forecasts.
 
-```{r fcstVAR, warning=FALSE,message=FALSE,fig.cap="Comparison of expanding-window forecasts of Swiss GDP growth.", fig.asp = .6, out.width = "95%", fig.align = 'left'}
-library(vars)
-infl <- c(NaN,log(data$cpi[2:T]/data$cpi[1:(T-1)]))
-y_var <- cbind(y,infl)
-e3 <- NULL
-for(T.star in first.date:(T-h)){
-  estim.model.3 <- VAR(y_var[2:T.star,],p=1)
-  e3 <- c(e3,y[T.star+h] - predict(estim.model.3,n.ahead=h)$fcst$y[h,1])
-}
-res.DM <- dm.test(e1,e3,h = h,alternative = "greater")
-res.DM
+Figure \@ref(fig:zurich-forecast-comparison) shows the observations and forecasts. Its bottom panel accumulates the squared-loss difference between the seasonal-naive and seasonal-mean methods: an upward movement means the seasonal mean performed better that month.
+
+```{r zurich-forecast-comparison, echo=FALSE, fig.width=7, fig.height=5.8, out.width="95%", fig.cap="Forecast evaluation in 2023--2025. Top: realized injury-accident counts and three one-month-ahead forecasts. Bottom: cumulative squared-error loss of seasonal naive minus seasonal mean; positive totals favour the seasonal mean."}
+local({
+  par(mfrow=c(2,1),mar=c(4.3,5.2,2,1),mgp=c(2.7,.8,0))
+  dates <- zurich_ts$date[z_targets]
+  plot(dates,z_counts[z_targets],type="l",lwd=2,col="#334155",
+       ylim=c(min(z_counts[z_targets],z_predictions),
+              max(z_counts[z_targets],z_predictions)+35),xlab="Target month",
+       ylab="Injury accidents",main="One-month-ahead predictions",las=1)
+  cols <- c("#94A3B8","#147D92","#C76D36")
+  for(j in 1:3) lines(dates,z_predictions[,j],col=cols[j],lty=j+1,lwd=1.6)
+  legend("topright",c("Observed","Seasonal naive","Seasonal mean","Seasonal + AR(1)"),
+         col=c("#334155",cols),lty=1:4,lwd=c(2,rep(1.6,3)),bty="n",cex=.8,ncol=2)
+  loss_difference <- z_errors[,1]^2-z_errors[,2]^2
+  plot(dates,cumsum(loss_difference),type="l",col="#147D92",lwd=2,
+       xlab="Target month",ylab="",
+       main="Accumulated loss comparison",las=1)
+  title(ylab="Cumulative loss difference",line=3.8)
+  abline(h=0,col="#CBD5E1",lty=3)
+})
 ```
-Again, we do not find that the alternative model (here the VAR(1) model) is better than the AR(1) model to forecast GDP growth.
+
+To illustrate the Diebold--Mariano calculation, compare the seasonal-naive and seasonal-mean forecasts with squared loss. We use a Bartlett estimate of the loss difference's long-run variance with three lags, rather than assuming these monthly losses are independent.
+
+```{r zurich-forecast-dm}
+z_loss_difference <- z_errors[,1]^2-z_errors[,2]^2
+z_loss_centered <- z_loss_difference-mean(z_loss_difference)
+z_n_eval <- length(z_loss_difference)
+z_bandwidth <- 3L
+z_gamma <- vapply(0:z_bandwidth,function(lag)
+  sum(z_loss_centered[(lag+1):z_n_eval]*
+      z_loss_centered[1:(z_n_eval-lag)])/z_n_eval,0)
+z_loss_lrv <- z_gamma[1]+2*sum((1-(1:z_bandwidth)/(z_bandwidth+1))*z_gamma[-1])
+z_DM <- sqrt(z_n_eval)*mean(z_loss_difference)/sqrt(z_loss_lrv)
+z_DM_p <- 2*pnorm(-abs(z_DM))
+data_table(data.frame(`Mean loss difference`=mean(z_loss_difference),
+                     DM=z_DM,p_value=z_DM_p,check.names=FALSE),
+           digits=2,row.names=FALSE,col.names=c("Mean loss difference","DM","p-value"),
+           caption="Illustrative two-sided loss comparison: seasonal naive minus seasonal mean.")
+```
+
+A positive statistic favours the seasonal mean. With only 36 forecasts, the normal approximation is rough and the result can depend on the bandwidth; it supplements the error table rather than certifying a universally superior model. This exercise uses the frozen database and assumes each month's final count is available at month-end. It is not an evaluation using historical publication vintages.
 :::
 
 ```{r time-series-recap-space, echo=FALSE, results='asis'}

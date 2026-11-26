@@ -53,17 +53,25 @@ configure_code_display(params$show_code_in_pdf)
 
 This book develops the statistical foundations of econometrics and then uses them to study regression, panel data, parametric estimation, binary-choice models, and time series. Mathematical results are paired with simulations, empirical applications, and exercises. The material has been developed by [Jean-Paul Renne](https://www.jprenne.com).
 
-The chapters are cumulative. The first three establish the probability and inference tools used later. The linear-regression chapter develops the central econometric framework; the chapters on panel regressions, estimation methods, and binary-choice models build on it. The time-series chapter introduces time-indexed data and forecasting. The appendix collects supporting results and longer proofs so that the main chapters can retain their narrative flow.
+The chapters are cumulative. The first three establish the probability and inference tools used later. The linear-regression chapter develops the central econometric framework; the chapters on panel regressions, estimation methods, and binary-choice models build on it. The time-series chapter introduces time-indexed data and forecasting. The mathematical appendix collects supporting results and longer proofs; the data appendix documents the empirical material.
 
 Definitions and propositions state the core results. Examples show how those results operate in data, while practice boxes point to exercises that reinforce the surrounding material. Readers who use the computational examples can inspect the R code in the HTML edition; the PDF can be rendered with or without that code.
 
-The computational material uses various packages available from [CRAN](https://cran.r-project.org), as well as procedures and data from the companion package `AEC`. This package is available on GitHub. Installation instructions and the recorded package environment are described in the repository README.
+The computational examples use **AEC 0.2.0**. The checked source
+archive is supplied in this course's `packages/` directory. From the complete
+course source directory, first run `Rscript --vanilla scripts/setup.R` to
+restore the recorded environment. The following R commands then select the
+course's private package installation. See the repository README for details.
 
-```{r installAEC, eval=FALSE}
-install.packages("remotes")
-remotes::install_github("jrenne/AEC@3245789138e77c2d7b591b40e8b6a3405e93cbf1")
+```{r installCompanion, eval=FALSE}
+source("R/companion-packages.R")
+use_companion_packages()
 library(AEC)
 ```
+
+**Notation.** Bold letters denote vectors and matrices; a prime denotes transpose. The identity matrix is $\mathbf{Id}_n$, the vector of ones is $\bv{1}_n$, and $\mathbb{I}_{A}$ is the indicator of event $A$. Fisher information uses a different symbol: $\mathcal{I}_Y(\boldsymbol\theta)$ is information per observation and $\bv{I}(\boldsymbol\theta)$ is full-sample information. For i.i.d. observations, $\bv{I}=n\mathcal{I}_Y$. The second argument of $\mathcal{N}(\mu,\sigma^2)$ is a variance, or a covariance matrix in the multivariate case. We distinguish an exact distribution ($\sim$), a large-sample approximation ($\overset{a}{\sim}$), and a limiting distribution ($\overset{d}{\rightarrow}$). Dimensions and any local changes of notation are stated where introduced.
+
+**Data and examples.** Appendix \@ref(data-appendix) describes the packaged data and maps them to the applications. Simulated and hypothetical examples are identified as such. A recorded-data comparison, a probability experiment that samples from those records, and a model for a wider population are different objects; each example states which one it uses.
 
 **Useful R links:**
 

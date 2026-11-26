@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 10 Data appendix | Econometrics and Statistics</title>
+  <meta name="description" content="A textbook introduction to probability, statistics, econometrics, and time-series analysis, with simulations, applications, and exercises." />
+  <meta name="generator" content="bookdown 0.43 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 10 Data appendix | Econometrics and Statistics" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="A textbook introduction to probability, statistics, econometrics, and time-series analysis, with simulations, applications, and exercises." />
+  <meta name="github-repo" content="jrenne/EcoStat" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 10 Data appendix | Econometrics and Statistics" />
+  
+  <meta name="twitter:description" content="A textbook introduction to probability, statistics, econometrics, and time-series analysis, with simulations, applications, and exercises." />
+  
+
+<meta name="author" content="Jean-Paul Renne" />
+
+
+<meta name="date" content="2026-11-26" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="append.html"/>
+<link rel="next" href="copyright-and-licence.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/codefolding-lua-1.1/codefolding-lua.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Econometrics and Statistics</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="Basics.html"><a href="Basics.html"><i class="fa fa-check"></i><b>1</b> Basic statistical results</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="Basics.html"><a href="Basics.html#basics-moments"><i class="fa fa-check"></i><b>1.1</b> Random variables and moments</a></li>
+<li class="chapter" data-level="1.2" data-path="Basics.html"><a href="Basics.html#basics-discrete"><i class="fa fa-check"></i><b>1.2</b> Joint distributions: the discrete case</a>
+<ul>
+<li class="chapter" data-level="1.2.1" data-path="Basics.html"><a href="Basics.html#basics-conditional-expectation"><i class="fa fa-check"></i><b>1.2.1</b> Conditional expectation</a></li>
+<li class="chapter" data-level="1.2.2" data-path="Basics.html"><a href="Basics.html#basics-bayes"><i class="fa fa-check"></i><b>1.2.2</b> Bayes’ rule</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="Basics.html"><a href="Basics.html#basics-densities"><i class="fa fa-check"></i><b>1.3</b> Continuous distributions</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="Basics.html"><a href="Basics.html#distribution-and-density-functions"><i class="fa fa-check"></i><b>1.3.1</b> Distribution and density functions</a></li>
+<li class="chapter" data-level="1.3.2" data-path="Basics.html"><a href="Basics.html#joint-and-conditional-densities"><i class="fa fa-check"></i><b>1.3.2</b> Joint and conditional densities</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="Basics.html"><a href="Basics.html#basics-iterated-expectations"><i class="fa fa-check"></i><b>1.4</b> Law of iterated expectations</a></li>
+<li class="chapter" data-level="1.5" data-path="Basics.html"><a href="Basics.html#basics-total-variance"><i class="fa fa-check"></i><b>1.5</b> Law of total variance</a></li>
+<li class="chapter" data-level="1.6" data-path="Basics.html"><a href="Basics.html#basics-estimators"><i class="fa fa-check"></i><b>1.6</b> Bias, accuracy, and consistency</a></li>
+<li class="chapter" data-level="1.7" data-path="Basics.html"><a href="Basics.html#basics-recap"><i class="fa fa-check"></i><b>1.7</b> Chapter recap</a></li>
+<li class="chapter" data-level="1.8" data-path="Basics.html"><a href="Basics.html#basics-exercises"><i class="fa fa-check"></i><b>1.8</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="TCL.html"><a href="TCL.html"><i class="fa fa-check"></i><b>2</b> Central Limit Theorem</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="TCL.html"><a href="TCL.html#law-of-large-numbers"><i class="fa fa-check"></i><b>2.1</b> Law of large numbers</a></li>
+<li class="chapter" data-level="2.2" data-path="TCL.html"><a href="TCL.html#central-limit-theorem-clt"><i class="fa fa-check"></i><b>2.2</b> Central Limit Theorem (CLT)</a></li>
+<li class="chapter" data-level="2.3" data-path="TCL.html"><a href="TCL.html#comparison-means"><i class="fa fa-check"></i><b>2.3</b> Comparison of sample means</a></li>
+<li class="chapter" data-level="2.4" data-path="TCL.html"><a href="TCL.html#clt-recap"><i class="fa fa-check"></i><b>2.4</b> Chapter recap</a></li>
+<li class="chapter" data-level="2.5" data-path="TCL.html"><a href="TCL.html#clt-exercises"><i class="fa fa-check"></i><b>2.5</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="Tests.html"><a href="Tests.html"><i class="fa fa-check"></i><b>3</b> Statistical tests</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="Tests.html"><a href="Tests.html#size-power"><i class="fa fa-check"></i><b>3.1</b> Size and power of a test</a></li>
+<li class="chapter" data-level="3.2" data-path="Tests.html"><a href="Tests.html#critical-regions"><i class="fa fa-check"></i><b>3.2</b> Critical regions and p-values</a></li>
+<li class="chapter" data-level="3.3" data-path="Tests.html"><a href="Tests.html#asymptotic-properties-of-statistical-tests"><i class="fa fa-check"></i><b>3.3</b> Asymptotic properties of statistical tests</a></li>
+<li class="chapter" data-level="3.4" data-path="Tests.html"><a href="Tests.html#example-normality-tests"><i class="fa fa-check"></i><b>3.4</b> Example: Normality tests</a></li>
+<li class="chapter" data-level="3.5" data-path="Tests.html"><a href="Tests.html#tests-recap"><i class="fa fa-check"></i><b>3.5</b> Chapter recap</a></li>
+<li class="chapter" data-level="3.6" data-path="Tests.html"><a href="Tests.html#tests-exercises"><i class="fa fa-check"></i><b>3.6</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="ChapterLS.html"><a href="ChapterLS.html"><i class="fa fa-check"></i><b>4</b> Linear regressions</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="ChapterLS.html"><a href="ChapterLS.html#linearHyp"><i class="fa fa-check"></i><b>4.1</b> Hypotheses</a></li>
+<li class="chapter" data-level="4.2" data-path="ChapterLS.html"><a href="ChapterLS.html#LSquares"><i class="fa fa-check"></i><b>4.2</b> Least-squares estimation</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="ChapterLS.html"><a href="ChapterLS.html#derivation-of-the-ols-formula"><i class="fa fa-check"></i><b>4.2.1</b> Derivation of the OLS formula</a></li>
+<li class="chapter" data-level="4.2.2" data-path="ChapterLS.html"><a href="ChapterLS.html#properties-of-the-ols-estimate-small-sample"><i class="fa fa-check"></i><b>4.2.2</b> Properties of the OLS estimate (small sample)</a></li>
+<li class="chapter" data-level="4.2.3" data-path="ChapterLS.html"><a href="ChapterLS.html#goodness-of-fit"><i class="fa fa-check"></i><b>4.2.3</b> Goodness of fit</a></li>
+<li class="chapter" data-level="4.2.4" data-path="ChapterLS.html"><a href="ChapterLS.html#inference-and-confidence-intervals-in-small-sample"><i class="fa fa-check"></i><b>4.2.4</b> Inference and confidence intervals (in small sample)</a></li>
+<li class="chapter" data-level="4.2.5" data-path="ChapterLS.html"><a href="ChapterLS.html#Ftest"><i class="fa fa-check"></i><b>4.2.5</b> Testing a set of linear restrictions</a></li>
+<li class="chapter" data-level="4.2.6" data-path="ChapterLS.html"><a href="ChapterLS.html#largeSample"><i class="fa fa-check"></i><b>4.2.6</b> Large-sample properties</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="ChapterLS.html"><a href="ChapterLS.html#CommonPitfalls"><i class="fa fa-check"></i><b>4.3</b> Common pitfalls in linear regressions</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="ChapterLS.html"><a href="ChapterLS.html#multicollinearity"><i class="fa fa-check"></i><b>4.3.1</b> Multicollinearity</a></li>
+<li class="chapter" data-level="4.3.2" data-path="ChapterLS.html"><a href="ChapterLS.html#Omitted"><i class="fa fa-check"></i><b>4.3.2</b> Omitted variables</a></li>
+<li class="chapter" data-level="4.3.3" data-path="ChapterLS.html"><a href="ChapterLS.html#irrelevant"><i class="fa fa-check"></i><b>4.3.3</b> Irrelevant variable</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="ChapterLS.html"><a href="ChapterLS.html#regression-prediction-intervals"><i class="fa fa-check"></i><b>4.4</b> Confidence and prediction intervals</a></li>
+<li class="chapter" data-level="4.5" data-path="ChapterLS.html"><a href="ChapterLS.html#IV"><i class="fa fa-check"></i><b>4.5</b> Instrumental Variables</a></li>
+<li class="chapter" data-level="4.6" data-path="ChapterLS.html"><a href="ChapterLS.html#regression-grm"><i class="fa fa-check"></i><b>4.6</b> General Regression Model (GRM) and robust covariance matrices</a>
+<ul>
+<li class="chapter" data-level="4.6.1" data-path="ChapterLS.html"><a href="ChapterLS.html#presentation-of-the-general-regression-model-grm"><i class="fa fa-check"></i><b>4.6.1</b> Presentation of the General Regression Model (GRM)</a></li>
+<li class="chapter" data-level="4.6.2" data-path="ChapterLS.html"><a href="ChapterLS.html#GLS"><i class="fa fa-check"></i><b>4.6.2</b> Generalized Least Squares</a></li>
+<li class="chapter" data-level="4.6.3" data-path="ChapterLS.html"><a href="ChapterLS.html#asymptotic-properties-of-the-ols-estimator-in-the-grm-framework"><i class="fa fa-check"></i><b>4.6.3</b> Asymptotic properties of the OLS estimator in the GRM framework</a></li>
+<li class="chapter" data-level="4.6.4" data-path="ChapterLS.html"><a href="ChapterLS.html#HAC"><i class="fa fa-check"></i><b>4.6.4</b> HAC-robust covariance matrices</a></li>
+<li class="chapter" data-level="4.6.5" data-path="ChapterLS.html"><a href="ChapterLS.html#Clusters"><i class="fa fa-check"></i><b>4.6.5</b> Cluster-robust covariance matrices</a></li>
+</ul></li>
+<li class="chapter" data-level="4.7" data-path="ChapterLS.html"><a href="ChapterLS.html#shrinkage"><i class="fa fa-check"></i><b>4.7</b> Shrinkage methods</a></li>
+<li class="chapter" data-level="4.8" data-path="ChapterLS.html"><a href="ChapterLS.html#regressions-recap"><i class="fa fa-check"></i><b>4.8</b> Chapter recap</a></li>
+<li class="chapter" data-level="4.9" data-path="ChapterLS.html"><a href="ChapterLS.html#regressions-exercises"><i class="fa fa-check"></i><b>4.9</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="Panel.html"><a href="Panel.html"><i class="fa fa-check"></i><b>5</b> Panel regressions</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="Panel.html"><a href="Panel.html#specification-and-notation"><i class="fa fa-check"></i><b>5.1</b> Specification and notation</a></li>
+<li class="chapter" data-level="5.2" data-path="Panel.html"><a href="Panel.html#panel-cases"><i class="fa fa-check"></i><b>5.2</b> Three standard cases</a></li>
+<li class="chapter" data-level="5.3" data-path="Panel.html"><a href="Panel.html#FixedEffect"><i class="fa fa-check"></i><b>5.3</b> Estimation of fixed-effects models</a></li>
+<li class="chapter" data-level="5.4" data-path="Panel.html"><a href="Panel.html#RandomEffect"><i class="fa fa-check"></i><b>5.4</b> Estimation of random effects models</a></li>
+<li class="chapter" data-level="5.5" data-path="Panel.html"><a href="Panel.html#DynPanel"><i class="fa fa-check"></i><b>5.5</b> Dynamic panel regressions</a></li>
+<li class="chapter" data-level="5.6" data-path="Panel.html"><a href="Panel.html#program-evaluation"><i class="fa fa-check"></i><b>5.6</b> Introduction to program evaluation</a>
+<ul>
+<li class="chapter" data-level="5.6.1" data-path="Panel.html"><a href="Panel.html#presentation-of-the-problem"><i class="fa fa-check"></i><b>5.6.1</b> Presentation of the problem</a></li>
+<li class="chapter" data-level="5.6.2" data-path="Panel.html"><a href="Panel.html#randomized-controlled-trials-rcts"><i class="fa fa-check"></i><b>5.6.2</b> Randomized controlled trials (RCTs)</a></li>
+<li class="chapter" data-level="5.6.3" data-path="Panel.html"><a href="Panel.html#did"><i class="fa fa-check"></i><b>5.6.3</b> Difference-in-differences (DiD) approach</a></li>
+<li class="chapter" data-level="5.6.4" data-path="Panel.html"><a href="Panel.html#application-speed-cameras-and-injury-crashes-in-france"><i class="fa fa-check"></i><b>5.6.4</b> Application: speed cameras and injury crashes in France</a></li>
+</ul></li>
+<li class="chapter" data-level="5.7" data-path="Panel.html"><a href="Panel.html#panel-recap"><i class="fa fa-check"></i><b>5.7</b> Chapter recap</a></li>
+<li class="chapter" data-level="5.8" data-path="Panel.html"><a href="Panel.html#panel-exercises"><i class="fa fa-check"></i><b>5.8</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="estimation-methods.html"><a href="estimation-methods.html"><i class="fa fa-check"></i><b>6</b> Estimation methods</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="estimation-methods.html"><a href="estimation-methods.html#secGMM"><i class="fa fa-check"></i><b>6.1</b> Generalized Method of Moments (GMM)</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="estimation-methods.html"><a href="estimation-methods.html#definition-of-the-gmm-estimator"><i class="fa fa-check"></i><b>6.1.1</b> Definition of the GMM estimator</a></li>
+<li class="chapter" data-level="6.1.2" data-path="estimation-methods.html"><a href="estimation-methods.html#asymptotic-distribution-of-the-gmm-estimator"><i class="fa fa-check"></i><b>6.1.2</b> Asymptotic distribution of the GMM estimator</a></li>
+<li class="chapter" data-level="6.1.3" data-path="estimation-methods.html"><a href="estimation-methods.html#overidentif"><i class="fa fa-check"></i><b>6.1.3</b> Testing hypotheses in the GMM framework</a></li>
+<li class="chapter" data-level="6.1.4" data-path="estimation-methods.html"><a href="estimation-methods.html#application-wind-prices-and-swiss-hydropower"><i class="fa fa-check"></i><b>6.1.4</b> Application: wind, prices and Swiss hydropower</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="estimation-methods.html"><a href="estimation-methods.html#secMLE"><i class="fa fa-check"></i><b>6.2</b> Maximum likelihood estimation</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="estimation-methods.html"><a href="estimation-methods.html#intuition-waiting-times"><i class="fa fa-check"></i><b>6.2.1</b> Intuition: waiting times</a></li>
+<li class="chapter" data-level="6.2.2" data-path="estimation-methods.html"><a href="estimation-methods.html#definition-and-properties"><i class="fa fa-check"></i><b>6.2.2</b> Definition and properties</a></li>
+<li class="chapter" data-level="6.2.3" data-path="estimation-methods.html"><a href="estimation-methods.html#mle-in-practice"><i class="fa fa-check"></i><b>6.2.3</b> MLE in practice</a></li>
+<li class="chapter" data-level="6.2.4" data-path="estimation-methods.html"><a href="estimation-methods.html#application-a-default-payment-probability"><i class="fa fa-check"></i><b>6.2.4</b> Application: a default-payment probability</a></li>
+<li class="chapter" data-level="6.2.5" data-path="estimation-methods.html"><a href="estimation-methods.html#TestMLE"><i class="fa fa-check"></i><b>6.2.5</b> Test procedures</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="estimation-methods.html"><a href="estimation-methods.html#bayesian"><i class="fa fa-check"></i><b>6.3</b> Bayesian approach</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="estimation-methods.html"><a href="estimation-methods.html#from-prior-to-posterior"><i class="fa fa-check"></i><b>6.3.1</b> From prior to posterior</a></li>
+<li class="chapter" data-level="6.3.2" data-path="estimation-methods.html"><a href="estimation-methods.html#markov-chain-monte-carlo"><i class="fa fa-check"></i><b>6.3.2</b> Markov chain Monte Carlo</a></li>
+<li class="chapter" data-level="6.3.3" data-path="estimation-methods.html"><a href="estimation-methods.html#application-check-mcmc-against-the-exact-posterior"><i class="fa fa-check"></i><b>6.3.3</b> Application: check MCMC against the exact posterior</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="estimation-methods.html"><a href="estimation-methods.html#estimation-recap"><i class="fa fa-check"></i><b>6.4</b> Chapter recap</a></li>
+<li class="chapter" data-level="6.5" data-path="estimation-methods.html"><a href="estimation-methods.html#estimation-exercises"><i class="fa fa-check"></i><b>6.5</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="binary-choice-models.html"><a href="binary-choice-models.html"><i class="fa fa-check"></i><b>7</b> Binary-choice models</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="binary-choice-models.html"><a href="binary-choice-models.html#latent"><i class="fa fa-check"></i><b>7.1</b> Latent-variable and utility interpretations</a></li>
+<li class="chapter" data-level="7.2" data-path="binary-choice-models.html"><a href="binary-choice-models.html#Avregressors"><i class="fa fa-check"></i><b>7.2</b> Alternative-varying regressors</a></li>
+<li class="chapter" data-level="7.3" data-path="binary-choice-models.html"><a href="binary-choice-models.html#binary-estimation"><i class="fa fa-check"></i><b>7.3</b> Estimation</a></li>
+<li class="chapter" data-level="7.4" data-path="binary-choice-models.html"><a href="binary-choice-models.html#marginalFX"><i class="fa fa-check"></i><b>7.4</b> Marginal effects</a></li>
+<li class="chapter" data-level="7.5" data-path="binary-choice-models.html"><a href="binary-choice-models.html#binary-fit"><i class="fa fa-check"></i><b>7.5</b> Goodness of fit</a></li>
+<li class="chapter" data-level="7.6" data-path="binary-choice-models.html"><a href="binary-choice-models.html#binary-predictions"><i class="fa fa-check"></i><b>7.6</b> Predictions and ROC curves</a></li>
+<li class="chapter" data-level="7.7" data-path="binary-choice-models.html"><a href="binary-choice-models.html#binary-recap"><i class="fa fa-check"></i><b>7.7</b> Chapter recap</a></li>
+<li class="chapter" data-level="7.8" data-path="binary-choice-models.html"><a href="binary-choice-models.html#binary-exercises"><i class="fa fa-check"></i><b>7.8</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="TS.html"><a href="TS.html"><i class="fa fa-check"></i><b>8</b> Time Series</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="TS.html"><a href="TS.html#introduction-to-time-series"><i class="fa fa-check"></i><b>8.1</b> Introduction to time series</a></li>
+<li class="chapter" data-level="8.2" data-path="TS.html"><a href="TS.html#univariate-processes"><i class="fa fa-check"></i><b>8.2</b> Univariate processes</a>
+<ul>
+<li class="chapter" data-level="8.2.1" data-path="TS.html"><a href="TS.html#moving-average-ma-processes"><i class="fa fa-check"></i><b>8.2.1</b> Moving Average (MA) processes</a></li>
+<li class="chapter" data-level="8.2.2" data-path="TS.html"><a href="TS.html#ARsection"><i class="fa fa-check"></i><b>8.2.2</b> Autoregressive (AR) processes</a></li>
+<li class="chapter" data-level="8.2.3" data-path="TS.html"><a href="TS.html#PACFapproach"><i class="fa fa-check"></i><b>8.2.3</b> PACF approach to identify AR/MA processes</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="TS.html"><a href="TS.html#forecasting"><i class="fa fa-check"></i><b>8.3</b> Forecasting</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="TS.html"><a href="TS.html#forecast-evaluation"><i class="fa fa-check"></i><b>8.3.1</b> Evaluating forecasts</a></li>
+<li class="chapter" data-level="8.3.2" data-path="TS.html"><a href="TS.html#forecast-losses"><i class="fa fa-check"></i><b>8.3.2</b> Comparing forecast losses</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="TS.html"><a href="TS.html#time-series-recap"><i class="fa fa-check"></i><b>8.4</b> Chapter recap</a></li>
+<li class="chapter" data-level="8.5" data-path="TS.html"><a href="TS.html#time-series-exercises"><i class="fa fa-check"></i><b>8.5</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="append.html"><a href="append.html"><i class="fa fa-check"></i><b>9</b> Appendix</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="append.html"><a href="append.html#PCAapp"><i class="fa fa-check"></i><b>9.1</b> Principal component analysis (PCA)</a></li>
+<li class="chapter" data-level="9.2" data-path="append.html"><a href="append.html#LinAlgebra"><i class="fa fa-check"></i><b>9.2</b> Linear algebra: definitions and results</a></li>
+<li class="chapter" data-level="9.3" data-path="append.html"><a href="append.html#variousResults"><i class="fa fa-check"></i><b>9.3</b> Statistical analysis: definitions and results</a>
+<ul>
+<li class="chapter" data-level="9.3.1" data-path="append.html"><a href="append.html#moments-and-statistics"><i class="fa fa-check"></i><b>9.3.1</b> Moments and statistics</a></li>
+<li class="chapter" data-level="9.3.2" data-path="append.html"><a href="append.html#standard-distributions"><i class="fa fa-check"></i><b>9.3.2</b> Standard distributions</a></li>
+<li class="chapter" data-level="9.3.3" data-path="append.html"><a href="append.html#StochConvergences"><i class="fa fa-check"></i><b>9.3.3</b> Stochastic convergences</a></li>
+<li class="chapter" data-level="9.3.4" data-path="append.html"><a href="append.html#CLTappend"><i class="fa fa-check"></i><b>9.3.4</b> Central limit theorem</a></li>
+</ul></li>
+<li class="chapter" data-level="9.4" data-path="append.html"><a href="append.html#GaussianVar"><i class="fa fa-check"></i><b>9.4</b> Some properties of Gaussian variables</a></li>
+<li class="chapter" data-level="9.5" data-path="append.html"><a href="append.html#AppendixProof"><i class="fa fa-check"></i><b>9.5</b> Proofs</a></li>
+<li class="chapter" data-level="9.6" data-path="append.html"><a href="append.html#statistical-tables"><i class="fa fa-check"></i><b>9.6</b> Statistical tables</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="data-appendix.html"><a href="data-appendix.html"><i class="fa fa-check"></i><b>10</b> Data appendix</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="data-appendix.html"><a href="data-appendix.html#data-accidents"><i class="fa fa-check"></i><b>10.1</b> Road accidents in Zurich</a></li>
+<li class="chapter" data-level="10.2" data-path="data-appendix.html"><a href="data-appendix.html#data-paris-weather"><i class="fa fa-check"></i><b>10.2</b> Daily accidents and rainfall in Paris</a></li>
+<li class="chapter" data-level="10.3" data-path="data-appendix.html"><a href="data-appendix.html#data-votes"><i class="fa fa-check"></i><b>10.3</b> Participation in Swiss federal votes</a></li>
+<li class="chapter" data-level="10.4" data-path="data-appendix.html"><a href="data-appendix.html#data-credit"><i class="fa fa-check"></i><b>10.4</b> Credit-card payment defaults</a></li>
+<li class="chapter" data-level="10.5" data-path="data-appendix.html"><a href="data-appendix.html#data-electricity"><i class="fa fa-check"></i><b>10.5</b> Residential electricity in Switzerland</a></li>
+<li class="chapter" data-level="10.6" data-path="data-appendix.html"><a href="data-appendix.html#data-us-recession"><i class="fa fa-check"></i><b>10.6</b> US recessions and Treasury yields</a></li>
+<li class="chapter" data-level="10.7" data-path="data-appendix.html"><a href="data-appendix.html#data-hydro"><i class="fa fa-check"></i><b>10.7</b> Swiss hydropower and wholesale electricity prices</a></li>
+<li class="chapter" data-level="10.8" data-path="data-appendix.html"><a href="data-appendix.html#data-radars"><i class="fa fa-check"></i><b>10.8</b> Speed cameras and injury crashes in France</a></li>
+<li class="chapter" data-level="10.9" data-path="data-appendix.html"><a href="data-appendix.html#data-apples"><i class="fa fa-check"></i><b>10.9</b> Additional data: Swiss apples and spring frost</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="copyright-and-licence.html"><a href="copyright-and-licence.html"><i class="fa fa-check"></i>Copyright and licence</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li class="book-license">© 2026 Jean-Paul Renne — <a href="https://creativecommons.org/licenses/by/4.0/" target="blank">CC BY 4.0</a></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Econometrics and Statistics</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="data-appendix" class="section level1 hasAnchor" number="10">
+<h1><span class="header-section-number">Chapter 10</span> Data appendix<a href="data-appendix.html#data-appendix" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>This appendix describes the observation units, coverage, variables and sources of the eight dataset families used in the course. Associated tables are documented together. The package help provides the full variable dictionaries, preparation details and redistribution terms. An additional apple-market dataset, retained in AEC for exploration, is described at the end.</p>
+<table>
+<colgroup>
+<col width="33%" />
+<col width="33%" />
+<col width="33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Data family</th>
+<th align="left">Role in the course</th>
+<th align="left">Where used</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Zurich road accidents</td>
+<td align="left">Trend, seasonality and forecasts</td>
+<td align="left">Chapters <a href="ChapterLS.html#ChapterLS">4</a>, <a href="TS.html#TS">8</a></td>
+</tr>
+<tr class="even">
+<td align="left">Swissvotes</td>
+<td align="left">Clustered inference</td>
+<td align="left">Chapter <a href="ChapterLS.html#ChapterLS">4</a></td>
+</tr>
+<tr class="odd">
+<td align="left">Credit-card clients</td>
+<td align="left">Moments, inference, multicollinearity, shrinkage and binary prediction</td>
+<td align="left">Chapters <a href="Basics.html#Basics">1</a>, <a href="TCL.html#TCL">2</a>, <a href="ChapterLS.html#ChapterLS">4</a>, <a href="estimation-methods.html#estimation-methods">6</a>, <a href="binary-choice-models.html#binary-choice-models">7</a>; Appendix <a href="append.html#PCAapp">9.1</a></td>
+</tr>
+<tr class="even">
+<td align="left">Residential electricity</td>
+<td align="left">Heteroskedasticity, controls, repeated observations and fixed effects</td>
+<td align="left">Chapters <a href="ChapterLS.html#ChapterLS">4</a>, <a href="Panel.html#Panel">5</a></td>
+</tr>
+<tr class="odd">
+<td align="left">US yields and recessions</td>
+<td align="left">Warning thresholds and prediction errors</td>
+<td align="left">Chapter <a href="Tests.html#Tests">3</a></td>
+</tr>
+<tr class="even">
+<td align="left">Swiss hydropower</td>
+<td align="left">Instrumental variables and GMM</td>
+<td align="left">Chapters <a href="ChapterLS.html#ChapterLS">4</a>, <a href="estimation-methods.html#estimation-methods">6</a></td>
+</tr>
+<tr class="odd">
+<td align="left">Paris accidents and rainfall</td>
+<td align="left">Simple regression, controls and HAC inference</td>
+<td align="left">Chapter <a href="ChapterLS.html#ChapterLS">4</a></td>
+</tr>
+<tr class="even">
+<td align="left">French speed cameras</td>
+<td align="left">Difference-in-differences</td>
+<td align="left">Chapter <a href="Panel.html#Panel">5</a></td>
+</tr>
+</tbody>
+</table>
+<p>Sample sizes below describe the packaged objects. Individual applications can select a subset, aggregate observations or reserve part of the data for evaluation; those choices are stated in the chapters.</p>
+<div id="data-accidents" class="section level2 hasAnchor" number="10.1">
+<h2><span class="header-section-number">10.1</span> Road accidents in Zurich<a href="data-appendix.html#data-accidents" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><code>CHaccidents</code> records <strong>70,767 police-reported road accidents in the city of Zurich between 2011 and 2025</strong>. Each row describes one accident, including incidents involving property damage only. The variables describe accident type and severity, pedestrian, bicycle and motorcycle involvement, road category, location, year, month, weekday and hour. The file contains neither individual road-user records nor radar information.</p>
+<p>The associated <code>CHaccidents_monthly</code> table contains <strong>180 monthly observations</strong>, from January 2011 to December 2025. It reports total accident counts and the numbers involving injuries, serious injuries or fatalities. These categories are nested: a fatal accident is included in the serious-or-fatal count and in the injury count. They count accidents rather than injured people.</p>
+<p>The source is the <a href="https://data.stadt-zuerich.ch/dataset/sid_dav_strassenverkehrsunfallorte">City of Zurich open-data export of police-recorded accidents</a>, produced from the Federal Roads Office (ASTRA/OFROU) accident information system. The course snapshot was retrieved on 20 October 2026. AEC retains the source observations, selects and renames variables, derives severity indicators and constructs the monthly table. The reporting definition for property-damage accidents changed on 1 July 2015, which affects comparisons of total counts over time. Without a measure of traffic exposure, counts should not be interpreted as accident risk per journey.</p>
+</div>
+<div id="data-paris-weather" class="section level2 hasAnchor" number="10.2">
+<h2><span class="header-section-number">10.2</span> Daily accidents and rainfall in Paris<a href="data-appendix.html#data-paris-weather" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><code>FRaccidents_daily</code> contains <strong>3,287 consecutive daily observations from 1 January 2011 to 31 December 2019</strong>, with <strong>57,266 recorded injury accidents in Paris (department 75)</strong>. The pre-pandemic period provides nine complete years. One row is one 24-hour interval, including intervals with no recorded accident; counts refer to accidents, not injured people.</p>
+<p>The variables are the interval’s start date, injury-accident count, rainfall in millimetres, the original rainfall quality flag, and weekday, month and year labels. Rainfall comes from Météo-France station <strong>Paris-Montsouris (75114001)</strong>. Its daily precipitation total runs from <strong>06:00 UTC to 06:00 UTC the next day</strong>. AEC converts the accidents’ local clock times to UTC and aggregates them over these same intervals. The date and calendar labels refer to the start of each interval. There are no missing rainfall values in the selected series. The original quality flags are retained.</p>
+<p>The accident observations come from Jean-Paul Renne’s <a href="https://github.com/jrenne/accidents-radars-france"><em>accidents-radars-france</em> repository</a>, which harmonises the Ministry of the Interior/ONISR’s annual BAAC files. The independent rainfall series comes from Météo-France’s <a href="https://www.data.gouv.fr/datasets/donnees-climatologiques-de-base-quotidiennes">daily climatological observations</a>, retrieved on 22 October 2026. Unlike atmospheric-condition codes recorded at accidents, this station series measures rainfall even when no accident occurs. A single station represents weather across the city imperfectly. The data contain no traffic-volume denominator, and a regression of accident counts on rainfall should not be interpreted as accident risk per journey. Chapter <a href="ChapterLS.html#ChapterLS">4</a> uses the data to introduce a simple regression, calendar controls and HAC inference. Compact inputs and construction scripts are included in AEC.</p>
+</div>
+<div id="data-votes" class="section level2 hasAnchor" number="10.3">
+<h2><span class="header-section-number">10.3</span> Participation in Swiss federal votes<a href="data-appendix.html#data-votes" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><code>CHvotes</code> contains <strong>710 federal voting objects</strong>, from 12 September 1848 to 27 September 2026. An observation is an object submitted to a vote, including counterproposals and tie-break questions; several observations may therefore share a voting day. Variables include date, procedure, the number of proposals on the day, eligible voters, returned ballots and participation. The course applications focus on participation and institutional features. The titles and original identifiers allow readers to locate the underlying objects.</p>
+<p><code>CHvotes_cantons</code> provides <strong>17,482 observed canton–object combinations</strong>, from 14 January 1866 to 3 March 2024, with cantonal participation and ballot counts. Its historical coverage differs from the national table. Missing combinations are not filled with zero. The object identifier links it to <code>CHvotes</code>.</p>
+<p>Both tables are derived from <a href="https://swissvotes.ch/page/dataset">Swissvotes, Année Politique Suisse, University of Bern</a>. The source CSV is labelled 28 September 2026 and was retrieved on 20 October 2026. AEC selects institutional and participation variables, converts missing-value markers, excludes four objects scheduled after the retrieval date, and reshapes the cantonal fields. The source’s proposal count treats an initiative, its counterproposal and the associated tie-break question as a single proposal. It can therefore differ from the number of rows on that day. Objects on a common day are not independent observations of participation, and comparisons across this long period must account for changes in the electorate and institutions.</p>
+</div>
+<div id="data-credit" class="section level2 hasAnchor" number="10.4">
+<h2><span class="header-section-number">10.4</span> Credit-card payment defaults<a href="data-appendix.html#data-credit" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><code>UCIcredit</code> contains <strong>30,000 credit-card clients in Taiwan</strong>. Each observation comprises a client’s credit limit, age, coded demographic characteristics, monthly repayment statuses, statement balances and payments for <strong>April–September 2005</strong>, together with an indicator of payment default in the following month. The indicator equals one for <strong>6,636 clients</strong>, or <strong>22.12%</strong> of the observations. Monetary amounts are expressed in New Taiwan dollars (NTD). The credit limit includes individual and supplementary family credit; it is distinct from the statement balance and from income.</p>
+<p>Chapters <a href="Basics.html#Basics">1</a> and <a href="TCL.html#TCL">2</a> use the recorded clients as a finite population for explicitly defined sampling experiments. Chapter <a href="estimation-methods.html#estimation-methods">6</a> fits an unconditional Bernoulli working model; Chapter <a href="binary-choice-models.html#binary-choice-models">7</a> conditions on client characteristics and reserves 9,000 clients for evaluation. Chapter <a href="ChapterLS.html#ChapterLS">4</a> also uses the July and August statement balances as correlated regressors for the September payment amount, illustrating multicollinearity. Its shrinkage application predicts the binary default indicator from client characteristics and repayment histories, comparing quadratic predictors, repayment-status interactions and a full cubic numeric expansion on training clients. The selected rich design is compared with both unpenalised OLS on the same predictors and a smaller quadratic OLS benchmark. It uses a separate reproducible split of 21,000 training and 9,000 evaluation clients; cross-validation and feature-rank checks use only the training sample. Appendix <a href="append.html#PCAapp">9.1</a> summarizes the six statement-balance columns using PCA. These are six measurements within one client record, not a six-period panel of default outcomes. It contains neither annual income nor loan interest rates. The recorded outcome is labelled “default payment next month” in the source file. Thus 22.12% is the share of clients carrying that label in this particular dataset. The public documentation does not specify the arrears threshold used to define the outcome or establish that these clients are a representative sample of cardholders. This share should therefore not be presented as the monthly default rate of Taiwanese credit-card holders, nor interpreted as a bankruptcy or ultimate credit-loss rate. Some demographic and repayment codes are not defined in the source documentation; AEC preserves them. In particular, <code>PAY_0</code> is September repayment status: positive codes denote months of delay, while the source does not define codes -2 and 0. Chapter <a href="binary-choice-models.html#binary-choice-models">7</a> contrasts <code>PAY_0 &gt;= 1</code> with all other codes without labelling that comparison group as problem-free. The six monthly histories are predictors for one client, not six independent observations of the default outcome.</p>
+<p>The source is I-Cheng Yeh’s <em>Default of Credit Card Clients</em> dataset, available from the <a href="https://doi.org/10.24432/C55S3H">UCI Machine Learning Repository</a> and cited as Yeh (2009). The source archive was retrieved on 20 October 2026. AEC retains all rows and values and renames only the client identifier and outcome as <code>borrower_id</code> and <code>default_next_month</code>.</p>
+</div>
+<div id="data-electricity" class="section level2 hasAnchor" number="10.5">
+<h2><span class="header-section-number">10.5</span> Residential electricity in Switzerland<a href="data-appendix.html#data-electricity" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><code>CHelectricity</code> follows <strong>184 metered installations in the canton of Zurich over the 731 calendar days of 2023–2024</strong>, giving <strong>134,504 meter–day observations</strong>. It reports electricity drawn from and delivered to the grid, measured in kWh, and their difference. An installation may be an apartment, a house, a heat pump, a shared building area or another separately metered component; it is not necessarily a household.</p>
+<p>The associated <code>CHelectricity_meters</code> table describes <strong>all 2,447 installations in the original collection</strong>. It records installation and building types, reported equipment, pilot tariff and control labels, and the selection into the daily teaching panel. The panel takes at most 30 meters per installation type using a fixed ranking of anonymised identifiers, without selecting on consumption or observed pilot outcomes. This deliberately gives small categories more visibility; unweighted averages are not estimates of average consumption across Swiss households. Sampling expansion factors refer only to the original collection.</p>
+<p>The additional <code>CHelectricity_annual</code> table retains <strong>4,046 meter–year rows</strong>, covering both 2023 and 2024 for <strong>all 2,023 residential meters</strong> in the source: 1,528 apartments and 495 single-family houses. It is not restricted to the compact daily panel. It records complete-day counts, mean daily grid imports and exports, observed-day sums, winter and summer summaries, and equipment metadata. A mean is calculated over available complete days; an observed-day sum is an annual total only when every day is complete. Low-coverage and zero-coverage years remain in the object, with missing means where appropriate. Coverage filters must therefore be specified when using it. Chapter <a href="ChapterLS.html#ChapterLS">4</a> uses its 1,234 meters with complete import data for all 365 days of 2023 (909 apartments and 325 houses) to illustrate heteroskedasticity through differences in within-group dispersion. Its controls application additionally excludes five house meters with reported equipment changes, leaving 1,229 meters (909 apartments and 320 houses). It compares water-heater equipment groups before and after controlling for housing type.</p>
+<p>Chapter <a href="Panel.html#Panel">5</a> uses the 60 apartment and house meters in the compact daily panel, retaining 39,073 complete import days across the two years. It compares weekend and weekday imports at the same meter. Neither imports nor exports alone measure total electricity consumption when on-site generation is present. Equipment flags describe the source observation period and need not apply throughout each calendar year; tariff labels are not prices.</p>
+<p>The source is Katharina Kaiser, Markus Kreft, Marina González Vayá and Gabriela Hug’s <a href="https://doi.org/10.5281/zenodo.21398769"><em>Dataset on residential electricity load profiles in Switzerland</em>, version 1</a>, published in July 2026 and retrieved on 20 October 2026. AEC aggregates the original quarter-hourly energy readings to calendar days in the Europe/Zurich time zone. Days have 92, 96 or 100 quarter-hours around the daylight-saving transitions. Complete daily totals remain missing when readings are incomplete; partial observed sums and observation counts are retained separately. The compact panel contains no weather measurements. Construction scripts and the compact intermediate files are included in AEC for reproduction.</p>
+</div>
+<div id="data-us-recession" class="section level2 hasAnchor" number="10.6">
+<h2><span class="header-section-number">10.6</span> US recessions and Treasury yields<a href="data-appendix.html#data-us-recession" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><code>USrecession</code> contains <strong>516 monthly observations from January 1982 to December 2024</strong>. Each row records the 3-month and 10-year nominal Treasury constant-maturity yields, their difference in percentage points, and a binary indicator of NBER-dated recession. Both yields are annualised percentages on an investment basis and are monthly averages over business days. The month label is its first day; it is not a release date or a claim that the average was known at the beginning of the month.</p>
+<p>The rates come directly from the <a href="https://www.federalreserve.gov/releases/h15/">Federal Reserve Board’s H.15 Selected Interest Rates release</a>, using monthly series <code>RIFLGFCM03_N.M</code> and <code>RIFLGFCY10_N.M</code>. The dates come from the <a href="https://www.nber.org/research/data/us-business-cycle-expansions-and-contractions">NBER Business Cycle Dating Committee chronology</a>. The inputs were retrieved on 20 October 2026; the chronology page is labelled last updated 14 March 2023. AEC selects the teaching window and changes month-end source labels to first-of-month labels without changing the yield values. It does not splice earlier discount-basis bill rates into the constant-maturity series.</p>
+<p>A recession starts in the month after the NBER peak and continues through the trough month, inclusive. Five episodes intersect the snapshot, including only the final part of the 1981–1982 recession; together they account for <strong>47 recession months</strong>. These are retrospective reference dates, rather than real-time warning signals.</p>
+<p>The panel also contains the date twelve calendar months ahead and the recession indicator matched to that date. The final twelve outcomes are missing because their target dates lie outside the dataset, leaving <strong>504 evaluable forecast origins</strong> and <strong>36 recession target months across four complete episodes</strong>. This target asks whether the economy is in recession twelve months later, rather than whether a recession starts or occurs anywhere during the intervening year. Monthly observations can be dependent. Fitted forecasting models should respect chronological order and the availability of outcomes at the time of estimation. The compact dataset and its construction inputs support offline reproduction.</p>
+</div>
+<div id="data-hydro" class="section level2 hasAnchor" number="10.7">
+<h2><span class="header-section-number">10.7</span> Swiss hydropower and wholesale electricity prices<a href="data-appendix.html#data-hydro" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><code>CHhydro</code> contains <strong>3,288 daily observations from 1 January 2016 to 31 December 2024</strong>. Its principal outcome is the average power generated by Swiss reservoir-hydropower plants, in MW. The table also reports the Swiss day-ahead wholesale electricity price in EUR/MWh, German onshore and offshore wind generation, Swiss run-of-river, pumped-storage and nuclear generation, the source Swiss system-load series, and weather at Sion and Güttingen. The data support an investigation of the short-run production response of Swiss reservoir operators to price changes. They do not measure household demand or household retail tariffs. Pumped-storage generation is a separate source category and is not pumping consumption.</p>
+<p>AEC constructs the snapshot directly from the <a href="https://api.energy-charts.info/">Energy-Charts API</a>, with Swiss production disseminated from ENTSO-E/BFE sources and prices credited to Bundesnetzagentur/SMARD. The provider may apply energy corrections, so these series should not be described as unprocessed meter readings. The selected years precede the <a href="https://energy-charts.info/charts/power/chart.htm?c=CH&amp;l=en">documented change in Swiss generation sources from January 2025</a>. All inputs were retrieved on 20 October 2026.</p>
+<p>Electricity observations are aligned in UTC before aggregation into Europe/Zurich civil days. Four complete German quarter-hours form an hourly mean. Daily mean power uses all 23, 24 or 25 hours in the local day; daily energy in MWh is that mean MW multiplied by the number of hours. The price is the arithmetic mean of the corresponding hourly EUR/MWh quotations, without volume weighting. <strong>Six negative daily average prices are retained.</strong> A daily field is missing if any required source hour is missing. The principal generation, price and wind series are complete; ten run-of-river daily values are missing, with observation counts supplied. No observations are interpolated.</p>
+<p>Daily mean air temperatures at two metres and precipitation come from <a href="https://opendatadocs.meteoswiss.ch/a-data-groundbased/a1-automatic-weather-stations">MeteoSwiss automatic-station observations</a>, using Sion (Valais) and Güttingen (Thurgau). Weather retains the source daily reference dates, rather than being redefined to coincide with the electricity-day boundaries. The stations provide weather proxies, not national population- or catchment-weighted indices. In addition to current-day rainfall, AEC computes rainfall over the preceding seven days, excluding the current day. The compact weather input includes the final seven days of 2015 to construct the first 2016 lagged sums.</p>
+<p>Example <a href="ChapterLS.html#exm:IVhydro">4.10</a> uses German wind as an instrument for the Swiss wholesale price in a reservoir-production equation. More outside supply can shift the residual demand facing Swiss producers. Calendar and weather controls, together with sensitivity checks, help assess this design. They do not establish the exclusion restriction: shared weather, water availability, transmission constraints, wind curtailment and expected future prices can complicate interpretation. The estimated magnitude varies between periods. Compact source inputs and construction scripts in AEC reproduce the snapshot offline, including the treatment of incomplete days and daylight saving.</p>
+</div>
+<div id="data-radars" class="section level2 hasAnchor" number="10.8">
+<h2><span class="header-section-number">10.8</span> Speed cameras and injury crashes in France<a href="data-appendix.html#data-radars" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><code>FRradars</code> contains <strong>21,939 site–comparison observations</strong> from the principal specification of Renne (2026), <em>The Effects of Speed Cameras on Injury Crashes in France</em>. Its <strong>406 treated-site comparisons</strong> are anchored at camera installations between January 2012 and December 2022. Together they use <strong>639 distinct sites</strong>: 406 appear as treated sites and 477 as controls, with overlapping roles. A row is a site appearing in one comparison; repeated rows across comparisons are not new independent sites. Controls can be equipped as late as November 2024.</p>
+<p>The table records each site’s installation month, the comparison’s anchor month, road class and recorded speed limit, together with integer injury-crash counts in three twelve-month windows: months <strong>-24 to -13</strong>, <strong>-12 to -1</strong>, and <strong>+1 to +12</strong>, relative to the treated site’s installation. The installation month is omitted. Controls are observed over the same calendar windows and remain unequipped through the post window. They share the road-class and exact speed-limit stratum, lie more than four kilometres from the treated site, and number between 10 and 104 per comparison.</p>
+<p>Crashes are counted within 100 metres of the monitored road, extending two kilometres in each direction along the connected road network. The compact extraction retains the paper’s road-assignment, large-city, network-reach and nearby-camera filters, including at least 75% of the nominal two-sided network reach. It does not substitute all crashes within a circular radius. Complete annual windows are retained; zero counts are observed zeros.</p>
+<p>The sources are French Ministry of the Interior/ONISR BAAC injury-crash records for 2005–2024, the reconciled fixed-camera inventories, IGN BD TOPO road geometry and commune geography used in the article. The source data are distributed as <a href="https://github.com/jrenne/accidents-radars-france"><em>Accidents corporels et radars fixes en France</em>, version 1.1.0</a>; the <a href="https://github.com/jrenne/accidents-radars-replication">article replication</a> defines the retained comparisons. AEC’s extraction, made on 21 October 2026, preserves the full 406-comparison first-year sample and aggregates monthly counts to the three annual windows. Optional extraction code and source checksums document that step; compact inputs and an offline build script reproduce the package object.</p>
+<p>Divide annual counts by twelve to obtain crashes per site-month. The course reports these means per 100 site-months. Each treated site receives equal weight; controls are averaged within its comparison first. The resulting DiD reproduces the article’s point estimate. The compact earlier-year diagnostic is less detailed than the paper’s pre-treatment event study. Bootstrap inference must account for sites reappearing across comparisons, and the classroom resampling of retained sites need not match the article’s archived draws. These counts have no traffic-exposure denominator and should not be interpreted as crash risk per journey.</p>
+</div>
+<div id="data-apples" class="section level2 hasAnchor" number="10.9">
+<h2><span class="header-section-number">10.9</span> Additional data: Swiss apples and spring frost<a href="data-appendix.html#data-apples" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><code>CHapples</code> contains <strong>44 monthly variety observations from September 2022 to June 2024</strong> for Swiss Gala and Golden Delicious table apples of quality class I, from conventional/IP production. Quantities are tonnes sold by surveyed major Swiss warehouses to domestic buyers; prices are nominal wholesale CHF/kg for loose goods. The source is the OFAG/BLW and SWISSCOFEL workbook accompanying the <a href="https://www.donnees-agrimarche.ch/blog/nouvel-apercu-marche-suisse-pommes">20 September 2024 analysis of the Swiss apple market</a>, retrieved on 20 October 2026. The quantity inquiry is estimated to cover over 80% of pome-fruit sales, rather than all apple consumption. It excludes imports and exports. Prices and quantities refer to the same variety, quality and marketing stage but originate in separate surveys, rather than matched transactions. Prices can reflect changes in the mix of sales channels.</p>
+<p>AEC retains all nonempty quantity observations from the two published series and leaves the missing Gala price for July 2023 missing. A balanced September–June comparison would contain <strong>40 observations</strong>: September–June in both 2022/23 and 2023/24, for both varieties. July and August 2023 appear in the source’s 2023/24 columns but are assigned to harvest year 2022 for weather matching. This September-based harvest-year assignment is a proxy for the crop supplying stored apples, rather than verified harvest dates for individual sales. No values are interpolated, and summary totals and percentage changes in the source are not treated as extra observations.</p>
+<p><code>CHapples_frost</code> supplies <strong>40 station–year observations</strong>, covering Sion (Valais) and Güttingen (Thurgau) in <strong>2006–2025</strong>. The source is <a href="https://opendatadocs.meteoswiss.ch/a-data-groundbased/a1-automatic-weather-stations">MeteoSwiss automatic-station daily historical data</a>, retrieved on 20 October 2026. AEC selects the daily minimum air temperature at two metres, retaining the source’s daily date labels, and counts April 1–May 31 days strictly below zero Celsius. All 61 daily observations are available at each station in every retained year. The table also reports the lowest minimum and the sum of negative-temperature magnitudes over that window. Compact daily inputs and construction scripts are included in the package.</p>
+<p><code>CHapples</code> joins the station-specific frost counts and their unweighted mean by harvest year. This proxy describes two stations rather than a national orchard-weighted exposure. It does not observe flowering dates, frost protection, damage or harvest losses. The longer weather history does not extend the market sample: the balanced 40-observation market subset still contains only <strong>two harvest-year weather exposures</strong>. These data remain available in AEC for exploration but are not used in the chapter applications.</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="append.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="copyright-and-licence.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+  "sharing": {
+    "github": false,
+    "facebook": true,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": "https://github.com/jrenne/EcoStat/edit/main/09-Data.Rmd",
+    "text": "Edit"
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": ["EcoStat.pdf"],
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "subsection"
+  }
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

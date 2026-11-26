@@ -14,15 +14,11 @@
 
 Many economic outcomes are qualitative rather than continuous: a household defaults or does not, an individual participates or does not, and a firm enters a market or stays out. When $y_i\in\{0,1\}$, the object to model is the conditional probability $\mathbb{P}(y_i=1\mid\bv{x}_i)$. The covariates are collected in a $K\times1$ vector $\bv{x}_i$.
 
-The spectrum of applications is wide:
+Examples include participation in the labour force, market entry, and the occurrence of a credit default. A binary outcome need not represent a deliberate choice.
 
-* Binary decisions (e.g. in referendums, being owner or renter, living in the city or in the countryside, in/out of the labour force,...),
-* Contamination (disease or default),
-* Success/failure outcomes.
-
-Without loss of generality, the model reads:
-\begin{equation}\label{eq:binaryBenroulli}
-y_i | \bv{X} \sim \mathcal{B}(g(\bv{x}_i;\boldsymbol\theta)),
+We specify a Bernoulli model:
+\begin{equation}
+y_i | \bv{X} \sim \mathcal{B}(g(\bv{x}_i;\boldsymbol\theta)).
 \end{equation}
 where $g(\bv{x}_i;\boldsymbol\theta)$ is the parameter of the Bernoulli distribution. In other words, conditionally on $\bv{X}$:
 \begin{equation}
@@ -43,83 +39,60 @@ If the conditional probability is truly linear, OLS consistently estimates its c
 
 
 
-Figure \@ref(fig:LPM) illustrates the fit resulting from an application of the LPM model to binary (dependent) variables.
+Figure \@ref(fig:LPM) uses simulated observations to compare the linear fit with the probability function that generated the data. A straight line cannot flatten towards both zero and one.
 
-```{r LPM, echo=FALSE, fig.cap="Fitting a binary variable with a linear model (Linear Probability Model, LPM). The model is $\\mathbb{P}(y_i=1|x_i)=\\Phi(0.5+2x_i)$, where $\\Phi$ is the c.d.f. of the normal distribution and where $x_i \\sim \\,i.i.d.\\,\\mathcal{N}(0,1)$.", fig.asp = .6, out.width = "95%", fig.align = 'left'}
-beta0 <- 0.5;beta1 <- 2
-nb.sim <- 100
-xx <- rnorm(nb.sim)
-P.vec <- pnorm(beta0 + beta1*xx)
-U <- runif(nb.sim)
-yy <- (U<P.vec)
-eqY <- lm(yy~xx)
-par(mfrow=c(1,1));par(plt=c(.1,.95,.25,.95))
-plot(xx,yy,pch=19,xlab="x",ylab="y",xlim=c(-5,3))
-abline(eqY,col="blue",lwd=2)
-legend("topleft",
-       c("Observations","Linear regression line (LPM)"),
-       lty=c(NaN,1), # gives the legend appropriate symbols (lines)       
-       lwd=c(2,2), # line width
-       col=c("black","blue"),
-       pch=c(19,NaN),seg.len=2)
+```{r LPM, echo=FALSE, fig.cap="A linear fit and the true probability in a simulated sample of 100 observations. The generating probability is $\\Phi(0.5+2x)$, with standard normal covariates.", fig.width=7, fig.height=3.6, out.width="95%"}
+local({
+  x <- rnorm(100)
+  y <- rbinom(100, 1, pnorm(0.5 + 2*x))
+  fit <- lm(y ~ x)
+  grid <- seq(-3, 3, length.out=400)
+  par(mar=c(4,4,1,1))
+  plot(x, y, pch=16, col=adjustcolor("#334155", .45),
+       xlim=c(-3,3), ylim=c(-.35,1.35), xlab="Covariate x",
+       ylab="Outcome / probability", las=1)
+  abline(h=c(0,1), col="#CBD5E1", lty=3)
+  lines(grid, predict(fit, data.frame(x=grid)), col="#C76D36", lwd=2)
+  lines(grid, pnorm(.5+2*grid), col="#147D92", lwd=2)
+  legend("topleft", c("Linear fit", "True probability"),
+         col=c("#C76D36", "#147D92"), lwd=2, bty="n", cex=.9)
+})
 ```
 
-Except for its last row (LPM case), Table \@ref(tab:foo) provides examples of functions $g$ valued in $[0,1]$, and that can therefore used in models of the type: $\mathbb{P}(y_i=1|\bv{x}_i;\boldsymbol\theta) = g(\boldsymbol\theta'\bv{x}_i)$ (see Eq. \@ref(eq:genericBinary)). The "linear" case is given for comparison, but note that it does not satisfy $g(\boldsymbol\theta'\bv{x}_i) \in [0,1]$ for any value of $\boldsymbol\theta'\bv{x}_i$.
+Nonlinear models instead map an index $z_i=\boldsymbol\theta'\bv{x}_i$ into a probability $p_i=g(z_i)$. Table \@ref(tab:foo) gives common choices. Here $\Phi$ and $\phi$ denote the standard normal distribution and density functions.
 
+Table: (\#tab:foo) Probability functions and their derivatives. The linear specification is included for comparison.
 
-Table: (\#tab:foo) This table provides examples of function $g$, s.t. $\mathbb{P}(y_i=1|\bv{x}_i;\boldsymbol\theta) = g(\boldsymbol\theta'\bv{x}_i)$. The LPM case (last row) is given for comparison but, again, it does not satisfy $g(\boldsymbol\theta'\bv{x}_i) \in [0,1]$ for every value of $\boldsymbol\theta'\bv{x}_i$.
+| Model | $g(z)$ | $g'(z)$ |
+|-------|--------|---------|
+| Probit | $\Phi(z)$ | $\phi(z)$ |
+| Logit | $[1+\exp(-z)]^{-1}$ | $g(z)[1-g(z)]$ |
+| Complementary log-log | $1-\exp[-\exp(z)]$ | $\exp[z-\exp(z)]$ |
+| Linear (LPM) | $z$ | $1$ |
 
-| Model   | Function $g$ | Derivative   |
-|---------|---------------|------------------|
-| Probit  | $\Phi$  | $\phi$      |
-| Logit   | $\dfrac{\exp(x)}{1+\exp(x)}$    | $\dfrac{\exp(x)}{(1+\exp(x))^2}$ |
-| Complementary log-log | $1 - \exp(-\exp(x))$ | $\exp(-\exp(x))\exp(x)$     |
-| linear (LPM)  | $x$  | 1  |
-
-
-Figure \@ref(fig:ProbLogit) displays the first three $g$ functions appearing in Table \@ref(tab:foo).
-
-```{r ProbLogit, echo=FALSE, fig.cap="Probit, Logit, and Log-log functions.", fig.asp = .6, out.width = "95%", fig.align = 'left'}
-x <- seq(-5,5,by=.01)
-par(plt=c(.1,.95,.25,.95))
-plot(x,pnorm(x),type="l",lwd=2,col="black",xlab="x",ylab="")
-lines(x,1/(1+exp(-x)),col="blue",lwd=2)
-lines(x,1- exp(-exp(x)),col="red",lwd=2)
-legend("topleft",
-       c("Probit","Logit","Complementary log-log"),
-       lty=c(1,1,1), # gives the legend appropriate symbols (lines)       
-       lwd=c(2,2,2), # line width
-       col=c("black","blue","red"),
-       seg.len=2)
-```
-
-
-The **probit** and the **logit** models are popular binary-choice models. In the probit model, we have:
+The **probit** and **logit** models use, respectively,
 \begin{equation}
-g(z) = \Phi(z),(\#eq:probit)
+g(z)=\Phi(z), (\#eq:probit)
 \end{equation}
-where $\Phi$ is the c.d.f. of the normal distribution. And for the logit model:
+and
 \begin{equation}
-g(z) = \frac{1}{1+\exp(-z)}.(\#eq:logit)
+g(z)=\frac{1}{1+\exp(-z)}. (\#eq:logit)
 \end{equation}
+Both keep probabilities between zero and one. Their coefficients have different scales, so comparisons should focus on predicted probabilities and marginal effects. The complementary log-log link is asymmetric (Figure \@ref(fig:ProbLogit)).
 
-Figure \@ref(fig:LPM2) shows the conditional probabilities associated with the (probit) model that had been used to generate the data of Figure \@ref(fig:LPM).
-
-```{r LPM2, echo=FALSE, fig.cap="The model is $\\mathbb{P}(y_i=1|x_i)=\\Phi(0.5+2x_i)$, where $\\Phi$ is the c.d.f. of the normal distribution and where $x_i \\sim \\,i.i.d.\\,\\mathcal{N}(0,1)$. Crosses give the model-implied probabilities of having $y_i=1$ (conditional on $x_i$).", fig.asp = .6, out.width = "95%", fig.align = 'left'}
-P.vec <- pnorm(beta0 + beta1*xx)
-par(plt=c(.1,.95,.25,.95))
-plot(xx,yy,pch=19,xlab="x",ylab="y",xlim=c(-5,3))
-abline(eqY,col="blue",lwd=2)
-points(xx,P.vec,pch=3,col="red",lwd=2)
-legend("topleft",
-       c("Observations","fitted linear regressions",expression(paste(P,"(",y[i],"=",1,"|",x[i],")",sep=""))),
-       lty=c(NaN,1,NaN), # gives the legend appropriate symbols (lines)       
-       lwd=c(2,2,2), # line width
-       col=c("black","blue","red"),
-       pch=c(19,NaN,3),
-       seg.len=2)
+```{r ProbLogit, echo=FALSE, fig.cap="Three links from an index to a probability. Probit and logit are symmetric around zero; the complementary log-log link is asymmetric.", fig.width=7, fig.height=3.6, out.width="95%"}
+local({
+  z <- seq(-5,5,length.out=500)
+  par(mar=c(4,4,1,1))
+  plot(z, pnorm(z), type="l", lwd=2, col="#147D92", las=1,
+       xlab="Index z", ylab="Probability", ylim=c(0,1))
+  lines(z, plogis(z), col="#C76D36", lwd=2, lty=2)
+  lines(z, -expm1(-exp(z)), col="#765D9C", lwd=2, lty=3)
+  legend("topleft", c("Probit", "Logit", "Complementary log-log"),
+         col=c("#147D92", "#C76D36", "#765D9C"), lty=1:3,
+         lwd=2, bty="n", cex=.9)
+})
 ```
-
 
 ## Latent-variable and utility interpretations {#latent}
 
@@ -139,26 +112,24 @@ where $y_i^* = \boldsymbol\theta'\bv{x}_i + \varepsilon_i$, with $\varepsilon_{i
 
 Figure \@ref(fig:Latent) illustrates this situation.
 
-```{r Latent, echo=FALSE, fig.cap="Distribution of $y_i^*$ conditional on $\\bv{x}_i$.", fig.asp = .6, out.width = "95%", fig.align = 'left'}
-par(plt=c(.12,.95,.25,.95))
-mu <- 1
-x <- seq(-4,4,by=.01)
-plot(x,dnorm(x-mu),type="l",lwd=2,
-     xlab=expression(paste("Possible values of ",y[i],"*",sep="")),
-     ylab="")
-abline(v=mu,lty=2,col="grey")
-abline(v=0)
-abline(h=0)
-text(mu,.02,expression(paste(theta,"'",x_i,sep="")),pos=4)
-x.0 <- seq(-4,0,by=.01)
-polygon(c(x.0,x.0[length(x.0):1]),c(dnorm(x.0-mu),0*x.0),col="grey")
-abline(v=0)
-arrows(x0=-2, y0=.3, x1 = -1, y1 = .01, length = 0.05, angle = 20,
-       code = 2)
-text(-2,.3,expression(paste(P,"(",y[i],"=0|",x[i],";",theta,")",sep="")),pos=2)
-arrows(x0=2.5, y0=.3, x1 = 1.5, y1 = .2, length = 0.05, angle = 20,
-       code = 2)
-text(2.5,.3,expression(paste(P,"(",y[i],"=1|",x[i],";",theta,")",sep="")),pos=4)
+```{r Latent, echo=FALSE, fig.cap="A latent normal index with mean one and variance one. The area to the right of zero is the probability of observing outcome one.", fig.width=7, fig.height=3.5, out.width="95%"}
+local({
+  z <- seq(-3.5,5,length.out=1000)
+  par(mar=c(4,4,1,1))
+  plot(z, dnorm(z,1), type="n", xlab="Latent index", ylab="Density",
+       ylim=c(0,.46), las=1)
+  for (positive in c(FALSE,TRUE)) {
+    v <- if (positive) seq(0,5,length.out=400) else seq(-3.5,0,length.out=400)
+    polygon(c(v,rev(v)), c(dnorm(v,1),rep(0,length(v))),
+            col=if(positive) "#B5DAE0" else "#F0D3BE", border=NA)
+  }
+  lines(z, dnorm(z,1), lwd=2, col="#334155")
+  abline(v=0, col="#334155")
+  abline(v=1, col="#147D92", lty=2)
+  text(-1.6,.27,"Outcome 0\nProbability 0.159", cex=.9)
+  text(2.9,.27,"Outcome 1\nProbability 0.841", cex=.9)
+  text(1,.44,"Mean = 1", cex=.9)
+})
 ```
 
 
@@ -183,7 +154,7 @@ The RUM approach has been used by @Nakosteen_Zimmer_1980 to study migration choi
 * Migration cost: $C^*= \boldsymbol\theta_c'\bv{x}_c + \varepsilon_c$.
 * Wage earned elsewhere: $y_m^* = \boldsymbol\theta_m'\bv{x}_m + \varepsilon_m$.
 
-In this context, agents decision to migrate if $y_m^* >  y_p^* + C^*$, i.e. if
+In this context, agents decide to migrate if $y_m^* >  y_p^* + C^*$, i.e. if
 $$
 y^* = y_m^* -  y_p^* - C^* =  \boldsymbol\theta'\bv{x} + \underbrace{\varepsilon}_{=\varepsilon_m - \varepsilon_c - \varepsilon_p}>0,
 $$
@@ -193,90 +164,105 @@ where $\bv{x}$ is the union of the $\bv{x}_i$s, for $i \in \{p,m,c\}$.
 
 ## Alternative-varying regressors {#Avregressors}
 
-So far, the regressors have described the decision maker. Some choice problems also include attributes that differ across alternatives, such as prices or travel times. These variables require a specification in which utility is indexed by the available choice.
+When attributes such as fares and travel times vary across alternatives, specify utility for each available choice.
 
-In some cases, regressors may depend on the considered alternative ($0$ or $1$). For instance:
-
-* When modeling the decision to participate in the labour force (or not), the wage depends on the alternative. Typically, it is zero if the considered agent has decided not to work (and strictly positive otherwise).
-* In the context of the choice of transportation mode, "time cost" depends on the considered transportation mode.
-
-In terms of utility, we then have:
+For instance, let $\bv{u}_{i,j}$ collect the fare and travel time of alternative $j$ for traveller $i$, while $\bv{v}_i$ collects characteristics of the traveller. A specification with common coefficients on alternative attributes is
 $$
-V_{i,j} = {\theta^{(u)}_{j}}'\bv{u}_{i,j} + {\theta^{(v)}_{j}}'\bv{v}_{i},
+V_{i,j}={\theta^{(u)}}'\bv{u}_{i,j}+{\theta_j^{(v)}}'\bv{v}_i.
 $$
-where the $\bv{u}_{i,j}$'s are regressors associated with agent $i$, but taking different values for the different choices ($j=0$ or $j=1$). In that case, Eq. \@ref(eq:utility) becomes:
+Taking the difference between utilities gives
 \begin{equation}
-\mathbb{P}(y_i = 1|\bv{x}_i;\boldsymbol\theta)  = F\left({\theta^{(u)}_{1}}'\bv{u}_{i,1}-{\theta^{(u)}_{0}}'\bv{u}_{i,0}+[\boldsymbol\theta_1^{(v)}-\boldsymbol\theta_0^{(v)}]'\bv{v}_i\right),(\#eq:utility2)
+\mathbb{P}(y_i=1\mid\bv{x}_i)=F\left({\theta^{(u)}}'(\bv{u}_{i,1}-\bv{u}_{i,0})+
+[\theta_1^{(v)}-\theta_0^{(v)}]'\bv{v}_i\right). (\#eq:utility3)
 \end{equation}
-and, if $\theta^{(u)}_{1}=\theta^{(u)}_{0}=\theta^{(u)}$ ---as is customary--- we get:
-\begin{equation}
-\mathbb{P}(y_i = 1|\bv{x}_i;\boldsymbol\theta)  = F\left({\theta^{(u)}}'(\bv{u}_{i,1}-\bv{u}_{i,0})+[\boldsymbol\theta_1^{(v)}-\boldsymbol\theta_0^{(v)}]'\bv{v}_i\right).(\#eq:utility3)
-\end{equation}
+Thus it is the difference in attributes that enters the binary model.
 
-:::{.example #FishingTable name="Fishing-mode dataset"}
+:::{.example #transport-binary name="Train or bus?"}
 
-The fishing-mode dataset used in @Cameron_Trivedi_2005 (Chapters 14 and 15) contains alternative-specific variables. Specifically, for each individual, the price and catch rate depend on the fishing model. In the table reported below, lines `price` and `catch` correspond to the prices and catch rates associated with the chosen alternative.
+Consider a hypothetical journey with the following options:
 
-```{r fishing1, warning=FALSE, message=FALSE}
-library(mlogit)
-data("Fishing",package="mlogit")
-model_table(as.data.frame(Fishing))
-```
+| Attribute | Train ($j=1$) | Bus ($j=0$) | Train minus bus |
+|-----------|---------------|-------------|-----------------|
+| Fare (CHF) | 12 | 8 | 4 |
+| Travel time (minutes) | 25 | 40 | $-15$ |
+
+A logit specification might assign the train probability
+$$
+\mathbb{P}(y_i=1)=\Lambda\big(\alpha+\beta_c(c_{i,1}-c_{i,0})+
+\beta_t(t_{i,1}-t_{i,0})\big),
+$$
+where $\Lambda$ is the logistic distribution function. For this journey the index is $\alpha+4\beta_c-15\beta_t$. With negative fare and time coefficients, the higher fare lowers the train probability while the shorter journey raises it. These are illustrative attributes, not an estimated model. Estimation would require observations on choices and on the attributes of **both** available alternatives.
 :::
 
 ## Estimation {#binary-estimation}
 
 Once the probability function has been specified, its parameters can be estimated by maximum likelihood. Each observation contributes the probability assigned to the outcome that actually occurred.
 
-These models can be estimated by Maximum Likelihood approaches (see Section \@ref(secMLE)).
+Condition on the covariates and assume independent outcomes across entities. Write $p_i=g(\boldsymbol\theta'\bv{x}_i)$. The conditional probability of the observed outcome is $p_i^{y_i}(1-p_i)^{1-y_i}$, giving the log-likelihood
+$$
+\ell(\boldsymbol\theta)=\sum_{i=1}^n
+\left[y_i\log p_i+(1-y_i)\log(1-p_i)\right].
+$$
+Its score is
+$$
+\frac{\partial\ell}{\partial\boldsymbol\theta}
+=\sum_{i=1}^n\bv{x}_i\frac{(y_i-p_i)g'(\boldsymbol\theta'\bv{x}_i)}{p_i(1-p_i)}.
+$$
+Numerical maximization finds the coefficient vector for which this score is zero. In the logit model, $g'=p_i(1-p_i)$, so the score simplifies to $\bv{X}'(\bv{y}-\bv{p})$ and the Hessian is
+$$
+\frac{\partial^2\ell}{\partial\boldsymbol\theta\partial\boldsymbol\theta'}
+=-\sum_{i=1}^n p_i(1-p_i)\bv{x}_i\bv{x}_i'.
+$$
+The log-likelihood is concave. Full column rank gives strict concavity at finite coefficients, but a finite maximum may fail to exist when regressors perfectly separate the two outcomes.
 
-To simplify the exposition, we consider the $\bv{x}_i$ vectors of covariates to be deterministic. Moreover, we assume that the r.v. are independent across entities $i$. How to write the likelihood in that case? It is easily checked that:
+Under the regularity conditions of Section \@ref(secMLE), the MLE is approximately normal with covariance equal to the inverse information matrix. For either link, the conditional expected information is
 $$
-f(y_i|\bv{x}_i;\boldsymbol\theta) =   g(\boldsymbol\theta'\bv{x}_i)^{y_i}(1-g(\boldsymbol\theta'\bv{x}_i))^{1-y_i}.
+\bv{I}(\boldsymbol\theta\mid\bv{X})=
+\sum_{i=1}^n\frac{[g'(\boldsymbol\theta'\bv{x}_i)]^2}{p_i(1-p_i)}
+\bv{x}_i\bv{x}_i'.
 $$
+Evaluating its inverse at the estimates gives an estimated covariance matrix under the specified Bernoulli model.
 
-Therefore, if the observations $(\bv{x}_i,y_i)$ are independent across entities $i$, we obtain:
-$$
-\log \mathcal{L}(\boldsymbol\theta;\bv{y},\bv{X}) = \sum_{i=1}^{n}y_i \log[g(\boldsymbol\theta'\bv{x}_i)] + (1-y_i)\log[1-g(\boldsymbol\theta'\bv{x}_i)].
-$$
+:::{.example #creditProbit name="Predicting next-month credit defaults"}
 
-The likelihood equation reads (FOC of the optimization program, see Def. \@ref(def:likFunction)):
-$$
-\dfrac{\partial \log \mathcal{L}(\boldsymbol\theta;\bv{y},\bv{X})}{\partial \boldsymbol\theta} = \bv{0},
-$$
-that is:
-$$
-\sum_{i=1}^{n} y_i \bv{x}_i\frac{g'(\boldsymbol\theta'\bv{x}_i)}{g(\boldsymbol\theta'\bv{x}_i)} - (1-y_i) \bv{x}_i \frac{g'(\boldsymbol\theta'\bv{x}_i)}{1-g(\boldsymbol\theta'\bv{x}_i)} = \bv{0}.
-$$
+We return to `AEC::UCIcredit`, described in Appendix \@ref(data-credit). Each of the 30,000 rows records one cardholder and whether a default payment was recorded in the following month. We ask whether the recorded credit limit, age, and latest repayment status help predict this outcome.
 
-This is a nonlinear (multivariate) equation that can be solved numerically. Under regularity conditions (Hypotheses \@ref(hyp:MLEregularity)), we approximately have (Prop. \@ref(prp:MLEproperties)):
-$$
-\boldsymbol\theta_{MLE} \sim \mathcal{N}(\boldsymbol\theta_0,\bv{I}(\boldsymbol\theta_0)^{-1}),
-$$
-where
-$$
-\bv{I}(\boldsymbol\theta_0) = - \mathbb{E}_0 \left( \frac{\partial^2 \log \mathcal{L}(\theta;\bv{y},\bv{X})}{\partial \boldsymbol\theta \partial \boldsymbol\theta'}\right) = n \mathcal{I}_Y(\boldsymbol\theta_0).
-$$
+We use three predictors: the log of the credit limit (measured relative to NTD 100,000), age in decades relative to age 40, and an indicator for a **recorded payment delay** in September (`PAY_0 >= 1`). The credit limit is the amount of credit available on the card, not income or the outstanding balance. The comparison group for the delay indicator includes all other repayment codes; some of these codes are undocumented, so it should not be described as a group with no repayment problems.
 
-For finite samples, we can e.g. approximate $\bv{I}(\boldsymbol\theta_0)^{-1}$ by Eq. \@ref(eq:III1):
-$$
-\bv{I}(\boldsymbol\theta_0)^{-1} \approx -\left(\frac{\partial^2 \log \mathcal{L}(\boldsymbol\theta_{MLE};\bv{y},\bv{X})}{\partial \boldsymbol\theta \partial \boldsymbol\theta'}\right)^{-1}.
-$$
+We randomly reserve 9,000 cardholders for evaluation and estimate all models on the remaining 21,000. The reserved outcomes are used only in Section \@ref(binary-predictions). This split evaluates predictions for other clients in the same collection of observations.
 
+```{r credit-binary-sample}
+credit_binary <- transform(AEC::UCIcredit,
+  default = default_next_month,
+  log_limit = log(LIMIT_BAL / 100000),
+  age10 = (AGE - 40) / 10,
+  delay = as.integer(PAY_0 >= 1))
+training_rows <- sample.int(nrow(credit_binary), 21000)
+credit_train <- credit_binary[training_rows, ]
+credit_test <- credit_binary[-training_rows, ]
+credit_null <- glm(default ~ 1, data=credit_train, family=binomial())
+credit_basic <- glm(default ~ log_limit + age10, data=credit_train,
+                    family=binomial())
+credit_logit <- glm(default ~ log_limit + age10 + delay,
+                    data=credit_train, family=binomial())
+credit_probit <- update(credit_logit, family=binomial(link="probit"))
+```
 
-In the Probit case (see Table \@ref(tab:foo)), it can be shown that we have:
-\begin{eqnarray*}
-&&\frac{\partial^2 \log \mathcal{L}(\boldsymbol\theta;\bv{y},\bv{X})}{\partial \boldsymbol\theta \partial \boldsymbol\theta'} = - \sum_{i=1}^{n} g'(\boldsymbol\theta'\bv{x}_i) [\bv{x}_i \bv{x}_i'] \times \\
-&&\left[y_i \frac{g'(\boldsymbol\theta'\bv{x}_i) + \boldsymbol\theta'\bv{x}_ig(\boldsymbol\theta'\bv{x}_i)}{g(\boldsymbol\theta'\bv{x}_i)^2} + (1-y_i) \frac{g'(\boldsymbol\theta'\bv{x}_i) - \boldsymbol\theta'\bv{x}_i (1 - g(\boldsymbol\theta'\bv{x}_i))}{(1-g(\boldsymbol\theta'\bv{x}_i))^2}\right].
-\end{eqnarray*}
+The same three predictors enter the logit and probit specifications. Table \@ref(tab:credit-binary-coefficients) reports their estimates and standard errors. A positive coefficient raises the predicted probability, holding the other predictors fixed; coefficient magnitudes across links are not directly comparable.
 
-In the Logit case (see Table \@ref(tab:foo)), it can be shown that we have:
-$$
-\frac{\partial^2 \log \mathcal{L}(\boldsymbol\theta;\bv{y},\bv{X})}{\partial \boldsymbol\theta \partial \boldsymbol\theta'} = - \sum_{i=1}^{n} g'(\boldsymbol\theta'\bv{x}_i) \bv{x}_i\bv{x}_i',
-$$
-where $g'(x)=\dfrac{\exp(-x)}{(1 + \exp(-x))^2}$.
+```{r credit-binary-coefficients}
+binary_coefficients <- data.frame(
+  Predictor=c("Constant", "Log credit limit", "Age (decades)", "Recorded delay"),
+  Logit=coef(credit_logit),
+  `SE logit`=sqrt(diag(vcov(credit_logit))),
+  Probit=coef(credit_probit),
+  `SE probit`=sqrt(diag(vcov(credit_probit))), check.names=FALSE)
+data_table(binary_coefficients, digits=3, row.names=FALSE,
+           caption="Credit-default models: estimates and standard errors (21,000 training observations).")
+```
 
-Since $g'(x)>0$, $-\partial^2 \log \mathcal{L}(\boldsymbol\theta;\bv{y},\bv{X})/\partial \boldsymbol\theta \partial \boldsymbol\theta'$ is positive semidefinite. It is positive definite when the design matrix has full column rank and the fitted probabilities are non-degenerate.
+The delay coefficient is positive in both models. The following sections translate this association into probability differences and assess whether it improves predictions.
+:::
 
 ## Marginal effects {#marginalFX}
 
@@ -288,163 +274,175 @@ $$
 $$
 which is of the same sign as $\theta_k$ if function $g$ is monotonously increasing.
 
-For agent $i$, this marginal effect is consistently estimated by $g'(\boldsymbol\theta_{MLE}'\bv{x}_i)\theta_{MLE,k}$. It is important to see that the marginal effect depends on $\bv{x}_i$: respective increases by 1 unit of $x_{i,k}$ (entity $i$) and of $x_{j,k}$ (entity $j$) do not necessarily have the same effect on $\mathbb{P}(y_i=1|\bv{x}_i;\boldsymbol\theta)$ as on $\mathbb{P}(y_j=1|\bv{x}_j;\boldsymbol\theta)$. To address this issue, one can compute some measures of "average" marginal effect. There are two main solutions. For each explanatory variable $k$:
+This derivative applies when $x_{i,k}$ enters the index linearly, without transformations or interactions. Two summaries are common: evaluate it at the mean covariate vector (**marginal effect at the means**), or average the individual derivatives (**average marginal effect**, AME). The latter keeps each observation's covariate combination; the former can describe an artificial profile, especially with categorical predictors.
 
-i. Denoting by $\hat{\bv{x}}$ the sample average of the $\bv{x}_i$s, compute $g'(\boldsymbol\theta_{MLE}'\hat{\bv{x}})\theta_{MLE,k}$.
-ii. Compute the average (across $i$) of $g'(\boldsymbol\theta_{MLE}'\bv{x}_i)\theta_{MLE,k}$.
+For a binary predictor, use a finite difference instead: predict each observation once with that predictor set to one and once with it set to zero, holding the other predictors fixed, then average the differences. For a transformed continuous predictor, recompute its transformations when changing the underlying variable.
 
+:::{.example #credit-binary-effects name="From coefficients to probabilities"}
+
+In our credit model, the AME of `age10` is the average link derivative times its coefficient. It is a local slope per decade. For the credit limit we instead compare probabilities before and after a 10\% increase, which adds $\log(1.1)$ to `log_limit`. For the delay indicator we compare its two possible values. All three summaries average over the training sample and describe model-implied associations.
+
+```{r credit-binary-effects}
+credit_effects <- function(model) {
+  eta <- predict(model, newdata=credit_train, type="link")
+  base <- predict(model, newdata=credit_train, type="response")
+  higher <- transform(credit_train, log_limit=log_limit + log(1.1))
+  delayed <- transform(credit_train, delay=1L)
+  other <- transform(credit_train, delay=0L)
+  c(mean(model$family$mu.eta(eta)) * coef(model)[["age10"]],
+    mean(predict(model, higher, type="response") - base),
+    mean(predict(model, delayed, type="response") -
+         predict(model, other, type="response"))) * 100
+}
+data_table(data.frame(
+  Comparison=c("Age: local slope per decade", "Credit limit: +10%",
+               "Recorded delay: 0 to 1"),
+  Logit=credit_effects(credit_logit), Probit=credit_effects(credit_probit)),
+  digits=2, row.names=FALSE,
+  caption="Average changes in predicted default probability (percentage points).")
+```
+
+For example, the logit comparison for recorded delay is about `r round(credit_effects(credit_logit)[3],1)` percentage points. A 10\% higher credit limit corresponds to a much smaller change, about `r round(credit_effects(credit_logit)[2],2)` percentage points.
+
+A percentage-point change is a difference between probabilities multiplied by 100; it is not a percentage change in risk. The large contrast for recorded delay summarizes a strong predictive association, rather than the effect of an intervention on repayment behaviour.
+
+Figure \@ref(fig:credit-binary-profiles) illustrates why a single coefficient does not imply a constant probability difference. It holds age at 40 and varies the credit limit and delay indicator.
+
+```{r credit-binary-profiles, echo=FALSE, fig.width=7, fig.height=3.5, out.width="95%", fig.cap="Logit predictions at age 40. Curves differ only in the recorded-delay indicator; the comparison group includes all other repayment codes."}
+local({
+  limits <- seq(50000,500000,length.out=300)
+  profiles <- data.frame(log_limit=log(limits/100000), age10=0, delay=0L)
+  p0 <- predict(credit_logit, profiles, type="response")
+  profiles$delay <- 1L
+  p1 <- predict(credit_logit, profiles, type="response")
+  par(mar=c(4,4,1,1))
+  plot(limits/1000, 100*p0, type="l", col="#147D92", lwd=2,
+       ylim=c(0,70), xlab="Credit limit (thousands of NTD)",
+       ylab="Predicted default probability (%)", las=1)
+  lines(limits/1000, 100*p1, col="#C76D36", lwd=2, lty=2)
+  legend("topright", c("Other repayment codes", "Recorded delay"),
+         col=c("#147D92", "#C76D36"), lty=1:2, lwd=2, bty="n", cex=.9)
+})
+```
+:::
 
 ## Goodness of fit {#binary-fit}
 
 After interpreting individual coefficients, we turn to the performance of the model as a whole. For binary outcomes, fit can be assessed through likelihood-based measures, calibration, and the quality of probability predictions.
 
-There is no obvious version of "$R^2$" for binary-choice models. Existing measures are called **pseudo-$R^2$ measures**.
-
-Denoting by $\log \mathcal{L}_0(\bv{y})$ the (maximum) log-likelihood that would be obtained for a model containing only a constant term (i.e. with $\bv{x}_i = 1$ for all $i$), the McFadden's pseudo-$R^2$ is given by:
+McFadden's **pseudo-$R^2$** compares the maximized log-likelihood $\widehat\ell$ with that of an intercept-only model, $\widehat\ell_0$, on the same observations:
 $$
-R^2_{MF} = 1 - \frac{\log \mathcal{L}(\boldsymbol\theta;\bv{y})}{\log \mathcal{L}_0(\bv{y})}.
+R^2_{MF}=1-\frac{\widehat\ell}{\widehat\ell_0}.
 $$
-Intuitively, $R^2_{MF}=0$ if the explanatory variables do not convey any information on the outcome $y$. Indeed, in this case, the model is not better than the reference model, that simply captures the fraction of $y_i$'s that are equal to 1.
+A value of zero means that the fitted model does no better in likelihood terms than the constant-probability benchmark. This measure is not a fraction of variance explained and does not evaluate predictions on new observations.
 
-:::{.example #creditProbit name="Credit and defaults (Lending-club dataset)"}
+:::{.example #credit-binary-fit name="Does repayment status add information?"}
 
-This example makes use of the `credit` data of package `AEC`. The objective is to model the default probabilities of borrowers.
+We compare the intercept-only logit model, the model with credit limit and age, and the model that also includes recorded delay.
 
-Let us first represent the relationship between the fraction of households that have defaulted on their loan and their annual income:
-
-```{r Probitlending}
-library(AEC)
-credit_binary <- AEC::credit
-credit_binary$Default <- 0
-credit_binary$Default[credit_binary$loan_status == "Charged Off"] <- 1
-credit_binary$Default[credit_binary$loan_status ==
-                 "Does not meet the credit policy. Status:Charged Off"] <- 1
-credit_binary$amt2income <- credit_binary$loan_amnt/credit_binary$annual_inc
-plot(as.factor(credit_binary$Default)~log(credit_binary$annual_inc),
-     ylevels=2:1,ylab="Default status",xlab="log(annual income)")
+```{r credit-binary-fit}
+credit_fits <- list("Constant only"=credit_null,
+                    "Limit + age"=credit_basic,
+                    "Limit + age + delay"=credit_logit)
+data_table(data.frame(
+  Specification=names(credit_fits),
+  `Log-likelihood`=vapply(credit_fits, function(m) as.numeric(logLik(m)), 0),
+  `Pseudo-R2`=vapply(credit_fits, function(m)
+    1-as.numeric(logLik(m)/logLik(credit_null)), 0), check.names=FALSE),
+  digits=c(0,1,3), row.names=FALSE,
+  caption="Within-sample fit of nested logit specifications.")
+credit_LR <- 2*as.numeric(logLik(credit_logit)-logLik(credit_basic))
+credit_LR_p <- pchisq(credit_LR, df=1, lower.tail=FALSE)
 ```
 
-The previous figure suggests that the effect of annual income on the probability of default is non-monotonic. We therefore include a quadratic income term in the specifications with explanatory variables.
-
-We consider three specifications. The first contains only a constant and serves as the reference model for computing the pseudo-$R^2$. The second includes the loan amount, the ratio of the loan amount to annual income, the number of delinquencies in the borrower's credit file during the previous two years, and a quadratic function of annual income. The third specification also includes the borrower's credit grade.
-
-```{r Probitlending2,warning=FALSE}
-eq0 <- glm(Default ~ 1,data=credit_binary,family=binomial(link="probit"))
-eq1 <- glm(Default ~ log(loan_amnt) + amt2income + delinq_2yrs + 
-             log(annual_inc)+ I(log(annual_inc)^2),
-           data=credit_binary,family=binomial(link="probit"))
-eq2 <- glm(Default ~ grade + log(loan_amnt) + amt2income + delinq_2yrs + 
-             log(annual_inc)+ I(log(annual_inc)^2),
-           data=credit_binary,family=binomial(link="probit"))
-model_table(eq0,eq1,eq2,no.space = TRUE)
-```
-
-The pseudo-$R^2$ values for the latter two specifications are:
-
-```{r Probitlending2bis}
-logL0 <- logLik(eq0);logL1 <- logLik(eq1);logL2 <- logLik(eq2)
-pseudoR2_eq1 <- 1 - logL1/logL0 # pseudo R2
-pseudoR2_eq2 <- 1 - logL2/logL0 # pseudo R2
-c(pseudoR2_eq1,pseudoR2_eq2)
-```
-
-For a continuous regressor entering linearly, the average marginal effect is the average normal density times its coefficient. For example, treating `delinq_2yrs` as continuous gives (method ii of Section \@ref(marginalFX)):
-
-```{r Probitlending3}
-mean(dnorm(predict(eq2)), na.rm=TRUE) * coef(eq2)["delinq_2yrs"]
-```
-
-This shortcut does not apply directly to `annual_inc`: income enters through its logarithm, the square of its logarithm, and the loan-to-income ratio `amt2income`. It also does not describe discrete changes in categorical variables. To address this, one can proceed as follows: (1) we construct a new counterfactual dataset where annual incomes are increased by 1\% and the loan-to-income ratio is recomputed with loan amounts held fixed, (2) we use the model to compute model-implied probabilities of default on this new dataset and (3), we subtract the probabilities resulting from the original dataset from these counterfactual probabilities:
-
-```{r Probitlending4}
-new_credit <- credit_binary
-new_credit$annual_inc <- 1.01 * new_credit$annual_inc
-new_credit$amt2income <- new_credit$loan_amnt / new_credit$annual_inc
-bas_predict_eq2  <- predict(eq2, newdata = credit_binary, type = "response")
-# This is equivalent to pnorm(predict(eq2, newdata = credit_binary))
-new_predict_eq2  <- predict(eq2, newdata = new_credit, type = "response")
-mean(new_predict_eq2 - bas_predict_eq2)
-```
-The negative sign means that, on average across the entities considered in the analysis, a 1\% increase in annual income, holding loan amounts fixed, is associated with a lower model-predicted default probability. This average effect is however pretty low. To get an economic sense of the size of this effect, let us compute the average effect associated with a unit increase in the number of delinquencies:
-
-```{r Probitlending5}
-new_credit <- credit_binary
-new_credit$delinq_2yrs <- credit_binary$delinq_2yrs + 1
-new_predict_eq2  <- predict(eq2, newdata = new_credit, type = "response")
-mean(new_predict_eq2 - bas_predict_eq2)
-```
-
-We can employ a likelihood-ratio test (see Def. \@ref(def:LR)) to assess whether the two annual-income terms are jointly statistically significant in the second specification.
-```{r Probitlending6}
-eq1restr <- glm(Default ~ log(loan_amnt) + amt2income + delinq_2yrs,
-                data=credit_binary,family=binomial(link="probit"))
-LRstat <- 2*(logL1 - logLik(eq1restr))
-pvalue <- 1 - c(pchisq(LRstat,df=2))
-```
-
-The computation gives a p-value of `r round(pvalue,4)`.
-
+Adding recorded delay gives a likelihood-ratio statistic of `r round(credit_LR,1)`. Against the $\chi^2_1$ reference distribution, the p-value is below 0.001: delay contributes information conditional on limit and age. Section \@ref(binary-predictions) checks predictions on reserved observations.
 :::
-
-
-
-:::{.example #Fisch142 name="Replicating Table 14.2 of Cameron and Trivedi (2005)"}
-
-We replicate Table 14.2 of @Cameron_Trivedi_2005 (see Example \@ref(exm:FishingTable)).
-
-```{r fishing2, warning=FALSE}
-data.reduced <- subset(Fishing,mode %in% c("charter","pier"))
-data.reduced$lnrelp <- log(data.reduced$price.charter/data.reduced$price.pier)
-data.reduced$y <- 1*(data.reduced$mode=="charter")
-# check first line of Table 14.1:
-price.charter.y0 <- mean(data.reduced$pcharter[data.reduced$y==0])
-price.charter.y1 <- mean(data.reduced$pcharter[data.reduced$y==1])
-price.charter    <- mean(data.reduced$pcharter)
-# Run probit regression:
-reg.probit <- glm(y ~ lnrelp,
-                  data=data.reduced,
-                  family=binomial(link="probit"))
-# Run Logit regression:
-reg.logit <- glm(y ~ lnrelp,
-                 data=data.reduced,
-                 family=binomial(link="logit"))
-# Run OLS regression:
-reg.OLS <- lm(y ~ lnrelp,
-              data=data.reduced)
-# Replicates Table 14.2 of Cameron and Trivedi:
-model_table(reg.logit, reg.probit, reg.OLS,no.space = TRUE)
-```
-:::
-
 
 ## Predictions and ROC curves {#binary-predictions}
 
 A predicted probability becomes a classification only after a threshold is chosen. ROC curves summarize the trade-off between true- and false-positive rates across all possible thresholds, separating the model's ranking ability from any single decision rule.
 
-To convert predicted probabilities into binary classifications, choose a cutoff $c$ and set $\hat y_i=1$ when $\mathbb{P}(y_i=1\mid\bv{x}_i;\boldsymbol\theta)>c$. Although $c=0.5$ is a familiar default, it need not suit the decision problem. If the event is rare, a predicted probability of 10\% may already identify a high-risk entity, while a 50\% cutoff would classify every observation as low risk.
+To classify an outcome, choose a threshold $c$ and set $\widehat y_i=1$ when $\widehat p_i\geq c$. A lower threshold detects more positive outcomes but also produces more false alarms. The appropriate trade-off depends on the consequences of the two mistakes.
 
-The **receiver operating characteristics (ROC)** curve consitutes a more general approach. The idea is to remain agnostic and to consider all possible values of the cutoff $c$. It works as follows. For each potential cutoff $c \in [0,1]$, compute (and plot):
+The **receiver operating characteristic (ROC)** curve plots the true-positive rate against the false-positive rate as the threshold varies:
+$$
+\mathrm{TPR}=\frac{\text{correctly flagged positives}}{\text{all positives}},
+\qquad
+\mathrm{FPR}=\frac{\text{incorrectly flagged negatives}}{\text{all negatives}}.
+$$
+A threshold above every score gives $(0,0)$; one below every score gives $(1,1)$. Random ranking has a diagonal ROC in expectation. The **area under the curve (AUC)** measures ranking quality: it is the probability that a randomly selected positive receives a higher score than a randomly selected negative, counting ties as one half.
 
-*	The fraction of $y = 1$ values correctly classified (*True Positive Rate*) against
-* The fraction of $y = 0$ values incorrectly classified (*False Positive Rate*).
+Ranking is only one aspect of a probability forecast. **Calibration** asks whether outcomes occur at the predicted frequencies: among observations assigned a probability near 0.2, approximately one fifth should have outcome one. The **Brier score**, $n^{-1}\sum_i(y_i-\widehat p_i)^2$, assesses probability accuracy; smaller values are better.
 
-Such a curve mechanically starts at (0,0) ---which corresponds to $c=1$--- and terminates at (1,1) --situation when $c=0$.
+:::{.example #credit-binary-predictions name="Evaluating predictions for reserved cardholders"}
 
-With no discriminatory ability, the expected ROC curve is the diagonal between (0,0) and (1,1). A score whose ROC curve lies below that diagonal is systematically reversed and can be improved by reversing its ranking.
+We now predict outcomes for the 9,000 cardholders excluded from estimation. The benchmark assigns every client the default share in the training sample. None of these models is refitted on the evaluation sample.
 
-:::{.example #FishingROC name="ROC with the fishing-mode dataset"}
-Figure \@ref(fig:fishing3) shows the ROC curve associated with the probit model estimated in Example \@ref(exm:Fisch142).
-
-```{r fishing3, message=FALSE, warning=FALSE,results='hide',fig.keep='all', fig.cap="Application of the ROC methodology on the fishing-mode dataset.", fig.asp = .6, out.width = "95%", fig.align = 'left'}
-library(pROC)
-predict_model <- predict.glm(reg.probit,type = "response")
-roc(data.reduced$y, predict_model, percent=T,
-    boot.n=1000, ci.alpha=0.9, stratified=T, plot=TRUE, grid=TRUE,
-    show.thres=TRUE, legacy.axes = TRUE, reuse.auc = TRUE,
-    print.auc = TRUE, print.thres.col = "blue", ci=TRUE,
-    ci.type="bars", print.thres.cex = 0.7, col = 'red',
-    main = paste("ROC curve using","(N = ",nrow(data.reduced),")") )
+```{r credit-binary-predictions}
+credit_test_predictions <- data.frame(
+  Benchmark=rep(mean(credit_train$default), nrow(credit_test)),
+  Logit=predict(credit_logit, credit_test, type="response"),
+  Probit=predict(credit_probit, credit_test, type="response"))
+credit_auc <- function(y, p) {
+  n1 <- sum(y==1); n0 <- sum(y==0)
+  (sum(rank(p, ties.method="average")[y==1])-n1*(n1+1)/2)/(n1*n0)
+}
+data_table(data.frame(
+  Model=names(credit_test_predictions),
+  Brier=vapply(credit_test_predictions, function(p)
+    mean((credit_test$default-p)^2), 0),
+  AUC=vapply(credit_test_predictions, function(p)
+    credit_auc(credit_test$default,p), 0)),
+  digits=3, row.names=FALSE,
+  caption="Probability accuracy and ranking on 9,000 reserved observations.")
 ```
+
+Both fitted models reduce the Brier score relative to the constant-probability benchmark. Their AUC is about `r round(credit_auc(credit_test$default,credit_test_predictions$Logit),2)`: they rank defaults above non-defaults more often than chance, while leaving substantial uncertainty. The two links give similar predictive performance. Their ROC curves and the logit's calibration plot appear in Figure \@ref(fig:credit-binary-validation). A good ranking does not guarantee calibration: the left panel compares clients with one another, while the right panel compares probabilities with observed frequencies.
+
+```{r credit-binary-validation, echo=FALSE, fig.width=8, fig.height=3.8, out.width="100%", fig.cap="Evaluation on reserved observations. Left: ROC curves for logit and probit. Right: observed default frequencies against average logit predictions in ten equally sized groups ranked by predicted probability. The diagonal represents perfect calibration."}
+local({
+  par(mfrow=c(1,2), mar=c(4.3,4.3,2,1), mgp=c(2.7,.8,0))
+  plot(c(0,1),c(0,1),type="n",xlab="False-positive rate",
+       ylab="True-positive rate",las=1,main="Ranking")
+  abline(0,1,col="#CBD5E1",lty=3)
+  for (j in 1:2) {
+    p <- credit_test_predictions[[j+1]]
+    # Aggregate ties before accumulating counts: one ROC point per distinct score.
+    counts <- rowsum(cbind(positive=credit_test$default,
+                         negative=1-credit_test$default), group=-p, reorder=TRUE)
+    lines(c(0,cumsum(counts[,"negative"])/sum(counts[,"negative"])),
+          c(0,cumsum(counts[,"positive"])/sum(counts[,"positive"])),
+          col=c("#147D92","#C76D36")[j],lty=j,lwd=2)
+  }
+  legend("bottomright",c("Logit","Probit"),col=c("#147D92","#C76D36"),
+         lty=1:2,lwd=2,bty="n",cex=.9)
+  p <- credit_test_predictions$Logit
+  group <- ceiling(rank(p, ties.method="first")/900)
+  calibration <- aggregate(cbind(predicted=p, observed=credit_test$default),
+                           list(group=group),mean)
+  plot(calibration$predicted,calibration$observed,pch=19,col="#147D92",
+       xlim=c(0,.8),ylim=c(0,.8),xlab="Average predicted probability",
+       ylab="Observed default share",las=1,main="Calibration")
+  abline(0,1,col="#CBD5E1",lty=3)
+})
+```
+
+Finally, consider two illustrative logit thresholds, 0.5 and 0.2. They are specified for comparison, rather than selected to maximize performance on the reserved outcomes.
+
+```{r credit-binary-classification}
+credit_classification <- do.call(rbind,lapply(c(.5,.2), function(cutoff) {
+  flagged <- credit_test_predictions$Logit >= cutoff
+  y <- credit_test$default
+  data.frame(Threshold=cutoff, TP=sum(flagged & y==1),
+             FP=sum(flagged & y==0), FN=sum(!flagged & y==1),
+             TN=sum(!flagged & y==0),
+             TPR=mean(flagged[y==1]), FPR=mean(flagged[y==0]))
+}))
+data_table(credit_classification, digits=c(1,0,0,0,0,3,3),row.names=FALSE,
+  caption="Logit classifications: true positives (TP), false positives (FP), false negatives (FN), and true negatives (TN).")
+```
+
+Lowering the threshold detects more defaults and flags more clients who do not default. Overall classification accuracy alone can be misleading: predicting no default for everyone would already be correct for `r round(100*mean(credit_test$default==0),1)`\% of these clients, while detecting none of the defaults. The table makes both types of error visible.
 :::
 
 ```{r binary-recap-space, echo=FALSE, results='asis'}
@@ -455,12 +453,10 @@ if (knitr::is_latex_output()) cat("\\Needspace{14\\baselineskip}\n")
 
 ::: {.recapbox data-latex=""}
 
-- Chapter \@ref(binary-choice-models) models the conditional probability of a binary outcome rather than an unrestricted conditional mean.
-- The linear probability model is simple to estimate but can produce probabilities outside $[0,1]$ and requires heteroskedasticity-robust inference; Figure \@ref(fig:LPM) illustrates its fit.
-- Section \@ref(latent) interprets probit and logit models through a latent index or a difference in utilities.
-- Section \@ref(Avregressors) accommodates covariates, such as price or travel time, whose values vary across alternatives.
-- Section \@ref(binary-estimation) derives the Bernoulli likelihood; Section \@ref(marginalFX) converts index coefficients into effects on predicted probabilities.
-- Section \@ref(binary-fit) assesses overall fit, while Section \@ref(binary-predictions) separates probability prediction, threshold-based classification, and ROC analysis.
+- The LPM can give predictions outside $[0,1]$ and requires robust inference. Probit and logit use bounded probability functions (Figure \@ref(fig:LPM)).
+- Latent indices and utility differences motivate binary-choice models; alternative-specific attributes enter through utility comparisons (Sections \@ref(latent) and \@ref(Avregressors)).
+- Maximum likelihood estimates index coefficients. Derivatives and finite differences translate them into probability comparisons (Sections \@ref(binary-estimation) and \@ref(marginalFX)).
+- Within-sample fit, ranking, calibration and classification answer different questions. Reserved observations assess predictive performance (Sections \@ref(binary-fit) and \@ref(binary-predictions)).
 
 :::
 
