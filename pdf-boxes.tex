@@ -9,8 +9,10 @@
   skipabove=10pt,skipbelow=10pt,
   innerleftmargin=10pt,innerrightmargin=10pt,
   innertopmargin=8pt,innerbottommargin=8pt,
-  % Leave room for a real continuation when a long box crosses a page.
-  splittopskip=10pt,splitbottomskip=20pt,
+  % mdframed adds page shrinkage to its proposed split height. Reserve that
+  % allowance plus a baseline so the continuation contains actual text.
+  splittopskip=10pt,
+  splitbottomskip=\dimexpr8pt+\baselineskip+\pageshrink\relax,
   linewidth=.6pt,roundcorner=0pt,
   nobreak=false
 }

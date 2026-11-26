@@ -19,7 +19,14 @@ jobs:
       - name: Verify companion package and integrity guard
         run: Rscript --vanilla scripts/check-companion.R
       - name: Rebuild HTML and PDF
-        run: Rscript --vanilla scripts/build.R all
+        run: |
+          Rscript --vanilla scripts/build.R all 2>&1 | tee course-build.log
+          Rscript --vanilla -e 'if (any(grepl("Package .* Warning|LaTeX Warning", readLines("course-build.log")))) stop("LaTeX warnings remain; inspect course-build.log")'
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: course-build-log
+          path: course-build.log
       - uses: actions/upload-artifact@v4
         with:
           name: course-html-pdf
