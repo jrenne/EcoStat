@@ -319,7 +319,7 @@ At a true defect rate of 15\%, an inspection of 100 parts detects the violation 
 **Read the entire rejection-probability curve.** For any true defect rate,
 $$
 \pi_n(\theta)=\mathbb{P}_\theta(X_n>k_n)
-=\sum_{j=k_n+1}^{n}{n\choose j}\theta^j(1-\theta)^{n-j}.
+=\sum_{j=k_n+1}^{n}\binom{n}{j}\theta^j(1-\theta)^{n-j}.
 $$
 On the null interval $[0,0.10]$, this is the false-positive probability at each parameter value; its maximum is the size. To the right of 0.10, it is the power function. Figure \@ref(fig:FactoryR) compares the calibrated rule with the uncalibrated 10\% cutoff. The latter detects more violations, but does so at the cost of a much larger size.
 

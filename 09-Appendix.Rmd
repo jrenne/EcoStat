@@ -462,10 +462,13 @@ We have:
 :::{.proof}
 
 (of the fact that $\left(\overset{p}{\rightarrow}\right) \Rightarrow \left( \overset{d}{\rightarrow}\right)$). Assume that $X_n \overset{p}{\rightarrow} X$. Denoting by $F$ and $F_n$ the c.d.f. of $X$ and $X_n$, respectively:
-\begin{eqnarray*}
-F_n(x) &=& \mathbb{P}(X_n \le x,X\le x+\varepsilon) + \mathbb{P}(X_n \le x,X > x+\varepsilon)\\
-&\le& F(x+\varepsilon) + \mathbb{P}(|X_n - X|>\varepsilon).(\#eq:convgce1)
-\end{eqnarray*}
+\begin{equation}
+\begin{aligned}
+F_n(x) &= \mathbb{P}(X_n \le x,X\le x+\varepsilon) + \mathbb{P}(X_n \le x,X > x+\varepsilon)\\
+&\le F(x+\varepsilon) + \mathbb{P}(|X_n - X|>\varepsilon).
+\end{aligned}
+(\#eq:convgce1)
+\end{equation}
 Besides,
 \begin{eqnarray*}
 F(x-\varepsilon) &=& \mathbb{P}(X \le x-\varepsilon,X_n \le x) + \mathbb{P}(X \le x-\varepsilon,X_n > x)\\

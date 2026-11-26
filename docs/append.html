@@ -726,10 +726,13 @@ x_n/y_n &amp;\overset{d}{\rightarrow}&amp; x / c \quad (\mbox{if }c \ne 0)
 </div>
 <div class="proof">
 <p><span id="unlabeled-div-50" class="proof"><em>Proof</em>. </span>(of the fact that <span class="math inline">\(\left(\overset{p}{\rightarrow}\right) \Rightarrow \left( \overset{d}{\rightarrow}\right)\)</span>). Assume that <span class="math inline">\(X_n \overset{p}{\rightarrow} X\)</span>. Denoting by <span class="math inline">\(F\)</span> and <span class="math inline">\(F_n\)</span> the c.d.f. of <span class="math inline">\(X\)</span> and <span class="math inline">\(X_n\)</span>, respectively:
-<span class="math display" id="eq:convgce1">\[\begin{eqnarray*}
-F_n(x) &amp;=&amp; \mathbb{P}(X_n \le x,X\le x+\varepsilon) + \mathbb{P}(X_n \le x,X &gt; x+\varepsilon)\\
-&amp;\le&amp; F(x+\varepsilon) + \mathbb{P}(|X_n - X|&gt;\varepsilon).\tag{9.3}
-\end{eqnarray*}\]</span>
+<span class="math display" id="eq:convgce1">\[\begin{equation}
+\begin{aligned}
+F_n(x) &amp;= \mathbb{P}(X_n \le x,X\le x+\varepsilon) + \mathbb{P}(X_n \le x,X &gt; x+\varepsilon)\\
+&amp;\le F(x+\varepsilon) + \mathbb{P}(|X_n - X|&gt;\varepsilon).
+\end{aligned}
+\tag{9.3}
+\end{equation}\]</span>
 Besides,
 <span class="math display">\[\begin{eqnarray*}
 F(x-\varepsilon) &amp;=&amp; \mathbb{P}(X \le x-\varepsilon,X_n \le x) + \mathbb{P}(X \le x-\varepsilon,X_n &gt; x)\\
